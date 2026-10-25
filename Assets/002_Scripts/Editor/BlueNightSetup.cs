@@ -17,7 +17,7 @@ namespace BlueNight.EditorTools
     /// M0 環境整備をメニューから一括で行う。
     /// BlueNight > M0 セットアップ（すべて実行）
     /// </summary>
-    public static class BlueNightSetup
+    public static partial class BlueNightSetup
     {
         const string Renderer2DPath = "Assets/Settings/Renderer2D.asset";
         const string PostProcessDataGuid = "41439944d30ece34e96484bdb6645b55";
@@ -192,11 +192,26 @@ namespace BlueNight.EditorTools
 
         static void CreateVolume()
         {
-            if (AssetDatabase.LoadAssetAtPath<VolumeProfile>(VolumeProfilePath) != null)
-                AssetDatabase.DeleteAsset(VolumeProfilePath);
+            var volume = new GameObject("Global Volume").AddComponent<Volume>();
+            volume.isGlobal = true;
+            volume.sharedProfile = CreateOrResetNightProfile();
+        }
 
-            var profile = ScriptableObject.CreateInstance<VolumeProfile>();
-            AssetDatabase.CreateAsset(profile, VolumeProfilePath);
+        /// <summary>夜の画面効果のプロファイル。既にあれば中身だけ作り直す（他のシーンからの参照を切らさない）。</summary>
+        static VolumeProfile CreateOrResetNightProfile()
+        {
+            var profile = AssetDatabase.LoadAssetAtPath<VolumeProfile>(VolumeProfilePath);
+            if (profile == null)
+            {
+                profile = ScriptableObject.CreateInstance<VolumeProfile>();
+                AssetDatabase.CreateAsset(profile, VolumeProfilePath);
+            }
+            else
+            {
+                foreach (var component in profile.components.ToList())
+                    Object.DestroyImmediate(component, true);
+                profile.components.Clear();
+            }
 
             var bloom = AddOverride<Bloom>(profile);
             bloom.threshold.Override(0.85f);
@@ -234,11 +249,9 @@ namespace BlueNight.EditorTools
             var chromatic = AddOverride<ChromaticAberration>(profile);
             chromatic.intensity.Override(0.08f);
 
+            EditorUtility.SetDirty(profile);
             AssetDatabase.SaveAssets();
-
-            var volume = new GameObject("Global Volume").AddComponent<Volume>();
-            volume.isGlobal = true;
-            volume.sharedProfile = profile;
+            return profile;
         }
 
         static T AddOverride<T>(VolumeProfile profile) where T : VolumeComponent
@@ -345,7 +358,7 @@ namespace BlueNight.EditorTools
             puddle.GetComponent<SpriteRenderer>().sortingOrder = -50;
         }
 
-        static PlayerController CreateRuri(Material spriteMaterial, Vector3 position)
+        static PlayerController CreateRuri(Material spriteMaterial, Vector3 position, bool withLanternLight = true)
         {
             var go = new GameObject("Ruri");
             go.transform.position = position;
@@ -373,8 +386,9 @@ namespace BlueNight.EditorTools
             renderer.sprite = idle.down.FirstOrDefault();
             go.AddComponent<PlayerAnimator>().Configure(controller, idle, walk);
 
-            // ランタンの光（手元から）
-            CreatePointLight(go, "Lantern Light", new Vector3(0.3f, 0.8f, 0f), Hex("#ffb866"), 1.15f, 4.5f);
+            // ランタンの光（手元から）。M1 以降はランタンを独立したオブジェクトにする
+            if (withLanternLight)
+                CreatePointLight(go, "Lantern Light", new Vector3(0.3f, 0.8f, 0f), Hex("#ffb866"), 1.15f, 4.5f);
             return controller;
         }
 

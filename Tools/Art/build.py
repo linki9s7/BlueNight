@@ -16,6 +16,7 @@ from PIL import Image, ImageDraw
 
 sys.path.insert(0, os.path.dirname(__file__))
 
+import m1_assets  # noqa: E402
 import ruri  # noqa: E402
 from palette import RAMPS, color, hex_to_rgba  # noqa: E402
 
@@ -323,13 +324,77 @@ def build_previews(palette, sheets, nemu, tiles, props):
     upscale(lit, 6).save(os.path.join(PREVIEW, "scene_mock.png"))
 
 
+def read_m1_map():
+    """C# 側の M1Map.Rows（Assets/002_Scripts/Logic/GridMap.cs）を読み取る。マップの定義は 1 か所だけにする。"""
+    import re
+    src = open(os.path.join(ROOT, "Assets", "002_Scripts", "Logic", "GridMap.cs"), encoding="utf-8").read()
+    block = src[src.index("public static readonly string[] Rows"):]
+    block = block[: block.index("};")]
+    return re.findall(r'"([^"]+)"', block)
+
+
+def build_m1_preview(tiles, props, m1, sheets, nemu):
+    rows = read_m1_map()
+    h, w = len(rows), len(rows[0])
+    img = Image.new("RGBA", (w * 16, h * 16), CLEAR)
+    alley = set(",HS")
+    for ty, row in enumerate(rows):
+        for tx, ch in enumerate(row):
+            pos = (tx * 16, ty * 16)
+            if ch == "#":
+                img.alpha_composite(m1["wall_top"], pos)
+            elif ch in alley:
+                img.alpha_composite(tiles["road_1" if (tx * 3 + ty) % 7 == 0 else "road_0"], pos)
+            else:
+                img.alpha_composite(tiles["sidewalk_1" if (tx * 5 + ty * 3) % 6 == 0 else "sidewalk_0"], pos)
+    # 暗い路地（入口以外）を暗がりで覆う：ゲームでは光の計算で決まる。ここでは目安。
+    for ty, row in enumerate(rows):
+        for tx, ch in enumerate(row):
+            if ch in alley and not (ty == h - 1 - 5):
+                img.alpha_composite(m1["dark"], (tx * 16, ty * 16))
+
+    def place(sprite, tx, ty, dx=0, dy=0):
+        x = tx * 16 + 8 - sprite.width // 2 + dx
+        y = ty * 16 + 16 - sprite.height + dy
+        img.alpha_composite(sprite, (x, y))
+
+    for ty, row in enumerate(rows):
+        for tx, ch in enumerate(row):
+            if ch == "L":
+                place(props["lamp"], tx, ty)
+            elif ch in "Hh":
+                place(m1["hook"], tx, ty)
+            elif ch == "V":
+                place(props["vending"], tx, ty)
+            elif ch == "G":
+                place(m1["grandma"][0], tx, ty)
+            elif ch == "S":
+                place(m1["shadow"][0], tx, ty)
+            elif ch == "P":
+                place(sheets[("idle", "up")][0], tx, ty)
+                place(m1["lantern"], tx, ty, dx=-6, dy=-8)
+                place(nemu[1], tx, ty, dx=-12, dy=-24)
+    tint = Image.new("RGBA", img.size, (40, 55, 120, 110))
+    upscale(Image.alpha_composite(img, tint), 3).save(os.path.join(PREVIEW, "m1_map.png"))
+
+    chars = Image.new("RGBA", (120, 40), hex_to_rgba(RAMPS["night"][2]))
+    for i, frame in enumerate(m1["grandma"] + m1["shadow"][:2]):
+        chars.alpha_composite(frame, (4 + i * 20, 6))
+    chars.alpha_composite(m1["hook"], (86, 10))
+    chars.alpha_composite(m1["lantern"], (104, 14))
+    chars.alpha_composite(m1["prompt"], (104, 4))
+    upscale(chars, 8).save(os.path.join(PREVIEW, "m1_characters.png"))
+
+
 def main():
     palette = build_palette()
     sheets = build_ruri()
     nemu = build_nemu()
     tiles = build_tiles()
     props = build_props()
+    m1 = m1_assets.build(save)
     build_previews(palette, sheets, nemu, tiles, props)
+    build_m1_preview(tiles, props, m1, sheets, nemu)
     print("done")
 
 
