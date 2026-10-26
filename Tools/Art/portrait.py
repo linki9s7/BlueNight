@@ -257,35 +257,7 @@ def ruri_portrait(expression):
     return pt.img
 
 
-# ================================================================ ネム（蛾）
-def nemu_portrait(expression):
-    pt = Portrait()
-    # 羽（左右 2 枚ずつ）：上の羽は明るい黄、下の羽は少し濃い
-    upper = union(ellipse([2, 6, 23, 27]), ellipse([24, 6, 45, 27]))
-    lower = union(ellipse([6, 22, 22, 41]), ellipse([25, 22, 41, 41]))
-    pt.part(lower, "warm4", shade="warm3", shade_d=(3, 3))
-    pt.part(upper, "warm5", shade="warm4", shade_d=(3, 3))
-    # 羽の目玉模様（月色）：左上の羽のつやと同じ向きに、左寄り
-    for box in ([8, 13, 13, 18], [31, 13, 36, 18]):
-        pt.fill(ellipse(box), "moon1")
-    # ふわふわの体と頭
-    body = union(ellipse([17, 16, 30, 40]), ellipse([16, 8, 31, 24]))
-    pt.part(body, "stone7", shade="stone5", shade_d=(3, 3))
-    # 触角
-    for pts in ([(19, 9), (15, 2), (13, 1)], [(28, 9), (32, 2), (34, 1)]):
-        ImageDraw.Draw(pt.img).line(pts, fill=P("brown2"))
-    # 目と口
-    eyes = {
-        "normal": ["OO..OO", "OL..OL", "OO..OO"],
-        "happy": [".O..O.", "O.OO.O", "......"],
-        "worried": ["O....O", "OO..OO", "OL..OL"],
-    }[expression]
-    # 目は 2 つの 2x3 のかたまり（6 幅の行の左 2・右 2）
-    pt.stamp([row[:2] + "......" + row[4:] for row in eyes], {"O": "night1", "L": "moon3"}, 19, 14)
-    mouth = {"normal": ["mm"], "happy": ["mm", ".."], "worried": [".m", "m."]}[expression]
-    pt.stamp(mouth, {"m": "brown1"}, 23, 19)
-    pt.outline("night1")
-    return pt.img
+# ネム（蛾）の顔グラフィックは nemu.py
 
 
 # ================================================================ ランプ屋の主人
@@ -369,8 +341,6 @@ def build(save):
     out = {}
     for e in RURI_EXPRESSIONS:
         out[f"ruri_{e}"] = save(ruri_portrait(e), "Faces", f"face_ruri_{e}.png", clean=True)
-    for e in ("normal", "happy", "worried"):
-        out[f"nemu_{e}"] = save(nemu_portrait(e), "Faces", f"face_nemu_{e}.png", clean=True)
     for e in ("normal", "smile"):
         out[f"keeper_{e}"] = save(keeper_portrait(e), "Faces", f"face_keeper_{e}.png", clean=True)
     for e in ("normal", "smile", "teary"):

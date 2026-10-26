@@ -20,6 +20,7 @@ import json  # noqa: E402
 
 import ch1_assets  # noqa: E402
 import m1_assets  # noqa: E402
+import nemu  # noqa: E402
 import npc  # noqa: E402
 import portrait  # noqa: E402
 import ui_title  # noqa: E402
@@ -102,62 +103,15 @@ def build_ruri():
 
 
 # ---------------------------------------------------------------- ネム（蛾）
-NEMU_KEY = {
-    "O": color("night", 2),
-    "W": color("warm", 5),
-    "w": color("warm", 4),
-    "M": color("moon", 1),
-    "B": color("brown", 2),
-    "E": color("night", 0),
-}
-
-NEMU_FRAMES = [  # ゲームでは左右反転しないので、影は右の羽の下側だけ（光は左上から）
-    [  # 羽を上げる
-        "..O......O..",
-        "...O....O...",
-        ".OO..OO..OO.",
-        "OWWO.BB.OWWO",
-        "OWMWOBBOWMwO",
-        ".OWWOEEOwwO.",
-        "..OOOBBOOO..",
-        "....OBBO....",
-        ".....OO.....",
-        "............",
-    ],
-    [  # 羽を広げる
-        "..O......O..",
-        "...O....O...",
-        ".....OO.....",
-        "OOO.OBBO.OOO",
-        "OWWWOBBOWWWO",
-        "OWMWOEEOWMwO",
-        ".OWWOBBOwwO.",
-        "..OOOBBOOO..",
-        ".....OO.....",
-        "............",
-    ],
-    [  # 羽を下げる
-        "..O......O..",
-        "...O....O...",
-        ".....OO.....",
-        "....OBBO....",
-        ".OOOOBBOOOO.",
-        "OWWWOEEOWWWO",
-        "OWMWOBBOWMwO",
-        ".OWWOBBOwwO.",
-        "..OO.OO.OO..",
-        "............",
-    ],
-]
-
-
 def build_nemu():
-    order = [0, 1, 2, 1]
-    imgs = []
-    for i, f in enumerate(order):
-        img = save(from_map(NEMU_FRAMES[f], NEMU_KEY), "Characters", "Nemu", f"nemu_fly_{i}.png", clean=True)
-        imgs.append(img)
-    return imgs
+    """ゲーム内のネム（nemu.py）。顔グラフィックも nemu.py で作る。"""
+    global NEMU_FACES
+    out = nemu.build(save)
+    NEMU_FACES = out["faces"]
+    return out["sprite"]
+
+
+NEMU_FACES = {}
 
 
 # ---------------------------------------------------------------- タイル（16x16）
@@ -615,6 +569,7 @@ def main():
     ch1 = ch1_assets.build(save)
     people = npc.build(save)
     faces = portrait.build(save)
+    faces.update({f"nemu_{k}": v for k, v in NEMU_FACES.items()})
     ui = ui_title.build_ui(save)
     title = ui_title.build_title(save)
     os.makedirs(os.path.join(ROOT, "Tools", "Art", "report"), exist_ok=True)

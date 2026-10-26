@@ -21,6 +21,10 @@ RAMPS = {
     "scarf": ["#1f4fa8", "#3b7bd9", "#78b4f0"],
     # ルリのコート（明るいグレー）
     "coat": ["#6a6c91", "#9497b8", "#c9cbe0"],
+    # ネムの羽：月明かりの鱗粉のような青みの銀（暗 → 明）。目玉模様はランタンの金（warm4）
+    # 候補：A 月白（これ）／B 藍 ["#0b0f26","#16204a","#223477","#3552a3","#5b7fc8","#a8c4ec"]／
+    #       C 灯り色 ["#2a1408","#5c2e1f","#8a4a24","#c2702c","#e89a3c","#f5c46a"]（目玉模様は moon1）
+    "moth": ["#141a30", "#2c3758", "#56648e", "#8b9ac0", "#c4cfe6", "#eef2fb"],
     # 植物
     "green": ["#1d3b3a", "#2c5650", "#3f7466"],
     # 差し色（自販機・看板）
@@ -53,7 +57,7 @@ def _pick(*names):
 
 
 # 輪郭線に使う色（点検で「線」として扱う）
-OUTLINE_COLORS = _pick("hair0", "night0", "night1", "night2")
+OUTLINE_COLORS = _pick("hair0", "night0", "night1", "night2", "moth0")
 
 # マップ・用途ごとの専用パレット（この中の色だけで描く）
 MAP_PALETTES = {
@@ -67,7 +71,8 @@ MAP_PALETTES = {
                         "scarf0", "scarf1", "scarf2", "coat0", "coat1", "coat2",
                         "night0", "night1", "night2", "night3", "red0", "red1", "brown1", "brown2",
                         "stone2", "stone3", "stone4", "stone5", "stone7", "warm4", "warm5", "red2",
-                        "warm3", "moon0", "moon1", "moon2", "moon3"),  # moon2：逃げた影の光る目、moon3：顔グラの目のつや
+                        "warm3", "warm6", "moon0", "moon1", "moon2", "moon3",
+                        "moth0", "moth1", "moth2", "moth3", "moth4", "moth5"),  # moon2：逃げた影の光る目、moon3：顔グラの目のつや
     # UI（会話ウィンドウ・アイコン）：10 色
     "ui": _pick("night0", "night1", "night2", "moon1", "moon3", "scarf0", "scarf1", "stone7", "warm4", "warm5"),
     # タイトルの一枚絵（夜空・月・ハイウェイ・遠くの町＋小さなルリ）：32 色
