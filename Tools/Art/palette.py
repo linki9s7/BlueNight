@@ -57,11 +57,11 @@ OUTLINE_COLORS = _pick("hair0", "night0", "night1", "night2")
 
 # マップ・用途ごとの専用パレット（この中の色だけで描く）
 MAP_PALETTES = {
-    # 夜の商店街（第 1 章・M1 の地面と小物）：23 色
+    # 夜の商店街（第 1 章・M1 の地面・建物・小物）：32 色
     "street_night": _pick("night0", "night1", "night2", "night3", "night4", "night5",
-                          "stone1", "stone2", "stone3", "stone4", "stone5", "stone6",
-                          "warm3", "warm5", "warm6", "moon0", "moon2", "moon3",
-                          "red0", "red1", "red2", "brown1", "brown2"),
+                          "stone1", "stone2", "stone3", "stone4", "stone5", "stone6", "stone7",
+                          "warm1", "warm2", "warm3", "warm4", "warm5", "warm6", "moon0", "moon1", "moon2", "moon3",
+                          "red0", "red1", "red2", "brown0", "brown1", "brown2", "green0", "green1", "green2"),
     # 登場人物（どのマップにも出るので共通）
     "characters": _pick("hair0", "hair1", "hair2", "hair3", "skin0", "skin1", "skin2",
                         "scarf0", "scarf1", "scarf2", "coat0", "coat1", "coat2",

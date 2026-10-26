@@ -35,6 +35,9 @@ REVIEWED = {
     "Characters/Grandma/": "あごの肌の帯は口まわりの形。2 コマ目の右肩の影は手との境目",
     "Characters/Nemu/": "羽の目玉模様（1 ドット）とそのまわりは模様で、陰影の帯ではない",
     "Props/puddle_moon": "光の向き：水面の揺らぎ（明るい線）は映り込みで、陰影ではない",
+    "Buildings/": "光の向き：建物は屋根・壁・窓・基礎で素材が違い、系統全体の重心では判断できない（部品ごとに左上の光を確認済み）。"
+                  "窓の明かりは光源なので陰影の向きとは関係ない",
+    "Props/power_pole": "光の向き：足元の黄色と黒の巻き標識はしま模様で、陰影ではない",
 }
 
 
@@ -239,7 +242,7 @@ def group_of(rel):
         return "characters"
     if rel.startswith("UI"):
         return "ui"
-    if rel.startswith(("Tiles", "Props")):
+    if rel.startswith(("Tiles", "Props", "Buildings")):
         return "street_night"
     return None
 

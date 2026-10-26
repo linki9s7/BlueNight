@@ -6,6 +6,12 @@
 
 | 絵 | 色数 | パレット外 | ダブり | バンディング（帯/ドット） | 浮いた AA 候補 | ノイズ % | 網点 % | 光の向きが逆の系統 | 確認済み |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Buildings/bus_shelter.png | 10 |  | 0 | 0/0 | 0 | 0.0 | 0.0 | stone | 光の向き：建物は屋根・壁・窓・基礎で素材が違い、系統全体の重心では判断できない（部品ごとに左上の光を確認済み）。窓の明かりは光源なので陰影の向きとは関係ない |
+| Buildings/grandma_shop.png | 21 |  | 0 | 0/0 | 1 | 0.0 | 0.0 | brown, red, warm | 光の向き：建物は屋根・壁・窓・基礎で素材が違い、系統全体の重心では判断できない（部品ごとに左上の光を確認済み）。窓の明かりは光源なので陰影の向きとは関係ない |
+| Buildings/house.png | 13 |  | 0 | 0/0 | 0 | 0.0 | 0.0 | stone | 光の向き：建物は屋根・壁・窓・基礎で素材が違い、系統全体の重心では判断できない（部品ごとに左上の光を確認済み）。窓の明かりは光源なので陰影の向きとは関係ない |
+| Buildings/lamp_shop.png | 15 |  | 0 | 0/0 | 3 | 0.1 | 0.0 | brown, warm | 光の向き：建物は屋根・壁・窓・基礎で素材が違い、系統全体の重心では判断できない（部品ごとに左上の光を確認済み）。窓の明かりは光源なので陰影の向きとは関係ない |
+| Buildings/shutter_shop_0.png | 10 |  | 0 | 0/0 | 0 | 0.0 | 0.0 | stone, night | 光の向き：建物は屋根・壁・窓・基礎で素材が違い、系統全体の重心では判断できない（部品ごとに左上の光を確認済み）。窓の明かりは光源なので陰影の向きとは関係ない |
+| Buildings/shutter_shop_1.png | 12 |  | 0 | 0/0 | 0 | 0.0 | 0.0 | brown | 光の向き：建物は屋根・壁・窓・基礎で素材が違い、系統全体の重心では判断できない（部品ごとに左上の光を確認済み）。窓の明かりは光源なので陰影の向きとは関係ない |
 | Characters/Grandma/grandma_idle_0.png | 12 |  | 0 | 1/4 | 1 | 1.9 | 0.0 |  | あごの肌の帯は口まわりの形。2 コマ目の右肩の影は手との境目 |
 | Characters/Grandma/grandma_idle_1.png | 12 |  | 0 | 2/7 | 1 | 1.9 | 0.0 |  | あごの肌の帯は口まわりの形。2 コマ目の右肩の影は手との境目 |
 | Characters/Nemu/nemu_fly_0.png | 6 |  | 0 | 3/10 | 1 | 3.6 | 0.0 |  | 羽の目玉模様（1 ドット）とそのまわりは模様で、陰影の帯ではない |
@@ -48,12 +54,32 @@
 | Characters/Shadows/shadow_grandma_1.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Shadows/shadow_grandma_2.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Shadows/shadow_grandma_3.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Props/a_sign.png | 4 |  | 0 | 1/3 | 0 | 0.0 | 0.0 |  |  |
+| Props/beer_crates.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Props/bench.png | 5 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Props/bicycle.png | 5 |  | 0 | 0/0 | 0 | 0.7 | 0.0 |  |  |
+| Props/bus_sign.png | 7 |  | 0 | 0/0 | 0 | 1.3 | 0.0 |  |  |
+| Props/curve_mirror.png | 5 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Props/extinguisher_box.png | 5 |  | 0 | 0/0 | 0 | 1.1 | 0.0 |  |  |
 | Props/hook.png | 4 |  | 0 | 0/0 | 0 | 1.1 | 0.0 |  |  |
 | Props/lamp.png | 5 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Props/lantern.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Props/mailbox.png | 6 |  | 0 | 1/3 | 0 | 0.0 | 0.0 |  |  |
+| Props/pot_plant.png | 6 |  | 0 | 0/0 | 1 | 2.4 | 0.0 |  |  |
+| Props/power_pole.png | 8 |  | 0 | 1/4 | 0 | 0.6 | 0.0 | stone | 光の向き：足元の黄色と黒の巻き標識はしま模様で、陰影ではない |
 | Props/puddle_moon.png | 5 |  | 0 | 0/0 | 0 | 0.0 | 0.0 | night | 光の向き：水面の揺らぎ（明るい線）は映り込みで、陰影ではない |
+| Props/trash_bin.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Props/vending.png | 10 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Tiles/block_wall.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Tiles/block_wall_top.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Tiles/crosswalk.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Tiles/crosswalk_0.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Tiles/crosswalk_1.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Tiles/curb.png | 6 |  | 0 | 0/0 | 0 | 0.8 | 0.0 |  |  |
+| Tiles/drain.png | 5 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Tiles/drain_0.png | 5 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Tiles/drain_1.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Tiles/manhole.png | 4 |  | 0 | 3/12 | 0 | 0.0 | 0.0 |  |  |
 | Tiles/overlay_cast_shadow.png | 1 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Tiles/overlay_dark.png | 1 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Tiles/road_0.png | 3 |  | 0 | 0/0 | 0 | 1.6 | 0.0 |  |  |
@@ -62,4 +88,5 @@
 | Tiles/sidewalk_0.png | 4 |  | 0 | 0/0 | 0 | 0.4 | 0.0 |  |  |
 | Tiles/sidewalk_1.png | 4 |  | 0 | 0/0 | 0 | 0.4 | 0.0 |  |  |
 | Tiles/wall_top.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Tiles/weeds.png | 3 |  | 0 | 0/0 | 0 | 7.1 | 0.0 |  |  |
 | UI/prompt.png | 2 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |

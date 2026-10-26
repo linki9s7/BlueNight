@@ -18,6 +18,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 import json  # noqa: E402
 
+import ch1_assets  # noqa: E402
 import m1_assets  # noqa: E402
 import ruri  # noqa: E402
 from palette import RAMPS, color, hex_to_rgba  # noqa: E402
@@ -445,6 +446,114 @@ def build_m1_preview(tiles, props, m1, sheets, nemu):
     upscale(chars, 8).save(os.path.join(PREVIEW, "m1_characters.png"))
 
 
+def contact_sheet(images, bg, pad=4, max_w=360):
+    """画像を左から並べ、幅を超えたら折り返す（下そろえ）。"""
+    rows, row, w = [], [], pad
+    for img in images:
+        if row and w + img.width + pad > max_w:
+            rows.append(row)
+            row, w = [], pad
+        row.append(img)
+        w += img.width + pad
+    rows.append(row)
+    width = max(sum(i.width + pad for i in r) + pad for r in rows)
+    height = sum(max(i.height for i in r) + pad for r in rows) + pad
+    sheet = Image.new("RGBA", (width, height), bg)
+    y = pad
+    for r in rows:
+        rh = max(i.height for i in r)
+        x = pad
+        for img in r:
+            sheet.alpha_composite(img, (x, y + rh - img.height))
+            x += img.width + pad
+        y += rh + pad
+    return sheet
+
+
+def glow(img, cx, cy, radius, rgb, strength):
+    """プレビュー用の簡単な明かり（ゲームでは Light 2D が受け持つ）。ドットの格子のまま、距離で段階的に明るくする。"""
+    px = img.load()
+    for y in range(max(0, cy - radius), min(img.height, cy + radius)):
+        for x in range(max(0, cx - radius), min(img.width, cx + radius)):
+            d = ((x - cx) ** 2 + (y - cy) ** 2) ** 0.5 / radius
+            if d >= 1:
+                continue
+            k = strength * (1 - d) ** 1.5
+            r, g, b, a = px[x, y]
+            px[x, y] = (min(255, int(r + rgb[0] * k)), min(255, int(g + rgb[1] * k)), min(255, int(b + rgb[2] * k)), a)
+
+
+def build_ch1_preview(tiles, props, ch1, sheets, nemu, m1):
+    os.makedirs(PREVIEW, exist_ok=True)
+    bg = hex_to_rgba(RAMPS["night"][2])
+    parts = [ch1[k] for k in ("lamp_shop", "grandma_shop", "shutter_shop_0", "shutter_shop_1", "house", "bus_shelter")]
+    upscale(contact_sheet(parts, bg, max_w=420), 3).save(os.path.join(PREVIEW, "ch1_buildings.png"))
+    small = [ch1[k] for k in ("bus_sign", "mailbox", "bench", "power_pole", "curve_mirror", "trash_bin", "pot_plant",
+                              "beer_crates", "a_sign", "bicycle", "extinguisher_box")]
+    small += [ch1[k] for k in ("crosswalk_0", "manhole", "drain_0", "drain_1", "block_wall", "block_wall_top", "weeds")]
+    upscale(contact_sheet(small, bg, max_w=260), 5).save(os.path.join(PREVIEW, "ch1_props.png"))
+
+    # 商店街の一画面（480x270）の見え方
+    W, H = 480, 270
+    scene = Image.new("RGBA", (W, H), hex_to_rgba(RAMPS["night"][1]))
+    ground_y = 112  # 建物の足元
+    for ty in range(ground_y // 16, (H + 15) // 16):
+        for tx in range(W // 16):
+            y = ty * 16
+            if y < ground_y + 48:
+                t = tiles["sidewalk_1" if (tx * 5 + ty * 3) % 7 == 0 else "sidewalk_0"]
+            elif y == ground_y + 48:
+                t = tiles["curb"]
+            elif y < ground_y + 128:
+                if 18 <= tx <= 20:
+                    t = ch1["crosswalk_1" if (tx + ty) % 3 == 0 else "crosswalk_0"]
+                elif y == ground_y + 96 and tx % 2 == 0:
+                    t = tiles["road_line"]
+                elif (tx, ty) == (8, 12):
+                    t = ch1["manhole"]
+                else:
+                    t = tiles["road_1" if (tx * 3 + ty) % 7 == 0 else "road_0"]
+            else:
+                t = ch1[f"drain_{tx % 2}"] if y == ground_y + 128 else ch1["block_wall"]
+            scene.alpha_composite(t, (tx * 16, y))
+    for tx in (3, 11, 25):
+        scene.alpha_composite(ch1["weeds"], (tx * 16, ground_y + 16))
+    # 奥の屋根（暗いシルエット）
+    x = 0
+    for name in ("house", "shutter_shop_0", "lamp_shop", "grandma_shop", "shutter_shop_1", "house"):
+        img = ch1[name]
+        scene.alpha_composite(img, (x, ground_y - img.height))
+        x += img.width - 1  # 輪郭を 1 ドット重ねる
+    scene.alpha_composite(ch1["bus_shelter"], (436 - 48, ground_y + 30 - 48))
+
+    def put(img, x, foot_y):
+        scene.alpha_composite(img, (x - img.width // 2, foot_y - img.height))
+
+    put(ch1["power_pole"], 132, ground_y + 40)
+    put(props["lamp"], 250, ground_y + 44)
+    put(props["vending"], 466 - 8, ground_y + 6)
+    put(ch1["mailbox"], 224, ground_y + 22)
+    put(ch1["bus_sign"], 452, ground_y + 44)
+    put(ch1["pot_plant"], 300, ground_y + 8)
+    put(ch1["a_sign"], 352, ground_y + 12)
+    put(ch1["bicycle"], 52, ground_y + 14)
+    put(ch1["trash_bin"], 92, ground_y + 10)
+    put(ch1["extinguisher_box"], 164, ground_y - 2)
+    put(ch1["curve_mirror"], 20, ground_y + 46)
+    put(m1["grandma"][0], 318, ground_y + 26)
+    put(sheets[("idle", "right")][0], 262, ground_y + 40)
+    put(m1["lantern"], 270, ground_y + 30)
+    put(nemu[1], 252, ground_y + 6)
+    put(props["puddle_moon"], 200, ground_y + 104)
+    # 月明かりで沈め、灯りのまわりを明るくする（簡易）
+    lit = Image.alpha_composite(scene, Image.new("RGBA", scene.size, (30, 45, 110, 100)))
+    glow(lit, 250, ground_y - 4, 70, (255, 190, 110), 0.55)
+    glow(lit, 270, ground_y + 20, 34, (255, 180, 100), 0.45)
+    glow(lit, 458, ground_y - 20, 40, (150, 200, 255), 0.35)
+    glow(lit, 249, ground_y - 22, 46, (255, 170, 90), 0.35)  # おばあさんの店の窓
+    upscale(lit, 2).save(os.path.join(PREVIEW, "ch1_street.png"))
+
+
 def main():
     palette = build_palette()
     sheets = build_ruri()
@@ -452,11 +561,13 @@ def main():
     tiles = build_tiles()
     props = build_props()
     m1 = m1_assets.build(save)
+    ch1 = ch1_assets.build(save)
     os.makedirs(os.path.join(ROOT, "Tools", "Art", "report"), exist_ok=True)
     with open(os.path.join(ROOT, "Tools", "Art", "report", "clean_corners.json"), "w", encoding="utf-8") as f:
         json.dump(dict(sorted(CLEANED.items())), f, ensure_ascii=False, indent=1)
     build_previews(palette, sheets, nemu, tiles, props)
     build_m1_preview(tiles, props, m1, sheets, nemu)
+    build_ch1_preview(tiles, props, ch1, sheets, nemu, m1)
     print("done")
 
 
