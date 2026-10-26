@@ -29,13 +29,14 @@ def P(name):
 
 
 KEY = {
-    "O": "night1",   # 輪郭
-    "W": "moth2",    # 羽（淡い青緑）
-    "w": "moth1",    # 羽の影（自動）
-    "H": "moth2",    # 後ろ羽（色は前羽と同じ。前羽との境目に輪郭を入れるため記号を分ける）
-    "h": "moth1",    # 後ろ羽の影（自動）
-    "v": "moth1",    # 羽の筋
-    "L": "moth3",    # 羽のつや（前羽の帯の下）
+    "O": "night1",   # 輪郭（体・頭・触角）
+    "o": "moth0",    # 羽の輪郭：紺より軽い暗い青緑にして、羽を重く見せない（透明感）
+    "W": "moth3",    # 羽（淡い青緑）
+    "w": "moth2",    # 羽の影（自動）
+    "H": "moth3",    # 後ろ羽（色は前羽と同じ。前羽との境目に輪郭を入れるため記号を分ける）
+    "h": "moth2",    # 後ろ羽の影（自動）
+    "v": "moth2",    # 羽の筋
+    "L": "moth4",    # 羽のつや（前羽の帯の下）
     "C": "brown2",   # 前羽の前のふちの赤茶の帯
     "c": "brown1",   # 目玉模様の縁
     "y": "warm4",    # 目玉模様の黄色・尾の先
@@ -51,6 +52,10 @@ KEY = {
 }
 
 WING = set("WwHhvLCcyMS")   # 羽の部品
+
+# 羽の膜は少しだけ透ける（後ろの夜や灯りがかすかに見える）。目玉模様の窓はもっと透ける。
+# 1 ドット＝1 ドットのまま、色の重なり方だけが変わる（ドットの大きさは混ざらない）
+ALPHA = {"W": 215, "w": 215, "H": 215, "h": 215, "L": 215, "v": 235, "M": 120}
 FORE = set("WwLCvcyMS")     # 前羽（影の判定で「同じ部品」とみなす）
 HIND = set("HhvcyMS")       # 後ろ羽と尾
 FUR = set("FfEem")
@@ -91,8 +96,25 @@ def to_image(rows):
         assert len(row) == w, f"row {y}: {row!r} ({len(row)} != {w})"
         for x, ch in enumerate(row):
             if ch != ".":
-                px[x, y] = P(KEY[ch])
+                r, g, b, _ = P(KEY[ch])
+                px[x, y] = (r, g, b, ALPHA.get(ch, 255))
     return img
+
+
+def soften_wing_outline(rows):
+    """羽だけに接する輪郭（O）を、羽の輪郭の色（o）にする。体・頭・触角に接する所は紺のまま。"""
+    grid = [list(r) for r in rows]
+    h, w = len(grid), len(grid[0])
+    out = [r[:] for r in grid]
+    for y in range(h):
+        for x in range(w):
+            if grid[y][x] != "O":
+                continue
+            near = [grid[ny][nx] for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1))
+                    if 0 <= nx < w and 0 <= ny < h]
+            if any(c in WING for c in near) and not any(c in FUR or c in "Aa" for c in near):
+                out[y][x] = "o"
+    return ["".join(r) for r in out]
 
 
 # ================================================================ ゲーム内（20x20、4 コマ）
@@ -168,7 +190,7 @@ SPRITE_HALVES = {
 
 
 def sprite(name):
-    return to_image(shade(mirror_half(SPRITE_HALVES[name]), fur_d=1))
+    return to_image(soften_wing_outline(shade(mirror_half(SPRITE_HALVES[name]), fur_d=1)))
 
 
 def sprite_frames():
@@ -246,14 +268,14 @@ def curve(p0, p1, p2, steps=30):
 # 左側の図形（右側は反転して作る）
 # 実物のオオミズアオ（標本の、羽を広げた形）に合わせる
 # 前羽：前のふち（赤茶の帯）は体からほぼ真横にのび、先はとがる。外のふちは先から内側へななめに下がる三角形
-FOREWING = [(22, 13), (15, 11), (8, 9), (2, 7), (0, 8), (1, 11), (3, 15), (6, 20), (9, 24), (12, 26),
-            (17, 25), (22, 21)]
-COSTA = [(23, 12), (15, 10), (8, 8), (2, 6), (0, 7), (1, 9), (8, 11), (15, 13), (23, 15)]   # 赤茶の帯
-COSTA_LIGHT = [(16, 12), (8, 10), (2, 8), (3, 12), (9, 13), (15, 15)]   # 帯のすぐ下のつや（帯との間に 1 列の羽の色を残さない）
+FOREWING = [(23, 12), (15, 10), (8, 8), (2, 6), (0, 7), (1, 11), (3, 16), (6, 21), (10, 26), (14, 28),
+            (19, 26), (23, 21)]
+COSTA = [(23, 11), (15, 9), (8, 7), (2, 5), (0, 6), (1, 8), (8, 10), (15, 12), (23, 14)]   # 赤茶の帯
+COSTA_LIGHT = [(16, 11), (8, 9), (2, 7), (3, 11), (9, 12), (15, 14)]   # 帯のすぐ下のつや（帯との間に 1 列の羽の色を残さない）
 # 後ろ羽：前羽の下にのぞく、丸みのある大きな三角形。下のふちから長い尾がほぼまっすぐ下へ
-HINDWING = [(22, 20), (15, 23), (10, 26), (8, 30), (9, 34), (12, 37), (17, 37), (21, 33), (23, 27)]
-TAIL_OUTER = ((12, 35), (9, 42), (11, 48))
-TAIL_INNER = ((16, 36), (13, 42), (13, 48))
+HINDWING = [(23, 20), (15, 23), (9, 27), (6, 32), (7, 37), (11, 40), (17, 39), (21, 34), (23, 28)]
+TAIL_OUTER = ((11, 38), (8, 43), (10, 48))
+TAIL_INNER = ((16, 39), (12, 43), (12, 48))
 
 EYESPOT = [   # 目玉模様（5x4）：赤茶の縁・黄色の輪・透けた窓（窓は左上）
     ".cc..",
@@ -264,39 +286,35 @@ EYESPOT = [   # 目玉模様（5x4）：赤茶の縁・黄色の輪・透けた�
 
 
 def eyes_for(expression):
-    """目（6x6）。黒い大きな目に、左上の大きなつや＋右下の小さなつや。"""
+    """目（5x5）。黒い目に、左上の大きなつや＋右下の小さなつや。"""
     return {
         "normal": [   # 少しまぶたを下ろした、余裕のある目
-            "......",
-            "OOOOOO",
-            "EeeEEE",
-            "EeEEEE",
-            "EEEEeE",
-            ".EEEE.",
+            "OOOOO",
+            "EeeEE",
+            "EeEEE",
+            "EEEeE",
+            ".EEE.",
         ],
         "happy": [    # にっこり
-            "......",
-            "......",
-            ".EEEE.",
-            "E....E",
-            "......",
-            "......",
+            ".....",
+            ".EEE.",
+            "E...E",
+            ".....",
+            ".....",
         ],
         "surprised": [  # まんまる
-            ".EEEE.",
-            "EeeEEE",
-            "EeEEEE",
-            "EEEEEE",
-            "EEEEeE",
-            ".EEEE.",
+            ".EEE.",
+            "EeeEE",
+            "EeEEE",
+            "EEEeE",
+            ".EEE.",
         ],
         "sleepy": [   # 眠そう（名前の「ネム」）
-            "......",
-            "......",
-            "......",
-            "OOOOOO",
-            ".EEEE.",
-            "......",
+            ".....",
+            ".....",
+            "OOOOO",
+            ".EEE.",
+            ".....",
         ],
     }[expression]
 
@@ -316,31 +334,32 @@ def portrait(expression):
     outer, inner = curve(*TAIL_OUTER), curve(*TAIL_INNER)
     gr.poly(outer + inner[::-1], "H")
     gr.dots([(x, y) for (x, y) in outer + inner if y >= 45], "y")        # 尾の先の黄色いふち
-    gr.poly([(7, 46), (15, 46), (15, 47), (7, 47)], "y", only={"H"})
+    gr.poly([(6, 46), (14, 46), (14, 47), (6, 47)], "y", only={"H"})
     gr.poly(FOREWING, "W")
     gr.poly(COSTA, "C", only={"W"})
     gr.poly(COSTA_LIGHT, "L", only={"W"})
-    gr.dots(curve((20, 17), (12, 15), (4, 12)), "v", only={"W"})        # 羽の筋（体から外へ）
-    gr.dots(curve((20, 20), (14, 20), (8, 21)), "v", only={"W"})
-    gr.dots(curve((20, 27), (16, 29), (12, 33)), "v", only={"H"})
-    gr.stamp(EYESPOT, 9, 15)    # 前羽の目玉模様（羽のまん中より少し前のふち寄り）
-    gr.stamp(EYESPOT, 12, 28)   # 後ろ羽の目玉模様
+    gr.dots(curve((21, 15), (12, 13), (4, 10)), "v", only={"W"})        # 羽の筋（体から外へ）
+    gr.dots(curve((21, 19), (14, 20), (7, 21)), "v", only={"W"})
+    gr.dots(curve((21, 26), (15, 29), (10, 34)), "v", only={"H"})
+    gr.stamp(EYESPOT, 9, 14)    # 前羽の目玉模様（羽のまん中より少し前のふち寄り）
+    gr.stamp(EYESPOT, 11, 30)   # 後ろ羽の目玉模様
     gr.mirror_left()
 
     # ---- 体（白いふわふわ）：胸 → おなか → 頭（毛のかたまりでふちを波形に）
-    gr.ellipse([18, 18, 29, 29], "F")
-    gr.ellipse([20, 26, 27, 41], "F")
-    for x in range(21, 27, 2):
-        gr.dots([(x, 31), (x + 1, 31)] if x % 4 == 1 else [(x, 35), (x + 1, 35)], "f")   # おなかの節（短い線）
+    # 頭と体は羽より控えめに（オオミズアオの美しさは羽の大きさ）
+    gr.ellipse([19, 16, 28, 25], "F")
+    gr.ellipse([21, 22, 26, 37], "F")
+    for (x, y) in [(22, 28), (24, 32)]:
+        gr.dots([(x, y), (x + 1, y)], "f")                               # おなかの節（短い線）
     # 首まわりの毛の影（頭と胸を分ける）：頭を描く前に胸の上を影の色にしておく
-    gr.ellipse([17, 19, 30, 25], "f", only={"F"})
-    gr.ellipse([16, 7, 31, 22], "F")
-    for (x, y) in [(14, 11), (14, 16), (30, 11), (30, 16)]:
+    gr.ellipse([18, 17, 29, 22], "f", only={"F"})
+    gr.ellipse([17, 8, 30, 20], "F")
+    for (x, y) in [(15, 11), (15, 15), (29, 11), (29, 15)]:
         gr.ellipse([x, y, x + 3, y + 3], "F")                            # 頬の毛のふさ
 
     # ---- 触角（羽毛：葉の形の毛の中に軸）
     for side in (1, -1):
-        stem = curve((19, 9), (16, 1), (8, 1), steps=24)
+        stem = curve((20, 9), (17, 2), (10, 2), steps=20)
         blade = []
         n = len(stem)
         for i, (x, y) in enumerate(stem):
@@ -355,7 +374,7 @@ def portrait(expression):
 
     # ---- 目と口（右目は形を反転、つやは左上のまま）
     eyes = eyes_for(expression)
-    gr.stamp(eyes, 17, 12)
+    gr.stamp(eyes, 18, 11)
     right = []
     for r in eyes:
         rr = list(r[::-1].replace("e", "E"))
@@ -364,15 +383,15 @@ def portrait(expression):
         for x, ch in enumerate(r):
             if ch == "e":
                 right[y][x] = "e"
-    gr.stamp(["".join(r) for r in right], 25, 12)
-    gr.stamp(MOUTHS[expression], 22, 19)
+    gr.stamp(["".join(r) for r in right], 25, 11)
+    gr.stamp(MOUTHS[expression], 22, 16)
 
     # ---- 前羽と後ろ羽の境目 → 陰影 → 毛と羽の境目 → 外側の輪郭
     rows = fore_hind_line(gr.rows())
     rows = shade(rows)
     rows = inner_lines(rows)
-    img = to_image(rows)
-    return outline(img)
+    rows = outline_rows(rows)
+    return to_image(rows)
 
 
 def fore_hind_line(rows):
@@ -386,13 +405,30 @@ def fore_hind_line(rows):
                 continue
             for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
                 if 0 <= nx < w and 0 <= ny < h and grid[ny][nx] in "WLC":
-                    out[y][x] = "O"
+                    out[y][x] = "o"
                     break
     return ["".join(r) for r in out]
 
 
+def outline_rows(rows):
+    """外側の輪郭：羽だけに接する所は羽の輪郭の色（o）、体・頭・触角に接する所は紺（O）。"""
+    grid = [list(r) for r in rows]
+    h, w = len(grid), len(grid[0])
+    out = [r[:] for r in grid]
+    for y in range(h):
+        for x in range(w):
+            if grid[y][x] != ".":
+                continue
+            near = [grid[ny][nx] for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1))
+                    if 0 <= nx < w and 0 <= ny < h and grid[ny][nx] not in ".oO"]
+            if not near:
+                continue
+            out[y][x] = "o" if all(c in WING for c in near) else "O"
+    return ["".join(r) for r in out]
+
+
 def inner_lines(rows):
-    """毛（体・頭）と羽の境目、前羽と後ろ羽の境目に 1 ドットの輪郭（町の人と同じ描き方）。"""
+    """毛（体・頭）と羽の境目に 1 ドットの輪郭（羽の側に、羽の輪郭の色で）。"""
     grid = [list(r) for r in rows]
     h, w = len(grid), len(grid[0])
     out = [r[:] for r in grid]
@@ -402,24 +438,9 @@ def inner_lines(rows):
                 continue
             for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
                 if 0 <= nx < w and 0 <= ny < h and grid[ny][nx] in FUR:
-                    out[y][x] = "O"
+                    out[y][x] = "o"
                     break
     return ["".join(r) for r in out]
-
-
-def outline(img):
-    src = img.copy().load()
-    px = img.load()
-    w, h = img.size
-    for y in range(h):
-        for x in range(w):
-            if src[x, y][3]:
-                continue
-            for nx, ny in ((x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)):
-                if 0 <= nx < w and 0 <= ny < h and src[nx, ny][3]:
-                    px[x, y] = P("night1")
-                    break
-    return img
 
 
 EXPRESSIONS = ("normal", "happy", "surprised", "sleepy")
