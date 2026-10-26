@@ -8,24 +8,19 @@
       "loudnessLufs": -26.0,
       "layers": [
         {
-          "layer": "雨粒（主役）",
-          "lufs": -26.6,
+          "layer": "雨（録音・主役）",
+          "lufs": -26.2,
           "relativeToMainDb": 0.0
         },
         {
-          "layer": "しずく（背景）",
-          "lufs": -37.6,
-          "relativeToMainDb": -11.0
-        },
-        {
-          "layer": "遠くの雨（背景）",
-          "lufs": -39.6,
-          "relativeToMainDb": -13.0
+          "layer": "雨どいの水音（録音・背景）",
+          "lufs": -40.2,
+          "relativeToMainDb": -14.0
         },
         {
           "layer": "ノイズの隠し味",
-          "lufs": -38.6,
-          "relativeToMainDb": -12.0
+          "lufs": -44.2,
+          "relativeToMainDb": -18.0
         }
       ]
     },
@@ -37,29 +32,24 @@
       "loudnessLufs": -26.0,
       "layers": [
         {
-          "layer": "波（主役）",
-          "lufs": -24.4,
+          "layer": "波（録音の水音から・主役）",
+          "lufs": -24.9,
           "relativeToMainDb": 0.0
         },
         {
-          "layer": "岸壁の水音（背景）",
-          "lufs": -36.4,
+          "layer": "岸壁の水音（録音・背景）",
+          "lufs": -36.9,
           "relativeToMainDb": -12.0
         },
         {
-          "layer": "遠くの海鳴り（背景）",
-          "lufs": -38.4,
-          "relativeToMainDb": -14.0
-        },
-        {
-          "layer": "ブイの鐘（背景）",
-          "lufs": -40.4,
-          "relativeToMainDb": -16.0
+          "layer": "遠くの海鳴り（録音・背景）",
+          "lufs": -39.0,
+          "relativeToMainDb": -14.1
         },
         {
           "layer": "ノイズの隠し味",
-          "lufs": -37.4,
-          "relativeToMainDb": -13.0
+          "lufs": -43.0,
+          "relativeToMainDb": -18.1
         }
       ]
     },
@@ -71,19 +61,19 @@
       "loudnessLufs": -26.0,
       "layers": [
         {
-          "layer": "通り過ぎる車（主役）",
-          "lufs": -25.4,
+          "layer": "通り過ぎる車（録音の水音から・主役）",
+          "lufs": -25.2,
           "relativeToMainDb": 0.0
         },
         {
-          "layer": "街のうなり（背景）",
-          "lufs": -38.4,
+          "layer": "街のうなり（録音・背景）",
+          "lufs": -38.2,
           "relativeToMainDb": -13.0
         },
         {
           "layer": "ノイズの隠し味",
-          "lufs": -39.4,
-          "relativeToMainDb": -14.0
+          "lufs": -41.2,
+          "relativeToMainDb": -16.0
         }
       ]
     },

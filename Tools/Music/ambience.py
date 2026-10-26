@@ -4,7 +4,10 @@
 
 ミックスの考え方
 - 1 つのシーンにつき「主役」を 1 つだけ決め、ほかは空間を埋める「背景」として薄く重ねる。
-- 主役は面のノイズではなく「出来事」の積み重ねで作る（雨粒の 1 粒 1 粒、寄せては返す 1 つ 1 つの波、1 匹の虫の鳴き声）。
+- 素材にはできるだけ本物の録音（sources/、CC0・CC BY）を使う。短い録音は、ランダムな位置から切り出した断片を
+  なめらかに重ねて（テクスチャ化）、繰り返しに聞こえない長い音にする。
+- 波や車のような「出来事」は、録音の水音を材料にして、寄せる・崩れる・引くなどの形をつける。
+- 録音が無い音（虫）だけは合成する。
 - ホワイト／ピンク／ブラウンノイズは、そのまま大きく鳴らさず、主役の 20〜30% 程度の隠し味として背景に忍ばせる。
 - 音を左右に散らす（主役は片側寄り、背景は広く）。リバーブは使わず、遠さはローパスと音量だけで表す。
 - 層ごとの音量を測って、主役がいちばん大きく、背景は十分小さいことを確かめる。
@@ -16,6 +19,7 @@
 import json
 import math
 import os
+import subprocess
 import sys
 import tempfile
 
@@ -112,68 +116,93 @@ def lowpass(x, hz, order=2):
     return sosfilt(butter(order, hz, "low", fs=RATE, output="sos"), x)
 
 
+# ---------------------------------------------------------------- 録音の素材
+
+SOURCES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sources")
+SOURCE_FILES = {
+    "rain": "rain_mike_koenig.ogg",          # CC BY 3.0
+    "river": "river_adam_newns.ogg",         # CC0
+    "waterfall": "waterfall_leonard_graf.ogg",  # CC0
+}
+_sources = {}
+
+
+def source(name):
+    if name not in _sources:
+        path = os.path.join(SOURCES_DIR, SOURCE_FILES[name])
+        raw = subprocess.run(["ffmpeg", "-loglevel", "error", "-i", path, "-f", "f32le", "-ac", "2", "-ar", str(RATE), "-"],
+                             check=True, capture_output=True).stdout
+        audio = np.frombuffer(raw, dtype=np.float32).reshape(-1, 2).astype(np.float64)
+        _sources[name] = audio / (np.sqrt(np.mean(audio ** 2)) + 1e-12)
+    return _sources[name]
+
+
+def texture(name, n, rng, grain_seconds, pitch_variation=0.03, channels=2):
+    """
+    短い録音から、繰り返しに聞こえない長い音を作る。
+    録音のランダムな位置から断片を切り出し、少しだけ速さ（音程）を変えて、半分ずつ重ねながら並べる。
+    重ねる窓は「足し合わせても音量が変わらない」形（サイン窓、50% 重ね）。左右は別々の断片で作るので広がりが出る。
+    ループの終わりからはみ出した断片は頭へ回り込むので、継ぎ目なくループする。
+    """
+    src = source(name)
+    grain = int(grain_seconds * RATE)
+    hop = grain // 2
+    window = np.sin(np.pi * (np.arange(grain) + 0.5) / grain)
+    out = np.zeros((n, channels))
+    for start in range(0, n, hop):
+        for c in range(channels):
+            ratio = 1.0 + rng.uniform(-pitch_variation, pitch_variation)
+            need = int(grain * ratio) + 2
+            offset = int(rng.integers(0, len(src) - need))
+            segment = src[offset:offset + need, int(rng.integers(0, 2))]
+            segment = np.interp(np.arange(grain) * ratio, np.arange(need), segment) * window
+            column = np.zeros((n, 1))
+            place(column, start, segment[:, None])
+            out[:, c] += column[:, 0]
+    return out
+
+
+def mono_texture(name, n, rng, grain_seconds, pitch_variation=0.03):
+    return texture(name, n, rng, grain_seconds, pitch_variation, channels=1)[:, 0]
+
+
 # ---------------------------------------------------------------- 雨（第 2 章：雨の路地裏）
-
-def rain_drop_bank(rng, count=64):
-    """1 粒ぶんの音のバリエーション。硬いものに当たる「ぱちっ」と、ときどき水面の「ぽつ」。"""
-    bank = []
-    for _ in range(count):
-        length = int(RATE * rng.uniform(0.003, 0.012))
-        t = np.arange(length) / RATE
-        tick = rng.standard_normal(length) * np.exp(-t / rng.uniform(0.0012, 0.004))
-        center = rng.uniform(1800, 7000)
-        tick = bandpass(np.concatenate([tick, np.zeros(64)]), center * 0.6, min(center * 1.6, 20000))
-        if rng.random() < 0.25:
-            ring = np.sin(2 * math.pi * rng.uniform(1500, 4200) * np.arange(len(tick)) / RATE)
-            tick = tick + ring * np.exp(-np.arange(len(tick)) / (RATE * 0.004)) * 0.4
-        bank.append(tick / (np.max(np.abs(tick)) + 1e-12))
-    return bank
-
 
 def rain_scene(seconds, rng):
     n = int(RATE * seconds)
-    gust = circular_envelope(n, rng, 0.08, floor=0.55)  # 雨脚の強弱（十数秒で変わる）
+    gust = circular_envelope(n, rng, 0.06, floor=0.55)  # 雨脚の強弱（十数秒で変わる）
 
-    # 主役：雨粒。1 粒ずつ置く。大半は小さく、たまに大きな粒
-    bank = rain_drop_bank(rng)
-    drops = np.zeros((n, 2))
-    block = int(RATE * 0.01)
-    for b in range(n // block):
-        density = 420 * gust[b * block]
-        for _ in range(rng.poisson(density * 0.01)):
-            at = b * block + int(rng.integers(0, block))
-            amp = min(1.0, rng.lognormal(-2.2, 0.75)) * (0.7 + 0.3 * gust[at % n])
-            place(drops, at, pan(bank[rng.integers(len(bank))] * amp, rng.uniform(-0.9, 0.9)))
-
-    # 背景 1：ひさしから落ちるしずく（右寄り、ゆっくり不規則）
-    drips = np.zeros((n, 2))
-    t = 0.0
-    while t < seconds:
-        f0 = rng.uniform(900, 1500)
-        length = int(RATE * 0.09)
-        tt = np.arange(length) / RATE
-        freq = f0 * (1 - 0.18 * tt / tt[-1])
-        plink = np.sin(2 * math.pi * np.cumsum(freq) / RATE) * np.exp(-tt / 0.025)
-        place(drips, int(t * RATE), pan(plink * rng.uniform(0.5, 1.0), rng.uniform(0.45, 0.7)))
-        t += rng.uniform(0.6, 1.8)
-
-    # 背景 2：遠くで降り続く雨のざわめき（広く、こもった音）
-    wash = circular_noise(n, rng, lo=300, hi=2500, color="pink", width=0.9) * gust[:, None]
+    # 主役：録音の雨。断片をつないで長くし、雨脚に合わせて少しだけ強弱をつける
+    rain = texture("rain", n, rng, grain_seconds=1.2, pitch_variation=0.04) * (0.8 + 0.2 * gust)[:, None]
+    # 背景：雨どいを流れる水（録音の川の音を細く、右寄りに）
+    gutter = circular_filter(texture("river", n, rng, grain_seconds=2.5, pitch_variation=0.05), lo=200, hi=3500)
+    gutter *= np.array([0.45, 1.0])
     # 隠し味：ブラウンノイズ（厚みと奥行き）
     spice = circular_noise(n, rng, lo=60, hi=400, color="brown", width=0.8)
 
     return [
-        ("雨粒（主役）", drops, 0),
-        ("しずく（背景）", drips, -11),
-        ("遠くの雨（背景）", wash, -13),
-        ("ノイズの隠し味", spice, -12),
+        ("雨（録音・主役）", rain, 0),
+        ("雨どいの水音（録音・背景）", gutter, -14),
+        ("ノイズの隠し味", spice, -18),
     ]
 
 
 # ---------------------------------------------------------------- 波（第 4 章：灯台と港）
 
+def fresh(name, n, rng):
+    """出来事 1 つぶんの材料を、毎回新しく作る（同じ断片が別の出来事に使い回されないように）。"""
+    if n < RATE * 0.8:
+        # 短い音は、録音から直接ランダムに切り出し、少し速さを変える
+        src = source(name)
+        ratio = 1.0 + rng.uniform(-0.08, 0.08)
+        need = int(n * ratio) + 2
+        start = int(rng.integers(0, len(src) - need))
+        return np.interp(np.arange(n) * ratio, np.arange(need), src[start:start + need, int(rng.integers(0, 2))])
+    return mono_texture(name, n, rng, grain_seconds=min(1.2, n / RATE / 2), pitch_variation=0.07)
+
+
 def wave_event(rng):
-    """寄せて、崩れて、引いていく 1 つの波（7〜10 秒）。"""
+    """寄せて、崩れて、引いていく 1 つの波（7〜10 秒）。材料は録音の滝と川の音（波ごとに新しく作る）。"""
     length = rng.uniform(7.0, 10.0)
     n = int(RATE * length)
     t = np.arange(n) / RATE
@@ -182,91 +211,64 @@ def wave_event(rng):
     swell = np.where(t < peak, (t / peak) ** 2, np.exp(-after / 1.8))
     # 崩れる音は一瞬で立ち上がらず、0.3 秒ほどかけてふくらむ
     crash = (1 - np.exp(-np.maximum(t - peak + 0.6, 0) / 0.3)) * np.exp(-after / rng.uniform(0.6, 1.0))
-    # 寄せてくる間のざわめき（崩れる前から少しずつ大きくなる）
     approach = np.where(t < peak, (t / peak) ** 3, np.exp(-after / 0.8))
     wash = (1 - np.exp(-after / 0.5)) * np.exp(-after / rng.uniform(2.0, 3.2))
     # 波の終わりは途切れさせず、最後の 1.5 秒でなめらかに消す
     fade = np.clip((length - t) / 1.5, 0, 1) ** 2
-    swell, crash, wash, approach = swell * fade, crash * fade, wash * fade, approach * fade
 
-    low = bandpass(rng.standard_normal(n), 60, 450) * swell
-    mid = bandpass(rng.standard_normal(n), 300, 2500) * crash * 0.9
-    fizz = bandpass(rng.standard_normal(n), 2500, 9000) * wash * 0.35
-    # 引き波の泡：細かい粒が消えていく
-    bubbles = np.zeros(n)
-    for _ in range(int(140 * length)):
-        at = int(rng.integers(int(RATE * peak), n - 200))
-        if rng.random() < wash[at]:
-            bubbles[at:at + 120] += rng.standard_normal(120) * np.exp(-np.arange(120) / 25.0) * 0.5
-    bubbles = bandpass(bubbles, 2000, 8000)
-    body = bandpass(rng.standard_normal(n), 200, 1200) * swell * 0.5
-    hiss = bandpass(rng.standard_normal(n), 1500, 6000) * approach * 0.3
-    sound = low + body + hiss + mid + fizz + bubbles * 0.6
-    return sound, peak
-
-
-def buoy_bell(rng):
-    """遠くのブイの鐘（倍音がずれた金属の響き）。"""
-    f0 = rng.uniform(420, 520)
-    length = int(RATE * 5.0)
-    t = np.arange(length) / RATE
-    partials = [(1.0, 1.0, 4.0), (2.0, 0.5, 3.0), (2.76, 0.55, 2.4), (5.4, 0.25, 1.4), (8.93, 0.12, 0.9)]
-    bell = sum(a * np.sin(2 * math.pi * f0 * r * t) * np.exp(-t / d) for r, a, d in partials)
-    return lowpass(bell * np.minimum(1, t / 0.004), 2500)  # 遠いので高音を落とす
+    low = bandpass(fresh("waterfall", n, rng), 60, 500) * swell * fade
+    body = bandpass(fresh("waterfall", n, rng), 200, 1200) * swell * 0.5 * fade
+    hiss = bandpass(fresh("waterfall", n, rng), 1500, 6000) * approach * 0.3 * fade
+    crash_sound = bandpass(fresh("waterfall", n, rng), 300, 4000) * crash * 0.9 * fade
+    fizz = bandpass(fresh("river", n, rng), 1500, 9000) * wash * 0.7 * fade  # 引き波の泡は川のせせらぎから
+    return low + body + hiss + crash_sound + fizz
 
 
 def waves_scene(seconds, rng):
     n = int(RATE * seconds)
-
     # 主役：寄せては返す波。間隔は不規則に、左右も少しずつ変える
     waves = np.zeros((n, 2))
     t = 0.0
     while t < seconds:
-        sound, _ = wave_event(rng)
-        place(waves, int(t * RATE), pan(sound * rng.uniform(0.7, 1.0), rng.uniform(-0.35, 0.35)))
+        place(waves, int(t * RATE), pan(wave_event(rng) * rng.uniform(0.7, 1.0), rng.uniform(-0.35, 0.35)))
         t += rng.uniform(6.5, 10.5)
 
-    # 背景 1：岸壁に当たる小さな水音（左寄り）
+    # 背景 1：岸壁に当たる小さな水音（川の録音の短い断片、左寄り）
     lapping = np.zeros((n, 2))
     t = 0.0
     while t < seconds:
-        length = int(RATE * rng.uniform(0.15, 0.35))
+        length = int(RATE * rng.uniform(0.2, 0.45))
         tt = np.arange(length) / RATE
-        env = np.minimum(1, tt / 0.02) * np.exp(-tt / (tt[-1] / 3))
-        splash = bandpass(rng.standard_normal(length), 250, 1400) * env
-        place(lapping, int(t * RATE), pan(splash * rng.uniform(0.4, 1.0), rng.uniform(-0.75, -0.45)))
+        env = np.minimum(1, tt / 0.03) * np.exp(-tt / (tt[-1] / 3))
+        splash = bandpass(fresh("river", length, rng), 250, 2500) * env
+        place(lapping, int(t * RATE), pan(splash * rng.uniform(0.5, 1.0), rng.uniform(-0.75, -0.45)))
         t += rng.uniform(0.9, 2.8)
 
-    # 背景 2：遠くの海鳴り
-    surf = circular_noise(n, rng, lo=45, hi=260, color="brown", width=0.9)
-    # 背景 3：ずっと遠くのブイの鐘（ごくたまに）
-    bells = np.zeros((n, 2))
-    for k in range(max(1, int(seconds / 22))):
-        place(bells, int(RATE * (k * 22 + rng.uniform(3, 15))), pan(buoy_bell(rng), 0.55))
+    # 背景 2：遠くの海鳴り（滝の録音を低い音だけにして、遠くに置く）
+    surf = circular_filter(texture("waterfall", n, rng, grain_seconds=2.0), lo=40, hi=350)
     # 隠し味：ピンクノイズ
     spice = circular_noise(n, rng, lo=150, hi=6000, color="pink", width=0.8)
 
     return [
-        ("波（主役）", waves, 0),
-        ("岸壁の水音（背景）", lapping, -12),
-        ("遠くの海鳴り（背景）", surf, -14),
-        ("ブイの鐘（背景）", bells, -16),
-        ("ノイズの隠し味", spice, -13),
+        ("波（録音の水音から・主役）", waves, 0),
+        ("岸壁の水音（録音・背景）", lapping, -12),
+        ("遠くの海鳴り（録音・背景）", surf, -14),
+        ("ノイズの隠し味", spice, -18),
     ]
 
 
 # ---------------------------------------------------------------- 遠くのハイウェイ（BlueNight の原風景）
 
 def passing_car(rng):
-    """遠くを横切る 1 台。近づくと高い音、遠ざかると低い音（ドップラー）を、帯域の重みの変化で表す。"""
+    """遠くを横切る 1 台。タイヤの音は録音の滝の音を材料にする。近づくと高く、遠ざかると低く聞こえる。"""
     length = rng.uniform(5.0, 9.0)
     n = int(RATE * length)
     t = np.linspace(0, 1, n)
     env = np.sin(math.pi * t) ** 2
     approach = np.clip(1.3 - t * 1.6, 0, 1)  # 前半ほど高い帯域が強い
-    low = bandpass(rng.standard_normal(n), 90, 350)
-    mid = bandpass(rng.standard_normal(n), 350, 900)
-    tire = bandpass(rng.standard_normal(n), 1000, 3500)
+    low = bandpass(fresh("waterfall", n, rng), 90, 350)
+    mid = bandpass(fresh("waterfall", n, rng), 350, 900)
+    tire = bandpass(fresh("waterfall", n, rng), 1000, 3500)
     sound = (low * 1.0 + mid * (0.3 + 0.6 * approach) + tire * 0.25 * env) * env
     distance = rng.uniform(0.35, 1.0)
     sound = lowpass(sound, 900 + 2500 * distance) * distance
@@ -279,7 +281,6 @@ def passing_car(rng):
 
 def highway_scene(seconds, rng):
     n = int(RATE * seconds)
-
     # 主役：ときどき通り過ぎる車。間があいたり、2 台続いたりする
     cars = np.zeros((n, 2))
     t = rng.uniform(0, 2)
@@ -287,16 +288,16 @@ def highway_scene(seconds, rng):
         place(cars, int(t * RATE), passing_car(rng))
         t += rng.choice([rng.uniform(1.5, 3.0), rng.uniform(4.0, 9.0), rng.uniform(4.0, 9.0)])
 
-    # 背景：街全体の低いうなり（ゆっくり強弱）
-    drone = circular_noise(n, rng, lo=45, hi=160, color="brown", width=0.8)
+    # 背景：街全体の低いうなり（滝の録音のいちばん低い音だけ。ゆっくり強弱）
+    drone = circular_filter(texture("waterfall", n, rng, grain_seconds=2.5), lo=40, hi=170)
     drone *= circular_envelope(n, rng, 0.05, floor=0.7)[:, None]
     # 隠し味：夜の空気（ピンクノイズ）
     spice = circular_noise(n, rng, lo=200, hi=5000, color="pink", width=0.9)
 
     return [
-        ("通り過ぎる車（主役）", cars, 0),
-        ("街のうなり（背景）", drone, -13),
-        ("ノイズの隠し味", spice, -14),
+        ("通り過ぎる車（録音の水音から・主役）", cars, 0),
+        ("街のうなり（録音・背景）", drone, -13),
+        ("ノイズの隠し味", spice, -16),
     ]
 
 

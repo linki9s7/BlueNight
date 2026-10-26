@@ -26,7 +26,6 @@ import pyloudnorm
 from scipy.io import wavfile
 from scipy.signal import butter, fftconvolve, sosfilt
 
-import salamander
 from blue_music import SAMPLE_RATE, SOUNDFONT, hiss, make_reverb_ir, n
 
 warnings.filterwarnings("ignore", category=wavfile.WavFileWarning)
@@ -226,42 +225,6 @@ def render_midi(midi_path, wav_path):
     return data
 
 
-def pedal_down_intervals(song, pedals, events):
-    """write_part_midi と同じタイミングで、ペダルを踏んでいる区間を返す。"""
-    if not pedals:
-        return []
-    times = sorted(song.seconds(b) for b in pedals)
-    final = max(e[1] for e in events) + 0.3
-    downs = []
-    for i, t in enumerate(times):
-        a = t + 0.05
-        b = times[i + 1] - 0.01 if i + 1 < len(times) else final
-        if b > a:
-            downs.append((a, b))
-    return downs
-
-
-_piano_calibration = None
-
-
-def piano_calibration(tmp):
-    """Salamander の音量を、これまでのピアノ（FluidSynth）と同じ大きさにそろえる係数。パートの音量バランスを保つため。"""
-    global _piano_calibration
-    if _piano_calibration is None:
-        events = [(0.1, 1.8, p, v) for p in (43, 50, 55, 60, 64, 67, 72, 79) for v in (40, 60)]
-        pm = pretty_midi.PrettyMIDI()
-        inst = pretty_midi.Instrument(program=PIANO)
-        for start, end, p, v in events:
-            inst.notes.append(pretty_midi.Note(velocity=v, pitch=p, start=start, end=end))
-        pm.instruments.append(inst)
-        midi = os.path.join(tmp, "_calibration.mid")
-        pm.write(midi)
-        old = render_midi(midi, os.path.join(tmp, "_calibration.wav"))[: SAMPLE_RATE * 2]
-        new = salamander.render(events, [], SAMPLE_RATE * 2)
-        _piano_calibration = float(np.sqrt(np.mean(old ** 2)) / (np.sqrt(np.mean(new ** 2)) + 1e-12))
-    return _piano_calibration
-
-
 def process_part(audio, part):
     if part.highpass:
         audio = sosfilt(butter(2, part.highpass, "high", fs=SAMPLE_RATE, output="sos"), audio, axis=0)
@@ -301,15 +264,10 @@ def mix_layer(song, parts, tmp, compress_layer=True):
         if not notes:
             continue
         events = humanize(song, part, notes)
-        if part.program == PIANO and not part.drum and salamander.available():
-            # ピアノは録音されたグランドピアノ（Salamander）で鳴らす
-            length = int(SAMPLE_RATE * (max(e[1] for e in events) + 8.0))
-            audio = salamander.render(events, pedal_down_intervals(song, pedals, events), length) * piano_calibration(tmp)
-        else:
-            midi = os.path.join(tmp, f"{part.name}.mid")
-            write_part_midi(midi, song, part, events, pedals)
-            audio = render_midi(midi, os.path.join(tmp, f"{part.name}.wav"))
-        rendered.append((part, process_part(audio, part)))
+        midi = os.path.join(tmp, f"{part.name}.mid")
+        write_part_midi(midi, song, part, events, pedals)
+        wav = os.path.join(tmp, f"{part.name}.wav")
+        rendered.append((part, process_part(render_midi(midi, wav), part)))
 
     total_beats = song.intro_beats + song.loop_beats * (2 if song.loop else 1)
     length = int(SAMPLE_RATE * (song.seconds(total_beats) + song.tail_seconds + song.reverb_seconds))

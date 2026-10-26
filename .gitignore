@@ -75,5 +75,3 @@ crashlytics-build.properties
 __pycache__/
 *.pyc
 
-# 取得した楽器サンプル（Tools/Music/scripts/fetch_samples.sh で再取得できる）
-Tools/Music/.cache/

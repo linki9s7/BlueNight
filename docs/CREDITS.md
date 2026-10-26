@@ -6,12 +6,14 @@
 
 | 素材 | 作者 | ライセンス | 使っている場所 |
 | --- | --- | --- | --- |
-| Salamander Grand Piano V3 | Alexander Holm | CC BY 3.0（表記が必要） | すべての BGM のピアノ |
-| MuseScore General SoundFont | S. Christian Collins | MIT | ピアノ以外の楽器（弦・チェロ・ハープ・エレピ・オルゴールなど） |
+| MuseScore General SoundFont | S. Christian Collins | MIT | すべての BGM の楽器 |
+| 雨の録音 | Mike Koenig（soundbible.com。2014 年に Dawid Gan が切り出し） | CC BY 3.0（表記が必要） | 環境音「雨」 |
+| 川の録音 | Adam Newns（vennaudio.com） | CC0（表記不要） | 環境音「雨」「波」 |
+| 滝の録音 | Leonard "VKProduktion" Graf | CC0（表記不要） | 環境音「波」「遠くのハイウェイ」 |
 
-- Salamander Grand Piano V3 は npm の `@audio-samples/piano-*`（同じ録音を OGG にしたもの）から取得した。
-  元の配布元：archive.org/details/SalamanderGrandPianoV3
-- 表記例：`Piano samples: "Salamander Grand Piano V3" by Alexander Holm, licensed under CC BY 3.0`
+- 環境音の録音は Ubuntu の `supertuxkart-data` パッケージから取り出した（同パッケージの copyright ファイルにライセンス記載）。
+  詳細は `Tools/Music/sources/README.md`。
+- 表記例：`Rain recording by Mike Koenig (soundbible.com), licensed under CC BY 3.0`
 
 ## フォント
 
@@ -24,3 +26,5 @@
 | 素材 | 理由 |
 | --- | --- |
 | tonejs-instruments（npm の `tonejs-instrument-*`） | 録音の出どころとライセンスが記載されておらず、商用での利用可否を確認できないため |
+| Salamander Grand Piano V3（Alexander Holm、CC BY 3.0） | ライセンスは問題ないが、リズムに合わせて低音が「ドシン」と響くのが不快とのユーザー判断 |
+| 0 A.D. の環境音（Wildfire Games、CC BY-SA 3.0） | 録音の質は良いが、混ぜたファイルも CC BY-SA にする必要がある。採用するかはユーザーの判断待ち |
