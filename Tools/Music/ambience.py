@@ -123,7 +123,27 @@ SOURCE_FILES = {
     "rain": "rain_mike_koenig.ogg",          # CC BY 3.0
     "river": "river_adam_newns.ogg",         # CC0
     "waterfall": "waterfall_leonard_graf.ogg",  # CC0
+    "wind": "wind_0ad.ogg",                  # CC BY-SA 3.0（0 A.D.）
+    "leaves1": "windleaves_0ad_1.ogg",       # CC BY-SA 3.0（0 A.D.）
+    "leaves2": "windleaves_0ad_2.ogg",       # CC BY-SA 3.0（0 A.D.）
 }
+_active = {}
+
+
+def active_starts(name, need):
+    """断片を切り出してよい開始位置（録音の無音・ほぼ無音の部分にかからない位置）。"""
+    key = (name, need)
+    if key not in _active:
+        src = source(name).mean(axis=1)
+        block = int(RATE * 0.25)
+        levels = np.array([np.sqrt(np.mean(src[i:i + block] ** 2)) for i in range(0, len(src) - block, block)])
+        loud = levels > levels.max() * 10 ** (-30 / 20)  # いちばん大きい所から 30 dB 以内
+        if loud.all():
+            _active[key] = None  # 無音が無い録音は、どこから切り出してもよい
+        else:
+            starts = [i * block for i in range(len(loud)) if loud[i: i + need // block + 2].all() and i * block + need < len(src)]
+            _active[key] = np.array(starts) if starts else None
+    return _active[key]
 _sources = {}
 
 
@@ -153,7 +173,8 @@ def texture(name, n, rng, grain_seconds, pitch_variation=0.03, channels=2):
         for c in range(channels):
             ratio = 1.0 + rng.uniform(-pitch_variation, pitch_variation)
             need = int(grain * ratio) + 2
-            offset = int(rng.integers(0, len(src) - need))
+            starts = active_starts(name, need)
+            offset = int(rng.integers(0, len(src) - need)) if starts is None else int(rng.choice(starts))
             segment = src[offset:offset + need, int(rng.integers(0, 2))]
             segment = np.interp(np.arange(grain) * ratio, np.arange(need), segment) * window
             column = np.zeros((n, 1))
@@ -291,13 +312,13 @@ def highway_scene(seconds, rng):
     # 背景：街全体の低いうなり（滝の録音のいちばん低い音だけ。ゆっくり強弱）
     drone = circular_filter(texture("waterfall", n, rng, grain_seconds=2.5), lo=40, hi=170)
     drone *= circular_envelope(n, rng, 0.05, floor=0.7)[:, None]
-    # 隠し味：夜の空気（ピンクノイズ）
-    spice = circular_noise(n, rng, lo=200, hi=5000, color="pink", width=0.9)
+    # 背景：夜風（録音）。ノイズの隠し味の代わりに、本物の空気の流れを薄く敷く
+    wind = texture("wind", n, rng, grain_seconds=3.0, pitch_variation=0.04)
 
     return [
         ("通り過ぎる車（録音の水音から・主役）", cars, 0),
         ("街のうなり（録音・背景）", drone, -13),
-        ("ノイズの隠し味", spice, -16),
+        ("夜風（録音・背景）", wind, -15),
     ]
 
 
@@ -348,14 +369,25 @@ def crickets_scene(seconds, rng):
         chorus += cricket_song(n, rng, f0=rng.uniform(3600, 5200), period=rng.uniform(0.4, 1.1),
                                position=rng.uniform(-0.9, 0.9), distance=rng.uniform(0.3, 1.0))
     chorus = circular_filter(chorus, hi=3800, order=2)
-    # 隠し味：夜の空気
-    spice = circular_noise(n, rng, lo=150, hi=4000, color="pink", width=0.9)
+    # 背景 3：夜風（録音）
+    wind = texture("wind", n, rng, grain_seconds=3.0, pitch_variation=0.04)
+    # 背景 4：ときどき風で葉がそよぐ（録音、左右どこかから）
+    leaves = np.zeros((n, 2))
+    t = rng.uniform(2, 6)
+    while t < seconds:
+        clip = source(rng.choice(["leaves1", "leaves2"])).mean(axis=1)
+        length = int(RATE * rng.uniform(2.0, 4.0))
+        start = int(rng.integers(0, len(clip) - length))
+        env = np.sin(np.pi * np.arange(length) / length) ** 2
+        place(leaves, int(t * RATE), pan(clip[start:start + length] * env, rng.uniform(-0.8, 0.8)))
+        t += rng.uniform(7, 16)
 
     return [
         ("近くの虫（主役）", main, 0),
         ("もう 1 匹（背景）", second, -10),
         ("遠くの合唱（背景）", chorus, -14),
-        ("ノイズの隠し味", spice, -15),
+        ("夜風（録音・背景）", wind, -16),
+        ("葉のそよぎ（録音・背景）", leaves, -15),
     ]
 
 

@@ -47,4 +47,5 @@ Unity エディタでプロジェクトを開いたままだとバッチモー�
 - 次：M1 を実際に遊んでもらい、影を追いつめる手ごたえ・速さ・暗がりの見え方を調整 → BGM の再生を実装 → M2（第 1 章を本番品質で）。
 - 未解決の検討事項：ポストエフェクトが 480×270 で処理される件（仕様書 7.6）。粗く見えたら 2 段カメラ構成にする。
 - 音源：楽器は MuseScore General（MIT）。Salamander Grand Piano はユーザーの判断で不採用（低音がリズムに合わせて「ドシン」と響くのが不快）。クレジットは `docs/CREDITS.md`。
-- 環境音は `Tools/Music/sources/` の録音（CC0／CC BY）を素材に組み立てる。虫だけ合成。ローカル環境では Sonniss GDC バンドルや Freesound（CC0）でさらに質を上げられる（仕様書 8.6）。素材を足したら `docs/CREDITS.md` と `sources/README.md` に記録する。
+- 環境音は `Tools/Music/sources/` の録音を素材に組み立てる。**雨と波は確定（変えない）**。ハイウェイと虫の背景に 0 A.D. の風・葉（CC BY-SA 3.0、ユーザー許可済み）。
+- **TODO（ユーザーの依頼・忘れないこと）：虫の声は合成のまま。ローカル環境に切り替えたら、商用利用できる録音（Freesound CC0、Sonniss GDC バンドルなど）に差し替える。**ローカル環境では Sonniss GDC バンドルや Freesound（CC0）でさらに質を上げられる（仕様書 8.6）。素材を足したら `docs/CREDITS.md` と `sources/README.md` に記録する。

@@ -62,18 +62,18 @@
       "layers": [
         {
           "layer": "通り過ぎる車（録音の水音から・主役）",
-          "lufs": -25.2,
+          "lufs": -25.5,
           "relativeToMainDb": 0.0
         },
         {
           "layer": "街のうなり（録音・背景）",
-          "lufs": -38.2,
+          "lufs": -38.5,
           "relativeToMainDb": -13.0
         },
         {
-          "layer": "ノイズの隠し味",
-          "lufs": -41.2,
-          "relativeToMainDb": -16.0
+          "layer": "夜風（録音・背景）",
+          "lufs": -40.5,
+          "relativeToMainDb": -15.0
         }
       ]
     },
@@ -86,23 +86,28 @@
       "layers": [
         {
           "layer": "近くの虫（主役）",
-          "lufs": -25.0,
+          "lufs": -25.2,
           "relativeToMainDb": 0.0
         },
         {
           "layer": "もう 1 匹（背景）",
-          "lufs": -35.1,
+          "lufs": -35.2,
           "relativeToMainDb": -10.0
         },
         {
           "layer": "遠くの合唱（背景）",
-          "lufs": -39.1,
+          "lufs": -39.2,
           "relativeToMainDb": -14.0
         },
         {
-          "layer": "ノイズの隠し味",
+          "layer": "夜風（録音・背景）",
+          "lufs": -41.2,
+          "relativeToMainDb": -16.0
+        },
+        {
+          "layer": "葉のそよぎ（録音・背景）",
           "lufs": -40.1,
-          "relativeToMainDb": -15.0
+          "relativeToMainDb": -14.9
         }
       ]
     }
