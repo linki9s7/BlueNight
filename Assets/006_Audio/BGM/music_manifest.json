@@ -1,0 +1,22 @@
+{
+  "tracks": [
+    {
+      "name": "title_ruri_theme",
+      "title": "タイトル／ルリのテーマ",
+      "bpm": 72,
+      "beatsPerBar": 4,
+      "loop": true,
+      "introSeconds": 6.666667,
+      "loopSeconds": 53.333333,
+      "sampleRate": 48000,
+      "layers": [
+        {
+          "name": "main",
+          "intro": "title_ruri_theme_intro.ogg",
+          "loop": "title_ruri_theme_loop.ogg"
+        }
+      ],
+      "loudnessLufs": -16.0
+    }
+  ]
+}
