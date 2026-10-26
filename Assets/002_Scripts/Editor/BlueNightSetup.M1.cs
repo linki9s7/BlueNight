@@ -1,4 +1,5 @@
 using System.Linq;
+using BlueNight.Core;
 using BlueNight.Dialogue;
 using BlueNight.Interaction;
 using BlueNight.LightShadow;
@@ -148,8 +149,25 @@ namespace BlueNight.EditorTools
             AddFootCollider(lamp, new Vector2(0.5f, 0.3f));
             var light = CreatePointLight(lamp, "Lamp Light", new Vector3(0f, 2.4f, 0f), Hex("#ffc98a"), 1.1f, M1Map.StreetLampRadius);
             lamp.AddComponent<GridLightSource>().Configure(M1Map.StreetLampRadius, light);
+            AddMoths(lamp, new Vector3(0f, 2.3f, 0f));
             if (flicker)
-                light.gameObject.AddComponent<LightFlicker2D>();
+            {
+                // 古い街灯：光がゆらぎ、ガラスの絵も暗く／消えた色に変わる
+                light.gameObject.AddComponent<LightFlicker2D>().ConfigureSprites(lamp.GetComponent<SpriteRenderer>(),
+                    LoadSprite($"{TexturesRoot}/Props/lamp.png"), LoadSprite($"{TexturesRoot}/Props/lamp_dim.png"),
+                    LoadSprite($"{TexturesRoot}/Props/lamp_off.png"));
+            }
+        }
+
+        /// <summary>街灯に集まる小さな蛾の群れ。</summary>
+        static void AddMoths(GameObject lamp, Vector3 localPosition)
+        {
+            var moths = new GameObject("Moths");
+            moths.transform.SetParent(lamp.transform, false);
+            moths.transform.localPosition = localPosition;
+            var renderer = moths.AddComponent<SpriteRenderer>();
+            renderer.sortingOrder = 15;
+            moths.AddComponent<SimpleSpriteAnimator>().Configure(LoadFrames($"{TexturesRoot}/Effects/fx_moths_"), 8f);
         }
 
         static void CreateLanternHook(GameObject parent, Cell cell, Material material)
@@ -174,6 +192,13 @@ namespace BlueNight.EditorTools
             var grandma = CreateSpriteObject(root, "Grandma", "Characters/Grandma/grandma_idle_0", CellFoot(cell), material);
             AddFootCollider(grandma, new Vector2(0.7f, 0.4f));
             grandma.AddComponent<SimpleSpriteAnimator>().Configure(LoadFrames($"{TexturesRoot}/Characters/Grandma/grandma_idle_"), 1.2f);
+
+            // 影が戻ったら：足元に影が出て、居眠りをはじめる
+            var footShadow = CreateSpriteObject(grandma, "Foot Shadow", "Effects/foot_shadow", grandma.transform.position, material);
+            footShadow.GetComponent<SpriteRenderer>().sortingOrder = -40;
+            footShadow.SetActive(false);
+            grandma.AddComponent<FlagReaction>().Configure(FlagReturned, new[] { footShadow }, null,
+                grandma.GetComponent<SimpleSpriteAnimator>(), LoadFrames($"{TexturesRoot}/Characters/Grandma/grandma_doze_"), 0.8f);
 
             var talk = grandma.AddComponent<TalkInteractable>();
             talk.SetPromptOffset(new Vector2(0f, 2.0f));
@@ -245,13 +270,19 @@ namespace BlueNight.EditorTools
             var go = new GameObject("Runaway Shadow (Grandma)");
             go.transform.position = CellFoot(cell);
             var renderer = go.AddComponent<SpriteRenderer>();
-            var frames = LoadFrames($"{TexturesRoot}/Characters/Shadows/shadow_grandma_");
+            var frames = new[] { 0, 1, 2, 3 }.Select(i => LoadSprite($"{TexturesRoot}/Characters/Shadows/shadow_grandma_{i}.png")).ToArray();
             renderer.sprite = frames.FirstOrDefault();
             renderer.spriteSortPoint = SpriteSortPoint.Pivot;
             if (unlit != null)
                 renderer.sharedMaterial = unlit; // 光に関係なく、真っ黒と水色のふちで見せる
 
-            go.AddComponent<RunawayShadow>().Configure(player, owner, frames,
+            var shadow = go.AddComponent<RunawayShadow>();
+            string s = $"{TexturesRoot}/Characters/Shadows/shadow_grandma_";
+            shadow.ConfigureAnimations(LoadFrames(s + "move_down_"), LoadFrames(s + "move_up_"),
+                LoadFrames(s + "move_left_"), LoadFrames(s + "move_right_"),
+                LoadFrames(s + "surprised_"), LoadFrames(s + "caught_"),
+                LoadFrames($"{TexturesRoot}/Effects/fx_capture_"), LoadFrames($"{TexturesRoot}/Effects/fx_return_"), unlit);
+            shadow.Configure(player, owner, frames,
                 new[]
                 {
                     new DialogueLine("", "……ありがとう、って。", shadowVoice: true),

@@ -17,6 +17,7 @@ namespace BlueNight.Player
         [SerializeField, Range(0f, 1f)] float facingWeight = 0.4f;
 
         PlayerController controller;
+        PlayerAnimator animator;
         Interactable current;
 
         public Lantern Lantern => lantern;
@@ -31,6 +32,7 @@ namespace BlueNight.Player
         void Awake()
         {
             controller = GetComponent<PlayerController>();
+            animator = GetComponentInChildren<PlayerAnimator>();
         }
 
         void Update()
@@ -47,7 +49,14 @@ namespace BlueNight.Player
                 return;
 
             if (GameInput.ConfirmPressed || (GameInput.LanternPressed && current is LanternHook))
+            {
+                // 動き：ランタン掛けは腕をのばして掛ける、人と話すときはそのまま、それ以外はのぞきこむ
+                if (animator != null && current is LanternHook)
+                    animator.PlayAction(PlayerAnimator.Action.Hang);
+                else if (animator != null && !(current is TalkInteractable))
+                    animator.PlayAction(PlayerAnimator.Action.Inspect);
                 current.Interact(this);
+            }
         }
 
         Interactable FindBest()

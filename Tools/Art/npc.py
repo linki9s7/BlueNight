@@ -167,7 +167,7 @@ def build(save):
     rim = [RAMPS["moon"][0], RAMPS["moon"][1]]
     for i, img in enumerate(cat_shadow_frames()):
         out["cat_shadow"].append(save(img, "Characters", "Shadows", f"shadow_cat_{i}.png", clean=True, outline=rim))
-    for anim in ("idle", "walk"):
+    for anim in ("idle", "walk", "run"):
         for direction in ("down", "up", "right", "left"):
             imgs = []
             for i, img in enumerate(ruri_shadow_frames(anim, direction)):

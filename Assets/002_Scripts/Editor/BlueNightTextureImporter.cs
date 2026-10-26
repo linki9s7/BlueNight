@@ -10,8 +10,8 @@ namespace BlueNight.EditorTools
     public class BlueNightTextureImporter : AssetPostprocessor
     {
         const string Root = "Assets/005_Textures/";
-        // 中心をピボットにするフォルダ（タイル・顔グラフィック・UI・タイトルなどの一枚絵）
-        static readonly string[] CenterPivotFolders = { "/Tiles/", "/Faces/", "/UI/", "/Title/" };
+        // 中心をピボットにするフォルダ（タイル・顔グラフィック・UI・タイトルなどの一枚絵・演出）
+        static readonly string[] CenterPivotFolders = { "/Tiles/", "/Faces/", "/UI/", "/Title/", "/Effects/" };
         public const int PixelsPerUnit = 16;
 
         void OnPreprocessTexture()

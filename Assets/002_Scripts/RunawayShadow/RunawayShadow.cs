@@ -3,6 +3,7 @@ using BlueNight.Core;
 using BlueNight.Dialogue;
 using BlueNight.LightShadow;
 using BlueNight.Logic;
+using BlueNight.Rendering;
 using UnityEngine;
 
 namespace BlueNight.Shadows
@@ -22,8 +23,21 @@ namespace BlueNight.Shadows
         [SerializeField, Tooltip("移動の速さ（マス/秒）。ルリの小走りより速くして、輪の路地では逃げ切れるようにする")] float speed = 6.5f;
         [SerializeField, Tooltip("逃げ方を考えるときに想定するルリの速さ（マス/秒）")] float assumedPlayerSpeed = 6f;
         [SerializeField] float touchDistance = 1.05f;
-        [SerializeField] Sprite[] frames = Array.Empty<Sprite>();
+        [SerializeField, Tooltip("その場でゆらゆらしているとき")] Sprite[] frames = Array.Empty<Sprite>();
         [SerializeField] float fps = 6f;
+        [Header("動き（任意）")]
+        [SerializeField] Sprite[] moveDown = Array.Empty<Sprite>();
+        [SerializeField] Sprite[] moveUp = Array.Empty<Sprite>();
+        [SerializeField] Sprite[] moveLeft = Array.Empty<Sprite>();
+        [SerializeField] Sprite[] moveRight = Array.Empty<Sprite>();
+        [SerializeField] float moveFps = 10f;
+        [SerializeField, Tooltip("ルリが近づいたとき、びくっとする")] Sprite[] surprised = Array.Empty<Sprite>();
+        [SerializeField] float surpriseDistance = 2.5f;
+        [SerializeField] float surpriseCooldown = 5f;
+        [SerializeField, Tooltip("捕まったとき、じたばたして光る")] Sprite[] caught = Array.Empty<Sprite>();
+        [SerializeField] Sprite[] captureEffect = Array.Empty<Sprite>();
+        [SerializeField] Sprite[] returnEffect = Array.Empty<Sprite>();
+        [SerializeField] Material effectMaterial;
         [SerializeField] DialogueLine[] captureLines = Array.Empty<DialogueLine>();
         [SerializeField] string capturedFlag = "shadow_captured";
         [SerializeField] string returnedFlag = "shadow_returned";
@@ -35,6 +49,11 @@ namespace BlueNight.Shadows
         Cell target;
         float animTime;
         Vector3 followVelocity;
+        Vector3 lastPosition;
+        Vector2 moveDirection = Vector2.down;
+        Sprite[] oneShot;
+        float oneShotTime;
+        float surpriseTimer;
 
         static readonly Vector3 FootOffset = new Vector3(0f, -0.45f, 0f); // マスの中心 → 足元
 
@@ -49,9 +68,25 @@ namespace BlueNight.Shadows
             returnedFlag = flagOnReturn;
         }
 
+        /// <summary>動きと演出のコマ（無くても動く：その場合は frames だけで再生する）。</summary>
+        public void ConfigureAnimations(Sprite[] down, Sprite[] up, Sprite[] left, Sprite[] right,
+            Sprite[] surprisedFrames, Sprite[] caughtFrames, Sprite[] captureFx, Sprite[] returnFx, Material fxMaterial)
+        {
+            moveDown = down;
+            moveUp = up;
+            moveLeft = left;
+            moveRight = right;
+            surprised = surprisedFrames;
+            caught = caughtFrames;
+            captureEffect = captureFx;
+            returnEffect = returnFx;
+            effectMaterial = fxMaterial;
+        }
+
         void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
+            lastPosition = transform.position;
         }
 
         void Start()
@@ -81,10 +116,47 @@ namespace BlueNight.Shadows
 
         void Animate()
         {
-            if (frames.Length == 0)
+            Vector3 delta = transform.position - lastPosition;
+            lastPosition = transform.position;
+            bool moving = delta.sqrMagnitude > 0.000001f;
+            if (moving)
+                moveDirection = delta;
+
+            // びくっ・じたばた（1 回だけ）
+            if (oneShot != null)
+            {
+                oneShotTime += Time.deltaTime;
+                int frame = (int)(oneShotTime * 10f);
+                if (frame < oneShot.Length)
+                {
+                    spriteRenderer.sprite = oneShot[frame];
+                    return;
+                }
+                oneShot = null;
+            }
+
+            Sprite[] set = moving ? MoveFrames() : frames;
+            if (set == null || set.Length == 0)
+                set = frames;
+            if (set.Length == 0)
                 return;
             animTime += Time.deltaTime;
-            spriteRenderer.sprite = frames[(int)(animTime * fps) % frames.Length];
+            spriteRenderer.sprite = set[(int)(animTime * (moving ? moveFps : fps)) % set.Length];
+        }
+
+        Sprite[] MoveFrames()
+        {
+            if (Mathf.Abs(moveDirection.x) > Mathf.Abs(moveDirection.y))
+                return moveDirection.x < 0f ? moveLeft : moveRight;
+            return moveDirection.y > 0f ? moveUp : moveDown;
+        }
+
+        void PlayOnce(Sprite[] shot)
+        {
+            if (shot == null || shot.Length == 0)
+                return;
+            oneShot = shot;
+            oneShotTime = 0f;
         }
 
         // ------------------------------------------------------------------ 逃げる
@@ -100,11 +172,20 @@ namespace BlueNight.Shadows
             {
                 current = target;
                 target = ChooseNext();
-                if (target.X != current.X)
+                // 向きの絵が無いときだけ、左右を反転して向きを見せる（影には陰影が無いので反転してよい）
+                if (target.X != current.X && moveLeft.Length == 0)
                     spriteRenderer.flipX = target.X < current.X;
             }
 
-            if (Vector2.Distance(transform.position, player.position) <= touchDistance)
+            float distance = Vector2.Distance(transform.position, player.position);
+            surpriseTimer -= Time.deltaTime;
+            if (distance <= surpriseDistance && surpriseTimer <= 0f)
+            {
+                PlayOnce(surprised);
+                surpriseTimer = surpriseCooldown;
+            }
+
+            if (distance <= touchDistance)
                 Capture();
         }
 
@@ -124,6 +205,9 @@ namespace BlueNight.Shadows
         {
             state = State.Speaking;
             transform.position = player.position + new Vector3(0.9f, 0f, 0f);
+            lastPosition = transform.position;
+            PlayOnce(caught);
+            OneShotEffect.Spawn(captureEffect, transform.position + new Vector3(0f, 1f, 0f), 12f, effectMaterial);
             if (DialogueRunner.Instance != null)
                 DialogueRunner.Instance.Play(captureLines, AfterCapture);
             else
@@ -162,6 +246,8 @@ namespace BlueNight.Shadows
 
             if (c.a <= 0f)
             {
+                if (owner != null)
+                    OneShotEffect.Spawn(returnEffect, owner.position + new Vector3(0f, 1f, 0f), 8f, effectMaterial);
                 state = State.Gone;
                 gameObject.SetActive(false);
             }

@@ -296,10 +296,13 @@ namespace BlueNight.EditorTools
             }
         }
 
-        static Tile LoadTile(string name)
+        static Tile LoadTile(string name) => LoadTileFrom($"Tiles/{name}", name);
+
+        /// <summary>Assets/005_Textures からの相対パス（拡張子なし）の絵をタイルにする。</summary>
+        static Tile LoadTileFrom(string texture, string assetName)
         {
-            var sprite = LoadSprite($"{TexturesRoot}/Tiles/{name}.png");
-            string path = $"{TileAssetFolder}/{name}.asset";
+            var sprite = LoadSprite($"{TexturesRoot}/{texture}.png");
+            string path = $"{TileAssetFolder}/{assetName}.asset";
             var tile = AssetDatabase.LoadAssetAtPath<Tile>(path);
             if (tile == null)
             {
@@ -384,7 +387,9 @@ namespace BlueNight.EditorTools
             var idle = LoadDirectionalFrames("idle");
             var walk = LoadDirectionalFrames("walk");
             renderer.sprite = idle.down.FirstOrDefault();
-            go.AddComponent<PlayerAnimator>().Configure(controller, idle, walk);
+            go.AddComponent<PlayerAnimator>().Configure(controller, idle, walk,
+                LoadDirectionalFrames("run"), LoadDirectionalFrames("inspect"),
+                LoadDirectionalFrames("hang"), LoadDirectionalFrames("place"));
 
             // ランタンの光（手元から）。M1 以降はランタンを独立したオブジェクトにする
             if (withLanternLight)
