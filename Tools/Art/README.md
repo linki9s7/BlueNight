@@ -7,7 +7,7 @@ python3 Tools/Art/build.py        # 素材とプレビューを書き出す
 python3 Tools/Art/pixel_check.py  # 点検（ダブり・バンディング・光の向き・パレット）→ report/
 ```
 
-**描き方のルールは `STYLE.md`**（参考資料、マップごとのパレット、輪郭と clean_corners、ダブり・バンディング・
+**ゲーム全体で必要なドット絵の一覧と進み具合は `art_plan.md`**。**描き方のルールは `STYLE.md`**（参考資料、マップごとのパレット、輪郭と clean_corners、ダブり・バンディング・
 ピローシェーディング・浮いた AA・網点の使いすぎ・ミクセルを避ける）。
 
 - `palette.py` … パレット（色のランプ）
