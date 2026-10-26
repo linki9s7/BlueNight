@@ -46,4 +46,5 @@ Unity エディタでプロジェクトを開いたままだとバッチモー�
 - BGM 8 曲＋スティンガー＋環境音 4 種は制作済み（`Assets/006_Audio/`、`music_manifest.json`）。Unity 側の再生（`MusicDirector`：前奏→ループを `PlayScheduled`、`shadow_chase` の 3 レイヤーの音量制御、AudioMixer）は未実装。
 - 次：M1 を実際に遊んでもらい、影を追いつめる手ごたえ・速さ・暗がりの見え方を調整 → BGM の再生を実装 → M2（第 1 章を本番品質で）。
 - 未解決の検討事項：ポストエフェクトが 480×270 で処理される件（仕様書 7.6）。粗く見えたら 2 段カメラ構成にする。
-- 音源は MuseScore General（MIT）。ネットワーク制限が無い環境なら Salamander Grand Piano などへの差し替えを検討（仕様書 8.4）。
+- 音源：ピアノは Salamander Grand Piano V3（`Tools/Music/scripts/fetch_samples.sh` で取得、CC BY 3.0）、ほかは MuseScore General（MIT）。クレジットは `docs/CREDITS.md`。
+- 環境音は合成。ローカル環境では Sonniss GDC バンドルや Freesound（CC0）の録音に差し替える（仕様書 8.6）。素材を足したら `docs/CREDITS.md` に記録する。

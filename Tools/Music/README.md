@@ -22,11 +22,14 @@ python3 Tools/Music/ruri_theme.py       # 最初の 30 秒スケッチ（参考�
 ## 必要なもの（Ubuntu）
 
 ```
-apt-get install fluidsynth ffmpeg musescore-general-soundfont
+apt-get install fluidsynth ffmpeg musescore-general-soundfont nodejs npm
 pip install pretty_midi pyloudnorm scipy numpy
+Tools/Music/scripts/fetch_samples.sh    # Salamander Grand Piano（約 80 MB）を .cache に取得
 ```
 
 ## 音源
 
-- MuseScore General SoundFont（MIT ライセンス、S. Christian Collins）。
-  リリース時はクレジットとライセンス表記を入れる。
+- ピアノ：Salamander Grand Piano V3（Alexander Holm、CC BY 3.0）を `salamander.py` のサンプラーで鳴らす。
+  サンプルが無い環境では自動で MuseScore General のピアノになる（`BLUENIGHT_NO_SALAMANDER=1` で強制的に戻せる）。
+- ほかの楽器：MuseScore General SoundFont（MIT、S. Christian Collins）。
+- クレジット表記は `docs/CREDITS.md`。
