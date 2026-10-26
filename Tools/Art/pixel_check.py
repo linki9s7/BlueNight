@@ -34,6 +34,7 @@ REVIEWED = {
     "Characters/Ruri/ruri_walk_right_0": "靴下の光の向き：奥の脚を暗くしているのは奥行きの表現",
     "Characters/Grandma/": "あごの肌の帯は口まわりの形。2 コマ目の右肩の影は手との境目",
     "Characters/Keeper/": "顔の帯（めがね・口ひげ・鼻のまわり）は形の細部で、陰影の帯ではない",
+    "Faces/": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない",
     "Characters/Nemu/": "羽の目玉模様（1 ドット）とそのまわりは模様で、陰影の帯ではない",
     "Props/puddle_moon": "光の向き：水面の揺らぎ（明るい線）は映り込みで、陰影ではない",
     "Buildings/": "光の向き：建物は屋根・壁・窓・基礎で素材が違い、系統全体の重心では判断できない（部品ごとに左上の光を確認済み）。"
@@ -239,7 +240,7 @@ def palette_violations(g, allowed):
 
 
 def group_of(rel):
-    if rel.startswith("Characters"):
+    if rel.startswith(("Characters", "Faces")):
         return "characters"
     if rel.startswith("UI"):
         return "ui"

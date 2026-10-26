@@ -67,7 +67,7 @@ MAP_PALETTES = {
                         "scarf0", "scarf1", "scarf2", "coat0", "coat1", "coat2",
                         "night0", "night1", "night2", "night3", "red0", "red1", "brown1", "brown2",
                         "stone2", "stone3", "stone4", "stone5", "stone7", "warm4", "warm5", "red2",
-                        "moon0", "moon1", "moon2"),  # moon2：逃げた影の光る目
+                        "warm3", "moon0", "moon1", "moon2", "moon3"),  # moon2：逃げた影の光る目、moon3：顔グラの目のつや
     # UI
     "ui": _pick("night1", "moon3"),
 }

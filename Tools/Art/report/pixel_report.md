@@ -96,6 +96,19 @@
 | Characters/Shadows/shadow_ruri_walk_up_1.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Shadows/shadow_ruri_walk_up_2.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Shadows/shadow_ruri_walk_up_3.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Faces/face_grandma_normal.png | 8 |  | 0 | 1/3 | 0 | 0.1 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない |
+| Faces/face_grandma_smile.png | 8 |  | 0 | 1/3 | 0 | 0.1 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない |
+| Faces/face_grandma_teary.png | 9 |  | 0 | 1/3 | 1 | 0.2 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない |
+| Faces/face_keeper_normal.png | 11 |  | 0 | 4/16 | 1 | 0.2 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない |
+| Faces/face_keeper_smile.png | 11 |  | 0 | 4/16 | 1 | 0.2 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない |
+| Faces/face_nemu_happy.png | 9 |  | 0 | 1/3 | 0 | 0.1 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない |
+| Faces/face_nemu_normal.png | 10 |  | 0 | 1/3 | 0 | 0.2 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない |
+| Faces/face_nemu_worried.png | 10 |  | 0 | 1/3 | 0 | 0.2 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない |
+| Faces/face_ruri_gentle.png | 13 |  | 0 | 1/3 | 1 | 0.1 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない |
+| Faces/face_ruri_normal.png | 14 |  | 0 | 1/3 | 1 | 0.2 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない |
+| Faces/face_ruri_sad.png | 14 |  | 0 | 1/3 | 1 | 0.2 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない |
+| Faces/face_ruri_smile.png | 14 |  | 0 | 4/12 | 1 | 0.2 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない |
+| Faces/face_ruri_surprised.png | 15 |  | 0 | 6/29 | 1 | 0.2 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない |
 | Props/a_sign.png | 4 |  | 0 | 1/3 | 0 | 0.0 | 0.0 |  |  |
 | Props/beer_crates.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Props/bench.png | 5 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |

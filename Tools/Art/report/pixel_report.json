@@ -1447,6 +1447,235 @@
   "reviewed": ""
  },
  {
+  "file": "Faces/face_grandma_normal.png",
+  "group": "characters",
+  "colors": 8,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#757d9e"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.1,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない"
+ },
+ {
+  "file": "Faces/face_grandma_smile.png",
+  "group": "characters",
+  "colors": 8,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#757d9e"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.1,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない"
+ },
+ {
+  "file": "Faces/face_grandma_teary.png",
+  "group": "characters",
+  "colors": 9,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#757d9e"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない"
+ },
+ {
+  "file": "Faces/face_keeper_normal.png",
+  "group": "characters",
+  "colors": 11,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 4,
+  "bandingPixels": 16,
+  "bandingColors": [
+   "#f2c9a8",
+   "#757d9e",
+   "#cfe8ff"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない"
+ },
+ {
+  "file": "Faces/face_keeper_smile.png",
+  "group": "characters",
+  "colors": 11,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 4,
+  "bandingPixels": 16,
+  "bandingColors": [
+   "#f2c9a8",
+   "#757d9e",
+   "#cfe8ff"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない"
+ },
+ {
+  "file": "Faces/face_nemu_happy.png",
+  "group": "characters",
+  "colors": 9,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#80544a"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.1,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない"
+ },
+ {
+  "file": "Faces/face_nemu_normal.png",
+  "group": "characters",
+  "colors": 10,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#80544a"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない"
+ },
+ {
+  "file": "Faces/face_nemu_worried.png",
+  "group": "characters",
+  "colors": 10,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#80544a"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない"
+ },
+ {
+  "file": "Faces/face_ruri_gentle.png",
+  "group": "characters",
+  "colors": 13,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#232448"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.1,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない"
+ },
+ {
+  "file": "Faces/face_ruri_normal.png",
+  "group": "characters",
+  "colors": 14,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#232448"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない"
+ },
+ {
+  "file": "Faces/face_ruri_sad.png",
+  "group": "characters",
+  "colors": 14,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#232448"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない"
+ },
+ {
+  "file": "Faces/face_ruri_smile.png",
+  "group": "characters",
+  "colors": 14,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 4,
+  "bandingPixels": 12,
+  "bandingColors": [
+   "#3b7bd9",
+   "#1f4fa8",
+   "#232448"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない"
+ },
+ {
+  "file": "Faces/face_ruri_surprised.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 6,
+  "bandingPixels": 29,
+  "bandingColors": [
+   "#f2c9a8",
+   "#d99a7c",
+   "#a8665a"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない"
+ },
+ {
   "file": "Props/a_sign.png",
   "group": "street_night",
   "colors": 4,
