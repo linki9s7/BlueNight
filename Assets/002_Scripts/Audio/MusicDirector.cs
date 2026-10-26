@@ -57,6 +57,7 @@ namespace BlueNight.Audio
         void Awake()
         {
             Instance = this;
+            AudioPrefs.Load();
             stingerSource = gameObject.AddComponent<AudioSource>();
             stingerSource.playOnAwake = false;
         }

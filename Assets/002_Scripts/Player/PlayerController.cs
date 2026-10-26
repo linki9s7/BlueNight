@@ -26,6 +26,12 @@ namespace BlueNight.Player
         /// <summary>会話中・演出中などは false にして操作を止める。</summary>
         public bool InputEnabled { get; set; } = true;
 
+        /// <summary>演出でルリを歩かせるときの入力（null ならプレイヤーの操作）。</summary>
+        public Vector2? ScriptedMove { get; set; }
+
+        /// <summary>演出で向きだけ変える。</summary>
+        public void Face(Facing facing) => Facing = facing;
+
         void Awake()
         {
             body = GetComponent<Rigidbody2D>();
@@ -36,8 +42,8 @@ namespace BlueNight.Player
 
         void Update()
         {
-            moveInput = InputEnabled ? ReadMove() : Vector2.zero;
-            IsRunning = InputEnabled && IsMoving && ReadRun();
+            moveInput = ScriptedMove ?? (InputEnabled ? ReadMove() : Vector2.zero);
+            IsRunning = InputEnabled && ScriptedMove == null && IsMoving && ReadRun();
 
             if (IsMoving)
                 Facing = ToFacing(moveInput);

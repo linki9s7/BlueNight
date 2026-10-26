@@ -31,6 +31,15 @@ namespace BlueNight.Player
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
+        /// <summary>エリアを移動したとき、ルリのそばへすぐ移す。</summary>
+        public void SnapToTarget()
+        {
+            if (target == null)
+                return;
+            transform.position = target.transform.position + (Vector3)offset;
+            velocity = Vector3.zero;
+        }
+
         void LateUpdate()
         {
             if (target == null)

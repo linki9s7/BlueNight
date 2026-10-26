@@ -76,17 +76,19 @@ namespace UnityEngine.InputSystem
         public class ButtonControl { public bool isPressed, wasPressedThisFrame; }
         public class KeyControl : ButtonControl { }
         public class StickControl { public Vector2 ReadValue() => default; }
+        public class DpadControl : StickControl { public ButtonControl up, down, left, right; }
     }
     public class Keyboard
     {
         public static Keyboard current;
         public Controls.KeyControl aKey, dKey, sKey, wKey, eKey, fKey, xKey, zKey, spaceKey, enterKey, numpadEnterKey,
-            leftArrowKey, rightArrowKey, upArrowKey, downArrowKey, leftShiftKey, rightShiftKey;
+            leftArrowKey, rightArrowKey, upArrowKey, downArrowKey, leftShiftKey, rightShiftKey, escapeKey, backspaceKey, tabKey;
     }
     public class Gamepad
     {
         public static Gamepad current;
-        public Controls.StickControl leftStick, dpad;
-        public Controls.ButtonControl buttonSouth, buttonWest, rightTrigger;
+        public Controls.StickControl leftStick;
+        public Controls.DpadControl dpad;
+        public Controls.ButtonControl buttonSouth, buttonWest, buttonEast, startButton, rightTrigger;
     }
 }

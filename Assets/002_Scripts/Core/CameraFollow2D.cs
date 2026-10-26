@@ -24,6 +24,17 @@ namespace BlueNight.Core
             bounds = roomBounds;
         }
 
+        /// <summary>エリアを移動したとき：範囲を変えて、すぐにその位置へ（なめらかに追わない）。</summary>
+        public void SetBounds(Rect roomBounds)
+        {
+            bounds = roomBounds;
+            velocity = Vector3.zero;
+            if (target == null)
+                return;
+            unsnappedPosition = Clamp(Goal());
+            transform.position = Snap(unsnappedPosition);
+        }
+
         void Start()
         {
             unsnappedPosition = transform.position;

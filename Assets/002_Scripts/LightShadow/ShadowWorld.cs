@@ -34,8 +34,13 @@ namespace BlueNight.LightShadow
         int lastSignature;
         bool computed;
 
-        public void Configure(string[] rows, Tilemap overlayTilemap, TileBase dark, TileBase castShadow)
+        public void Configure(string[] rows, Tilemap overlayTilemap, TileBase dark, TileBase castShadow) =>
+            Configure(rows, overlayTilemap, dark, castShadow, Vector2.zero);
+
+        /// <summary>origin：マス (0, 0) の左下のワールド座標（エリアごとに場所をずらすとき）。</summary>
+        public void Configure(string[] rows, Tilemap overlayTilemap, TileBase dark, TileBase castShadow, Vector2 worldOrigin)
         {
+            origin = worldOrigin;
             mapRows = rows;
             overlay = overlayTilemap;
             darkTile = dark;
@@ -44,9 +49,21 @@ namespace BlueNight.LightShadow
 
         void Awake()
         {
-            Instance = this;
             Map = new GridMap(mapRows);
             Grid = Map.CreateGrid();
+        }
+
+        // エリアが切り替わると、表示中のエリアの影グリッドが「いまの影グリッド」になる
+        void OnEnable()
+        {
+            Instance = this;
+            computed = false;
+        }
+
+        void OnDisable()
+        {
+            if (Instance == this)
+                Instance = null;
         }
 
         void OnDestroy()
