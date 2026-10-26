@@ -271,110 +271,78 @@
  {
   "file": "Characters/Nemu/nemu_fly_0.png",
   "group": "characters",
-  "colors": 7,
+  "colors": 9,
   "offPalette": [],
   "doubles": 0,
-  "banding": 8,
-  "bandingPixels": 30,
+  "banding": 7,
+  "bandingPixels": 29,
   "bandingColors": [
-   "#56648e",
-   "#8b9ac0",
-   "#f5c46a"
+   "#3f7a78",
+   "#c3c8dc",
+   "#fffbe8"
   ],
-  "floatingAA": 3,
-  "noisePercent": 3.2,
+  "floatingAA": 1,
+  "noisePercent": 4.3,
   "ditherPercent": 0.0,
-  "lightWrong": {
-   "warm": [
-    0.0,
-    -1.0
-   ],
-   "moth": [
-    0.0,
-    -8.3
-   ]
-  },
-  "reviewed": "羽の筋・金の目玉模様・触角は模様で、陰影の帯ではない。光の向き：尾の先を明るくしているのは光をためた模様"
+  "lightWrong": {},
+  "reviewed": "オオミズアオの模様（前羽の赤茶の帯・目玉模様・尾の先の黄色）と細い体は模様・形で、陰影の帯ではない"
  },
  {
   "file": "Characters/Nemu/nemu_fly_1.png",
   "group": "characters",
-  "colors": 7,
+  "colors": 9,
   "offPalette": [],
   "doubles": 0,
-  "banding": 9,
-  "bandingPixels": 30,
+  "banding": 4,
+  "bandingPixels": 18,
   "bandingColors": [
-   "#56648e",
-   "#8b9ac0",
-   "#c4cfe6"
+   "#c3c8dc",
+   "#fffbe8",
+   "#3f7a78"
   ],
-  "floatingAA": 1,
-  "noisePercent": 2.8,
+  "floatingAA": 2,
+  "noisePercent": 5.7,
   "ditherPercent": 0.0,
-  "lightWrong": {
-   "moth": [
-    0.0,
-    -8.3
-   ],
-   "warm": [
-    0.0,
-    -1.5
-   ]
-  },
-  "reviewed": "羽の筋・金の目玉模様・触角は模様で、陰影の帯ではない。光の向き：尾の先を明るくしているのは光をためた模様"
+  "lightWrong": {},
+  "reviewed": "オオミズアオの模様（前羽の赤茶の帯・目玉模様・尾の先の黄色）と細い体は模様・形で、陰影の帯ではない"
  },
  {
   "file": "Characters/Nemu/nemu_fly_2.png",
   "group": "characters",
-  "colors": 7,
+  "colors": 9,
   "offPalette": [],
   "doubles": 0,
-  "banding": 8,
-  "bandingPixels": 30,
+  "banding": 7,
+  "bandingPixels": 29,
   "bandingColors": [
-   "#56648e",
-   "#8b9ac0",
-   "#f5c46a"
+   "#3f7a78",
+   "#c3c8dc",
+   "#fffbe8"
   ],
-  "floatingAA": 3,
-  "noisePercent": 3.2,
+  "floatingAA": 1,
+  "noisePercent": 4.3,
   "ditherPercent": 0.0,
-  "lightWrong": {
-   "warm": [
-    0.0,
-    -1.0
-   ],
-   "moth": [
-    0.0,
-    -8.3
-   ]
-  },
-  "reviewed": "羽の筋・金の目玉模様・触角は模様で、陰影の帯ではない。光の向き：尾の先を明るくしているのは光をためた模様"
+  "lightWrong": {},
+  "reviewed": "オオミズアオの模様（前羽の赤茶の帯・目玉模様・尾の先の黄色）と細い体は模様・形で、陰影の帯ではない"
  },
  {
   "file": "Characters/Nemu/nemu_fly_3.png",
   "group": "characters",
-  "colors": 7,
+  "colors": 9,
   "offPalette": [],
   "doubles": 0,
-  "banding": 7,
-  "bandingPixels": 25,
+  "banding": 3,
+  "bandingPixels": 17,
   "bandingColors": [
-   "#f5c46a",
-   "#8b9ac0",
-   "#56648e"
+   "#c3c8dc",
+   "#fffbe8",
+   "#3f7a78"
   ],
-  "floatingAA": 2,
-  "noisePercent": 3.2,
+  "floatingAA": 1,
+  "noisePercent": 4.4,
   "ditherPercent": 0.0,
-  "lightWrong": {
-   "moth": [
-    0.0,
-    -8.2
-   ]
-  },
-  "reviewed": "羽の筋・金の目玉模様・触角は模様で、陰影の帯ではない。光の向き：尾の先を明るくしているのは光をためた模様"
+  "lightWrong": {},
+  "reviewed": "オオミズアオの模様（前羽の赤茶の帯・目玉模様・尾の先の黄色）と細い体は模様・形で、陰影の帯ではない"
  },
  {
   "file": "Characters/Ruri/ruri_idle_down_0.png",
@@ -1574,74 +1542,98 @@
  {
   "file": "Faces/face_nemu_happy.png",
   "group": "characters",
-  "colors": 10,
+  "colors": 11,
   "offPalette": [],
   "doubles": 0,
-  "banding": 12,
-  "bandingPixels": 57,
+  "banding": 20,
+  "bandingPixels": 94,
   "bandingColors": [
-   "#f5c46a",
-   "#56648e",
-   "#2c3758"
+   "#5a3a32",
+   "#3f7a78",
+   "#f5c46a"
   ],
-  "floatingAA": 9,
-  "noisePercent": 0.8,
+  "floatingAA": 7,
+  "noisePercent": 0.4,
   "ditherPercent": 0.0,
   "lightWrong": {
    "warm": [
-    1.5,
-    -19.3
+    1.1,
+    -0.7
    ]
   },
-  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない ／ 羽の筋（体から外へ流れる曲線）・目玉模様の輪・触角の毛・まぶたの線は模様。光の向き：触角の金色は形の色"
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない ／ 目玉模様の縁・羽の筋・触角の羽毛・前羽の帯は模様で、陰影の帯ではない"
  },
  {
   "file": "Faces/face_nemu_normal.png",
   "group": "characters",
-  "colors": 12,
+  "colors": 11,
   "offPalette": [],
   "doubles": 0,
-  "banding": 14,
-  "bandingPixels": 69,
+  "banding": 24,
+  "bandingPixels": 108,
   "bandingColors": [
-   "#f5c46a",
-   "#2c3758",
-   "#56648e"
+   "#5a3a32",
+   "#3f7a78",
+   "#f5c46a"
   ],
-  "floatingAA": 11,
-  "noisePercent": 1.0,
+  "floatingAA": 7,
+  "noisePercent": 0.6,
   "ditherPercent": 0.0,
   "lightWrong": {
    "warm": [
-    1.5,
-    -18.5
+    1.2,
+    -2.1
    ]
   },
-  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない ／ 羽の筋（体から外へ流れる曲線）・目玉模様の輪・触角の毛・まぶたの線は模様。光の向き：触角の金色は形の色"
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない ／ 目玉模様の縁・羽の筋・触角の羽毛・前羽の帯は模様で、陰影の帯ではない"
  },
  {
-  "file": "Faces/face_nemu_worried.png",
+  "file": "Faces/face_nemu_sleepy.png",
   "group": "characters",
-  "colors": 12,
+  "colors": 11,
   "offPalette": [],
   "doubles": 0,
-  "banding": 12,
-  "bandingPixels": 57,
+  "banding": 21,
+  "bandingPixels": 99,
   "bandingColors": [
-   "#f5c46a",
-   "#56648e",
-   "#2c3758"
+   "#5a3a32",
+   "#3f7a78",
+   "#f5c46a"
   ],
-  "floatingAA": 11,
-  "noisePercent": 0.9,
+  "floatingAA": 7,
+  "noisePercent": 0.4,
   "ditherPercent": 0.0,
   "lightWrong": {
    "warm": [
-    1.5,
-    -18.5
+    1.0,
+    -1.1
    ]
   },
-  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない ／ 羽の筋（体から外へ流れる曲線）・目玉模様の輪・触角の毛・まぶたの線は模様。光の向き：触角の金色は形の色"
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない ／ 目玉模様の縁・羽の筋・触角の羽毛・前羽の帯は模様で、陰影の帯ではない"
+ },
+ {
+  "file": "Faces/face_nemu_surprised.png",
+  "group": "characters",
+  "colors": 11,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 21,
+  "bandingPixels": 97,
+  "bandingColors": [
+   "#5a3a32",
+   "#3f7a78",
+   "#f5c46a"
+  ],
+  "floatingAA": 7,
+  "noisePercent": 0.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "warm": [
+    1.3,
+    -1.8
+   ]
+  },
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない ／ 目玉模様の縁・羽の筋・触角の羽毛・前羽の帯は模様で、陰影の帯ではない"
  },
  {
   "file": "Faces/face_ruri_gentle.png",

@@ -511,6 +511,18 @@ def build_ch1_preview(tiles, props, ch1, sheets, nemu, m1):
     upscale(lit, 2).save(os.path.join(PREVIEW, "ch1_street.png"))
 
 
+def build_nemu_preview(sprites):
+    """ネムの顔グラフィック（全表情）とゲーム内の 4 コマ。"""
+    bg = hex_to_rgba(RAMPS["night"][2])
+    faces = [NEMU_FACES[e] for e in nemu.EXPRESSIONS]
+    img = Image.new("RGBA", (4 + len(faces) * 52, 48 + 8 + 20 + 8), bg)
+    for k, f in enumerate(faces):
+        img.alpha_composite(f, (4 + 52 * k, 4))
+    for k, sp in enumerate(sprites):
+        img.alpha_composite(sp, (4 + 24 * k, 60))
+    upscale(img, 5).save(os.path.join(PREVIEW, "nemu.png"))
+
+
 def build_npc_preview(people, m1, sheets):
     bg = hex_to_rgba(RAMPS["night"][2])
     row1 = people["keeper"] + m1["grandma"] + people["cat"] + people["cat_shadow"]
@@ -579,6 +591,7 @@ def main():
     build_m1_preview(tiles, props, m1, sheets, nemu)
     build_ch1_preview(tiles, props, ch1, sheets, nemu, m1)
     build_npc_preview(people, m1, sheets)
+    build_nemu_preview(nemu)
     upscale(contact_sheet(list(faces.values()), hex_to_rgba(RAMPS["night"][2]), max_w=320), 4).save(
         os.path.join(PREVIEW, "faces.png"))
     build_ui_title_preview(ui, title, faces)
