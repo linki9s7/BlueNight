@@ -16,9 +16,12 @@ from PIL import Image, ImageDraw
 
 sys.path.insert(0, os.path.dirname(__file__))
 
+import json  # noqa: E402
+
 import m1_assets  # noqa: E402
 import ruri  # noqa: E402
 from palette import RAMPS, color, hex_to_rgba  # noqa: E402
+from pixel_check import clean_corners  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 TEX = os.path.join(ROOT, "Assets", "005_Textures")
@@ -43,11 +46,18 @@ def from_map(rows, key, width=None):
     return img
 
 
-def save(img, *path):
+CLEANED = {}  # 絵ごとに clean_corners で取ったダブりの数（report/clean_corners.json に記録）
+
+
+def save(img, *path, clean=False, outline=None):
+    """書き出す。clean=True なら輪郭の段差のダブりを取ってから（Tools/Art/STYLE.md）。"""
     full = os.path.join(TEX, *path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
+    if clean:
+        img, removed = clean_corners(img, outline)
+        CLEANED["/".join(path)] = removed
     img.save(full)
-    return full
+    return img
 
 
 def upscale(img, scale):
@@ -70,14 +80,20 @@ def build_palette():
 
 # ---------------------------------------------------------------- ルリ
 def build_ruri():
+    """4 方向（下・上・右・左）。左向きは形だけ反転し、陰影は左上からの光のまま（ruri.relight_mirror）。"""
+    folder = os.path.join(TEX, "Characters", "Ruri")
+    if os.path.isdir(folder):
+        for name in os.listdir(folder):
+            if name.endswith(".png"):
+                os.remove(os.path.join(folder, name))  # 以前の「side」などを残さない
     sheets = {}
-    for (anim, view), frames in ruri.FRAMES.items():
-        imgs = []
-        for i, (pose, lift) in enumerate(frames):
-            img = from_map(ruri.compose(view, pose, lift), ruri.KEY)
-            save(img, "Characters", "Ruri", f"ruri_{anim}_{view}_{i}.png")
-            imgs.append(img)
-        sheets[(anim, view)] = imgs
+    for anim in ("idle", "walk"):
+        for direction in ("down", "up", "right", "left"):
+            imgs = []
+            for i, rows in enumerate(ruri.frames(anim, direction)):
+                img = save(from_map(rows, ruri.KEY), "Characters", "Ruri", f"ruri_{anim}_{direction}_{i}.png", clean=True)
+                imgs.append(img)
+            sheets[(anim, direction)] = imgs
     return sheets
 
 
@@ -91,14 +107,14 @@ NEMU_KEY = {
     "E": color("night", 0),
 }
 
-NEMU_FRAMES = [
+NEMU_FRAMES = [  # ゲームでは左右反転しないので、影は右の羽の下側だけ（光は左上から）
     [  # 羽を上げる
         "..O......O..",
         "...O....O...",
         ".OO..OO..OO.",
         "OWWO.BB.OWWO",
-        "OWMWOBBOWMWO",
-        ".OWWOEEOWWO.",
+        "OWMWOBBOWMwO",
+        ".OWWOEEOwwO.",
         "..OOOBBOOO..",
         "....OBBO....",
         ".....OO.....",
@@ -110,8 +126,8 @@ NEMU_FRAMES = [
         ".....OO.....",
         "OOO.OBBO.OOO",
         "OWWWOBBOWWWO",
-        "OWMwOEEOwMWO",
-        ".OWWOBBOWWO.",
+        "OWMWOEEOWMwO",
+        ".OWWOBBOwwO.",
         "..OOOBBOOO..",
         ".....OO.....",
         "............",
@@ -123,8 +139,8 @@ NEMU_FRAMES = [
         "....OBBO....",
         ".OOOOBBOOOO.",
         "OWWWOEEOWWWO",
-        "OWMWOBBOWMWO",
-        ".OWWOBBOWWO.",
+        "OWMWOBBOWMwO",
+        ".OWWOBBOwwO.",
         "..OO.OO.OO..",
         "............",
     ],
@@ -135,70 +151,76 @@ def build_nemu():
     order = [0, 1, 2, 1]
     imgs = []
     for i, f in enumerate(order):
-        img = from_map(NEMU_FRAMES[f], NEMU_KEY)
-        save(img, "Characters", "Nemu", f"nemu_fly_{i}.png")
+        img = save(from_map(NEMU_FRAMES[f], NEMU_KEY), "Characters", "Nemu", f"nemu_fly_{i}.png", clean=True)
         imgs.append(img)
     return imgs
 
 
 # ---------------------------------------------------------------- タイル（16x16）
-def noise_fill(img, base, accents, density, rng):
-    px = img.load()
-    for y in range(img.height):
-        for x in range(img.width):
-            px[x, y] = base
-            if rng.random() < density:
-                px[x, y] = rng.choice(accents)
+# 平らな塗り＋小さな模様。ランダムな点々（ノイズ）で質感を出さない。模様は 2〜3 ドットのかたまりにして、
+# 光の当たる左上を明るく、右下を暗くする。
+
+def flat(c):
+    return Image.new("RGBA", (16, 16), c)
+
+
+def pebble(px, x, y, base_ramp_index):
+    """2x2 の小石：左上が明るく、右下が暗い。"""
+    px[x, y] = color("stone", base_ramp_index + 1)
+    px[x + 1, y] = color("stone", base_ramp_index)
+    px[x, y + 1] = color("stone", base_ramp_index)
+    px[x + 1, y + 1] = color("stone", base_ramp_index - 1)
 
 
 def tile_road(variant):
-    rng = random.Random(100 + variant)
-    img = Image.new("RGBA", (16, 16))
-    noise_fill(img, color("stone", 2), [color("stone", 1), color("stone", 3)], 0.12, rng)
-    if variant == 1:  # 小さなひび
-        px = img.load()
-        for x, y in [(4, 9), (5, 9), (6, 10), (7, 10), (8, 11)]:
-            px[x, y] = color("stone", 0)
+    img = flat(color("stone", 2))
+    px = img.load()
+    for x, y in ([(3, 4), (11, 11)] if variant == 0 else [(12, 3)]):
+        pebble(px, x, y, 2)
+    if variant == 1:  # 小さなひび（つながった線）
+        for x, y in [(3, 8), (4, 8), (5, 9), (6, 9), (7, 10), (8, 10), (8, 11)]:
+            px[x, y] = color("stone", 1)
     return img
 
 
 def tile_road_line():
-    img = tile_road(0)
-    draw = ImageDraw.Draw(img)
-    draw.rectangle([2, 7, 13, 8], fill=color("stone", 6))
+    img = flat(color("stone", 2))
+    d = ImageDraw.Draw(img)
+    d.rectangle([2, 7, 13, 8], fill=color("stone", 6))
     px = img.load()
-    for x in (4, 9, 12):  # かすれ
-        px[x, 7] = color("stone", 4)
+    for x, y in [(9, 8), (10, 8)]:  # すり減った所（かたまり）
+        px[x, y] = color("stone", 4)
+    pebble(px, 4, 12, 2)
     return img
 
 
 def tile_sidewalk(variant):
-    """歩道の敷石。1 タイル = 1 枚の大きな石板にして、壁（レンガ）に見えないようにする。"""
-    rng = random.Random(200 + variant)
-    img = Image.new("RGBA", (16, 16))
-    noise_fill(img, color("stone", 4), [color("stone", 3), color("stone", 5)], 0.06, rng)
-    draw = ImageDraw.Draw(img)
-    draw.line([0, 15, 15, 15], fill=color("stone", 3))
-    draw.line([15, 0, 15, 15], fill=color("stone", 3))
-    draw.line([0, 0, 14, 0], fill=color("stone", 5))
-    draw.line([0, 0, 0, 14], fill=color("stone", 5))
-    if variant == 1:  # 小さな欠け
-        px = img.load()
-        for x, y in [(10, 4), (11, 5), (11, 6), (12, 6)]:
-            px[x, y] = color("stone", 2)
+    """歩道の敷石。1 タイル = 1 枚の石板。左上の辺が明るく、右下の目地が暗い。"""
+    img = flat(color("stone", 4))
+    d = ImageDraw.Draw(img)
+    d.line([0, 0, 14, 0], fill=color("stone", 5))
+    d.line([0, 0, 0, 14], fill=color("stone", 5))
+    d.line([0, 15, 15, 15], fill=color("stone", 3))
+    d.line([15, 0, 15, 15], fill=color("stone", 3))
+    px = img.load()
+    if variant == 1:  # 角の小さな欠け
+        for x, y in [(11, 11), (12, 11), (12, 12)]:
+            px[x, y] = color("stone", 3)
+        px[11, 12] = color("stone", 2)
+    else:
+        pebble(px, 5, 6, 3)
     return img
 
 
 def tile_curb():
-    img = Image.new("RGBA", (16, 16))
-    draw = ImageDraw.Draw(img)
-    draw.rectangle([0, 0, 15, 15], fill=color("stone", 2))
-    draw.rectangle([0, 0, 15, 6], fill=color("stone", 5))
-    draw.line([0, 0, 15, 0], fill=color("stone", 6))
-    draw.rectangle([0, 7, 15, 9], fill=color("stone", 3))
-    draw.line([0, 10, 15, 10], fill=color("stone", 1))
-    for x in (5, 13):
-        draw.line([x, 1, x, 6], fill=color("stone", 4))
+    img = flat(color("stone", 2))
+    d = ImageDraw.Draw(img)
+    d.rectangle([0, 0, 15, 6], fill=color("stone", 5))   # 上の面（光が当たる）
+    d.line([0, 0, 15, 0], fill=color("stone", 6))
+    d.rectangle([0, 7, 15, 9], fill=color("stone", 3))   # 正面
+    for x in (5, 13):                                      # 継ぎ目
+        d.line([x, 1, x, 6], fill=color("stone", 4))
+    pebble(img.load(), 9, 12, 2)
     return img
 
 
@@ -222,41 +244,76 @@ def build_lamp():
     img = Image.new("RGBA", (16, 48), CLEAR)
     d = ImageDraw.Draw(img)
     pole, pole_hi, outline = color("night", 3), color("night", 5), color("night", 1)
-    # 台座
+    # 台座（左上につや）
     d.rectangle([5, 43, 10, 47], fill=pole, outline=outline)
-    d.line([6, 44, 6, 46], fill=pole_hi)
-    # 柱
-    d.rectangle([7, 12, 8, 43], fill=pole)
-    d.line([7, 12, 7, 43], fill=pole_hi)
-    # 灯具（傘＋ガラス）
+    d.line([6, 44, 6, 45], fill=pole_hi)
+    # 柱（左の列が明るい）
+    d.rectangle([7, 12, 8, 42], fill=pole)
+    d.line([7, 12, 7, 42], fill=pole_hi)
+    # 灯具（傘＋ガラス）。つやは 1 列の線ではなく、左上の 2x2 のかたまり
     d.polygon([(3, 6), (12, 6), (10, 3), (5, 3)], fill=pole, outline=outline)
+    d.rectangle([5, 4, 6, 5], fill=pole_hi)
     d.rectangle([4, 7, 11, 11], fill=color("warm", 5), outline=outline)
-    d.line([5, 8, 10, 8], fill=color("warm", 6))
+    d.rectangle([5, 8, 6, 9], fill=color("warm", 6))
     d.line([6, 12, 9, 12], fill=outline)
     return img
 
 
+# 自販機 16x32（3/4 ビュー：上面＋正面）。光は左上から：上面が明るく、右の 2 列が影。
+# 枠を 1 ドットずつ何重にも重ねる（帯になる）のではなく、部品は輪郭線で区切り、すき間は 2 ドット以上あける。
+VENDING = [
+    "OOOOOOOOOOOOOOOO",
+    "OccccccccccccccO",
+    "OccccccccccccccO",
+    "ORRRRRRRRRRRRddO",
+    "ORRRRRRRRRRRRddO",
+    "ORROOOOOOOOOOddO",
+    "ORROggggggggOddO",
+    "ORROggggggggOddO",
+    "ORROYYgPPgmmOddO",
+    "ORROnnnnnnnnOddO",
+    "ORROggggggggOddO",
+    "ORROggggggggOddO",
+    "ORROPPgyygYYOddO",
+    "ORROnnnnnnnnOddO",
+    "ORROnnnnnnnnOddO",
+    "ORROOOOOOOOOOddO",
+    "ORRRRRRRRRRRRddO",
+    "ORRRRRRRRRRRRddO",
+    "ORRSSSSSSRRRRddO",
+    "ORRSSSSSSRRRRddO",
+    "ORRRRRRRRRRRRddO",
+    "ORRRRRRRRRkkRddO",
+    "ORRRRRRRRRkkRddO",
+    "ORRRRRRRRRRRRddO",
+    "ORRRRRRRRRRRRddO",
+    "ORRKKKKKKKKRRddO",
+    "ORRKKKKKKKKRRddO",
+    "ORRKKKKKKKKRRddO",
+    "ORRRRRRRRRRRRddO",
+    "ORRRRRRRRRRRRddO",
+    "ORRRRRRRRRRRRddO",
+    "OOOOOOOOOOOOOOOO",
+]
+VENDING_KEY = {
+    "O": color("night", 1),
+    "c": color("red", 2),
+    "R": color("red", 1),
+    "d": color("red", 0),
+    "g": color("moon", 2),
+    "n": color("moon", 0),
+    "Y": color("warm", 3),
+    "y": color("warm", 5),
+    "P": color("red", 2),
+    "m": color("moon", 0),
+    "S": color("stone", 6),
+    "k": color("night", 0),
+    "K": color("night", 1),
+}
+
+
 def build_vending():
-    """自販機 16x32（3/4 ビュー：上面＋正面）。"""
-    img = Image.new("RGBA", (16, 32), CLEAR)
-    d = ImageDraw.Draw(img)
-    outline = color("night", 1)
-    d.rectangle([0, 0, 15, 31], fill=color("red", 1), outline=outline)
-    d.rectangle([1, 1, 14, 3], fill=color("red", 2))  # 上面
-    # 商品ケース（光る）
-    d.rectangle([2, 5, 13, 15], fill=color("moon", 2), outline=color("red", 0))
-    for y in (8, 12):
-        d.line([2, y, 13, y], fill=color("moon", 0))
-    rng = random.Random(7)
-    for y in (6, 9, 13):
-        for x in range(3, 13, 2):
-            d.point((x, y), fill=rng.choice([color("warm", 3), color("red", 2), color("green", 2), color("scarf", 1)]))
-    # ボタンと取り出し口
-    d.rectangle([2, 17, 13, 18], fill=color("stone", 6))
-    d.rectangle([10, 20, 12, 23], fill=color("night", 2))
-    d.rectangle([3, 25, 12, 28], fill=color("night", 1))
-    d.line([1, 30, 14, 30], fill=color("red", 0))
-    return img
+    return from_map(VENDING, VENDING_KEY)
 
 
 def build_puddle():
@@ -265,19 +322,20 @@ def build_puddle():
     d = ImageDraw.Draw(img)
     d.ellipse([0, 2, 31, 15], fill=color("night", 2))
     d.ellipse([2, 3, 29, 14], fill=color("night", 3))
-    # 映り込んだ満月
-    d.ellipse([17, 5, 24, 10], fill=color("moon", 2))
-    d.ellipse([19, 6, 23, 9], fill=color("moon", 3))
-    # 水面の揺らぎ
-    for x0, y in [(5, 8), (9, 11), (14, 12), (21, 12)]:
+    # 映り込んだ満月（左上寄り）。同心円に明るくせず、平らな丸＋左上の小さなつや
+    d.ellipse([7, 4, 14, 9], fill=color("moon", 2))
+    for xy in [(9, 4), (10, 4), (8, 5), (9, 5)]:
+        d.point(xy, fill=color("moon", 3))
+    # 水面の揺らぎ（ふちから離して置く）
+    for x0, y in [(4, 8), (9, 11), (16, 10), (21, 9)]:
         d.line([x0, y, x0 + 3, y], fill=color("night", 5))
     return img
 
 
 def build_props():
     props = {"lamp": build_lamp(), "vending": build_vending(), "puddle_moon": build_puddle()}
-    for name, img in props.items():
-        save(img, "Props", f"{name}.png")
+    for name in props:
+        props[name] = save(props[name], "Props", f"{name}.png", clean=True)
     return props
 
 
@@ -315,7 +373,8 @@ def build_previews(palette, sheets, nemu, tiles, props):
     scene.alpha_composite(props["lamp"], (20, 2))
     scene.alpha_composite(props["vending"], (126, 16))
     scene.alpha_composite(sheets[("idle", "down")][0], (60, 18))
-    scene.alpha_composite(sheets[("walk", "side")][0], (80, 20))
+    scene.alpha_composite(sheets[("walk", "right")][0], (80, 20))
+    scene.alpha_composite(sheets[("walk", "left")][0], (100, 20))
     scene.alpha_composite(sheets[("idle", "up")][0], (40, 22))
     scene.alpha_composite(nemu[1], (52, 10))
     # 月明かりの青で暗く沈め、街灯の周りだけ明るくした簡易プレビュー
@@ -393,6 +452,9 @@ def main():
     tiles = build_tiles()
     props = build_props()
     m1 = m1_assets.build(save)
+    os.makedirs(os.path.join(ROOT, "Tools", "Art", "report"), exist_ok=True)
+    with open(os.path.join(ROOT, "Tools", "Art", "report", "clean_corners.json"), "w", encoding="utf-8") as f:
+        json.dump(dict(sorted(CLEANED.items())), f, ensure_ascii=False, indent=1)
     build_previews(palette, sheets, nemu, tiles, props)
     build_m1_preview(tiles, props, m1, sheets, nemu)
     print("done")

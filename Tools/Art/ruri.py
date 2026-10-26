@@ -1,19 +1,23 @@
 """ルリ（16x32 px、4 方向）のピクセルマップ。
 
 頭・胴体・脚をパーツに分けて書き、コマごとに組み合わせる。
-横向きは右向きだけを描き、左向きはゲーム側で反転する。
+
+描き方のルール（Tools/Art/STYLE.md）
+- 光はどの向きの絵でも画面の左上から。影は右下に「かたまり」で置き、輪郭に沿った内側 1 列の影は作らない。
+- 左向きは右向きの形を反転して作るが、陰影は反転しない（relight_mirror）。ゲーム側でも flipX は使わない。
+- 少ない色数、くっきりした 1 ドットの輪郭、平らな塗り＋小さな模様。
 
 記号:
   .  透明
   O  輪郭（紺）
   H  髪   h 髪・明   k 髪・ハイライト
-  S  肌   s 肌・影   m 口・頬
+  S  肌   s 肌・影   m 口
   E  目
   B  マフラー   b マフラー・影   c マフラー・明
-  W  コート     w コート・影     v コート・暗
+  W  コート     w コート・影     v コートのしわ
   K  スカート
   T  靴下       t 靴下・影
-  F  靴
+  F  靴         f 靴・明
 """
 
 from palette import color
@@ -37,35 +41,40 @@ KEY = {
     "T": color("stone", 7),
     "t": color("stone", 5),
     "F": color("brown", 1),
+    "f": color("brown", 2),
 }
+
+# 同じ素材の色のまとまり（左向きを作るときの陰影の付け直しに使う）。先頭が基本の色。
+# （コートのしわ v・口 m・目 E は陰影ではなく形なので、ここには入れない）
+MATERIALS = ["Hhk", "Ss", "Bbc", "Ww", "Tt", "Ff"]
 
 # ---------------------------------------------------------------- 下向き（正面）
 DOWN_HEAD = [
     "................",
     ".....OOOOOO.....",
     "...OOHHHHHHOO...",
-    "..OHhhhHHHHHHO..",
-    "..OHkkhHHHHHHO..",
-    ".OHHhhHHHHHHHHO.",
+    "..OHkhhHHHHHHO..",
+    "..OHhhHHHHHHHO..",
     ".OHHHHHHHHHHHHO.",
     ".OHHHHHHHHHHHHO.",
-    ".OHHHSHHHSSHHHO.",
+    ".OHHHHHHHHHHHHO.",
+    ".OHHHHSHHSSHHHO.",
     ".OHHSSSSSSSSHHO.",
-    ".OHSESSSSSSESHO.",
-    ".OHSESSSSSSESHO.",
-    ".OHHmSSSSSSmHHO.",
-    "..OHHSSSmSSHHO..",
+    ".OHHSESSSSESHHO.",
+    ".OHHSESSSSESHHO.",
+    ".OHHSSSSSSssHHO.",
+    "..OHHSSSmSsHHO..",
 ]
 
 DOWN_BODY = [
-    "....ObBBBBbO....",
-    "...ObBBcBBBbO...",
-    "..OWObBBBBbOWO..",
-    "..OWWObBBbOWwO..",
-    "..OWWWBbWWWWwO..",
-    "..OWWWBbWWWWwO..",
-    "..OSWWWbWWWWSO..",
-    "..OsOWWWWWWOsO..",
+    "....OBBBBBBO....",
+    "...OBBBBBBbbO...",
+    "..OWOBBBBbbOwO..",
+    "..OWWOBBbbOwwO..",
+    "..OWWWWBBWWwwO..",
+    "..OWWWWBBWWwwO..",
+    "..OSWWWBbwwwsO..",
+    "..OSOWWBbwwOsO..",
     "...OKKKKKKKKO...",
     "...OKKKKKKKKO...",
     "..OKKKKKKKKKKO..",
@@ -74,27 +83,27 @@ DOWN_BODY = [
 
 DOWN_LEGS = {
     "stand": [
-        ".....OSOOSO.....",
-        ".....OTOOTO.....",
-        ".....OTOOTO.....",
-        ".....OTOOTO.....",
-        "....OFFOOFFO....",
+        ".....OSOOsO.....",
+        ".....OTOOtO.....",
+        ".....OTOOtO.....",
+        ".....OTOOtO.....",
+        "....OfFOOFFO....",
         "....OOOOOOOO....",
     ],
     "left_up": [
-        ".....OSOOSO.....",
-        ".....OTOOTO.....",
-        ".....OTOOTO.....",
-        "....OFFOOTO.....",
+        ".....OSOOsO.....",
+        ".....OTOOtO.....",
+        ".....OTOOtO.....",
+        "....OfFOOtO.....",
         "....OOOOOFFO....",
         "........OOOO....",
     ],
     "right_up": [
-        ".....OSOOSO.....",
-        ".....OTOOTO.....",
-        ".....OTOOTO.....",
+        ".....OSOOsO.....",
+        ".....OTOOtO.....",
+        ".....OTOOtO.....",
         ".....OTOOFFO....",
-        "....OFFOOOOO....",
+        "....OfFOOOOO....",
         "....OOOO........",
     ],
 }
@@ -104,28 +113,28 @@ UP_HEAD = [
     "................",
     ".....OOOOOO.....",
     "...OOHHHHHHOO...",
-    "..OHHHHHHhhHHO..",
-    "..OHHHHHhkkhHO..",
-    ".OHHHHHHHhhHHHO.",
+    "..OHkhhHHHHHHO..",
+    "..OHhhHHHHHHHO..",
     ".OHHHHHHHHHHHHO.",
     ".OHHHHHHHHHHHHO.",
     ".OHHHHHHHHHHHHO.",
     ".OHHHHHHHHHHHHO.",
     ".OHHHHHHHHHHHHO.",
-    ".OHHHhHHHHhHHHO.",
-    ".OHHhHHHHHHhHHO.",
-    "..OHHHHHHHHHHO..",
+    ".OHHHHHHHHHHHHO.",
+    ".OHHHHHHHHHHHHO.",
+    ".OHHHHHHHHHHHHO.",
+    "..OHHHOHHOHHHO..",
 ]
 
 UP_BODY = [
-    "....ObBBBBbO....",
-    "...OBBBBBBBBO...",
-    "..OWObBBBBbOWO..",
-    "..OWWOBBBBOWwO..",
-    "..OWWWWBbWWWwO..",
-    "..OWWWWBbWWWwO..",
-    "..OSWWWcbWWWSO..",
-    "..OsOWWWWWWOsO..",
+    "....OBBBBBBO....",
+    "...OBBBBBBbbO...",
+    "..OWOBBBBbbOwO..",
+    "..OWWOBBbbOwwO..",
+    "..OWWWWBBWWwwO..",
+    "..OWWWWBBWWwwO..",
+    "..OSWWWBbwwwsO..",
+    "..OSOWWBbwwOsO..",
     "...OKKKKKKKKO...",
     "...OKKKKKKKKO...",
     "..OKKKKKKKKKKO..",
@@ -139,28 +148,28 @@ SIDE_HEAD = [
     "................",
     ".....OOOOOO.....",
     "...OOHHHHHHOO...",
-    "..OHHHHhhhHHHO..",
-    "..OHHHHhkkhHHO..",
-    ".OHHHHHHhhHHHHO.",
+    "..OHkhhHHHHHHO..",
+    "..OHhhHHHHHHHO..",
+    ".OHHHHHHHHHHHHO.",
     ".OHHHHHHHHHHHHO.",
     ".OHHHHHHHHHHHHO.",
     ".OHHHHHHHSHHSHO.",
     ".OHHHHHHSSSSSSO.",
     ".OHHHHHHSSSESSO.",
     ".OHHHHHHSSSESSO.",
-    ".OHHHHHHsSSSmSO.",
-    "..OHHHHHHSSSO...",
+    ".OHHHHHHSSSSmSO.",
+    "..OHHHHHHSssO...",
 ]
 
 SIDE_BODY = [
-    ".....ObBBBBO....",
-    "....ObBBcBBBO...",
-    "..bbOWWWWBbO....",
-    ".bbOWWWWWWwO....",
-    "...OWWWvWWwO....",
-    "...OWWWvWWwO....",
-    "...OWWWvWWwO....",
-    "...OWWWSWWwO....",
+    ".....OBBBBBO....",
+    "..OOOBcBBBBbO...",
+    ".OBBBOWWWWBbO...",
+    "..OOOWWWWWWwO...",
+    "...OWWWvWWwwO...",
+    "...OWWWvWwwwO...",
+    "...OWWWvWwwwO...",
+    "...OWWWSWwwwO...",
     "...OKKKKKKKO....",
     "...OKKKKKKKKO...",
     "..OKKKKKKKKKO...",
@@ -172,16 +181,16 @@ SIDE_LEGS = {
         "......OSSO......",
         "......OTTO......",
         "......OTTO......",
-        "......OTtO......",
-        "......OFFFO.....",
+        "......OTTO......",
+        "......OfFFO.....",
         "......OOOOO.....",
     ],
     "stride": [
         ".....OSSSO......",
-        "....OtSOOTTO....",
+        "....OtsOOTTO....",
         "...OttO..OTTO...",
         "...OttO...OTTO..",
-        "..OFFFO...OFFFO.",
+        "..OFFFO...OfFFO.",
         "..OOOOO...OOOOO.",
     ],
     "stride_alt": [
@@ -189,7 +198,7 @@ SIDE_LEGS = {
         "....OTSOOttO....",
         "...OTTO..OttO...",
         "...OTTO...OttO..",
-        "..OFFFO...OFFFO.",
+        "..OfFFO...OFFFO.",
         "..OOOOO...OOOOO.",
     ],
 }
@@ -230,6 +239,43 @@ def compose(view, legs_pose, lift):
     for i, row in enumerate(leg_rows):
         rows[26 + i] = row
     return rows
+
+
+def material_of(symbol):
+    for group in MATERIALS:
+        if symbol in group:
+            return group
+    return None
+
+
+def relight_mirror(rows):
+    """
+    左右反転した絵を作る。ただし陰影は反転しない（光は常に画面の左上から）。
+    形は反転し、素材の色（髪・肌・コートなど）は「反転前の同じ位置が同じ素材ならその陰影の色」を使い、
+    違う素材なら基本の色にする（光の当たる側に来た影は消える）。目・口・輪郭などはそのまま反転する。
+    """
+    mirrored = [row[::-1] for row in rows]
+    out = []
+    for y, row in enumerate(mirrored):
+        line = []
+        for x, symbol in enumerate(row):
+            group = material_of(symbol)
+            if group is None:
+                line.append(symbol)
+                continue
+            original = rows[y][x]
+            line.append(original if original in group else group[0])
+        out.append("".join(line))
+    return out
+
+
+def frames(anim, direction):
+    """direction は down / up / right / left。"""
+    view = "side" if direction in ("left", "right") else direction
+    result = [compose(view, pose, lift) for pose, lift in FRAMES[(anim, view)]]
+    if direction == "left":
+        result = [relight_mirror(rows) for rows in result]
+    return result
 
 
 def all_parts():

@@ -1,6 +1,7 @@
 using System;
 using BlueNight.Core;
 using BlueNight.Player;
+using BlueNight.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -99,7 +100,7 @@ namespace BlueNight.Dialogue
 
             // 影の声は、ことばが不安定に揺れる
             bodyRect.anchoredPosition = line.shadowVoice
-                ? bodyBasePosition + new Vector2(Mathf.Round(Mathf.Sin(Time.unscaledTime * 23f)), 0f) * 0.5f
+                ? bodyBasePosition + new Vector2(Mathf.Round(Mathf.Sin(Time.unscaledTime * 23f)), 0f)  // 1 ドット単位で震える（半ドットはミクセルになる）
                 : bodyBasePosition;
 
             // 会話を開いたボタン押しで 1 行目を飛ばさない
@@ -152,14 +153,12 @@ namespace BlueNight.Dialogue
             var canvas = canvasGo.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             canvas.sortingOrder = 100;
-            var scaler = canvasGo.AddComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(480f, 270f);
-            scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-            scaler.matchWidthOrHeight = 1f;
+            canvasGo.AddComponent<CanvasScaler>();
+            // 拡大率は 480×270 の整数倍に固定（文字もゲーム画面と同じドットの大きさになる）
+            var pixelCanvas = canvasGo.AddComponent<PixelPerfectCanvas>();
 
             window = new GameObject("Window", typeof(RectTransform));
-            window.transform.SetParent(canvasGo.transform, false);
+            window.transform.SetParent(pixelCanvas.Frame, false);
             var windowRect = (RectTransform)window.transform;
             windowRect.anchorMin = new Vector2(0f, 0f);
             windowRect.anchorMax = new Vector2(1f, 0f);

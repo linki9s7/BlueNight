@@ -398,7 +398,8 @@ namespace BlueNight.EditorTools
             {
                 down = LoadFrames($"{TexturesRoot}/Characters/Ruri/ruri_{anim}_down_"),
                 up = LoadFrames($"{TexturesRoot}/Characters/Ruri/ruri_{anim}_up_"),
-                side = LoadFrames($"{TexturesRoot}/Characters/Ruri/ruri_{anim}_side_"),
+                right = LoadFrames($"{TexturesRoot}/Characters/Ruri/ruri_{anim}_right_"),
+                left = LoadFrames($"{TexturesRoot}/Characters/Ruri/ruri_{anim}_left_"),
             };
         }
 

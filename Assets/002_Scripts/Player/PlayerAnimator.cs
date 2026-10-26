@@ -4,7 +4,8 @@ using UnityEngine;
 namespace BlueNight.Player
 {
     /// <summary>
-    /// 4 方向のスプライトアニメーション。横向きは右向きの絵を用意し、左向きは反転して使う。
+    /// 4 方向のスプライトアニメーション。左向きは専用の絵（形だけ反転し、陰影は左上からの光のまま描き直したもの）を使う。
+    /// flipX で反転すると影の位置まで反転して光の向きが逆になるので、反転はしない。
     /// </summary>
     [RequireComponent(typeof(SpriteRenderer))]
     public class PlayerAnimator : MonoBehaviour
@@ -14,15 +15,16 @@ namespace BlueNight.Player
         {
             public Sprite[] down = Array.Empty<Sprite>();
             public Sprite[] up = Array.Empty<Sprite>();
-            public Sprite[] side = Array.Empty<Sprite>();
+            public Sprite[] right = Array.Empty<Sprite>();
+            public Sprite[] left = Array.Empty<Sprite>();
 
             public Sprite[] For(Facing facing)
             {
                 switch (facing)
                 {
                     case Facing.Up: return up;
-                    case Facing.Left:
-                    case Facing.Right: return side;
+                    case Facing.Left: return left;
+                    case Facing.Right: return right;
                     default: return down;
                 }
             }
@@ -77,7 +79,6 @@ namespace BlueNight.Player
             int index = (int)(time * fps) % frames.Length;
 
             spriteRenderer.sprite = frames[index];
-            spriteRenderer.flipX = facing == Facing.Left;
         }
     }
 }

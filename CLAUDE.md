@@ -17,7 +17,7 @@
 | `Assets/002_Scripts/Tests/EditMode/` | Logic の NUnit テスト（追いかけっこのシミュレーションを含む） |
 | `Assets/002_Scripts/{Core,Player,Interaction,LightShadow,RunawayShadow,Dialogue,Rendering}/` | ランタイム（Assembly-CSharp） |
 | `Assets/002_Scripts/Editor/` | メニュー **BlueNight**（M0／M1 シーンの自動生成）、テクスチャ・フォントの取り込み規則 |
-| `Tools/Art/` | ドット絵生成（Python / Pillow）。`python Tools/Art/build.py` → `Assets/005_Textures/` と `Tools/Art/preview/` |
+| `Tools/Art/` | ドット絵生成（Python / Pillow）。`python Tools/Art/build.py` → `Assets/005_Textures/` と `Tools/Art/preview/`。点検は `pixel_check.py`。**描き方のルールは `Tools/Art/STYLE.md`（必ず守る）** |
 | `Tools/Music/` | 作曲（MIDI → FluidSynth → 仕上げ）。`python Tools/Music/build_bgm.py`、`ambience.py`、`check_loops.py`。全曲の一覧とルールは `Tools/Music/designs/bgm_plan.md` |
 
 - 名前空間は `BlueNight.*`。クラス名と同じ名前空間は作らない（例：逃げた影は `BlueNight.Shadows.RunawayShadow`）。
@@ -45,7 +45,8 @@ Unity エディタでプロジェクトを開いたままだとバッチモー�
 - M0（2D 環境）：完了。M1（光と影のプロトタイプ）：実装済み、ユーザーの Unity での動作確認待ち。
 - BGM 8 曲＋スティンガー＋環境音 4 種＋効果音（`Assets/006_Audio/SE/`、`se_manifest.json`、一覧は `Tools/Music/designs/se_plan.md`）は制作済み。Unity 側の再生（`MusicDirector`：前奏→ループを `PlayScheduled`、`shadow_chase` の 3 レイヤーの音量制御、AudioMixer）は未実装。
 - 次：M1 を実際に遊んでもらい、影を追いつめる手ごたえ・速さ・暗がりの見え方を調整 → BGM の再生を実装 → M2（第 1 章を本番品質で）。
-- 未解決の検討事項：ポストエフェクトが 480×270 で処理される件（仕様書 7.6）。粗く見えたら 2 段カメラ構成にする。
+- ポストエフェクトは 480×270 のまま処理する（ミクセルを作らないため。2 段カメラ構成は採らない、仕様書 7.6）。
+- ドット絵：光はどの向きでも左上から。左向きは専用の絵（`ruri_*_left_*`）で、`flipX` は使わない。新しい絵を足したら `pixel_check.py` でダブり・バンディングを確認し、直さないものは理由を `REVIEWED` に書く。
 - 音源：楽器は MuseScore General（MIT）。Salamander Grand Piano はユーザーの判断で不採用（低音がリズムに合わせて「ドシン」と響くのが不快）。クレジットは `docs/CREDITS.md`。
 - 環境音は `Tools/Music/sources/` の録音を素材に組み立てる。**雨と波は確定（変えない）**。0 A.D. の素材は使わない（ユーザーの判断）。
 - **TODO（ユーザーの依頼・忘れないこと）：虫の声は合成のまま。ローカル環境に切り替えたら、商用利用できる録音（Freesound CC0、Sonniss GDC バンドルなど）に差し替える。**ローカル環境では Sonniss GDC バンドルや Freesound（CC0）でさらに質を上げられる（仕様書 8.6）。素材を足したら `docs/CREDITS.md` と `sources/README.md` に記録する。
