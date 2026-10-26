@@ -68,6 +68,11 @@ MAP_PALETTES = {
                         "night0", "night1", "night2", "night3", "red0", "red1", "brown1", "brown2",
                         "stone2", "stone3", "stone4", "stone5", "stone7", "warm4", "warm5", "red2",
                         "warm3", "moon0", "moon1", "moon2", "moon3"),  # moon2：逃げた影の光る目、moon3：顔グラの目のつや
-    # UI
-    "ui": _pick("night1", "moon3"),
+    # UI（会話ウィンドウ・アイコン）：10 色
+    "ui": _pick("night0", "night1", "night2", "moon1", "moon3", "scarf0", "scarf1", "stone7", "warm4", "warm5"),
+    # タイトルの一枚絵（夜空・月・ハイウェイ・遠くの町＋小さなルリ）：32 色
+    "title": _pick("night0", "night1", "night2", "night3", "night4", "night5", "moon1", "moon2", "moon3",
+                   "stone1", "stone2", "stone3", "stone5", "stone7", "warm3", "warm4", "warm5", "warm6", "red0", "red2",
+                   "hair0", "hair1", "hair2", "hair3", "skin1", "skin2", "scarf0", "scarf1", "coat1", "coat2",
+                   "brown1", "brown2"),
 }

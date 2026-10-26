@@ -1690,7 +1690,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "黒板のチョークの線は模様"
  },
  {
   "file": "Props/beer_crates.png",
@@ -1842,7 +1842,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "差し入れ口の上の明るい点はつやの模様"
  },
  {
   "file": "Props/pot_plant.png",
@@ -1857,7 +1857,7 @@
   "noisePercent": 2.4,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "花の 1 ドットは模様（AA ではない）"
  },
  {
   "file": "Props/power_pole.png",
@@ -2082,7 +2082,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "ふたの格子は模様"
  },
  {
   "file": "Tiles/overlay_cast_shadow.png",
@@ -2220,6 +2220,82 @@
   "reviewed": ""
  },
  {
+  "file": "Title/title_bg.png",
+  "group": "title",
+  "colors": 30,
+  "offPalette": [],
+  "doubles": 2,
+  "banding": 8,
+  "bandingPixels": 60,
+  "bandingColors": [
+   "#1a2550",
+   "#cfe8ff"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.1,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "moon": [
+    -102.9,
+    -26.5
+   ],
+   "night": [
+    -22.6,
+    96.2
+   ],
+   "stone": [
+    117.8,
+    -17.5
+   ]
+  },
+  "reviewed": "一枚絵：明るい星の十字形・月の欠けの先は模様。光の向きは、月（光源）・星・街灯の光のたまりが入るので系統の重心では判断できない"
+ },
+ {
+  "file": "Title/title_car_head.png",
+  "group": "title",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 33.3,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "車の光は 3 ドットの光の点（ノイズではない）"
+ },
+ {
+  "file": "Title/title_car_tail.png",
+  "group": "title",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 33.3,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "車の光は 3 ドットの光の点（ノイズではない）"
+ },
+ {
+  "file": "Title/title_logo.png",
+  "group": "title",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": ""
+ },
+ {
   "file": "UI/prompt.png",
   "group": "ui",
   "colors": 2,
@@ -2232,6 +2308,148 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "アイコンの中の絵（ランタン・虫めがね・しおり）は 1 ドットの線の絵で、陰影の帯ではない"
+ },
+ {
+  "file": "UI/ui_cursor.png",
+  "group": "ui",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "アイコンの中の絵（ランタン・虫めがね・しおり）は 1 ドットの線の絵で、陰影の帯ではない"
+ },
+ {
+  "file": "UI/ui_icon_lantern.png",
+  "group": "ui",
+  "colors": 5,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 2,
+  "bandingPixels": 7,
+  "bandingColors": [
+   "#fde9a8",
+   "#f4f6ff"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "アイコンの中の絵（ランタン・虫めがね・しおり）は 1 ドットの線の絵で、陰影の帯ではない"
+ },
+ {
+  "file": "UI/ui_icon_look.png",
+  "group": "ui",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f4f6ff"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "アイコンの中の絵（ランタン・虫めがね・しおり）は 1 ドットの線の絵で、陰影の帯ではない"
+ },
+ {
+  "file": "UI/ui_icon_talk.png",
+  "group": "ui",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "アイコンの中の絵（ランタン・虫めがね・しおり）は 1 ドットの線の絵で、陰影の帯ではない"
+ },
+ {
+  "file": "UI/ui_name_tab.png",
+  "group": "ui",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "アイコンの中の絵（ランタン・虫めがね・しおり）は 1 ドットの線の絵で、陰影の帯ではない"
+ },
+ {
+  "file": "UI/ui_next_0.png",
+  "group": "ui",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "アイコンの中の絵（ランタン・虫めがね・しおり）は 1 ドットの線の絵で、陰影の帯ではない"
+ },
+ {
+  "file": "UI/ui_next_1.png",
+  "group": "ui",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "アイコンの中の絵（ランタン・虫めがね・しおり）は 1 ドットの線の絵で、陰影の帯ではない"
+ },
+ {
+  "file": "UI/ui_window.png",
+  "group": "ui",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "アイコンの中の絵（ランタン・虫めがね・しおり）は 1 ドットの線の絵で、陰影の帯ではない"
+ },
+ {
+  "file": "UI/ui_wordbook.png",
+  "group": "ui",
+  "colors": 5,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 7,
+  "bandingColors": [
+   "#1f4fa8"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "アイコンの中の絵（ランタン・虫めがね・しおり）は 1 ドットの線の絵で、陰影の帯ではない"
  }
 ]

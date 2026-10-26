@@ -22,6 +22,7 @@ import ch1_assets  # noqa: E402
 import m1_assets  # noqa: E402
 import npc  # noqa: E402
 import portrait  # noqa: E402
+import ui_title  # noqa: E402
 import ruri  # noqa: E402
 from palette import RAMPS, color, hex_to_rgba  # noqa: E402
 from pixel_check import clean_corners  # noqa: E402
@@ -567,6 +568,43 @@ def build_npc_preview(people, m1, sheets):
     upscale(contact_sheet(rows, bg, max_w=96), 5).save(os.path.join(PREVIEW, "ruri_shadow_frames.png"))
 
 
+def build_ui_title_preview(ui, title, faces):
+    bg = hex_to_rgba(RAMPS["night"][2])
+    upscale(contact_sheet(list(ui.values()), bg, max_w=200), 6).save(os.path.join(PREVIEW, "ui_parts.png"))
+    # タイトル：車の光を高架の上に置き、ロゴを重ねた見え方
+    img = title["bg"].copy()
+    deck_y = title["deck_y"]
+    for x in (40, 128, 210, 300, 420):
+        img.alpha_composite(title["car_head"], (x, deck_y(x) + 1))
+    for x in (84, 170, 260, 370):
+        img.alpha_composite(title["car_tail"], (x, deck_y(x) + 4))
+    img.alpha_composite(title["logo"], (36, 52))
+    upscale(img, 2).save(os.path.join(PREVIEW, "title.png"))
+    # 会話ウィンドウの見え方（9 スライスを手で広げる）
+    scene = Image.open(os.path.join(PREVIEW, "ch1_street.png")).resize((480, 270), Image.NEAREST).convert("RGBA")
+    win = nine_slice(ui["window"], 4, 456, 64)
+    scene.alpha_composite(win, (12, 196))
+    scene.alpha_composite(faces["ruri_normal"], (20, 204))
+    tab = nine_slice(ui["name_tab"], 4, 40, 12)
+    scene.alpha_composite(tab, (76, 190))
+    scene.alpha_composite(ui["next_0"], (452, 250))
+    scene.alpha_composite(ui["icon_talk"], (311, 92))
+    upscale(scene, 2).save(os.path.join(PREVIEW, "dialogue_mock.png"))
+
+
+def nine_slice(img, b, w, h):
+    """9 スライス（ふち b ドット）を w x h に広げる。中と辺は繰り返しではなく引き伸ばし（1 色なのでドットは変わらない）。"""
+    out = Image.new("RGBA", (w, h), CLEAR)
+    sw, sh = img.size
+    cols = [(0, b, 0, b), (b, sw - b, b, w - b), (sw - b, sw, w - b, w)]
+    rows = [(0, b, 0, b), (b, sh - b, b, h - b), (sh - b, sh, h - b, h)]
+    for (sx0, sx1, dx0, dx1) in cols:
+        for (sy0, sy1, dy0, dy1) in rows:
+            piece = img.crop((sx0, sy0, sx1, sy1)).resize((dx1 - dx0, dy1 - dy0), Image.NEAREST)
+            out.alpha_composite(piece, (dx0, dy0))
+    return out
+
+
 def main():
     palette = build_palette()
     sheets = build_ruri()
@@ -577,6 +615,8 @@ def main():
     ch1 = ch1_assets.build(save)
     people = npc.build(save)
     faces = portrait.build(save)
+    ui = ui_title.build_ui(save)
+    title = ui_title.build_title(save)
     os.makedirs(os.path.join(ROOT, "Tools", "Art", "report"), exist_ok=True)
     with open(os.path.join(ROOT, "Tools", "Art", "report", "clean_corners.json"), "w", encoding="utf-8") as f:
         json.dump(dict(sorted(CLEANED.items())), f, ensure_ascii=False, indent=1)
@@ -586,6 +626,7 @@ def main():
     build_npc_preview(people, m1, sheets)
     upscale(contact_sheet(list(faces.values()), hex_to_rgba(RAMPS["night"][2]), max_w=320), 4).save(
         os.path.join(PREVIEW, "faces.png"))
+    build_ui_title_preview(ui, title, faces)
     print("done")
 
 

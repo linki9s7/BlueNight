@@ -26,6 +26,7 @@
 | 素材 | 作者 | ライセンス |
 | --- | --- | --- |
 | DotGothic16 | The DotGothic16 Project Authors（Fontworks） | SIL Open Font License 1.1（`Assets/008_Fonts/DotGothic16-OFL.txt` を同梱） |
+| DejaVu Serif Bold（タイトルのロゴ画像 `Title/title_logo.png` のみ。アンチエイリアス無しで描いた画像で、フォントファイルは同梱しない） | DejaVu fonts team（Bitstream Vera を元にした書体） | Bitstream Vera Fonts のライセンス（自由に使用・改変可）。表記例：`Logo lettering based on DejaVu Serif Bold (DejaVu fonts, Bitstream Vera license)` |
 
 ## 使わないと判断したもの
 

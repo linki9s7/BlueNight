@@ -34,11 +34,18 @@ REVIEWED = {
     "Characters/Ruri/ruri_walk_right_0": "靴下の光の向き：奥の脚を暗くしているのは奥行きの表現",
     "Characters/Grandma/": "あごの肌の帯は口まわりの形。2 コマ目の右肩の影は手との境目",
     "Characters/Keeper/": "顔の帯（めがね・口ひげ・鼻のまわり）は形の細部で、陰影の帯ではない",
+    "Title/title_bg": "一枚絵：明るい星の十字形・月の欠けの先は模様。光の向きは、月（光源）・星・街灯の光のたまりが入るので系統の重心では判断できない",
+    "Title/title_car": "車の光は 3 ドットの光の点（ノイズではない）",
+    "UI/": "アイコンの中の絵（ランタン・虫めがね・しおり）は 1 ドットの線の絵で、陰影の帯ではない",
     "Faces/": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない",
     "Characters/Nemu/": "羽の目玉模様（1 ドット）とそのまわりは模様で、陰影の帯ではない",
     "Props/puddle_moon": "光の向き：水面の揺らぎ（明るい線）は映り込みで、陰影ではない",
     "Buildings/": "光の向き：建物は屋根・壁・窓・基礎で素材が違い、系統全体の重心では判断できない（部品ごとに左上の光を確認済み）。"
                   "窓の明かりは光源なので陰影の向きとは関係ない",
+    "Props/a_sign": "黒板のチョークの線は模様",
+    "Props/mailbox": "差し入れ口の上の明るい点はつやの模様",
+    "Props/pot_plant": "花の 1 ドットは模様（AA ではない）",
+    "Tiles/manhole": "ふたの格子は模様",
     "Props/power_pole": "光の向き：足元の黄色と黒の巻き標識はしま模様で、陰影ではない",
 }
 
@@ -244,6 +251,8 @@ def group_of(rel):
         return "characters"
     if rel.startswith("UI"):
         return "ui"
+    if rel.startswith("Title"):
+        return "title"
     if rel.startswith(("Tiles", "Props", "Buildings")):
         return "street_night"
     return None
