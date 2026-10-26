@@ -66,7 +66,8 @@ MAP_PALETTES = {
     "characters": _pick("hair0", "hair1", "hair2", "hair3", "skin0", "skin1", "skin2",
                         "scarf0", "scarf1", "scarf2", "coat0", "coat1", "coat2",
                         "night0", "night1", "night2", "night3", "red0", "red1", "brown1", "brown2",
-                        "stone2", "stone3", "stone5", "stone7", "warm4", "warm5", "moon0", "moon1"),
+                        "stone2", "stone3", "stone4", "stone5", "stone7", "warm4", "warm5", "red2",
+                        "moon0", "moon1", "moon2"),  # moon2：逃げた影の光る目
     # UI
     "ui": _pick("night1", "moon3"),
 }

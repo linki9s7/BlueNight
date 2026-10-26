@@ -20,6 +20,7 @@ import json  # noqa: E402
 
 import ch1_assets  # noqa: E402
 import m1_assets  # noqa: E402
+import npc  # noqa: E402
 import ruri  # noqa: E402
 from palette import RAMPS, color, hex_to_rgba  # noqa: E402
 from pixel_check import clean_corners  # noqa: E402
@@ -554,6 +555,17 @@ def build_ch1_preview(tiles, props, ch1, sheets, nemu, m1):
     upscale(lit, 2).save(os.path.join(PREVIEW, "ch1_street.png"))
 
 
+def build_npc_preview(people, m1, sheets):
+    bg = hex_to_rgba(RAMPS["night"][2])
+    row1 = people["keeper"] + m1["grandma"] + people["cat"] + people["cat_shadow"]
+    upscale(contact_sheet(row1, bg, max_w=400), 6).save(os.path.join(PREVIEW, "ch1_people.png"))
+    rows = []
+    for anim in ("idle", "walk"):
+        for d in ("down", "up", "right", "left"):
+            rows += [sheets[(anim, d)][0]] + people["ruri_shadow"][(anim, d)]
+    upscale(contact_sheet(rows, bg, max_w=96), 5).save(os.path.join(PREVIEW, "ruri_shadow_frames.png"))
+
+
 def main():
     palette = build_palette()
     sheets = build_ruri()
@@ -562,12 +574,14 @@ def main():
     props = build_props()
     m1 = m1_assets.build(save)
     ch1 = ch1_assets.build(save)
+    people = npc.build(save)
     os.makedirs(os.path.join(ROOT, "Tools", "Art", "report"), exist_ok=True)
     with open(os.path.join(ROOT, "Tools", "Art", "report", "clean_corners.json"), "w", encoding="utf-8") as f:
         json.dump(dict(sorted(CLEANED.items())), f, ensure_ascii=False, indent=1)
     build_previews(palette, sheets, nemu, tiles, props)
     build_m1_preview(tiles, props, m1, sheets, nemu)
     build_ch1_preview(tiles, props, ch1, sheets, nemu, m1)
+    build_npc_preview(people, m1, sheets)
     print("done")
 
 

@@ -12,8 +12,14 @@
 | Buildings/lamp_shop.png | 15 |  | 0 | 0/0 | 3 | 0.1 | 0.0 | brown, warm | 光の向き：建物は屋根・壁・窓・基礎で素材が違い、系統全体の重心では判断できない（部品ごとに左上の光を確認済み）。窓の明かりは光源なので陰影の向きとは関係ない |
 | Buildings/shutter_shop_0.png | 10 |  | 0 | 0/0 | 0 | 0.0 | 0.0 | stone, night | 光の向き：建物は屋根・壁・窓・基礎で素材が違い、系統全体の重心では判断できない（部品ごとに左上の光を確認済み）。窓の明かりは光源なので陰影の向きとは関係ない |
 | Buildings/shutter_shop_1.png | 12 |  | 0 | 0/0 | 0 | 0.0 | 0.0 | brown | 光の向き：建物は屋根・壁・窓・基礎で素材が違い、系統全体の重心では判断できない（部品ごとに左上の光を確認済み）。窓の明かりは光源なので陰影の向きとは関係ない |
+| Characters/Cat/cat_idle_0.png | 6 |  | 0 | 0/0 | 0 | 2.9 | 0.0 |  |  |
+| Characters/Cat/cat_idle_1.png | 5 |  | 0 | 0/0 | 0 | 1.0 | 0.0 |  |  |
+| Characters/Cat/cat_idle_2.png | 6 |  | 0 | 0/0 | 0 | 3.0 | 0.0 |  |  |
+| Characters/Cat/cat_idle_3.png | 6 |  | 0 | 0/0 | 0 | 2.9 | 0.0 |  |  |
 | Characters/Grandma/grandma_idle_0.png | 12 |  | 0 | 1/4 | 1 | 1.9 | 0.0 |  | あごの肌の帯は口まわりの形。2 コマ目の右肩の影は手との境目 |
 | Characters/Grandma/grandma_idle_1.png | 12 |  | 0 | 2/7 | 1 | 1.9 | 0.0 |  | あごの肌の帯は口まわりの形。2 コマ目の右肩の影は手との境目 |
+| Characters/Keeper/keeper_idle_0.png | 14 |  | 0 | 4/14 | 0 | 1.8 | 0.0 |  | 顔の帯（めがね・口ひげ・鼻のまわり）は形の細部で、陰影の帯ではない |
+| Characters/Keeper/keeper_idle_1.png | 14 |  | 0 | 4/13 | 0 | 2.2 | 0.0 |  | 顔の帯（めがね・口ひげ・鼻のまわり）は形の細部で、陰影の帯ではない |
 | Characters/Nemu/nemu_fly_0.png | 6 |  | 0 | 3/10 | 1 | 3.6 | 0.0 |  | 羽の目玉模様（1 ドット）とそのまわりは模様で、陰影の帯ではない |
 | Characters/Nemu/nemu_fly_1.png | 6 |  | 0 | 3/10 | 1 | 3.4 | 0.0 |  | 羽の目玉模様（1 ドット）とそのまわりは模様で、陰影の帯ではない |
 | Characters/Nemu/nemu_fly_2.png | 6 |  | 0 | 3/10 | 1 | 3.3 | 0.0 |  | 羽の目玉模様（1 ドット）とそのまわりは模様で、陰影の帯ではない |
@@ -50,10 +56,46 @@
 | Characters/Ruri/ruri_walk_up_1.png | 15 |  | 0 | 0/0 | 1 | 0.9 | 0.0 |  | 顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない |
 | Characters/Ruri/ruri_walk_up_2.png | 15 |  | 0 | 0/0 | 1 | 1.5 | 0.0 |  | 顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない |
 | Characters/Ruri/ruri_walk_up_3.png | 15 |  | 0 | 0/0 | 1 | 0.9 | 0.0 |  | 顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない |
+| Characters/Shadows/shadow_cat_0.png | 4 |  | 0 | 0/0 | 0 | 1.3 | 0.0 |  |  |
+| Characters/Shadows/shadow_cat_1.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_cat_2.png | 4 |  | 0 | 0/0 | 0 | 1.3 | 0.0 |  |  |
+| Characters/Shadows/shadow_cat_3.png | 4 |  | 0 | 0/0 | 0 | 1.3 | 0.0 |  |  |
 | Characters/Shadows/shadow_grandma_0.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Shadows/shadow_grandma_1.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Shadows/shadow_grandma_2.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Shadows/shadow_grandma_3.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_idle_down_0.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_idle_down_1.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_idle_down_2.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_idle_down_3.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_idle_left_0.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_idle_left_1.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_idle_left_2.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_idle_left_3.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_idle_right_0.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_idle_right_1.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_idle_right_2.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_idle_right_3.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_idle_up_0.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_idle_up_1.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_idle_up_2.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_idle_up_3.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_walk_down_0.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_walk_down_1.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_walk_down_2.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_walk_down_3.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_walk_left_0.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_walk_left_1.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_walk_left_2.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_walk_left_3.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_walk_right_0.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_walk_right_1.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_walk_right_2.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_walk_right_3.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_walk_up_0.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_walk_up_1.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_walk_up_2.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Shadows/shadow_ruri_walk_up_3.png | 3 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Props/a_sign.png | 4 |  | 0 | 1/3 | 0 | 0.0 | 0.0 |  |  |
 | Props/beer_crates.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Props/bench.png | 5 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
