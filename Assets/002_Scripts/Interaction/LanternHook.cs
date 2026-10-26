@@ -1,3 +1,4 @@
+using BlueNight.Audio;
 using BlueNight.Player;
 using UnityEngine;
 
@@ -19,9 +20,15 @@ namespace BlueNight.Interaction
             if (lantern == null)
                 return;
             if (lantern.IsCarried)
+            {
                 lantern.HangOn(this);
+                SoundEffects.Play("lantern_hang");
+            }
             else if (lantern.Hook == this)
+            {
                 lantern.TakeBack();
+                SoundEffects.Play("lantern_take");
+            }
         }
     }
 }

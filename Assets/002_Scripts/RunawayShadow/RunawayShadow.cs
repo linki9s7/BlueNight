@@ -55,6 +55,15 @@ namespace BlueNight.Shadows
         float oneShotTime;
         float surpriseTimer;
 
+        /// <summary>ルリが近づいて、びくっとしたとき（音を鳴らすのに使う）。</summary>
+        public event Action Surprised;
+        /// <summary>捕まったとき。</summary>
+        public event Action Captured;
+
+        public bool IsFleeing => state == State.Fleeing;
+        public bool IsSpeaking => state == State.Speaking;
+        public bool IsGone => state == State.Gone || state == State.Returning;
+
         static readonly Vector3 FootOffset = new Vector3(0f, -0.45f, 0f); // マスの中心 → 足元
 
         public void Configure(Transform playerTransform, Transform ownerTransform, Sprite[] animationFrames,
@@ -183,6 +192,7 @@ namespace BlueNight.Shadows
             {
                 PlayOnce(surprised);
                 surpriseTimer = surpriseCooldown;
+                Surprised?.Invoke();
             }
 
             if (distance <= touchDistance)
@@ -207,6 +217,7 @@ namespace BlueNight.Shadows
             transform.position = player.position + new Vector3(0.9f, 0f, 0f);
             lastPosition = transform.position;
             PlayOnce(caught);
+            Captured?.Invoke();
             OneShotEffect.Spawn(captureEffect, transform.position + new Vector3(0f, 1f, 0f), 12f, effectMaterial);
             if (DialogueRunner.Instance != null)
                 DialogueRunner.Instance.Play(captureLines, AfterCapture);

@@ -1,4 +1,5 @@
 using System.Linq;
+using BlueNight.Audio;
 using BlueNight.Core;
 using BlueNight.Player;
 using BlueNight.Rendering;
@@ -50,6 +51,12 @@ namespace BlueNight.EditorTools
 
             PlayerController player = CreateRuri(lit, new Vector3(2f, 0.5f, 0f));
             CreateNemu(lit, player);
+            player.gameObject.AddComponent<PlayerAreaSounds>();
+
+            // 音：町の曲と夜の環境音。ランプ屋の中は木の床の足音で、環境音がこもる
+            CreateAudio("ch1_shopping_street", Ambience("crickets", 0.55f), Ambience("highway", 0.35f));
+            new GameObject("Area: Lamp Shop Inside").AddComponent<AreaZone>()
+                .Configure(new Rect(44f, -47f, 15f, 9f), "step_wood", true);
 
             var follow = camera.gameObject.AddComponent<CameraFollow2D>();
             follow.Configure(player.transform, GalleryBounds);

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Unity を開かずに、Assets/002_Scripts の C# を型まで含めてコンパイルできるか確かめる（Unity のある環境では不要）。
+    参照：Unity3D.SDK（NuGet、UnityEngine.dll・UnityEditor.dll 2021.1）。URP・Input System・UI は Stubs.cs の代用品。
+    使い方：sh Tools/CodeCheck/check.sh
+  -->
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>CS0414;CS0649;CS0169;CS0067;CS0618</NoWarn>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <Compile Include="../../Assets/002_Scripts/**/*.cs" Exclude="../../Assets/002_Scripts/Tests/**" />
+    <Compile Include="Stubs.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include=".refs/lib/UnityEngine.dll" />
+    <Reference Include=".refs/lib/UnityEditor.dll" />
+  </ItemGroup>
+</Project>
