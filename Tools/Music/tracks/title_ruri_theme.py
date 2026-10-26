@@ -32,8 +32,8 @@ STRINGS_UPPER = {
 
 def compose():
     song = Song("title_ruri_theme", "タイトル／ルリのテーマ", bpm=72, intro_bars=2, loop_bars=16)
-    lh = song.part("piano_lh", program=PIANO, gain_db=-2, pan=-0.1, wet=0.3)
-    rh = song.part("piano_rh", program=PIANO, gain_db=0, pan=0.1, wet=0.3, delay_ms=12)
+    lh = song.part("piano_lh", program=PIANO, gain_db=-2, pan=-0.1, wet=0.3, lowpass=6000)  # 少しこもったピアノ
+    rh = song.part("piano_rh", program=PIANO, gain_db=-1, pan=0.1, wet=0.32, delay_ms=12, lowpass=6500)
     strings = song.part("strings", program=SLOW_STRINGS, gain_db=-9, wet=0.45, lowpass=6000, timing_ms=4)
     celesta = song.part("celesta", program=CELESTA, gain_db=-12, pan=0.3, wet=0.5)
 

@@ -112,7 +112,7 @@ class Part:
 class Song:
     def __init__(self, name, title, bpm, beats_per_bar=4, intro_bars=0, loop_bars=8, loop=True,
                  swing=0.5, tail_seconds=3.0, reverb_seconds=2.2, wow_depth_ms=0.7, hiss_db=-60.0,
-                 target_lufs=-16.0, fade_seconds=4.0):
+                 target_lufs=-16.0, fade_seconds=4.0, compress=True, mid_dip_db=-2.5):
         self.name = name
         self.title = title
         self.bpm = bpm
@@ -127,6 +127,8 @@ class Song:
         self.hiss_db = hiss_db
         self.target_lufs = target_lufs
         self.fade_seconds = fade_seconds
+        self.compress = compress
+        self.mid_dip_db = mid_dip_db
         self.parts = {}
 
     def part(self, name, **kwargs):
@@ -181,9 +183,12 @@ def expand_notes(song, part):
 
 
 def humanize(song, part, notes):
-    rng = random.Random(zlib.crc32(f"{song.name}/{part.name}".encode()))
+    """1 音ずつの揺らぎ。ループの 2 回目に複製した音は、1 回目と同じ揺らぎにする（継ぎ目をそろえる）。"""
     events = []
+    loop_end = song.intro_beats + song.loop_beats
     for (p, b, l, v) in notes:
+        canonical = b - song.loop_beats if song.loop and b >= loop_end - 1e-6 else b
+        rng = random.Random(zlib.crc32(f"{song.name}/{part.name}/{p}/{canonical:.4f}/{l:.4f}".encode()))
         start = song.seconds(swing_map(b, song.swing)) + rng.gauss(0.0, part.timing_ms / 2000.0) + part.delay_ms / 1000.0
         end = song.seconds(swing_map(b + l, song.swing))
         vel = max(1, min(127, v + rng.randint(-part.vel_jitter, part.vel_jitter)))
@@ -252,7 +257,7 @@ def periodic_wow(audio, period_seconds, depth_ms):
     return out
 
 
-def mix_layer(song, parts, tmp):
+def mix_layer(song, parts, tmp, compress_layer=True):
     rendered = []
     for part in parts:
         notes, pedals = expand_notes(song, part)
@@ -275,10 +280,64 @@ def mix_layer(song, parts, tmp):
 
     ir = make_reverb_ir(SAMPLE_RATE, seconds=song.reverb_seconds)
     wet = np.stack([fftconvolve(send[:, ch], ir[:, ch])[:length] for ch in range(2)], axis=1)
-    mix = dry + wet
-    mix = sosfilt(butter(1, 11000, "low", fs=SAMPLE_RATE, output="sos"), mix, axis=0)
+    mix = master_eq(dry + wet, song.mid_dip_db)
+    # 圧縮もテープの揺れも、切り出す前の通しの音にかける（ループ点で状態がつながる）
+    if song.compress and compress_layer:
+        mix = gentle_compressor(mix)
     loop_seconds = song.seconds(song.loop_beats)
     return periodic_wow(mix, loop_seconds if song.loop else 2.5, song.wow_depth_ms)
+
+
+# ---------------------------------------------------------------- 聴き心地を整える（マスター）
+
+def peaking_sos(f0, gain_db, q):
+    """ピーキング EQ（RBJ の式）。"""
+    a = 10 ** (gain_db / 40.0)
+    w0 = 2 * math.pi * f0 / SAMPLE_RATE
+    alpha = math.sin(w0) / (2 * q)
+    b = [1 + alpha * a, -2 * math.cos(w0), 1 - alpha * a]
+    den = [1 + alpha / a, -2 * math.cos(w0), 1 - alpha / a]
+    return np.array([[b[0] / den[0], b[1] / den[0], b[2] / den[0], 1.0, den[1] / den[0], den[2] / den[0]]])
+
+
+def master_eq(mix, mid_dip_db):
+    """
+    - 40 Hz 以下の重低音を落とす（お腹に響くトゲを取る）
+    - 500 Hz〜2 kHz（話し声の帯域）を少し下げて、BGM を一歩後ろへ
+    - 8 kHz より上をなだらかに丸める（耳に刺さる高音を取る）
+    """
+    mix = sosfilt(butter(2, 40, "high", fs=SAMPLE_RATE, output="sos"), mix, axis=0)
+    if mid_dip_db:
+        mix = sosfilt(peaking_sos(1000, mid_dip_db, 0.6), mix, axis=0)
+    return sosfilt(butter(1, 8000, "low", fs=SAMPLE_RATE, output="sos"), mix, axis=0)
+
+
+def gentle_compressor(mix, ratio=2.2, attack=0.03, release=0.35, block_seconds=0.01, headroom_db=4.0):
+    """
+    音量の差を縮めるゆるいコンプレッサー（急に大きく・小さくならないように）。
+    しきい値は曲そのものの大きめの部分の音量から決める。
+    """
+    block = int(SAMPLE_RATE * block_seconds)
+    blocks = len(mix) // block
+    if blocks < 2:
+        return mix
+    mono = mix[: blocks * block].mean(axis=1).reshape(blocks, block)
+    level_db = 10 * np.log10(np.mean(mono ** 2, axis=1) + 1e-12)
+    active = level_db[level_db > level_db.max() - 40]
+    threshold = np.percentile(active, 80) - headroom_db
+
+    target = np.minimum(0.0, (threshold - level_db) * (1.0 - 1.0 / ratio))
+    a_coef = math.exp(-block_seconds / attack)
+    r_coef = math.exp(-block_seconds / release)
+    gain = np.empty(blocks)
+    g = 0.0
+    for i, t in enumerate(target):
+        coef = a_coef if t < g else r_coef
+        g = coef * g + (1 - coef) * t
+        gain[i] = g
+    centers = (np.arange(blocks) + 0.5) * block
+    curve = np.interp(np.arange(len(mix)), centers, gain)
+    return mix * (10 ** (curve / 20.0))[:, None]
 
 
 def cut(song, mix):
@@ -291,9 +350,26 @@ def cut(song, mix):
         return None, whole
     i = int(round(SAMPLE_RATE * song.seconds(song.intro_beats)))
     l = int(round(SAMPLE_RATE * song.seconds(song.loop_beats)))
-    intro = mix[:i].copy() if i > 0 else None
     body = mix[i + l: i + 2 * l].copy()
+    # ループ本体の頭の直前に鳴っている音（= 1 回目のループの終わり）
+    before_body = mix[i + l - LOOP_XFADE: i + l]
+    # 終わりの 50 ms を「頭の直前の音」へなめらかに移す → 最後のサンプルから頭へ途切れなくつながる
+    body[-LOOP_XFADE:] = equal_power_blend(body[-LOOP_XFADE:], before_body)
+    intro = None
+    if i > 0:
+        intro = mix[:i].copy()
+        if i >= LOOP_XFADE:
+            intro[-LOOP_XFADE:] = equal_power_blend(intro[-LOOP_XFADE:], before_body)
     return intro, body
+
+
+LOOP_XFADE = int(SAMPLE_RATE * 0.05)
+
+
+def equal_power_blend(a, b):
+    """a から b へ、音量が落ち込まないカーブで移る。"""
+    t = np.linspace(0.0, 1.0, len(a))[:, None]
+    return a * np.cos(t * math.pi / 2) + b * np.sin(t * math.pi / 2)
 
 
 def write_wav(path, audio):
@@ -330,7 +406,7 @@ def build(song):
         layers = {}
         for layer in song.layers():
             parts = [p for p in song.parts.values() if p.layer == layer]
-            intro, body = cut(song, mix_layer(song, parts, tmp))
+            intro, body = cut(song, mix_layer(song, parts, tmp, compress_layer=len(song.layers()) == 1))
             layers[layer] = [intro, body]
 
         # 全レイヤーを重ねた音量を基準にして、すべてのレイヤーに同じ音量調整をかける

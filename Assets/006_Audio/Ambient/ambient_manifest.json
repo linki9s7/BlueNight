@@ -1,0 +1,32 @@
+{
+  "sounds": [
+    {
+      "name": "rain",
+      "title": "雨",
+      "file": "ambient_rain.ogg",
+      "loopSeconds": 40.0,
+      "loudnessLufs": -26.0
+    },
+    {
+      "name": "waves",
+      "title": "波",
+      "file": "ambient_waves.ogg",
+      "loopSeconds": 40.0,
+      "loudnessLufs": -26.0
+    },
+    {
+      "name": "highway",
+      "title": "遠くのハイウェイ",
+      "file": "ambient_highway.ogg",
+      "loopSeconds": 48.0,
+      "loudnessLufs": -26.0
+    },
+    {
+      "name": "crickets",
+      "title": "夜の虫",
+      "file": "ambient_crickets.ogg",
+      "loopSeconds": 30.0,
+      "loudnessLufs": -26.0
+    }
+  ]
+}

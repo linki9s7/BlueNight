@@ -18,7 +18,7 @@
 | `Assets/002_Scripts/{Core,Player,Interaction,LightShadow,RunawayShadow,Dialogue,Rendering}/` | ランタイム（Assembly-CSharp） |
 | `Assets/002_Scripts/Editor/` | メニュー **BlueNight**（M0／M1 シーンの自動生成）、テクスチャ・フォントの取り込み規則 |
 | `Tools/Art/` | ドット絵生成（Python / Pillow）。`python Tools/Art/build.py` → `Assets/005_Textures/` と `Tools/Art/preview/` |
-| `Tools/Music/` | 作曲（MIDI → FluidSynth → 仕上げ）。`python Tools/Music/ruri_theme.py` |
+| `Tools/Music/` | 作曲（MIDI → FluidSynth → 仕上げ）。`python Tools/Music/build_bgm.py`、`ambience.py`、`check_loops.py`。全曲の一覧とルールは `Tools/Music/designs/bgm_plan.md` |
 
 - 名前空間は `BlueNight.*`。クラス名と同じ名前空間は作らない（例：逃げた影は `BlueNight.Shadows.RunawayShadow`）。
 - マップは `M1Map.Rows`（ASCII）が唯一の定義。シーン生成・テスト・プレビュー画像がすべてここを読む。
@@ -43,6 +43,7 @@ Unity エディタでプロジェクトを開いたままだとバッチモー�
 ## 現在の状況と次の作業
 
 - M0（2D 環境）：完了。M1（光と影のプロトタイプ）：実装済み、ユーザーの Unity での動作確認待ち。
-- 次：M1 を実際に遊んでもらい、影を追いつめる手ごたえ・速さ・暗がりの見え方を調整 → M2（第 1 章を本番品質で）。
+- BGM 8 曲＋スティンガー＋環境音 4 種は制作済み（`Assets/006_Audio/`、`music_manifest.json`）。Unity 側の再生（`MusicDirector`：前奏→ループを `PlayScheduled`、`shadow_chase` の 3 レイヤーの音量制御、AudioMixer）は未実装。
+- 次：M1 を実際に遊んでもらい、影を追いつめる手ごたえ・速さ・暗がりの見え方を調整 → BGM の再生を実装 → M2（第 1 章を本番品質で）。
 - 未解決の検討事項：ポストエフェクトが 480×270 で処理される件（仕様書 7.6）。粗く見えたら 2 段カメラ構成にする。
 - 音源は MuseScore General（MIT）。ネットワーク制限が無い環境なら Salamander Grand Piano などへの差し替えを検討（仕様書 8.4）。

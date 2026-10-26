@@ -1,6 +1,156 @@
 {
   "tracks": [
     {
+      "name": "ch1_shopping_street",
+      "title": "第1章 バス停と商店街",
+      "bpm": 80,
+      "beatsPerBar": 4,
+      "loop": true,
+      "introSeconds": 3.0,
+      "loopSeconds": 48.0,
+      "sampleRate": 48000,
+      "layers": [
+        {
+          "name": "main",
+          "intro": "ch1_shopping_street_intro.ogg",
+          "loop": "ch1_shopping_street_loop.ogg"
+        }
+      ],
+      "loudnessLufs": -16.0
+    },
+    {
+      "name": "ch2_rain_alley",
+      "title": "第2章 雨の路地裏",
+      "bpm": 66,
+      "beatsPerBar": 4,
+      "loop": true,
+      "introSeconds": 7.272727,
+      "loopSeconds": 58.181818,
+      "sampleRate": 48000,
+      "layers": [
+        {
+          "name": "main",
+          "intro": "ch2_rain_alley_intro.ogg",
+          "loop": "ch2_rain_alley_loop.ogg"
+        }
+      ],
+      "loudnessLufs": -16.0
+    },
+    {
+      "name": "ch3_night_school",
+      "title": "第3章 夜の学校",
+      "bpm": 78,
+      "beatsPerBar": 3,
+      "loop": true,
+      "introSeconds": 4.615385,
+      "loopSeconds": 36.923077,
+      "sampleRate": 48000,
+      "layers": [
+        {
+          "name": "main",
+          "intro": "ch3_night_school_intro.ogg",
+          "loop": "ch3_night_school_loop.ogg"
+        }
+      ],
+      "loudnessLufs": -16.0
+    },
+    {
+      "name": "ch4_lighthouse_harbor",
+      "title": "第4章 灯台と港",
+      "bpm": 150,
+      "beatsPerBar": 6,
+      "loop": true,
+      "introSeconds": 4.8,
+      "loopSeconds": 38.4,
+      "sampleRate": 48000,
+      "layers": [
+        {
+          "name": "main",
+          "intro": "ch4_lighthouse_harbor_intro.ogg",
+          "loop": "ch4_lighthouse_harbor_loop.ogg"
+        }
+      ],
+      "loudnessLufs": -16.0
+    },
+    {
+      "name": "ch5_dawn_hill",
+      "title": "第5章 夜明けの丘",
+      "bpm": 76,
+      "beatsPerBar": 4,
+      "loop": true,
+      "introSeconds": 6.315789,
+      "loopSeconds": 50.526316,
+      "sampleRate": 48000,
+      "layers": [
+        {
+          "name": "main",
+          "intro": "ch5_dawn_hill_intro.ogg",
+          "loop": "ch5_dawn_hill_loop.ogg"
+        }
+      ],
+      "loudnessLufs": -16.0
+    },
+    {
+      "name": "shadow_chase",
+      "title": "影を追う",
+      "bpm": 100,
+      "beatsPerBar": 4,
+      "loop": true,
+      "introSeconds": 0.0,
+      "loopSeconds": 38.4,
+      "sampleRate": 48000,
+      "layers": [
+        {
+          "name": "base",
+          "loop": "shadow_chase_base_loop.ogg"
+        },
+        {
+          "name": "drums",
+          "loop": "shadow_chase_drums_loop.ogg"
+        },
+        {
+          "name": "strings",
+          "loop": "shadow_chase_strings_loop.ogg"
+        }
+      ],
+      "loudnessLufs": -16.0
+    },
+    {
+      "name": "shadow_words",
+      "title": "影の言葉",
+      "bpm": 60,
+      "beatsPerBar": 4,
+      "loop": true,
+      "introSeconds": 4.0,
+      "loopSeconds": 32.0,
+      "sampleRate": 48000,
+      "layers": [
+        {
+          "name": "main",
+          "intro": "shadow_words_intro.ogg",
+          "loop": "shadow_words_loop.ogg"
+        }
+      ],
+      "loudnessLufs": -16.0
+    },
+    {
+      "name": "stinger_shadow_capture",
+      "title": "影を捕まえた",
+      "bpm": 90,
+      "beatsPerBar": 4,
+      "loop": false,
+      "introSeconds": 0.0,
+      "loopSeconds": 0.0,
+      "sampleRate": 48000,
+      "layers": [
+        {
+          "name": "main",
+          "full": "stinger_shadow_capture_full.ogg"
+        }
+      ],
+      "loudnessLufs": -16.0
+    },
+    {
       "name": "title_ruri_theme",
       "title": "タイトル／ルリのテーマ",
       "bpm": 72,

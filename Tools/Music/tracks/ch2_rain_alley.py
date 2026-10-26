@@ -32,8 +32,8 @@ def compose():
     song = Song("ch2_rain_alley", "第2章 雨の路地裏", bpm=66, intro_bars=2, loop_bars=16, wow_depth_ms=0.8)
     harp = song.part("harp", program=HARP, gain_db=-5, pan=-0.2, wet=0.4, timing_ms=6)
     pad = song.part("pad", program=WARM_PAD, gain_db=-15, wet=0.35, lowpass=3000, timing_ms=0)
-    keys = song.part("epiano", program=EPIANO, gain_db=-5, pan=0.2, wet=0.3, delay_ms=8)
-    cello = song.part("cello", program=CELLO, gain_db=-1, pan=0.05, wet=0.35, timing_ms=10)
+    keys = song.part("epiano", program=EPIANO, gain_db=-7, pan=0.2, wet=0.32, delay_ms=8)
+    cello = song.part("cello", program=CELLO, gain_db=-4, pan=0.05, wet=0.38, timing_ms=10, lowpass=5000)
     drops = song.part("drops", program=GLOCK, gain_db=-16, pan=0.35, wet=0.55, timing_ms=0)
 
     def harmony(bar, chords, vel):
