@@ -32,6 +32,8 @@ KEY = {
     "O": "night1",   # 輪郭
     "W": "moth2",    # 羽（淡い青緑）
     "w": "moth1",    # 羽の影（自動）
+    "H": "moth2",    # 後ろ羽（色は前羽と同じ。前羽との境目に輪郭を入れるため記号を分ける）
+    "h": "moth1",    # 後ろ羽の影（自動）
     "v": "moth1",    # 羽の筋
     "L": "moth3",    # 羽のつや（前羽の帯の下）
     "C": "brown2",   # 前羽の前のふちの赤茶の帯
@@ -48,7 +50,9 @@ KEY = {
     "m": "brown1",   # 口
 }
 
-WING = set("WwvLCcyMS")   # 羽の部品（影の判定で「同じ部品」とみなす）
+WING = set("WwHhvLCcyMS")   # 羽の部品
+FORE = set("WwLCvcyMS")     # 前羽（影の判定で「同じ部品」とみなす）
+HIND = set("HhvcyMS")       # 後ろ羽と尾
 FUR = set("FfEem")
 
 
@@ -70,8 +74,10 @@ def shade(rows, fur_d=2):
     for y in range(h):
         for x in range(w):
             ch = grid[y][x]
-            if ch == "W" and at(x + 2, y + 2) not in WING:
+            if ch == "W" and at(x + 2, y + 2) not in FORE:
                 out[y][x] = "w"
+            elif ch == "H" and at(x + 2, y + 2) not in HIND:
+                out[y][x] = "h"
             elif ch == "F" and at(x + fur_d, y + fur_d) not in FUR:
                 out[y][x] = "f"
     return ["".join(r) for r in out]
@@ -92,71 +98,71 @@ def to_image(rows):
 # ================================================================ ゲーム内（20x20、4 コマ）
 # 左半分（10 列）。右端の列が体の中心。y = 目玉模様の黄、S = その暗い点、y（尾の先）
 SPRITE_HALVES = {
-    "spread": [  # 羽を広げる
-        "...A......",
-        "....A.....",
-        "OO...AOOOO",
-        "OCCO..OFFF",
-        "OWCCOOOFEF",
-        "OWWCCCOFFF",
-        "OWySWWCOFF",
-        "OWWWWWWWOF",
-        ".OWWWWWWOF",
-        "..OOWWWWOF",
-        "..OWWWWWOF",
-        ".OWWySWWOF",
-        ".OWWWWWWOF",
-        "..OWWWWWOF",
-        "..OWWOOOOO",
-        ".OWWO.....",
-        ".OWO......",
-        "OWO.......",
-        "OyO.......",
-        "OO........",
-    ],
-    "up": [  # 羽を上げる（横から見ると細くなる）
-        "..OO.A....",
-        "..OCO.A...",
-        "..OCCOOOOO",
-        "..OWCCOFFF",
-        "..OWWCOFEF",
-        "..OySWOFFF",
-        "..OWWWWOOF",
-        "...OWWWWOF",
-        "...OOWWWOF",
-        "...OWWWWOF",
-        "...OySWWOF",
-        "...OWWWWOF",
-        "...OWWOOOF",
-        "...OWO..OO",
-        "..OWO.....",
-        "..OWO.....",
-        ".OWO......",
-        ".OyO......",
-        ".OO.......",
-        "..........",
-    ],
-    "down": [  # 羽を下げる（尾が外へふれる）
+    "spread": [  # 羽を広げる：前羽の前のふち（帯）はほぼ真横、尾はほぼまっすぐ下
         "...A......",
         "....A.....",
         ".....AOOOO",
-        "OOOO..OFFF",
-        "OCCCOOOFEF",
-        "OWWCCCOFFF",
-        "OWySWWWOFF",
-        "OWWWWWWWOF",
-        "OWWWWWWOOF",
-        ".OOWWWWWOF",
-        "..OWWWWWOF",
-        "..OWySWWOF",
-        "..OWWWWWOF",
-        "...OWWWWOF",
+        "OOOOOOOFFF",
+        "OCCCCCOFEF",
+        "OWWWWCCOFF",
+        ".OWySWWOFF",
+        "..OWWWWOFF",
+        "...OWWWOFF",
+        "..OOWWWOFF",
+        ".OWWWWWOFF",
+        ".OWWySWOFF",
+        ".OWWWWWOFF",
+        "..OWWWWOOF",
+        "...OWWWOOO",
+        "....OWWO..",
+        "....OWO...",
+        "....OWO...",
+        "...OWO....",
+        "...OyO....",
+    ],
+    "up": [  # 羽を上げる（前羽の先が上を向き、横から見ると細くなる）
+        "..OO.A....",
+        "..OCO.A...",
+        "..OCCOOOOO",
+        "...OCCOFFF",
+        "...OWCOFEF",
+        "...OySOFFF",
+        "...OWWOOFF",
+        "...OWWWOFF",
+        "..OOWWWOFF",
+        "..OWWWWOFF",
+        "..OWySWOFF",
+        "..OWWWWOFF",
+        "...OWWWOFF",
+        "...OWWWOOF",
+        "....OWO.OO",
+        "....OWO...",
+        "....OWO...",
+        "...OWO....",
+        "...OyO....",
+        "...OO.....",
+    ],
+    "down": [  # 羽を下げる（前羽の先が下を向く）
+        "...A......",
+        "....A.....",
+        ".....AOOOO",
+        "......OFFF",
+        "...OOOOFEF",
+        ".OOCCCOFFF",
+        "OCCWWWCOFF",
+        "OWWySWWOFF",
+        ".OWWWWWOFF",
+        "..OOWWWOFF",
+        ".OWWWWWOFF",
+        ".OWWySWOFF",
+        ".OWWWWWOFF",
+        "..OWWWWOOF",
         "...OWWOOOO",
-        "..OWWO....",
-        "..OWO.....",
-        ".OWO......",
-        ".OyO......",
-        ".OO.......",
+        "...OWWO...",
+        "....OWO...",
+        "...OWO....",
+        "...OyO....",
+        "...OO.....",
     ],
 }
 
@@ -238,13 +244,16 @@ def curve(p0, p1, p2, steps=30):
 
 
 # 左側の図形（右側は反転して作る）
-FOREWING = [(22, 15), (17, 11), (11, 7), (5, 4), (1, 3), (0, 5), (2, 9), (3, 14), (4, 19), (7, 23),
-            (12, 25), (18, 25), (22, 22)]
-COSTA = [(23, 13), (17, 9), (11, 5), (5, 2), (1, 2), (1, 4), (5, 5), (11, 8), (17, 12), (23, 16)]   # 赤茶の帯
-COSTA_LIGHT = [(17, 11), (11, 7), (5, 4), (6, 9), (11, 12), (15, 15)]   # 帯のすぐ下のつや（帯との間に 1 列の羽の色を残さない）
-HINDWING = [(22, 22), (16, 24), (10, 27), (6, 31), (6, 35), (9, 37), (13, 37), (17, 35), (21, 31), (23, 27)]
-TAIL_OUTER = ((6, 33), (0, 40), (3, 47))
-TAIL_INNER = ((12, 37), (5, 41), (5, 47))
+# 実物のオオミズアオ（標本の、羽を広げた形）に合わせる
+# 前羽：前のふち（赤茶の帯）は体からほぼ真横にのび、先はとがる。外のふちは先から内側へななめに下がる三角形
+FOREWING = [(22, 13), (15, 11), (8, 9), (2, 7), (0, 8), (1, 11), (3, 15), (6, 20), (9, 24), (12, 26),
+            (17, 25), (22, 21)]
+COSTA = [(23, 12), (15, 10), (8, 8), (2, 6), (0, 7), (1, 9), (8, 11), (15, 13), (23, 15)]   # 赤茶の帯
+COSTA_LIGHT = [(16, 12), (8, 10), (2, 8), (3, 12), (9, 13), (15, 15)]   # 帯のすぐ下のつや（帯との間に 1 列の羽の色を残さない）
+# 後ろ羽：前羽の下にのぞく、丸みのある大きな三角形。下のふちから長い尾がほぼまっすぐ下へ
+HINDWING = [(22, 20), (15, 23), (10, 26), (8, 30), (9, 34), (12, 37), (17, 37), (21, 33), (23, 27)]
+TAIL_OUTER = ((12, 35), (9, 42), (11, 48))
+TAIL_INNER = ((16, 36), (13, 42), (13, 48))
 
 EYESPOT = [   # 目玉模様（5x4）：赤茶の縁・黄色の輪・透けた窓（窓は左上）
     ".cc..",
@@ -303,19 +312,19 @@ MOUTHS = {
 def portrait(expression):
     gr = Grid()
     # ---- 左半分：後ろ羽と尾 → 前羽 → 帯 → 目玉模様 → 羽の筋
-    gr.poly(HINDWING, "W")
+    gr.poly(HINDWING, "H")
     outer, inner = curve(*TAIL_OUTER), curve(*TAIL_INNER)
-    gr.poly(outer + inner[::-1], "W")
+    gr.poly(outer + inner[::-1], "H")
     gr.dots([(x, y) for (x, y) in outer + inner if y >= 45], "y")        # 尾の先の黄色いふち
-    gr.poly([(1, 46), (7, 46), (7, 47), (1, 47)], "y", only={"W"})
+    gr.poly([(7, 46), (15, 46), (15, 47), (7, 47)], "y", only={"H"})
     gr.poly(FOREWING, "W")
     gr.poly(COSTA, "C", only={"W"})
     gr.poly(COSTA_LIGHT, "L", only={"W"})
-    gr.dots(curve((19, 18), (12, 15), (5, 15)), "v", only={"W"})        # 羽の筋（体から外へ）
-    gr.dots(curve((19, 21), (13, 21), (8, 22)), "v", only={"W"})
-    gr.dots(curve((20, 28), (15, 29), (10, 31)), "v", only={"W"})
-    gr.stamp(EYESPOT, 7, 13)    # 前羽の目玉模様
-    gr.stamp(EYESPOT, 12, 29)   # 後ろ羽の目玉模様
+    gr.dots(curve((20, 17), (12, 15), (4, 12)), "v", only={"W"})        # 羽の筋（体から外へ）
+    gr.dots(curve((20, 20), (14, 20), (8, 21)), "v", only={"W"})
+    gr.dots(curve((20, 27), (16, 29), (12, 33)), "v", only={"H"})
+    gr.stamp(EYESPOT, 9, 15)    # 前羽の目玉模様（羽のまん中より少し前のふち寄り）
+    gr.stamp(EYESPOT, 12, 28)   # 後ろ羽の目玉模様
     gr.mirror_left()
 
     # ---- 体（白いふわふわ）：胸 → おなか → 頭（毛のかたまりでふちを波形に）
@@ -358,11 +367,28 @@ def portrait(expression):
     gr.stamp(["".join(r) for r in right], 25, 12)
     gr.stamp(MOUTHS[expression], 22, 19)
 
-    # ---- 陰影 → 部品の境目と外側の輪郭
-    rows = shade(gr.rows())
+    # ---- 前羽と後ろ羽の境目 → 陰影 → 毛と羽の境目 → 外側の輪郭
+    rows = fore_hind_line(gr.rows())
+    rows = shade(rows)
     rows = inner_lines(rows)
     img = to_image(rows)
     return outline(img)
+
+
+def fore_hind_line(rows):
+    """後ろ羽のうち、前羽に接する所を 1 ドットの輪郭にする（2 枚の羽が重なって見えるように）。"""
+    grid = [list(r) for r in rows]
+    h, w = len(grid), len(grid[0])
+    out = [r[:] for r in grid]
+    for y in range(h):
+        for x in range(w):
+            if grid[y][x] != "H":
+                continue
+            for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+                if 0 <= nx < w and 0 <= ny < h and grid[ny][nx] in "WLC":
+                    out[y][x] = "O"
+                    break
+    return ["".join(r) for r in out]
 
 
 def inner_lines(rows):

@@ -274,17 +274,22 @@
   "colors": 9,
   "offPalette": [],
   "doubles": 0,
-  "banding": 7,
-  "bandingPixels": 29,
+  "banding": 6,
+  "bandingPixels": 33,
   "bandingColors": [
-   "#3f7a78",
    "#c3c8dc",
-   "#fffbe8"
+   "#80544a",
+   "#3f7a78"
   ],
-  "floatingAA": 1,
-  "noisePercent": 4.3,
+  "floatingAA": 0,
+  "noisePercent": 4.0,
   "ditherPercent": 0.0,
-  "lightWrong": {},
+  "lightWrong": {
+   "warm": [
+    0.7,
+    -1.1
+   ]
+  },
   "reviewed": "オオミズアオの模様（前羽の赤茶の帯・目玉模様・尾の先の黄色）と細い体は模様・形で、陰影の帯ではない"
  },
  {
@@ -293,15 +298,14 @@
   "colors": 9,
   "offPalette": [],
   "doubles": 0,
-  "banding": 4,
-  "bandingPixels": 18,
+  "banding": 2,
+  "bandingPixels": 8,
   "bandingColors": [
    "#c3c8dc",
-   "#fffbe8",
-   "#3f7a78"
+   "#78b3a8"
   ],
-  "floatingAA": 2,
-  "noisePercent": 5.7,
+  "floatingAA": 4,
+  "noisePercent": 5.4,
   "ditherPercent": 0.0,
   "lightWrong": {},
   "reviewed": "オオミズアオの模様（前羽の赤茶の帯・目玉模様・尾の先の黄色）と細い体は模様・形で、陰影の帯ではない"
@@ -312,17 +316,22 @@
   "colors": 9,
   "offPalette": [],
   "doubles": 0,
-  "banding": 7,
-  "bandingPixels": 29,
+  "banding": 6,
+  "bandingPixels": 33,
   "bandingColors": [
-   "#3f7a78",
    "#c3c8dc",
-   "#fffbe8"
+   "#80544a",
+   "#3f7a78"
   ],
-  "floatingAA": 1,
-  "noisePercent": 4.3,
+  "floatingAA": 0,
+  "noisePercent": 4.0,
   "ditherPercent": 0.0,
-  "lightWrong": {},
+  "lightWrong": {
+   "warm": [
+    0.7,
+    -1.1
+   ]
+  },
   "reviewed": "オオミズアオの模様（前羽の赤茶の帯・目玉模様・尾の先の黄色）と細い体は模様・形で、陰影の帯ではない"
  },
  {
@@ -331,15 +340,15 @@
   "colors": 9,
   "offPalette": [],
   "doubles": 0,
-  "banding": 3,
-  "bandingPixels": 17,
+  "banding": 6,
+  "bandingPixels": 29,
   "bandingColors": [
-   "#c3c8dc",
-   "#fffbe8",
-   "#3f7a78"
+   "#80544a",
+   "#78b3a8",
+   "#c3c8dc"
   ],
-  "floatingAA": 1,
-  "noisePercent": 4.4,
+  "floatingAA": 2,
+  "noisePercent": 5.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
   "reviewed": "オオミズアオの模様（前羽の赤茶の帯・目玉模様・尾の先の黄色）と細い体は模様・形で、陰影の帯ではない"
@@ -1546,14 +1555,14 @@
   "offPalette": [],
   "doubles": 0,
   "banding": 20,
-  "bandingPixels": 94,
+  "bandingPixels": 87,
   "bandingColors": [
    "#5a3a32",
    "#3f7a78",
    "#f5c46a"
   ],
-  "floatingAA": 7,
-  "noisePercent": 0.4,
+  "floatingAA": 10,
+  "noisePercent": 0.7,
   "ditherPercent": 0.0,
   "lightWrong": {
    "warm": [
@@ -1570,14 +1579,14 @@
   "offPalette": [],
   "doubles": 0,
   "banding": 24,
-  "bandingPixels": 108,
+  "bandingPixels": 101,
   "bandingColors": [
    "#5a3a32",
    "#3f7a78",
    "#f5c46a"
   ],
-  "floatingAA": 7,
-  "noisePercent": 0.6,
+  "floatingAA": 10,
+  "noisePercent": 0.9,
   "ditherPercent": 0.0,
   "lightWrong": {
    "warm": [
@@ -1594,18 +1603,18 @@
   "offPalette": [],
   "doubles": 0,
   "banding": 21,
-  "bandingPixels": 99,
+  "bandingPixels": 92,
   "bandingColors": [
    "#5a3a32",
    "#3f7a78",
    "#f5c46a"
   ],
-  "floatingAA": 7,
-  "noisePercent": 0.4,
+  "floatingAA": 10,
+  "noisePercent": 0.7,
   "ditherPercent": 0.0,
   "lightWrong": {
    "warm": [
-    1.0,
+    1.1,
     -1.1
    ]
   },
@@ -1618,14 +1627,14 @@
   "offPalette": [],
   "doubles": 0,
   "banding": 21,
-  "bandingPixels": 97,
+  "bandingPixels": 90,
   "bandingColors": [
    "#5a3a32",
    "#3f7a78",
    "#f5c46a"
   ],
-  "floatingAA": 7,
-  "noisePercent": 0.6,
+  "floatingAA": 10,
+  "noisePercent": 0.9,
   "ditherPercent": 0.0,
   "lightWrong": {
    "warm": [
