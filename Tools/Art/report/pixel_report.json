@@ -271,41 +271,37 @@
  {
   "file": "Characters/Nemu/nemu_fly_0.png",
   "group": "characters",
-  "colors": 10,
+  "colors": 9,
   "offPalette": [],
   "doubles": 0,
-  "banding": 6,
-  "bandingPixels": 33,
+  "banding": 5,
+  "bandingPixels": 31,
   "bandingColors": [
-   "#c3c8dc",
    "#80544a",
-   "#78b3a8"
+   "#c3c8dc",
+   "#fffbe8"
   ],
-  "floatingAA": 3,
-  "noisePercent": 4.0,
+  "floatingAA": 4,
+  "noisePercent": 1.8,
   "ditherPercent": 0.0,
-  "lightWrong": {
-   "warm": [
-    0.7,
-    -1.1
-   ]
-  },
+  "lightWrong": {},
   "reviewed": "オオミズアオの模様（前羽の赤茶の帯・目玉模様・尾の先の黄色）と細い体は模様・形で、陰影の帯ではない。ノイズの点は、羽の輪郭（青緑）と体の輪郭（紺）が切り替わる所"
  },
  {
   "file": "Characters/Nemu/nemu_fly_1.png",
   "group": "characters",
-  "colors": 10,
+  "colors": 9,
   "offPalette": [],
   "doubles": 0,
-  "banding": 2,
-  "bandingPixels": 8,
+  "banding": 5,
+  "bandingPixels": 28,
   "bandingColors": [
+   "#80544a",
    "#c3c8dc",
-   "#b5e0d2"
+   "#fffbe8"
   ],
-  "floatingAA": 6,
-  "noisePercent": 5.4,
+  "floatingAA": 5,
+  "noisePercent": 2.5,
   "ditherPercent": 0.0,
   "lightWrong": {},
   "reviewed": "オオミズアオの模様（前羽の赤茶の帯・目玉模様・尾の先の黄色）と細い体は模様・形で、陰影の帯ではない。ノイズの点は、羽の輪郭（青緑）と体の輪郭（紺）が切り替わる所"
@@ -313,42 +309,37 @@
  {
   "file": "Characters/Nemu/nemu_fly_2.png",
   "group": "characters",
-  "colors": 10,
+  "colors": 9,
   "offPalette": [],
   "doubles": 0,
-  "banding": 6,
-  "bandingPixels": 33,
+  "banding": 5,
+  "bandingPixels": 31,
   "bandingColors": [
-   "#c3c8dc",
    "#80544a",
-   "#78b3a8"
+   "#c3c8dc",
+   "#fffbe8"
   ],
-  "floatingAA": 3,
-  "noisePercent": 4.0,
+  "floatingAA": 4,
+  "noisePercent": 1.8,
   "ditherPercent": 0.0,
-  "lightWrong": {
-   "warm": [
-    0.7,
-    -1.1
-   ]
-  },
+  "lightWrong": {},
   "reviewed": "オオミズアオの模様（前羽の赤茶の帯・目玉模様・尾の先の黄色）と細い体は模様・形で、陰影の帯ではない。ノイズの点は、羽の輪郭（青緑）と体の輪郭（紺）が切り替わる所"
  },
  {
   "file": "Characters/Nemu/nemu_fly_3.png",
   "group": "characters",
-  "colors": 10,
+  "colors": 9,
   "offPalette": [],
   "doubles": 0,
   "banding": 6,
-  "bandingPixels": 29,
+  "bandingPixels": 32,
   "bandingColors": [
    "#80544a",
    "#b5e0d2",
    "#c3c8dc"
   ],
-  "floatingAA": 5,
-  "noisePercent": 5.0,
+  "floatingAA": 4,
+  "noisePercent": 1.8,
   "ditherPercent": 0.0,
   "lightWrong": {},
   "reviewed": "オオミズアオの模様（前羽の赤茶の帯・目玉模様・尾の先の黄色）と細い体は模様・形で、陰影の帯ではない。ノイズの点は、羽の輪郭（青緑）と体の輪郭（紺）が切り替わる所"

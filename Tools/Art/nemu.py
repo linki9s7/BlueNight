@@ -117,80 +117,62 @@ def soften_wing_outline(rows):
     return ["".join(r) for r in out]
 
 
-# ================================================================ ゲーム内（20x20、4 コマ）
-# 左半分（10 列）。右端の列が体の中心。y = 目玉模様の黄、S = その暗い点、y（尾の先）
-SPRITE_HALVES = {
-    "spread": [  # 羽を広げる：前羽の前のふち（帯）はほぼ真横、尾はほぼまっすぐ下
-        "...A......",
-        "....A.....",
-        ".....AOOOO",
-        "OOOOOOOFFF",
-        "OCCCCCOFEF",
-        "OWWWWCCOFF",
-        ".OWySWWOFF",
-        "..OWWWWOFF",
-        "...OWWWOFF",
-        "..OOWWWOFF",
-        ".OWWWWWOFF",
-        ".OWWySWOFF",
-        ".OWWWWWOFF",
-        "..OWWWWOOF",
-        "...OWWWOOO",
-        "....OWWO..",
-        "....OWO...",
-        "....OWO...",
-        "...OWO....",
-        "...OyO....",
-    ],
-    "up": [  # 羽を上げる（前羽の先が上を向き、横から見ると細くなる）
-        "..OO.A....",
-        "..OCO.A...",
-        "..OCCOOOOO",
-        "...OCCOFFF",
-        "...OWCOFEF",
-        "...OySOFFF",
-        "...OWWOOFF",
-        "...OWWWOFF",
-        "..OOWWWOFF",
-        "..OWWWWOFF",
-        "..OWySWOFF",
-        "..OWWWWOFF",
-        "...OWWWOFF",
-        "...OWWWOOF",
-        "....OWO.OO",
-        "....OWO...",
-        "....OWO...",
-        "...OWO....",
-        "...OyO....",
-        "...OO.....",
-    ],
-    "down": [  # 羽を下げる（前羽の先が下を向く）
-        "...A......",
-        "....A.....",
-        ".....AOOOO",
-        "......OFFF",
-        "...OOOOFEF",
-        ".OOCCCOFFF",
-        "OCCWWWCOFF",
-        "OWWySWWOFF",
-        ".OWWWWWOFF",
-        "..OOWWWOFF",
-        ".OWWWWWOFF",
-        ".OWWySWOFF",
-        ".OWWWWWOFF",
-        "..OWWWWOOF",
-        "...OWWOOOO",
-        "...OWWO...",
-        "....OWO...",
-        "...OWO....",
-        "...OyO....",
-        "...OO.....",
-    ],
+# ================================================================ ゲーム内（22x24、4 コマ）
+# シルエットだけでオオミズアオとわかるように：大きな三角の前羽、細い体（2 ドット）、小さな頭、長く垂れる尾。
+# 図形（左側の座標）を記号の格子に塗って反転し、顔グラフィックと同じ手順で境目・陰影・輪郭をつける。
+SPRITE_W, SPRITE_H = 22, 24
+
+POSES = {
+    "spread": {  # 羽を広げる：前羽は先のとがった大きな三角、後ろ羽はそれより小さく、細い尾がまっすぐ下へ
+        "fore": [(9, 8), (5, 6), (0, 4), (2, 8), (4, 11), (7, 12), (9, 11)],
+        "hind": [(9, 11), (7, 12), (5, 14), (5, 16), (6, 17), (8, 17), (9, 16)],
+        "tail": ((7, 16), (5, 19), (6, 22)),
+        "spots": [(4, 8), (7, 14)],
+    },
+    "up": {  # 羽を上げる（前羽の先が上を向き、横から見ると細くなる）
+        "fore": [(9, 8), (6, 5), (2, 3), (4, 7), (5, 10), (7, 12), (9, 11)],
+        "hind": [(9, 11), (7, 12), (6, 14), (6, 16), (7, 17), (9, 16)],
+        "tail": ((8, 16), (6, 19), (7, 22)),
+        "spots": [(5, 6), (7, 14)],
+    },
+    "down": {  # 羽を下げる（前羽の先が下を向く）
+        "fore": [(9, 8), (4, 8), (0, 10), (3, 12), (6, 13), (9, 12)],
+        "hind": [(9, 11), (6, 13), (4, 15), (4, 17), (6, 18), (8, 18), (9, 17)],
+        "tail": ((6, 17), (4, 20), (5, 23)),
+        "spots": [(4, 10), (6, 15)],
+    },
 }
 
 
 def sprite(name):
-    return to_image(soften_wing_outline(shade(mirror_half(SPRITE_HALVES[name]), fur_d=1)))
+    pose = POSES[name]
+    gr = Grid(SPRITE_W, SPRITE_H)
+    gr.poly(pose["hind"], "H")
+    tail = curve(*pose["tail"], steps=12)
+    gr.dots(tail, "H")                                                    # 細い尾（1 ドット＋輪郭）
+    tip = max(tail, key=lambda p: p[1])
+    gr.dots([tip, (tip[0], tip[1] - 1)], "y")                             # 尾の先の黄色
+    gr.poly(pose["fore"], "W")
+    # 前羽の前のふちの赤茶の帯：各列のいちばん上の羽の 1 ドット（小さな絵では細い線のほうが実物らしい）
+    for x in range(10):
+        ys = [y for y in range(SPRITE_H) if gr.g[y][x] == "W"]
+        if ys:
+            gr.dots([(x, ys[0])], "C", only={"W"})
+    for (x, y) in pose["spots"]:
+        gr.dots([(x, y)], "y", only={"W", "H"})                            # 目玉模様（黄色の 1 ドット）
+    gr.mirror_left()
+    # 体：小さな頭（横に黒い目）、短い胸、細いおなか（2 ドット：左が白、右が影で細く見える）
+    gr.poly([(9, 5), (12, 5), (12, 7), (9, 7)], "F")
+    gr.dots([(9, 6), (12, 6)], "E")
+    gr.poly([(9, 8), (12, 8), (12, 9), (9, 9)], "F")
+    gr.poly([(10, 10), (11, 10), (11, 16), (10, 16)], "F")
+    gr.dots([(8, 4), (7, 3), (6, 2)], "A")                                 # 触角
+    gr.dots([(13, 4), (14, 3), (15, 2)], "A")
+    rows = fore_hind_line(gr.rows())
+    rows = shade(rows, fur_d=1)
+    rows = inner_lines(rows)
+    rows = outline_rows(rows)
+    return to_image(rows)
 
 
 def sprite_frames():
@@ -203,31 +185,32 @@ SIZE = 48
 
 
 class Grid:
-    """記号の格子（48x48）。図形は記号で塗り、最後に KEY で色にする。"""
+    """記号の格子（顔グラフィックは 48x48、ゲーム内は小さい格子）。図形は記号で塗り、最後に KEY で色にする。"""
 
-    def __init__(self):
-        self.g = [["."] * SIZE for _ in range(SIZE)]
+    def __init__(self, w=None, h=None):
+        self.w, self.h = w or SIZE, h or SIZE
+        self.g = [["."] * self.w for _ in range(self.h)]
 
     def poly(self, points, ch, only=None):
-        m = Image.new("L", (SIZE, SIZE), 0)
+        m = Image.new("L", (self.w, self.h), 0)
         ImageDraw.Draw(m).polygon(points, fill=255)
         self._apply(m, ch, only)
 
     def ellipse(self, box, ch, only=None):
-        m = Image.new("L", (SIZE, SIZE), 0)
+        m = Image.new("L", (self.w, self.h), 0)
         ImageDraw.Draw(m).ellipse(box, fill=255)
         self._apply(m, ch, only)
 
     def _apply(self, m, ch, only):
         px = m.load()
-        for y in range(SIZE):
-            for x in range(SIZE):
+        for y in range(self.h):
+            for x in range(self.w):
                 if px[x, y] and (only is None or self.g[y][x] in only):
                     self.g[y][x] = ch
 
     def dots(self, pts, ch, only=None):
         for (x, y) in pts:
-            if 0 <= x < SIZE and 0 <= y < SIZE and (only is None or self.g[y][x] in only):
+            if 0 <= x < self.w and 0 <= y < self.h and (only is None or self.g[y][x] in only):
                 self.g[y][x] = ch
 
     def stamp(self, rows, x0, y0):
@@ -237,10 +220,10 @@ class Grid:
                     self.g[y0 + y][x0 + x] = ch
 
     def mirror_left(self):
-        """左半分（x < 24）を右半分へ写す。"""
-        for y in range(SIZE):
-            for x in range(SIZE // 2):
-                self.g[y][SIZE - 1 - x] = self.g[y][x]
+        """左半分を右半分へ写す。"""
+        for y in range(self.h):
+            for x in range(self.w // 2):
+                self.g[y][self.w - 1 - x] = self.g[y][x]
 
     def rows(self):
         return ["".join(r) for r in self.g]
