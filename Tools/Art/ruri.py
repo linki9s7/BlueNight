@@ -209,7 +209,7 @@ VIEWS = {
     "side": (SIDE_HEAD, SIDE_BODY, SIDE_LEGS),
 }
 
-# (脚のポーズ, 上半身を持ち上げる px)
+# idle・walk：(脚のポーズ, 上半身を持ち上げる px)
 FRAMES = {
     ("idle", "down"): [("stand", 0), ("stand", 0), ("stand", 1), ("stand", 0)],
     ("idle", "up"): [("stand", 0), ("stand", 0), ("stand", 1), ("stand", 0)],
@@ -220,25 +220,104 @@ FRAMES = {
 }
 
 
-def compose(view, legs_pose, lift):
+def compose(view, legs_pose, lift, head_dy=0, crouch=0, lean=0):
     """頭・胴・脚を 16x32 のピクセルマップに組み立てる。
 
-    lift > 0 のときは上半身を持ち上げ、できた隙間は脚の一番上の行で埋める（歩きの上下動）。
+    lift   > 0：上半身を持ち上げ、できた隙間は脚の一番上の行で埋める（歩き・走りの上下動）。
+    head_dy> 0：頭だけ下げる（のぞきこむ）。頭が胴の上の行に重なる。
+    crouch > 0：すねを crouch 行ぶん縮めて、上半身を下げる（しゃがむ）。
+    lean       ：頭を横へずらす（走るときの前のめり）。
     """
     head, body, legs = VIEWS[view]
     leg_rows = legs[legs_pose]
-    upper = head + body  # 26 行
-    rows = ["." * 16] * 32
-    top = 0 - lift
-    for i, row in enumerate(upper):
-        y = top + i
-        if 0 <= y < 32:
-            rows[y] = row
+    if crouch:
+        leg_rows = leg_rows[:1] + leg_rows[1 + crouch:]
+    rows = [["."] * 16 for _ in range(32)]
+
+    def put(src, top, dx=0):
+        for i, row in enumerate(src):
+            y = top + i
+            if not 0 <= y < 32:
+                continue
+            for x, ch in enumerate(row):
+                if ch != "." and 0 <= x + dx < 16:
+                    rows[y][x + dx] = ch
+
+    legs_top = 32 - len(leg_rows)
+    body_top = legs_top - len(body) - lift
+    put(body, body_top)
+    put(head, body_top - len(head) + head_dy, lean)
     for i in range(lift):
-        rows[26 - lift + i] = leg_rows[0]
-    for i, row in enumerate(leg_rows):
-        rows[26 + i] = row
-    return rows
+        put([leg_rows[0]], legs_top - lift + i)
+    put(leg_rows, legs_top)
+    return ["".join(r) for r in rows]
+
+
+# ---------------------------------------------------------------- 腕の動き（コマに上から描き足す）
+# 座標は 16 列の絵の中の位置。y は「胴の一番上の行」からの行数（lift・crouch に合わせて動く）。
+# 新しく描いた腕のまわりには、あとで自動で輪郭をつける（add_outline）。
+
+def body_top_of(view, legs_pose, lift, crouch):
+    _, body, legs = VIEWS[view]
+    return 32 - (len(legs[legs_pose]) - crouch) - len(body) - lift
+
+
+def edit(rows, changes, top, width_pad):
+    """changes: [(x, y, 記号)]。y は胴の一番上からの行数。"""
+    grid = [list(r) for r in rows]
+    for (x, y, ch) in changes:
+        yy, xx = top + y, x + width_pad
+        if 0 <= yy < len(grid) and 0 <= xx < len(grid[0]):
+            grid[yy][xx] = ch
+    return ["".join(r) for r in grid]
+
+
+def add_outline(rows, symbols="WwSsBb"):
+    """透明の所で、腕（コート・肌）に接する所に輪郭 O をつける。"""
+    grid = [list(r) for r in rows]
+    h, w = len(grid), len(grid[0])
+    out = [r[:] for r in grid]
+    for y in range(h):
+        for x in range(w):
+            if grid[y][x] != ".":
+                continue
+            for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+                if 0 <= nx < w and 0 <= ny < h and grid[ny][nx] in symbols:
+                    out[y][x] = "O"
+                    break
+    return ["".join(r) for r in out]
+
+
+def mirror_x(changes):
+    """正面・背中の絵で、右腕の変更を左腕へ写す（コートの明るさは左が明るい W、右が影 w）。"""
+    swap = {"w": "W", "s": "S"}
+    return [(15 - x, y, swap.get(ch, ch)) for (x, y, ch) in changes]
+
+
+# 正面（下向き）：画面右の腕（col 12）。ランタンはこちらの手に持つ
+ARM_FRONT = {
+    "swing": [(12, 5, "s"), (12, 6, "s"), (12, 7, "O"), (11, 7, "O")],         # 手を前へ（1 ドット上がる）
+    "reach": [(12, 6, "w"), (12, 7, "w"), (11, 7, "w"),                          # 体の横の手を消して
+              (13, 3, "w"), (14, 3, "w"), (15, 3, "s")],                          # 腕を横へのばす
+    "raise": [(12, 6, "w"), (12, 7, "w"), (11, 7, "w"),
+              (13, 2, "w"), (14, 1, "w"), (15, 0, "w"), (15, -1, "w"), (15, -2, "s"), (15, -3, "s")],
+}
+# 横向き（右向き）：手は胴の前（col 7、7 行目）
+ARM_SIDE = {
+    "swing_fwd": [(7, 7, "W"), (9, 7, "S")],
+    "swing_back": [(7, 7, "W"), (5, 7, "S")],
+    "reach": [(7, 7, "W"), (13, 4, "W"), (14, 4, "W"), (15, 4, "S")],
+    "raise": [(7, 7, "W"), (13, 3, "W"), (14, 2, "W"), (15, 1, "W"), (16, 0, "S"), (16, -1, "S")],
+}
+
+
+def arm(view, name):
+    """向きと動きの名前から、腕の変更（16 列の座標）を返す。背中向きはランタンを持つ左手（画面左）。"""
+    if view == "side":
+        return ARM_SIDE[name]
+    if view == "up":
+        return mirror_x(ARM_FRONT[name])
+    return ARM_FRONT[name]
 
 
 def material_of(symbol):
@@ -269,10 +348,66 @@ def relight_mirror(rows):
     return out
 
 
+# 動きのコマ：dict(pose=脚のポーズ, lift, head_dy, crouch, lean, arm=腕の動き, arm2=もう一方の腕)
+def F(pose="stand", lift=0, head_dy=0, crouch=0, lean=0, arm=None, arm2=None):
+    return dict(pose=pose, lift=lift, head_dy=head_dy, crouch=crouch, lean=lean, arm=arm, arm2=arm2)
+
+
+ACTIONS = {
+    # 小走り 6 コマ：大きな上下動、腕を振る。横向きは頭が 1 ドット前へ（前のめり）
+    ("run", "down"): [F("left_up", 2, arm="swing"), F("left_up", 1, arm="swing"), F("stand", 0),
+                      F("right_up", 2, arm2="swing"), F("right_up", 1, arm2="swing"), F("stand", 0)],
+    ("run", "up"): [F("right_up", 2, arm="swing"), F("right_up", 1, arm="swing"), F("stand", 0),
+                    F("left_up", 2, arm2="swing"), F("left_up", 1, arm2="swing"), F("stand", 0)],
+    ("run", "side"): [F("stride", 1, lean=1, arm="swing_fwd"), F("stride", 2, lean=1, arm="swing_fwd"), F("stand", 1, lean=1),
+                      F("stride_alt", 1, lean=1, arm="swing_back"), F("stride_alt", 2, lean=1, arm="swing_back"),
+                      F("stand", 1, lean=1)],
+    # 調べる 3 コマ：のぞきこむ（頭を下げ、少しかがむ）
+    ("inspect", "down"): [F(), F(head_dy=1), F(head_dy=1, crouch=1)],
+    ("inspect", "up"): [F(), F(head_dy=1), F(head_dy=1, crouch=1)],
+    ("inspect", "side"): [F(), F(head_dy=1, lean=1), F(head_dy=1, crouch=1, lean=1, arm="reach")],
+    # ランタンを掛ける 5 コマ：腕を横へ → 上へ（背のびして 1 ドット上がる）→ 横へもどす
+    ("hang", "down"): [F(), F(arm="reach"), F(arm="raise"), F(lift=1, arm="raise"), F(arm="reach")],
+    ("hang", "up"): [F(), F(arm="reach"), F(arm="raise"), F(lift=1, arm="raise"), F(arm="reach")],
+    ("hang", "side"): [F(), F(arm="reach"), F(arm="raise"), F(lift=1, arm="raise"), F(arm="reach")],
+    # ランタンを置く 5 コマ：しゃがんで、手を下へのばす
+    ("place", "down"): [F(), F(crouch=2, head_dy=1), F(crouch=2, head_dy=1, arm="reach"),
+                        F(crouch=2, head_dy=1, arm="reach"), F(crouch=1)],
+    ("place", "up"): [F(), F(crouch=2, head_dy=1), F(crouch=2, head_dy=1, arm="reach"),
+                      F(crouch=2, head_dy=1, arm="reach"), F(crouch=1)],
+    ("place", "side"): [F(), F(crouch=2, head_dy=1, lean=1), F(crouch=2, head_dy=1, lean=1, arm="reach"),
+                        F(crouch=2, head_dy=1, lean=1, arm="reach"), F(crouch=1)],
+}
+
+ANIMS = ("idle", "walk", "run", "inspect", "hang", "place")
+# 腕を体の外へのばす動きは、絵の幅を 24 にする（左右 4 ドットずつ広げる。足元の中心は同じ）
+WIDE = {"hang", "place", "inspect"}
+
+
+def action_frame(view, spec, width):
+    pad = (width - 16) // 2
+    rows = compose(view, spec["pose"], spec["lift"], spec["head_dy"], spec["crouch"], spec["lean"])
+    rows = ["." * pad + r + "." * pad for r in rows]
+    top = body_top_of(view, spec["pose"], spec["lift"], spec["crouch"])
+    changed = False
+    if spec["arm"]:
+        rows = edit(rows, arm(view, spec["arm"]), top, pad)
+        changed = True
+    if spec["arm2"] and view != "side":
+        other = mirror_x(ARM_FRONT[spec["arm2"]]) if view == "down" else ARM_FRONT[spec["arm2"]]
+        rows = edit(rows, other, top, pad)
+        changed = True
+    return add_outline(rows) if changed else rows
+
+
 def frames(anim, direction):
     """direction は down / up / right / left。"""
     view = "side" if direction in ("left", "right") else direction
-    result = [compose(view, pose, lift) for pose, lift in FRAMES[(anim, view)]]
+    if (anim, view) in FRAMES:
+        result = [compose(view, pose, lift) for pose, lift in FRAMES[(anim, view)]]
+    else:
+        width = 24 if anim in WIDE else 16
+        result = [action_frame(view, spec, width) for spec in ACTIONS[(anim, view)]]
     if direction == "left":
         result = [relight_mirror(rows) for rows in result]
     return result

@@ -71,6 +71,12 @@ MAP_PALETTES = {
                         "stone2", "stone3", "stone4", "stone5", "stone7", "warm4", "warm5", "red2",
                         "warm3", "warm6", "moon0", "moon1", "moon2", "moon3",
                         "moth0", "moth1", "moth2", "moth3", "moth4"),  # moon2：逃げた影の光る目、moon3：顔グラの目のつや、moth：ネムの羽
+    # ランプ屋の中（第 1 章）：木・しっくい・消えたランプ・灯り
+    "lamp_shop": _pick("night0", "night1", "night2", "night3", "night4", "night5", "stone3", "stone4", "stone5",
+                       "stone6", "stone7", "brown0", "brown1", "brown2", "warm3", "warm4", "warm5", "warm6",
+                       "red0", "red1", "red1", "green0", "green1", "moon2"),
+    # 演出（光の輪・つぶ・波紋・小さな蛾・足元の影）
+    "effects": _pick("night0", "night4", "night5", "moon0", "moon1", "moon2", "moon3", "stone7", "warm4", "warm5"),
     # UI（会話ウィンドウ・アイコン）：10 色
     "ui": _pick("night0", "night1", "night2", "moon1", "moon3", "scarf0", "scarf1", "stone7", "warm4", "warm5"),
     # タイトルの一枚絵（夜空・月・ハイウェイ・遠くの町＋小さなルリ）：32 色

@@ -196,6 +196,40 @@
   "reviewed": ""
  },
  {
+  "file": "Characters/Grandma/grandma_doze_0.png",
+  "group": "characters",
+  "colors": 12,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 4,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 2.1,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "あごの肌の帯は口まわりの形。2 コマ目の右肩の影は手との境目"
+ },
+ {
+  "file": "Characters/Grandma/grandma_doze_1.png",
+  "group": "characters",
+  "colors": 12,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 4,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 2.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "あごの肌の帯は口まわりの形。2 コマ目の右肩の影は手との境目"
+ },
+ {
   "file": "Characters/Grandma/grandma_idle_0.png",
   "group": "characters",
   "colors": 12,
@@ -343,6 +377,324 @@
   "ditherPercent": 0.0,
   "lightWrong": {},
   "reviewed": "オオミズアオの模様（前羽の赤茶の帯・目玉模様・尾の先の黄色）と細い体は模様・形で、陰影の帯ではない。ノイズの点は、羽の輪郭（青緑）と体の輪郭（紺）が切り替わる所"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_down_0.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 1.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_down_1.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 2.1,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_down_2.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 1.7,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_down_3.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 1.1,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_down_4.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 2.1,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_left_0.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 6,
+  "noisePercent": 2.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_left_1.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 6,
+  "noisePercent": 2.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_left_2.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 6,
+  "noisePercent": 2.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_left_3.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 6,
+  "noisePercent": 2.1,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_left_4.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 6,
+  "noisePercent": 2.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_right_0.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 1.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_right_1.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#c9cbe0"
+  ],
+  "floatingAA": 3,
+  "noisePercent": 1.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_right_2.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#c9cbe0"
+  ],
+  "floatingAA": 3,
+  "noisePercent": 1.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_right_3.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#c9cbe0"
+  ],
+  "floatingAA": 3,
+  "noisePercent": 1.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_right_4.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#c9cbe0"
+  ],
+  "floatingAA": 3,
+  "noisePercent": 1.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_up_0.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 1.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_up_1.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 1.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_up_2.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 1.4,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_up_3.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 0.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_hang_up_4.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 1.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
  },
  {
   "file": "Characters/Ruri/ruri_idle_down_0.png",
@@ -579,6 +931,933 @@
  },
  {
   "file": "Characters/Ruri/ruri_idle_up_3.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 1.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_inspect_down_0.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 1.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_inspect_down_1.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 1.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_inspect_down_2.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 1.9,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_inspect_left_0.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 6,
+  "noisePercent": 2.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_inspect_left_1.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#232448"
+  ],
+  "floatingAA": 6,
+  "noisePercent": 2.7,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_inspect_left_2.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#232448"
+  ],
+  "floatingAA": 6,
+  "noisePercent": 2.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_inspect_right_0.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 1.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_inspect_right_1.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 4,
+  "bandingColors": [
+   "#3b7bd9"
+  ],
+  "floatingAA": 3,
+  "noisePercent": 1.7,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_inspect_right_2.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 2,
+  "bandingPixels": 7,
+  "bandingColors": [
+   "#3b7bd9",
+   "#c9cbe0"
+  ],
+  "floatingAA": 3,
+  "noisePercent": 1.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_inspect_up_0.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 1.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_inspect_up_1.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 1.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_inspect_up_2.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 1.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_down_0.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 1.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_down_1.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 3,
+  "noisePercent": 2.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_down_2.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 3,
+  "noisePercent": 2.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_down_3.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 3,
+  "noisePercent": 2.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_down_4.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 1.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_left_0.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 6,
+  "noisePercent": 2.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_left_1.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#232448"
+  ],
+  "floatingAA": 6,
+  "noisePercent": 2.7,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_left_2.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#232448"
+  ],
+  "floatingAA": 6,
+  "noisePercent": 2.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_left_3.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#232448"
+  ],
+  "floatingAA": 6,
+  "noisePercent": 2.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_left_4.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 6,
+  "noisePercent": 2.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_right_0.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 1.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_right_1.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 4,
+  "bandingColors": [
+   "#3b7bd9"
+  ],
+  "floatingAA": 3,
+  "noisePercent": 1.7,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_right_2.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 2,
+  "bandingPixels": 7,
+  "bandingColors": [
+   "#3b7bd9",
+   "#c9cbe0"
+  ],
+  "floatingAA": 3,
+  "noisePercent": 1.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_right_3.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 2,
+  "bandingPixels": 7,
+  "bandingColors": [
+   "#3b7bd9",
+   "#c9cbe0"
+  ],
+  "floatingAA": 3,
+  "noisePercent": 1.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_right_4.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 1.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_up_0.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 1.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_up_1.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 2.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_up_2.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 2.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_up_3.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 2.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_place_up_4.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 1.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_down_0.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 1.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_down_1.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 1.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_down_2.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 1.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_down_3.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 1.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_down_4.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 1.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_down_5.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 1.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_left_0.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#232448"
+  ],
+  "floatingAA": 6,
+  "noisePercent": 3.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "stone": [
+    -4.2,
+    -0.1
+   ]
+  },
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_left_1.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 6,
+  "noisePercent": 3.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "stone": [
+    -4.2,
+    -0.1
+   ]
+  },
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_left_2.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#232448"
+  ],
+  "floatingAA": 6,
+  "noisePercent": 2.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_left_3.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#232448"
+  ],
+  "floatingAA": 6,
+  "noisePercent": 2.7,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_left_4.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 6,
+  "noisePercent": 2.7,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_left_5.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#232448"
+  ],
+  "floatingAA": 6,
+  "noisePercent": 2.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_right_0.png",
+  "group": "characters",
+  "colors": 18,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#c9cbe0"
+  ],
+  "floatingAA": 4,
+  "noisePercent": 1.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "stone": [
+    -5.9,
+    0.2
+   ]
+  },
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_right_1.png",
+  "group": "characters",
+  "colors": 18,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#c9cbe0"
+  ],
+  "floatingAA": 4,
+  "noisePercent": 1.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "stone": [
+    -5.9,
+    0.2
+   ]
+  },
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_right_2.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 1.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_right_3.png",
+  "group": "characters",
+  "colors": 18,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#c9cbe0"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 1.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_right_4.png",
+  "group": "characters",
+  "colors": 18,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#c9cbe0"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 1.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_right_5.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 1.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_up_0.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 0.9,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_up_1.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 0.9,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_up_2.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 1.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_up_3.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 0.9,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_up_4.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 0.9,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない"
+ },
+ {
+  "file": "Characters/Ruri/ruri_run_up_5.png",
   "group": "characters",
   "colors": 15,
   "offPalette": [],
@@ -863,7 +2142,7 @@
   "noisePercent": 1.3,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_cat_1.png",
@@ -878,7 +2157,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_cat_2.png",
@@ -893,7 +2172,7 @@
   "noisePercent": 1.3,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_cat_3.png",
@@ -908,7 +2187,7 @@
   "noisePercent": 1.3,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_grandma_0.png",
@@ -923,7 +2202,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_grandma_1.png",
@@ -938,7 +2217,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_grandma_2.png",
@@ -953,7 +2232,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_grandma_3.png",
@@ -968,7 +2247,512 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_caught_0.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_caught_1.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_caught_2.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_caught_3.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "moon": [
+    -2.3,
+    -16.1
+   ]
+  },
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_caught_4.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "moon": [
+    -2.3,
+    -16.1
+   ]
+  },
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_caught_5.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_down_0.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_down_1.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_down_2.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_down_3.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_down_4.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_down_5.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_left_0.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_left_1.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_left_2.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_left_3.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_left_4.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_left_5.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_right_0.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_right_1.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_right_2.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_right_3.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_right_4.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_right_5.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_up_0.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_up_1.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_up_2.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_up_3.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_up_4.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_move_up_5.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_surprised_0.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_surprised_1.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Characters/Shadows/shadow_grandma_surprised_2.png",
+  "group": "characters",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_idle_down_0.png",
@@ -983,7 +2767,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_idle_down_1.png",
@@ -998,7 +2782,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_idle_down_2.png",
@@ -1013,7 +2797,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_idle_down_3.png",
@@ -1028,7 +2812,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_idle_left_0.png",
@@ -1043,7 +2827,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_idle_left_1.png",
@@ -1058,7 +2842,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_idle_left_2.png",
@@ -1073,7 +2857,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_idle_left_3.png",
@@ -1088,7 +2872,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_idle_right_0.png",
@@ -1103,7 +2887,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_idle_right_1.png",
@@ -1118,7 +2902,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_idle_right_2.png",
@@ -1133,7 +2917,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_idle_right_3.png",
@@ -1148,7 +2932,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_idle_up_0.png",
@@ -1163,7 +2947,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_idle_up_1.png",
@@ -1178,7 +2962,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_idle_up_2.png",
@@ -1193,7 +2977,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_idle_up_3.png",
@@ -1208,7 +2992,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_walk_down_0.png",
@@ -1223,7 +3007,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_walk_down_1.png",
@@ -1238,7 +3022,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_walk_down_2.png",
@@ -1253,7 +3037,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_walk_down_3.png",
@@ -1268,7 +3052,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_walk_left_0.png",
@@ -1283,7 +3067,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_walk_left_1.png",
@@ -1298,7 +3082,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_walk_left_2.png",
@@ -1313,7 +3097,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_walk_left_3.png",
@@ -1328,7 +3112,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_walk_right_0.png",
@@ -1343,7 +3127,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_walk_right_1.png",
@@ -1358,7 +3142,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_walk_right_2.png",
@@ -1373,7 +3157,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_walk_right_3.png",
@@ -1388,7 +3172,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_walk_up_0.png",
@@ -1403,7 +3187,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_walk_up_1.png",
@@ -1418,7 +3202,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_walk_up_2.png",
@@ -1433,7 +3217,7 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
  },
  {
   "file": "Characters/Shadows/shadow_ruri_walk_up_3.png",
@@ -1448,7 +3232,387 @@
   "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない"
+ },
+ {
+  "file": "Effects/foot_shadow.png",
+  "group": "effects",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_capture_0.png",
+  "group": "effects",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_capture_1.png",
+  "group": "effects",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 25.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_capture_2.png",
+  "group": "effects",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 9.4,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_capture_3.png",
+  "group": "effects",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 7.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_capture_4.png",
+  "group": "effects",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 45.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_capture_5.png",
+  "group": "effects",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 47.9,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_moths_0.png",
+  "group": "effects",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 100.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_moths_1.png",
+  "group": "effects",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 100.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_moths_2.png",
+  "group": "effects",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 100.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_moths_3.png",
+  "group": "effects",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 100.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_return_0.png",
+  "group": "effects",
+  "colors": 4,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 88.9,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_return_1.png",
+  "group": "effects",
+  "colors": 4,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 88.9,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_return_2.png",
+  "group": "effects",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 100.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "moon": [
+    -2.0,
+    -2.7
+   ]
+  },
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_return_3.png",
+  "group": "effects",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 77.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_return_4.png",
+  "group": "effects",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 77.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_return_5.png",
+  "group": "effects",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 77.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_ripple_0.png",
+  "group": "effects",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_ripple_1.png",
+  "group": "effects",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_ripple_2.png",
+  "group": "effects",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_ripple_3.png",
+  "group": "effects",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_sparkle_0.png",
+  "group": "effects",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 100.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_sparkle_1.png",
+  "group": "effects",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 20.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_sparkle_2.png",
+  "group": "effects",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 44.4,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
+ },
+ {
+  "file": "Effects/fx_sparkle_3.png",
+  "group": "effects",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 20.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない"
  },
  {
   "file": "Faces/face_grandma_normal.png",
@@ -1705,6 +3869,302 @@
   "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない"
  },
  {
+  "file": "Interior/Tiles/floor_wood_0.png",
+  "group": "lamp_shop",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/Tiles/floor_wood_1.png",
+  "group": "lamp_shop",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/Tiles/wall_plaster_0.png",
+  "group": "lamp_shop",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/Tiles/wall_plaster_1.png",
+  "group": "lamp_shop",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "stone": [
+    -2.5,
+    -1.0
+   ]
+  },
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/Tiles/wall_top_inner.png",
+  "group": "lamp_shop",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/Tiles/wall_wainscot.png",
+  "group": "lamp_shop",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/counter.png",
+  "group": "lamp_shop",
+  "colors": 10,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 3,
+  "bandingPixels": 18,
+  "bandingColors": [
+   "#c3c8dc",
+   "#243266"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/crate.png",
+  "group": "lamp_shop",
+  "colors": 4,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/door_inner.png",
+  "group": "lamp_shop",
+  "colors": 4,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/doormat.png",
+  "group": "lamp_shop",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/grandfather_clock.png",
+  "group": "lamp_shop",
+  "colors": 8,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 6,
+  "bandingColors": [
+   "#5a3a32"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "warm": [
+    0.0,
+    -6.0
+   ]
+  },
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/hanging_lamp_off.png",
+  "group": "lamp_shop",
+  "colors": 4,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 2.7,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/hanging_lamp_on.png",
+  "group": "lamp_shop",
+  "colors": 4,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 2.7,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/rug.png",
+  "group": "lamp_shop",
+  "colors": 4,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 3.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/shelf_lamps.png",
+  "group": "lamp_shop",
+  "colors": 8,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 3,
+  "bandingPixels": 10,
+  "bandingColors": [
+   "#3b2626"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "brown": [
+    0.4,
+    -4.4
+   ]
+  },
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/stool.png",
+  "group": "lamp_shop",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 6,
+  "bandingColors": [
+   "#5a3a32"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/window_inner.png",
+  "group": "lamp_shop",
+  "colors": 5,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
+  "file": "Interior/workbench.png",
+  "group": "lamp_shop",
+  "colors": 8,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 4,
+  "bandingColors": [
+   "#2f4280"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.7,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様"
+ },
+ {
   "file": "Props/a_sign.png",
   "group": "street_night",
   "colors": 4,
@@ -1830,6 +4290,36 @@
   "file": "Props/lamp.png",
   "group": "street_night",
   "colors": 5,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": ""
+ },
+ {
+  "file": "Props/lamp_dim.png",
+  "group": "street_night",
+  "colors": 5,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": ""
+ },
+ {
+  "file": "Props/lamp_off.png",
+  "group": "street_night",
+  "colors": 4,
   "offPalette": [],
   "doubles": 0,
   "banding": 0,

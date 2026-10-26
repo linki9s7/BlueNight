@@ -19,6 +19,8 @@ sys.path.insert(0, os.path.dirname(__file__))
 import json  # noqa: E402
 
 import ch1_assets  # noqa: E402
+import ch1_interior  # noqa: E402
+import ch1_more  # noqa: E402
 import m1_assets  # noqa: E402
 import nemu  # noqa: E402
 import npc  # noqa: E402
@@ -92,7 +94,7 @@ def build_ruri():
             if name.endswith(".png"):
                 os.remove(os.path.join(folder, name))  # 以前の「side」などを残さない
     sheets = {}
-    for anim in ("idle", "walk"):
+    for anim in ruri.ANIMS:
         for direction in ("down", "up", "right", "left"):
             imgs = []
             for i, rows in enumerate(ruri.frames(anim, direction)):
@@ -197,8 +199,16 @@ def build_tiles():
 
 
 # ---------------------------------------------------------------- 小物
-def build_lamp():
-    """街灯 16x48。足元がピボット。"""
+LAMP_GLASS = {  # 街灯のガラスの色（明るさの段階）：(ガラス, つや)
+    "on": (("warm", 5), ("warm", 6)),
+    "dim": (("warm", 3), ("warm", 4)),   # 明滅でふっと暗くなったとき
+    "off": (("night", 4), ("night", 5)), # 消えたとき
+}
+
+
+def build_lamp(state="on"):
+    """街灯 16x48。足元がピボット。state は on / dim / off（明滅のコマ）。"""
+    glass, glass_hi = LAMP_GLASS[state]
     img = Image.new("RGBA", (16, 48), CLEAR)
     d = ImageDraw.Draw(img)
     pole, pole_hi, outline = color("night", 3), color("night", 5), color("night", 1)
@@ -211,8 +221,8 @@ def build_lamp():
     # 灯具（傘＋ガラス）。つやは 1 列の線ではなく、左上の 2x2 のかたまり
     d.polygon([(3, 6), (12, 6), (10, 3), (5, 3)], fill=pole, outline=outline)
     d.rectangle([5, 4, 6, 5], fill=pole_hi)
-    d.rectangle([4, 7, 11, 11], fill=color("warm", 5), outline=outline)
-    d.rectangle([5, 8, 6, 9], fill=color("warm", 6))
+    d.rectangle([4, 7, 11, 11], fill=color(*glass), outline=outline)
+    d.rectangle([5, 8, 6, 9], fill=color(*glass_hi))
     d.line([6, 12, 9, 12], fill=outline)
     return img
 
@@ -291,7 +301,8 @@ def build_puddle():
 
 
 def build_props():
-    props = {"lamp": build_lamp(), "vending": build_vending(), "puddle_moon": build_puddle()}
+    props = {"lamp": build_lamp(), "lamp_dim": build_lamp("dim"), "lamp_off": build_lamp("off"),
+             "vending": build_vending(), "puddle_moon": build_puddle()}
     for name in props:
         props[name] = save(props[name], "Props", f"{name}.png", clean=True)
     return props
@@ -302,18 +313,21 @@ def build_previews(palette, sheets, nemu, tiles, props):
     os.makedirs(PREVIEW, exist_ok=True)
     upscale(palette, 6).save(os.path.join(PREVIEW, "palette.png"))
 
-    # ルリ全コマ一覧（行 = アニメ×向き、列 = コマ）
-    scale = 8
-    rows = list(sheets.items())
-    cols = max(len(v) for _, v in rows)
-    pad = 4
-    w = cols * (16 + pad) + pad
-    h = len(rows) * (32 + pad) + pad
-    sheet = Image.new("RGBA", (w, h), hex_to_rgba(RAMPS["night"][2]))
-    for r, (_, imgs) in enumerate(rows):
-        for c, img in enumerate(imgs):
-            sheet.alpha_composite(img, (pad + c * (16 + pad), pad + r * (32 + pad)))
-    upscale(sheet, scale).save(os.path.join(PREVIEW, "ruri_frames.png"))
+    # ルリ全コマ一覧（行 = アニメ×向き、列 = コマ）。待機・歩きと、それ以外の動きで 2 枚に分ける
+    def frame_sheet(items, scale, name):
+        cell = max(img.width for _, imgs in items for img in imgs)
+        cols = max(len(v) for _, v in items)
+        pad = 4
+        sheet = Image.new("RGBA", (cols * (cell + pad) + pad, len(items) * (32 + pad) + pad), hex_to_rgba(RAMPS["night"][2]))
+        for r, (_, imgs) in enumerate(items):
+            for c, img in enumerate(imgs):
+                sheet.alpha_composite(img, (pad + c * (cell + pad) + (cell - img.width) // 2, pad + r * (32 + pad)))
+        upscale(sheet, scale).save(os.path.join(PREVIEW, name))
+
+    basic = [(k, v) for k, v in sheets.items() if k[0] in ("idle", "walk")]
+    actions = [(k, v) for k, v in sheets.items() if k[0] not in ("idle", "walk")]
+    frame_sheet(basic, 8, "ruri_frames.png")
+    frame_sheet(actions, 5, "ruri_actions.png")
 
     # 夜の地面に並べた全体の見え方
     scene = Image.new("RGBA", (160, 90), CLEAR)
@@ -511,6 +525,60 @@ def build_ch1_preview(tiles, props, ch1, sheets, nemu, m1):
     upscale(lit, 2).save(os.path.join(PREVIEW, "ch1_street.png"))
 
 
+def build_ch1_rest_preview(more, interior, sheets, nemu_sprites, people, props):
+    """第 1 章の残り：おばあさんの影の動き・演出・環境の動き・ランプ屋の中。"""
+    bg = hex_to_rgba(RAMPS["night"][2])
+    gs = more["grandma_shadow"]
+    rows = [gs[d] for d in ("down", "up", "right", "left")] + [gs["surprised"], gs["caught"]]
+    width = max(sum(i.width + 3 for i in r) for r in rows) + 3
+    img = Image.new("RGBA", (width, len(rows) * 38 + 3), bg)
+    for r, frames in enumerate(rows):
+        x = 3
+        for f in frames:
+            img.alpha_composite(f, (x, 3 + r * 38 + (36 - f.height)))
+            x += f.width + 3
+    upscale(img, 5).save(os.path.join(PREVIEW, "ch1_shadow_moves.png"))
+
+    fx = (more["fx_capture"] + more["fx_return"] + more["fx_sparkle"] + more["fx_ripple"] + more["fx_moths"]
+          + more["grandma_doze"] + [more["foot_shadow"], props["lamp"], props["lamp_dim"], props["lamp_off"]])
+    upscale(contact_sheet(fx, bg, max_w=260), 5).save(os.path.join(PREVIEW, "ch1_fx.png"))
+
+    # ランプ屋の中（15x10 タイル）
+    room = Image.new("RGBA", (240, 160), hex_to_rgba(RAMPS["night"][0]))
+    for tx in range(15):
+        room.alpha_composite(interior["wall_top_inner"], (tx * 16, 0))
+        room.alpha_composite(interior["wall_plaster_1" if tx % 5 == 2 else "wall_plaster_0"], (tx * 16, 16))
+        room.alpha_composite(interior["wall_plaster_0"], (tx * 16, 32))
+        room.alpha_composite(interior["wall_wainscot"], (tx * 16, 48))
+        for ty in range(4, 10):
+            room.alpha_composite(interior["floor_wood_1" if (tx * 3 + ty) % 5 == 0 else "floor_wood_0"], (tx * 16, ty * 16))
+
+    def put(sprite, x, foot):
+        room.alpha_composite(sprite, (x - sprite.width // 2, foot - sprite.height))
+
+    put(interior["window_inner"], 120, 44)
+    put(interior["shelf_lamps"], 28, 64)
+    put(interior["shelf_lamps"], 62, 64)
+    put(interior["grandfather_clock"], 200, 64)
+    put(interior["shelf_lamps"], 176, 64)
+    put(interior["rug"], 120, 124)
+    put(interior["workbench"], 44, 112)
+    put(interior["stool"], 44, 126)
+    put(interior["crate"], 214, 96)
+    put(interior["crate"], 222, 110)
+    put(interior["counter"], 168, 108)
+    put(interior["doormat"], 120, 160)
+    put(people["keeper"][0], 188, 92)
+    put(sheets[("idle", "up")][0], 128, 132)
+    put(nemu_sprites[0], 160, 76)
+    for x in (80, 160):
+        put(interior["hanging_lamp_on" if x == 160 else "hanging_lamp_off"], x, 20)
+    lit = Image.alpha_composite(room, Image.new("RGBA", room.size, (30, 45, 110, 70)))
+    glow(lit, 164, 84, 40, (255, 190, 110), 0.5)
+    glow(lit, 160, 18, 30, (255, 190, 110), 0.35)
+    upscale(lit, 3).save(os.path.join(PREVIEW, "ch1_lamp_shop_inside.png"))
+
+
 def build_nemu_preview(sprites):
     """ネムの顔グラフィック（全表情）とゲーム内の 4 コマ。"""
     bg = hex_to_rgba(RAMPS["night"][2])
@@ -580,6 +648,8 @@ def main():
     m1 = m1_assets.build(save)
     ch1 = ch1_assets.build(save)
     people = npc.build(save)
+    more = ch1_more.build(save)
+    interior = ch1_interior.build(save)
     faces = portrait.build(save)
     faces.update({f"nemu_{k}": v for k, v in NEMU_FACES.items()})
     ui = ui_title.build_ui(save)
@@ -592,6 +662,7 @@ def main():
     build_ch1_preview(tiles, props, ch1, sheets, nemu, m1)
     build_npc_preview(people, m1, sheets)
     build_nemu_preview(nemu)
+    build_ch1_rest_preview(more, interior, sheets, nemu, people, props)
     upscale(contact_sheet(list(faces.values()), hex_to_rgba(RAMPS["night"][2]), max_w=320), 4).save(
         os.path.join(PREVIEW, "faces.png"))
     build_ui_title_preview(ui, title, faces)

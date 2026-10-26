@@ -37,6 +37,9 @@ REVIEWED = {
     "Title/title_bg": "一枚絵：明るい星の十字形・月の欠けの先は模様。光の向きは、月（光源）・星・街灯の光のたまりが入るので系統の重心では判断できない",
     "Title/title_car": "車の光は 3 ドットの光の点（ノイズではない）",
     "UI/": "アイコンの中の絵（ランタン・虫めがね・しおり）は 1 ドットの線の絵で、陰影の帯ではない",
+    "Characters/Shadows/": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない",
+    "Interior/": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様",
+    "Effects/": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない",
     "Faces/": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない",
     "Characters/Nemu/": "オオミズアオの模様（前羽の赤茶の帯・目玉模様・尾の先の黄色）と細い体は模様・形で、陰影の帯ではない。ノイズの点は、羽の輪郭（青緑）と体の輪郭（紺）が切り替わる所",
     "Faces/face_nemu": "目玉模様の縁・羽の筋・触角の羽毛・前羽の帯は模様で、陰影の帯ではない",
@@ -254,6 +257,10 @@ def group_of(rel):
         return "ui"
     if rel.startswith("Title"):
         return "title"
+    if rel.startswith("Interior"):
+        return "lamp_shop"
+    if rel.startswith("Effects"):
+        return "effects"
     if rel.startswith(("Tiles", "Props", "Buildings")):
         return "street_night"
     return None
