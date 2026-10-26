@@ -1,0 +1,110 @@
+{
+  "sounds": [
+    {
+      "name": "rain",
+      "title": "雨（第2章 雨の路地裏）",
+      "file": "ambient_rain.ogg",
+      "loopSeconds": 60.0,
+      "loudnessLufs": -26.0,
+      "layers": [
+        {
+          "layer": "雨（録音・主役）",
+          "lufs": -26.2,
+          "relativeToMainDb": 0.0
+        },
+        {
+          "layer": "雨どいの水音（録音・背景）",
+          "lufs": -40.2,
+          "relativeToMainDb": -14.0
+        },
+        {
+          "layer": "ノイズの隠し味",
+          "lufs": -44.2,
+          "relativeToMainDb": -18.0
+        }
+      ]
+    },
+    {
+      "name": "waves",
+      "title": "波（第4章 灯台と港）",
+      "file": "ambient_waves.ogg",
+      "loopSeconds": 60.0,
+      "loudnessLufs": -26.0,
+      "layers": [
+        {
+          "layer": "波（録音の水音から・主役）",
+          "lufs": -24.9,
+          "relativeToMainDb": 0.0
+        },
+        {
+          "layer": "岸壁の水音（録音・背景）",
+          "lufs": -36.9,
+          "relativeToMainDb": -12.0
+        },
+        {
+          "layer": "遠くの海鳴り（録音・背景）",
+          "lufs": -39.0,
+          "relativeToMainDb": -14.1
+        },
+        {
+          "layer": "ノイズの隠し味",
+          "lufs": -43.0,
+          "relativeToMainDb": -18.1
+        }
+      ]
+    },
+    {
+      "name": "highway",
+      "title": "遠くのハイウェイ",
+      "file": "ambient_highway.ogg",
+      "loopSeconds": 60.0,
+      "loudnessLufs": -26.0,
+      "layers": [
+        {
+          "layer": "通り過ぎる車（録音の水音から・主役）",
+          "lufs": -25.2,
+          "relativeToMainDb": 0.0
+        },
+        {
+          "layer": "街のうなり（録音・背景）",
+          "lufs": -38.2,
+          "relativeToMainDb": -13.0
+        },
+        {
+          "layer": "ノイズの隠し味",
+          "lufs": -41.2,
+          "relativeToMainDb": -16.0
+        }
+      ]
+    },
+    {
+      "name": "crickets",
+      "title": "夜の虫",
+      "file": "ambient_crickets.ogg",
+      "loopSeconds": 45.0,
+      "loudnessLufs": -26.0,
+      "layers": [
+        {
+          "layer": "近くの虫（主役）",
+          "lufs": -25.0,
+          "relativeToMainDb": 0.0
+        },
+        {
+          "layer": "もう 1 匹（背景）",
+          "lufs": -35.1,
+          "relativeToMainDb": -10.0
+        },
+        {
+          "layer": "遠くの合唱（背景）",
+          "lufs": -39.1,
+          "relativeToMainDb": -14.0
+        },
+        {
+          "layer": "ノイズの隠し味",
+          "lufs": -40.1,
+          "relativeToMainDb": -15.0
+        }
+      ]
+    }
+  ]
+}

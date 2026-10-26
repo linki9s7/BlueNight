@@ -41,12 +41,8 @@ namespace BlueNight.Player
             // ルリの向きの反対側（背中側）に回り込む
             float side = target.Facing == Facing.Left ? -offset.x : offset.x;
             Vector3 goal = target.transform.position + new Vector3(side, offset.y + Mathf.Sin(time * bobFrequency * Mathf.PI * 2f) * bobAmplitude, 0f);
-            Vector3 previous = transform.position;
-            transform.position = Vector3.SmoothDamp(previous, goal, ref velocity, smoothTime);
-
-            float dx = transform.position.x - previous.x;
-            if (Mathf.Abs(dx) > 0.001f)
-                spriteRenderer.flipX = dx < 0f;
+            // ネムの絵は左右対称の正面向き（影は右の羽だけ）なので、反転しない
+            transform.position = Vector3.SmoothDamp(transform.position, goal, ref velocity, smoothTime);
 
             if (flapFrames.Length > 0)
                 spriteRenderer.sprite = flapFrames[(int)(time * flapFps) % flapFrames.Length];

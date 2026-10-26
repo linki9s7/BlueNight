@@ -1,0 +1,197 @@
+{
+  "groups": [
+    {
+      "name": "step_stone",
+      "title": "足音：石畳・アスファルト",
+      "files": [
+        "footsteps/step_stone_0.ogg",
+        "footsteps/step_stone_1.ogg",
+        "footsteps/step_stone_2.ogg",
+        "footsteps/step_stone_3.ogg",
+        "footsteps/step_stone_4.ogg",
+        "footsteps/step_stone_5.ogg"
+      ],
+      "loop": false,
+      "randomOrder": true,
+      "peakDb": -18
+    },
+    {
+      "name": "step_wet",
+      "title": "足音：濡れた路面・水たまり",
+      "files": [
+        "footsteps/step_wet_0.ogg",
+        "footsteps/step_wet_1.ogg",
+        "footsteps/step_wet_2.ogg",
+        "footsteps/step_wet_3.ogg",
+        "footsteps/step_wet_4.ogg",
+        "footsteps/step_wet_5.ogg"
+      ],
+      "loop": false,
+      "randomOrder": true,
+      "peakDb": -18
+    },
+    {
+      "name": "step_wood",
+      "title": "足音：木の床",
+      "files": [
+        "footsteps/step_wood_0.ogg",
+        "footsteps/step_wood_1.ogg",
+        "footsteps/step_wood_2.ogg",
+        "footsteps/step_wood_3.ogg",
+        "footsteps/step_wood_4.ogg",
+        "footsteps/step_wood_5.ogg"
+      ],
+      "loop": false,
+      "randomOrder": true,
+      "peakDb": -18
+    },
+    {
+      "name": "lantern_hang",
+      "title": "ランタンをフックに掛ける",
+      "files": [
+        "lantern/lantern_hang_0.ogg",
+        "lantern/lantern_hang_1.ogg",
+        "lantern/lantern_hang_2.ogg"
+      ],
+      "loop": false,
+      "randomOrder": true,
+      "peakDb": -12
+    },
+    {
+      "name": "lantern_take",
+      "title": "ランタンをフックから外す",
+      "files": [
+        "lantern/lantern_take_0.ogg",
+        "lantern/lantern_take_1.ogg",
+        "lantern/lantern_take_2.ogg"
+      ],
+      "loop": false,
+      "randomOrder": true,
+      "peakDb": -12
+    },
+    {
+      "name": "light_on",
+      "title": "街灯をつける（カチッ＋ジジッ）",
+      "files": [
+        "light/light_on_0.ogg",
+        "light/light_on_1.ogg"
+      ],
+      "loop": false,
+      "randomOrder": true,
+      "peakDb": -12
+    },
+    {
+      "name": "light_off",
+      "title": "街灯を消す",
+      "files": [
+        "light/light_off_0.ogg",
+        "light/light_off_1.ogg"
+      ],
+      "loop": false,
+      "randomOrder": true,
+      "peakDb": -12
+    },
+    {
+      "name": "shadow_presence",
+      "title": "影の気配（近くにいる間くり返す）",
+      "files": [
+        "shadow/shadow_presence.ogg"
+      ],
+      "loop": true,
+      "randomOrder": false,
+      "peakDb": -24
+    },
+    {
+      "name": "shadow_escape",
+      "title": "影がすっと逃げる",
+      "files": [
+        "shadow/shadow_escape_0.ogg",
+        "shadow/shadow_escape_1.ogg",
+        "shadow/shadow_escape_2.ogg"
+      ],
+      "loop": false,
+      "randomOrder": true,
+      "peakDb": -10
+    },
+    {
+      "name": "shadow_capture",
+      "title": "影を捕まえた",
+      "files": [
+        "shadow/shadow_capture.ogg"
+      ],
+      "loop": false,
+      "randomOrder": false,
+      "peakDb": -8
+    },
+    {
+      "name": "decide",
+      "title": "決定",
+      "files": [
+        "ui/decide.ogg"
+      ],
+      "loop": false,
+      "randomOrder": false,
+      "peakDb": -12
+    },
+    {
+      "name": "cancel",
+      "title": "キャンセル",
+      "files": [
+        "ui/cancel.ogg"
+      ],
+      "loop": false,
+      "randomOrder": false,
+      "peakDb": -12
+    },
+    {
+      "name": "text_blip",
+      "title": "会話の文字送り",
+      "files": [
+        "ui/text_blip.ogg"
+      ],
+      "loop": false,
+      "randomOrder": false,
+      "peakDb": -20
+    },
+    {
+      "name": "menu_open",
+      "title": "メニューを開く",
+      "files": [
+        "ui/menu_open.ogg"
+      ],
+      "loop": false,
+      "randomOrder": false,
+      "peakDb": -12
+    },
+    {
+      "name": "menu_close",
+      "title": "メニューを閉じる",
+      "files": [
+        "ui/menu_close.ogg"
+      ],
+      "loop": false,
+      "randomOrder": false,
+      "peakDb": -12
+    },
+    {
+      "name": "cursor",
+      "title": "カーソル移動",
+      "files": [
+        "ui/cursor.ogg"
+      ],
+      "loop": false,
+      "randomOrder": false,
+      "peakDb": -16
+    },
+    {
+      "name": "journal_add",
+      "title": "ことば帳に言葉が増えた",
+      "files": [
+        "ui/journal_add.ogg"
+      ],
+      "loop": false,
+      "randomOrder": false,
+      "peakDb": -12
+    }
+  ]
+}

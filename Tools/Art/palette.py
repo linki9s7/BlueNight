@@ -21,6 +21,8 @@ RAMPS = {
     "scarf": ["#1f4fa8", "#3b7bd9", "#78b4f0"],
     # ルリのコート（明るいグレー）
     "coat": ["#6a6c91", "#9497b8", "#c9cbe0"],
+    # ネムの羽（オオミズアオの淡い青緑。月明かりのようにほの白い）：暗 → 明
+    "moth": ["#24484c", "#3f7a78", "#78b3a8", "#b5e0d2", "#e1f3ea"],
     # 植物
     "green": ["#1d3b3a", "#2c5650", "#3f7466"],
     # 差し色（自販機・看板）
@@ -41,3 +43,45 @@ def color(ramp, index):
 
 def all_colors():
     return [hex_to_rgba(h) for ramp in RAMPS.values() for h in ramp]
+
+
+def _pick(*names):
+    """'night3' のような名前（系統＋明るさの番号）から色を集める。"""
+    out = []
+    for name in names:
+        ramp = name.rstrip("0123456789")
+        out.append(RAMPS[ramp][int(name[len(ramp):])])
+    return out
+
+
+# 輪郭線に使う色（点検で「線」として扱う）
+OUTLINE_COLORS = _pick("hair0", "night0", "night1", "night2", "moth0")  # moth0：ネムの羽の輪郭（やわらかい暗い青緑）
+
+# マップ・用途ごとの専用パレット（この中の色だけで描く）
+MAP_PALETTES = {
+    # 夜の商店街（第 1 章・M1 の地面・建物・小物）：32 色
+    "street_night": _pick("night0", "night1", "night2", "night3", "night4", "night5",
+                          "stone1", "stone2", "stone3", "stone4", "stone5", "stone6", "stone7",
+                          "warm1", "warm2", "warm3", "warm4", "warm5", "warm6", "moon0", "moon1", "moon2", "moon3",
+                          "red0", "red1", "red2", "brown0", "brown1", "brown2", "green0", "green1", "green2"),
+    # 登場人物（どのマップにも出るので共通）
+    "characters": _pick("hair0", "hair1", "hair2", "hair3", "skin0", "skin1", "skin2",
+                        "scarf0", "scarf1", "scarf2", "coat0", "coat1", "coat2",
+                        "night0", "night1", "night2", "night3", "red0", "red1", "brown1", "brown2",
+                        "stone2", "stone3", "stone4", "stone5", "stone7", "warm4", "warm5", "red2",
+                        "warm3", "warm6", "moon0", "moon1", "moon2", "moon3",
+                        "moth0", "moth1", "moth2", "moth3", "moth4"),  # moon2：逃げた影の光る目、moon3：顔グラの目のつや、moth：ネムの羽
+    # ランプ屋の中（第 1 章）：木・しっくい・消えたランプ・灯り
+    "lamp_shop": _pick("night0", "night1", "night2", "night3", "night4", "night5", "stone3", "stone4", "stone5",
+                       "stone6", "stone7", "brown0", "brown1", "brown2", "warm3", "warm4", "warm5", "warm6",
+                       "red0", "red1", "red1", "green0", "green1", "moon2"),
+    # 演出（光の輪・つぶ・波紋・小さな蛾・足元の影）
+    "effects": _pick("night0", "night4", "night5", "moon0", "moon1", "moon2", "moon3", "stone7", "warm4", "warm5"),
+    # UI（会話ウィンドウ・アイコン）：10 色
+    "ui": _pick("night0", "night1", "night2", "moon1", "moon3", "scarf0", "scarf1", "stone7", "warm4", "warm5"),
+    # タイトルの一枚絵（夜空・月・ハイウェイ・遠くの町＋小さなルリ）：32 色
+    "title": _pick("night0", "night1", "night2", "night3", "night4", "night5", "moon1", "moon2", "moon3",
+                   "stone1", "stone2", "stone3", "stone5", "stone7", "warm3", "warm4", "warm5", "warm6", "red0", "red2",
+                   "hair0", "hair1", "hair2", "hair3", "skin1", "skin2", "scarf0", "scarf1", "coat1", "coat2",
+                   "brown1", "brown2"),
+}
