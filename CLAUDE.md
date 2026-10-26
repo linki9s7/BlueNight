@@ -1,0 +1,48 @@
+# BlueNight — Claude 向けメモ
+
+ドット絵・見下ろし型のストーリーアドベンチャー。逃げ出した「影」をランタンの光で追いつめ、
+影が抱えていた「言えなかった言葉」を持ち主に届ける。詳細は **`docs/SPEC.md`**（仕様書・決定事項・進捗）を必ず読むこと。
+
+## ユーザーとのやり取り
+
+- 日本語で、専門用語を避けてわかりやすく説明する。
+- 決定事項は `docs/SPEC.md` の 11.1 にまとめてある。変更するときは仕様書も更新する。
+- ドット絵と音楽は Claude が制作する（ユーザーの決定）。仕上がりはプレビュー画像・試聴ファイルで確認してもらう。
+
+## 構成
+
+| 場所 | 内容 |
+| --- | --- |
+| `Assets/002_Scripts/Logic/` | 光と影のグリッド・マップ定義。**Unity 非依存**（`BlueNight.Logic.asmdef`、noEngineReferences） |
+| `Assets/002_Scripts/Tests/EditMode/` | Logic の NUnit テスト（追いかけっこのシミュレーションを含む） |
+| `Assets/002_Scripts/{Core,Player,Interaction,LightShadow,RunawayShadow,Dialogue,Rendering}/` | ランタイム（Assembly-CSharp） |
+| `Assets/002_Scripts/Editor/` | メニュー **BlueNight**（M0／M1 シーンの自動生成）、テクスチャ・フォントの取り込み規則 |
+| `Tools/Art/` | ドット絵生成（Python / Pillow）。`python Tools/Art/build.py` → `Assets/005_Textures/` と `Tools/Art/preview/` |
+| `Tools/Music/` | 作曲（MIDI → FluidSynth → 仕上げ）。`python Tools/Music/ruri_theme.py` |
+
+- 名前空間は `BlueNight.*`。クラス名と同じ名前空間は作らない（例：逃げた影は `BlueNight.Shadows.RunawayShadow`）。
+- マップは `M1Map.Rows`（ASCII）が唯一の定義。シーン生成・テスト・プレビュー画像がすべてここを読む。
+- シーンは手作業ではなくエディタスクリプトで生成する（再現できるように）。
+
+## 確認方法（Unity 2022.3.62f3）
+
+Unity エディタでプロジェクトを開いたままだとバッチモードは使えない（プロジェクトがロックされる）。
+実行前にユーザーに Unity を閉じてもらうか、エディタ上での確認をお願いする。
+
+```
+# コンパイル確認＋EditMode テスト（Windows の例。パスは環境に合わせる）
+"C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Unity.exe" -batchmode -nographics -projectPath . ^
+  -runTests -testPlatform EditMode -testResults Logs/test-results.xml -logFile Logs/unity.log
+
+# M1 シーンの生成
+"...\Unity.exe" -batchmode -nographics -projectPath . -executeMethod BlueNight.EditorTools.BlueNightSetup.BuildM1Scene -quit -logFile Logs/unity.log
+```
+
+コンパイルエラーは `Logs/unity.log` の `error CS` を探す。
+
+## 現在の状況と次の作業
+
+- M0（2D 環境）：完了。M1（光と影のプロトタイプ）：実装済み、ユーザーの Unity での動作確認待ち。
+- 次：M1 を実際に遊んでもらい、影を追いつめる手ごたえ・速さ・暗がりの見え方を調整 → M2（第 1 章を本番品質で）。
+- 未解決の検討事項：ポストエフェクトが 480×270 で処理される件（仕様書 7.6）。粗く見えたら 2 段カメラ構成にする。
+- 音源は MuseScore General（MIT）。ネットワーク制限が無い環境なら Salamander Grand Piano などへの差し替えを検討（仕様書 8.4）。
