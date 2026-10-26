@@ -5,6 +5,7 @@ BlueNight の曲を、楽譜（MIDI）から作るスクリプト。
 ```
 python3 Tools/Music/build_bgm.py        # BGM 全曲（曲名を付けるとその曲だけ）
 python3 Tools/Music/ambience.py         # 環境音
+python3 Tools/Music/sfx.py              # 効果音（一覧は designs/se_plan.md）
 python3 Tools/Music/check_loops.py      # ループの継ぎ目の確認
 python3 Tools/Music/ruri_theme.py       # 最初の 30 秒スケッチ（参考）
 ```

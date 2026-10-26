@@ -9,11 +9,17 @@
 | MuseScore General SoundFont | S. Christian Collins | MIT | すべての BGM の楽器 |
 | 雨の録音 | Mike Koenig（soundbible.com。2014 年に Dawid Gan が切り出し） | CC BY 3.0（表記が必要） | 環境音「雨」 |
 | 川の録音 | Adam Newns（vennaudio.com） | CC0（表記不要） | 環境音「雨」「波」 |
-| 滝の録音 | Leonard "VKProduktion" Graf | CC0（表記不要） | 環境音「波」「遠くのハイウェイ」 |
+| 滝の録音 | Leonard "VKProduktion" Graf | CC0（表記不要） | 環境音「波」「遠くのハイウェイ」、効果音（影） |
+| 金属を打つ録音 | dADDoiT、Mike Koenig、Marianne Gagnon | CC BY 3.0（表記が必要） | 効果音（ランタン、影を捕まえた） |
+| 木を叩く録音 | "Stephan"（Marianne Gagnon が編集） | パブリックドメイン | 効果音（足音、影を捕まえた） |
+| 時計の秒針の録音 | Natalie | パブリックドメイン | 効果音（ランタン、街灯のスイッチ） |
+| 水に落ちる音の録音 | pacomav | CC0 | 効果音（濡れた路面の足音） |
+| UI SFX（dreamy セット） | romainsimon/uisfx | CC0 | 効果音（決定・キャンセル・文字送りなどの UI 音） |
 
 - 環境音の録音は Ubuntu の `supertuxkart-data` パッケージから取り出した（同パッケージの copyright ファイルにライセンス記載）。
   詳細は `Tools/Music/sources/README.md`。
 - 表記例：`Rain recording by Mike Koenig (soundbible.com), licensed under CC BY 3.0`
+- 表記例：`Metal clang recording by dADDoiT, Mike Koenig and Marianne Gagnon, licensed under CC BY 3.0`
 
 ## フォント
 

@@ -43,7 +43,7 @@ Unity エディタでプロジェクトを開いたままだとバッチモー�
 ## 現在の状況と次の作業
 
 - M0（2D 環境）：完了。M1（光と影のプロトタイプ）：実装済み、ユーザーの Unity での動作確認待ち。
-- BGM 8 曲＋スティンガー＋環境音 4 種は制作済み（`Assets/006_Audio/`、`music_manifest.json`）。Unity 側の再生（`MusicDirector`：前奏→ループを `PlayScheduled`、`shadow_chase` の 3 レイヤーの音量制御、AudioMixer）は未実装。
+- BGM 8 曲＋スティンガー＋環境音 4 種＋効果音（`Assets/006_Audio/SE/`、`se_manifest.json`、一覧は `Tools/Music/designs/se_plan.md`）は制作済み。Unity 側の再生（`MusicDirector`：前奏→ループを `PlayScheduled`、`shadow_chase` の 3 レイヤーの音量制御、AudioMixer）は未実装。
 - 次：M1 を実際に遊んでもらい、影を追いつめる手ごたえ・速さ・暗がりの見え方を調整 → BGM の再生を実装 → M2（第 1 章を本番品質で）。
 - 未解決の検討事項：ポストエフェクトが 480×270 で処理される件（仕様書 7.6）。粗く見えたら 2 段カメラ構成にする。
 - 音源：楽器は MuseScore General（MIT）。Salamander Grand Piano はユーザーの判断で不採用（低音がリズムに合わせて「ドシン」と響くのが不快）。クレジットは `docs/CREDITS.md`。

@@ -12,3 +12,14 @@
 
 - 短い録音を、ランダムな位置から切り出した断片をなめらかに重ね合わせて、繰り返しに聞こえない長い音にして使う（`ambience.py` の `texture`）。
 - 表記が必要なものは `docs/CREDITS.md` にも書く。
+
+## 効果音の素材（`sfx.py` が使う）
+
+| ファイル | 内容 | 作者 | ライセンス | 元の出典 |
+| --- | --- | --- | --- | --- |
+| `knock_wood_stephan.ogg` | 木を叩く音（0.5 秒） | "Stephan"（2010 年に Marianne Gagnon が編集） | パブリックドメイン | pdsounds.org「knocking on wood or door」（SuperTuxKart の `wooden_bridge.ogg`） |
+| `clock_ticking_natalie.ogg` | 時計の秒針の音（6.8 秒） | Natalie | パブリックドメイン | pdsounds.org「clock ticking」（SuperTuxKart の `clock.ogg`） |
+| `metal_clang.ogg` | 金属を打つ音（5.2 秒） | dADDoiT、Mike Koenig、Marianne Gagnon | CC BY 3.0（**表記が必要**） | SuperTuxKart の `metal_clang.ogg` |
+| `plop_pacomav.ogg` | 水に落ちる「ぽちゃ」（0.4 秒） | pacomav | CC0 | freesound.org/people/pacomav/sounds/273792/ |
+| `uisfx_dreamy/*.ogg` | UI の効果音（dreamy セット） | UI SFX（romainsimon/uisfx） | CC0（`uisfx_dreamy/LICENSE-AUDIO.txt`） | npm パッケージ `uisfx` 0.4.0 |
+
