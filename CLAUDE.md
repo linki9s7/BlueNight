@@ -49,7 +49,7 @@ URP・Input System・UI の代用品（`Tools/CodeCheck/Stubs.cs`）を使って
 - BGM 8 曲＋スティンガー＋環境音 4 種＋効果音（`Assets/006_Audio/SE/`、`se_manifest.json`、一覧は `Tools/Music/designs/se_plan.md`）は制作済み。
   Unity 側の再生も実装済み（`Assets/002_Scripts/Audio/`：`MusicDirector`・`ChaseMusic`・`AmbiencePlayer`・`SoundEffects`・`AreaZone`・`PlayerAreaSounds`、仕様書 8.8）。M1 と素材を並べたシーンに入っている。AudioMixer は使わない。
 - ドット絵（第 1 章分）：商店街の建物・小物・タイル（`ch1_assets.py`）、人物と影（`npc.py`）、顔グラフィック 48×48（`portrait.py`）、UI・タイトル（`ui_title.py`）を制作済み。建物は横に並べるとき輪郭を 1 ドット重ねる。シーンへの配置（M2）はまだ。全体の一覧と残りは `Tools/Art/art_plan.md`。第 1 章の素材は Unity のメニュー「BlueNight > 4. 第 1 章の素材を並べたシーンを作成」（`BlueNightSetup.Gallery.cs` → `Assets/001_Scenes/Ch1_ArtGallery.unity`）で並べて確認できる。
-- M2（第 1 章の本番版）進行中：計画 `docs/M2_PLAN.md`（ユーザー確認済み）、物語全体の案 `docs/STORY.md`（確認待ち）。
+- M2（第 1 章の本番版）進行中：計画 `docs/M2_PLAN.md`（ユーザー確認済み）、物語の設計図と台本 `docs/STORY.md`・人物のプロフィール `docs/CHARACTERS.md`（v1.0、ユーザーの感想待ち。セリフを書くときは CHARACTERS.md の話し方と STORY.md 18 節の約束を守る）。
   土台（エリアの移動・演出の台本・タイトル画面・オートセーブ・音量設定）はできた。次はマップ（ASCII）→ 会話 → ことば帳・メニュー。
 - メニュー：1 プロジェクト設定、2 M0、3 M1、4 第 1 章の素材、5 音のデータ、6 タイトル画面。
 - ポストエフェクトは 480×270 のまま処理する（ミクセルを作らないため。2 段カメラ構成は採らない、仕様書 7.6）。
