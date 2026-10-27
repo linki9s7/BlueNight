@@ -1767,6 +1767,8 @@ def _set(rows, x, y, ch):
 def g_body(rows, kind, view):
     """服の行（15 行目〜）に髪を重ねる。short：肩の髪を消す／long：腕と体のすき間・背中に髪／braids：胸の前に三つ編み。"""
     rows = list(rows)
+    if kind == "long_light":
+        return _long_light(rows, view)
     if kind in ("short", "braids"):
         for y in range(15, len(rows)):
             rows[y] = rows[y].replace("H", ".")
@@ -1815,7 +1817,7 @@ def g_frames(key, outfit="f1"):
     mats.update(o["mats"])
     mats["Q"] = Mat("hair2", "hair1", "hair3", group="Q")
     mats["H"] = Mat("hair2", "hair1", "hair3", group="H", d=2)
-    direct = dict(D_DIRECT, u="tee3")
+    direct = dict(D_DIRECT, u="tee3", k="hair1", h="hair3")
     direct.update(o.get("direct", {}))
     return sprites(down, down_step, up, right, right_step, mats, direct, D_STYLE)
 
@@ -1848,6 +1850,99 @@ BRAID = [
 ]
 
 
+# ---------------------------------------------------------------- G2 改（ぱっつんロングを軽く）
+# ユーザー：「G2 がいい。でもちょっとモサっとしてない？」→ 髪の量を減らして、軽さと流れを出す。
+# - 頭の輪郭を細く（顔の横の髪を 1 ドットずつ減らす）。
+# - 前髪は眉の高さのまま、すき間から額が少しのぞく「シースルー前髪」にする。
+# - 胸の前へ流す髪は向かって左だけ、毛先へ細くなる房に。右は肩の後ろへ流す（左右で変えて重さを散らす）。
+# - 頭の左上に「天使の輪」（つやの帯）。房の中に暗い筋を 1 本入れて、髪の流れを見せる。
+# - 後ろ姿は背中いっぱいの四角ではなく、毛先へ細くなる形に。
+G_HEADS["g2b"] = dict(
+    down=[
+        "................",
+        "................",
+        "...H..HHHH..H...",
+        "...HHHHHHHHHH...",
+        "..HHhhHHHHHHHH..",
+        "..HhHHHHHHHHHH..",
+        "..HHHHHHHHHHHH..",
+        "..HHHHHHHHHHHH..",
+        "..HHHSHHHHSHHH..",
+        "...HSEESSEESH...",
+        "...HSeISSeISH...",
+        "...HSIISSIISH...",
+        "...HSrSSSSrSH...",
+        "...HHSSSSSSHH...",
+        "...HHHHSSHHHH...",
+    ],
+    up=["................", "................", "...H..HHHH..H...", "...HHHHHHHHHH...",
+        "..HHhhHHHHHHHH..", "..HhHHHHHHHHHH..", "..HHHHHHHHHHHH..", "..HHHHHHHHHHHH..", "..HHHHHHHHHHHH.."]
+       + ["...HHHHHHHHHH..."] * 6,
+    right=[
+        "................",
+        "................",
+        "..H..HHHH..H....",
+        "..HHHHHHHHHH....",
+        ".HHhhHHHHHHHH...",
+        ".HhHHHHHHHHHHH..",
+        ".HHHHHHHHHHHHH..",
+        ".HHHHHHHHHHHHH..",
+        ".HHHHHHHHHHSHH..",
+        "..HHHHHHHSSEES..",
+        "..HHHHHHHSSeIS..",
+        "..HHHHHHHSSIIS..",
+        "..HHHHHHHSrSSS..",
+        "..HHHHHHHHSSS...",
+        "...HHHHHHSS.....",
+    ],
+    hair="long_light",
+)
+
+
+def _long_light(rows, view):
+    for y in range(15, len(rows)):
+        rows[y] = rows[y].replace("H", ".")
+    if view == "down":
+        for y in range(15, 21):
+            if rows[y][3] == ".":
+                _set(rows, 3, y, "H")
+        for y in range(15, 18):
+            if rows[y][12] == ".":
+                _set(rows, 12, y, "H")
+    elif view == "up":
+        for y in range(15, 21):
+            for x in range(4, 12):
+                _set(rows, x, y, "H")
+        for x in range(5, 11):
+            _set(rows, x, 21, "H")
+        for x in range(6, 10):
+            _set(rows, x, 22, "H")
+        _set(rows, 7, 18, "k")
+        _set(rows, 7, 19, "k")
+    else:
+        for y in range(15, 20):
+            for x in (3, 4):
+                if rows[y][x] == ".":
+                    _set(rows, x, y, "H")
+        _set(rows, 4, 20, "H")
+    return rows
+
+
+def g2b_portrait_hair(c):
+    c.ellipse((10, 3, 38, 33), "H")
+    c.poly([(10, 18), (16, 18), (16, 38), (14, 47), (10, 47), (11, 36)], "H")     # 向かって左：胸の前へ細くなる房
+    c.poly([(32, 18), (38, 18), (39, 33), (37, 39), (33, 35)], "H")               # 向かって右：肩の後ろへ
+    c.line([(13, 24), (13, 38), (12, 45)], "k", only="H")                         # 房の中の暗い筋
+    c.ellipse((13, 10, 35, 36), "S")
+    c.rect((12, 6, 36, 19), "H", only="S.H")                                      # ぱっつん前髪（眉の高さ）
+    for x, y0 in ((19, 17), (27, 18)):                                           # シースルー：毛先のすき間から額が少しのぞく
+        c.line([(x, y0), (x, 19)], "S", only="H")
+    c.poly([(11, 5), (37, 5), (37, 8), (11, 8)], "H", only=".")                   # 猫の耳のような寝ぐせ（左右の角）
+    c.rect((13, 20, 14, 33), "H")                                                 # 顔の横の髪（細く）
+    c.rect((34, 20, 35, 31), "H")
+    c.line([(13, 13), (17, 10), (23, 9)], "h", only="H")                          # 天使の輪（左上のつや）
+
+
 def g_portrait(key, outfit="f1"):
     c = Canvas(48, 48)
     F_TORSOS[outfit](c)
@@ -1860,6 +1955,8 @@ def g_portrait(key, outfit="f1"):
         c.poly([(8, 16), (40, 16), (42, 33), (37, 35), (11, 35), (6, 33)], "H")   # あごの線のボブ（毛先が少し外へ）
         c.ellipse((13, 10, 35, 36), "S")
         c.poly([(10, 6), (38, 6), (36, 16), (31, 14), (26, 17), (21, 20), (17, 22), (14, 28), (12, 22)], "H", only="S.H")
+    elif key == "g2b":
+        g2b_portrait_hair(c)
     elif key == "g2":
         c.ellipse((8, 3, 40, 34), "H")
         c.poly([(8, 16), (16, 16), (17, 47), (6, 47)], "H")                       # 胸の前へ流れる長い髪
@@ -1884,10 +1981,11 @@ def g_portrait(key, outfit="f1"):
         c.poly([(24, 6), (38, 6), (36, 16), (34, 23), (30, 15), (25, 10)], "H", only="S.H")
         c.stamp(BRAID, 9, 32)
         c.stamp([r[::-1] for r in BRAID], 31, 32)
-    c.stamp(["hh.", "h.."], 14, 9)
-    eyes = G_EYES[key]
+    if key != "g2b":
+        c.stamp(["hh.", "h.."], 14, 9)
+    eyes = G_EYES.get(key, G_EYES["g2"])
     left, right = eyes if isinstance(eyes, tuple) else (eyes, eyes)
-    ey = 23 if key == "g2" else 22
+    ey = 23 if key in ("g2", "g2b") else 22
     c.stamp(left, 16, ey)
     c.stamp(right, 26, ey)
     c.stamp(["rr"], 15, 29)
@@ -1903,7 +2001,7 @@ def g_portrait(key, outfit="f1"):
         mats[k] = Mat(m.base, m.shade, m.light, m.line, m.group, 3 if k in "PJGW" else m.d)
     if outfit == "f1":
         mats["l"] = Mat("tee3", "tee2", "tee3", group="l", d=2)
-    direct = dict(D_DIRECT, h="hair3", n="skin1", u="tee3")
+    direct = dict(D_DIRECT, h="hair3", n="skin1", u="tee3", k="hair1")
     direct.pop("w")
     direct.update(o.get("direct", {}))
     return render(c.rows(), mats, direct, D_STYLE)
@@ -2005,10 +2103,13 @@ def main():
     upscale(sheet([e_portrait(k) for k in E_OUTFITS], bg), 5).save(os.path.join(OUT, "e_faces_compare.png"))
     upscale(sheet([f_portrait(k) for k in F_OUTFITS], bg), 5).save(os.path.join(OUT, "f_faces_compare.png"))
     # G 案（髪型と顔）：顔グラとゲーム内の正面を並べる
-    upscale(sheet([g_portrait(k) for k in G_HEADS], bg), 5).save(os.path.join(OUT, "g_faces_compare.png"))
-    upscale(sheet([g_frames(k)[i] for k in G_HEADS for i in (0, 3, 2)], bg), 6).save(
+    upscale(sheet([g_portrait(k) for k in ("g1", "g2", "g3", "g4")], bg), 5).save(os.path.join(OUT, "g_faces_compare.png"))
+    upscale(sheet([g_frames(k)[i] for k in ("g1", "g2", "g3", "g4") for i in (0, 3, 2)], bg), 6).save(
         os.path.join(OUT, "g_sprites_compare.png"))
-    streets = [Image.open(os.path.join(OUT, f"{k}_street.png")) for k in G_HEADS]
+    upscale(sheet([g_portrait("g2"), g_portrait("g2b")], bg), 6).save(os.path.join(OUT, "g2_before_after_faces.png"))
+    upscale(sheet([g_frames(k)[i] for k in ("g2", "g2b") for i in (0, 3, 2, 4)], bg), 6).save(
+        os.path.join(OUT, "g2_before_after_sprites.png"))
+    streets = [Image.open(os.path.join(OUT, f"{k}_street.png")) for k in ("g1", "g2", "g3", "g4")]
     w, h = streets[0].width, streets[0].height
     grid = Image.new("RGBA", (w * 2, h * 2), bg)
     for i, im in enumerate(streets):
