@@ -342,20 +342,20 @@
   "colors": 10,
   "offPalette": [],
   "doubles": 2,
-  "banding": 3,
-  "bandingPixels": 9,
+  "banding": 6,
+  "bandingPixels": 28,
   "bandingColors": [
-   "#d3dbe8",
    "#c8f5e6",
-   "#f4f6fb"
+   "#7fd1c0",
+   "#d3dbe8"
   ],
-  "floatingAA": 0,
+  "floatingAA": 3,
   "noisePercent": 3.5,
   "ditherPercent": 0.0,
   "lightWrong": {
    "glow": [
-    6.4,
-    -3.8
+    1.9,
+    -3.4
    ]
   },
   "reviewed": "v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる"
@@ -366,20 +366,20 @@
   "colors": 10,
   "offPalette": [],
   "doubles": 2,
-  "banding": 4,
-  "bandingPixels": 15,
+  "banding": 3,
+  "bandingPixels": 12,
   "bandingColors": [
-   "#c8f5e6",
+   "#7fd1c0",
    "#d3dbe8",
    "#f4f6fb"
   ],
-  "floatingAA": 2,
-  "noisePercent": 6.6,
+  "floatingAA": 4,
+  "noisePercent": 3.7,
   "ditherPercent": 0.0,
   "lightWrong": {
    "glow": [
-    4.9,
-    -4.8
+    5.5,
+    -4.4
    ]
   },
   "reviewed": "v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる"
@@ -390,20 +390,18 @@
   "colors": 10,
   "offPalette": [],
   "doubles": 2,
-  "banding": 3,
-  "bandingPixels": 9,
+  "banding": 1,
+  "bandingPixels": 3,
   "bandingColors": [
-   "#d3dbe8",
-   "#c8f5e6",
-   "#f4f6fb"
+   "#7fd1c0"
   ],
-  "floatingAA": 0,
-  "noisePercent": 3.5,
+  "floatingAA": 3,
+  "noisePercent": 6.6,
   "ditherPercent": 0.0,
   "lightWrong": {
    "glow": [
-    6.4,
-    -3.8
+    4.2,
+    -3.4
    ]
   },
   "reviewed": "v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる"
@@ -414,18 +412,43 @@
   "colors": 10,
   "offPalette": [],
   "doubles": 2,
-  "banding": 1,
-  "bandingPixels": 3,
+  "banding": 4,
+  "bandingPixels": 16,
   "bandingColors": [
+   "#c8f5e6",
    "#d3dbe8"
   ],
-  "floatingAA": 1,
-  "noisePercent": 6.2,
+  "floatingAA": 2,
+  "noisePercent": 5.1,
   "ditherPercent": 0.0,
   "lightWrong": {
    "glow": [
-    3.5,
-    -3.3
+    1.9,
+    -2.7
+   ]
+  },
+  "reviewed": "v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる"
+ },
+ {
+  "file": "Characters/Nemu/nemu_fly_down_4.png",
+  "group": "characters",
+  "colors": 10,
+  "offPalette": [],
+  "doubles": 2,
+  "banding": 4,
+  "bandingPixels": 14,
+  "bandingColors": [
+   "#7fd1c0",
+   "#d3dbe8",
+   "#c8f5e6"
+  ],
+  "floatingAA": 5,
+  "noisePercent": 8.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "glow": [
+    1.6,
+    -4.1
    ]
   },
   "reviewed": "v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる"
@@ -658,18 +681,19 @@
   "colors": 7,
   "offPalette": [],
   "doubles": 0,
-  "banding": 1,
-  "bandingPixels": 3,
+  "banding": 5,
+  "bandingPixels": 23,
   "bandingColors": [
-   "#c8f5e6"
+   "#c8f5e6",
+   "#7fd1c0"
   ],
-  "floatingAA": 0,
-  "noisePercent": 2.2,
+  "floatingAA": 3,
+  "noisePercent": 2.0,
   "ditherPercent": 0.0,
   "lightWrong": {
    "glow": [
-    6.5,
-    -3.8
+    1.9,
+    -3.4
    ]
   },
   "reviewed": "v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる"
@@ -680,18 +704,18 @@
   "colors": 7,
   "offPalette": [],
   "doubles": 0,
-  "banding": 2,
-  "bandingPixels": 8,
+  "banding": 1,
+  "bandingPixels": 6,
   "bandingColors": [
-   "#c8f5e6"
+   "#7fd1c0"
   ],
-  "floatingAA": 2,
-  "noisePercent": 5.1,
+  "floatingAA": 3,
+  "noisePercent": 1.9,
   "ditherPercent": 0.0,
   "lightWrong": {
    "glow": [
-    4.9,
-    -4.8
+    5.5,
+    -4.4
    ]
   },
   "reviewed": "v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる"
@@ -705,15 +729,15 @@
   "banding": 1,
   "bandingPixels": 3,
   "bandingColors": [
-   "#c8f5e6"
+   "#7fd1c0"
   ],
-  "floatingAA": 0,
-  "noisePercent": 2.2,
+  "floatingAA": 1,
+  "noisePercent": 4.4,
   "ditherPercent": 0.0,
   "lightWrong": {
    "glow": [
-    6.5,
-    -3.8
+    4.2,
+    -3.4
    ]
   },
   "reviewed": "v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる"
@@ -724,18 +748,42 @@
   "colors": 7,
   "offPalette": [],
   "doubles": 0,
-  "banding": 1,
-  "bandingPixels": 3,
+  "banding": 4,
+  "bandingPixels": 16,
   "bandingColors": [
+   "#c8f5e6",
    "#d3dbe8"
   ],
-  "floatingAA": 1,
-  "noisePercent": 4.7,
+  "floatingAA": 2,
+  "noisePercent": 3.4,
   "ditherPercent": 0.0,
   "lightWrong": {
    "glow": [
-    3.5,
-    -3.3
+    1.9,
+    -2.7
+   ]
+  },
+  "reviewed": "v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる"
+ },
+ {
+  "file": "Characters/Nemu/nemu_fly_up_4.png",
+  "group": "characters",
+  "colors": 7,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 3,
+  "bandingPixels": 11,
+  "bandingColors": [
+   "#c8f5e6",
+   "#7fd1c0"
+  ],
+  "floatingAA": 5,
+  "noisePercent": 7.1,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "glow": [
+    1.6,
+    -4.1
    ]
   },
   "reviewed": "v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる"
