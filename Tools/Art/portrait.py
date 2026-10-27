@@ -10,6 +10,7 @@
 
 from PIL import Image, ImageChops, ImageDraw
 
+import ruri
 from palette import RAMPS, hex_to_rgba
 
 CLEAR = (0, 0, 0, 0)
@@ -106,158 +107,7 @@ class Portrait:
 
 
 # ================================================================ ルリ
-RURI_EYE_KEY = {"O": "hair0", "I": "scarf1", "i": "scarf0", "L": "moon3", "S": "skin2", "s": "skin1"}
-
-# 目は 6x6。つやは左上。左右の目で形だけ反転し、つやの位置は反転しない（mirror_eye）。
-RURI_EYES = {
-    "normal": [
-        ".OOOO.",
-        "OLIIiO",
-        "OIIiiO",
-        "OIiiiO",
-        ".OiiO.",
-        "......",
-    ],
-    "smile": [  # 目を細める（下まぶたが上がる）
-        "......",
-        ".OOOO.",
-        "OLIIiO",
-        "OIiiiO",
-        "......",
-        "......",
-    ],
-    "sad": [  # まぶたが重く、視線が下
-        "......",
-        "OOOOOO",
-        "OOIIiO",
-        "OLIiiO",
-        ".OiiO.",
-        "......",
-    ],
-    "surprised": [  # 目を見開き、黒目が小さい
-        ".OOOO.",
-        "OSLIsO",
-        "OSIisO",
-        "OSiisO",
-        "OSSSsO",
-        ".OOOO.",
-    ],
-    "closed": [  # 目を閉じる（まばたき・しんみり）
-        "......",
-        "......",
-        "......",
-        "OOOOOO",
-        ".O..O.",
-        "......",
-    ],
-}
-
-RURI_MOUTHS = {  # 口：幅 6、肌の濃い色。左上を (21, 31) に置く
-    "normal": [
-        "......",
-        "..mm..",
-        "......",
-    ],
-    "smile": [
-        ".m..m.",
-        "..mm..",
-        "......",
-    ],
-    "sad": [
-        "..mm..",
-        ".m..m.",
-        "......",
-    ],
-    "surprised": [
-        "..mm..",
-        ".mMMm.",
-        "..mm..",
-    ],
-    "closed": [
-        "......",
-        ".mmmm.",
-        "......",
-    ],
-}
-MOUTH_KEY = {"m": "skin0", "M": "red0"}
-
-RURI_EXPRESSIONS = {
-    # 名前: (目, 口, ほおの赤み)
-    "normal": ("normal", "normal", False),
-    "smile": ("smile", "smile", True),
-    "sad": ("sad", "sad", False),
-    "surprised": ("surprised", "surprised", False),
-    "gentle": ("closed", "closed", True),  # 目を閉じてしんみり
-}
-
-
-def mirror_eye(rows):
-    """右目用：形を反転するが、つや（L）は左上のまま。"""
-    out = [row[::-1] for row in rows]
-    lights = [(x, y) for y, row in enumerate(out) for x, ch in enumerate(row) if ch == "L"]
-    out = [list(r) for r in out]
-    for x, y in lights:
-        out[y][x] = "I"
-    # つやは、反転後の黒目のいちばん左上に置き直す
-    for y, row in enumerate(out):
-        xs = [x for x, ch in enumerate(row) if ch in "Ii"]
-        if xs and lights:
-            row[xs[0]] = "L"
-            break
-    return ["".join(r) for r in out]
-
-
-def ruri_base():
-    """表情のない土台（髪・顔・首・マフラー・コート）。"""
-    pt = Portrait()
-    # うしろ髪（ボブ：あごの高さまで）
-    back = union(ellipse([8, 3, 39, 34]), rect([9, 18, 38, 36]))
-    pt.part(back, "hair2", shade="hair1", shade_d=(3, 3))
-    # コート（肩）
-    coat = polygon([(4, 47), (7, 41), (14, 38), (33, 38), (40, 41), (43, 47)])
-    pt.part(coat, "coat2", shade="coat1", shade_d=(4, 3))
-    pt.fill(polygon([(22, 40), (26, 40), (24, 47)]), "coat0")  # 前の合わせ目の影
-    # 首
-    neck = rect([20, 31, 27, 40])
-    pt.fill(neck, "skin1")
-    # マフラー：首に巻いた帯＋左前に垂れた端
-    wrap = union(ellipse([13, 34, 35, 44]))
-    tail = polygon([(14, 39), (20, 39), (21, 47), (13, 47)])
-    pt.part(union(wrap, tail), "scarf1", shade="scarf0", light="scarf2", shade_d=(3, 3), light_d=(-2, -2),
-            light_clip=rect([0, 0, 23, 38]))
-    # 顔（丸みのあるあご）
-    face = union(ellipse([13, 10, 34, 36]), rect([13, 14, 34, 26]))
-    face = minus(face, rect([0, 34, 47, 47]))
-    face = union(face, polygon([(17, 32), (30, 32), (26, 35), (21, 35)]))
-    pt.part(face, "skin2", shade="skin1", shade_d=(3, 2))
-    # 前髪（毛先がギザギザ）と横髪（ほおにかかる）
-    bangs = polygon([(10, 12), (14, 6), (22, 3), (30, 4), (36, 9), (38, 15), (36, 17), (34, 15), (33, 19),
-                     (30, 15), (28, 20), (25, 15), (22, 19), (19, 14), (16, 18), (14, 14), (12, 22), (10, 20)])
-    left_lock = polygon([(10, 16), (14, 15), (15, 24), (14, 33), (11, 35), (9, 30)])
-    right_lock = polygon([(37, 16), (33, 15), (32, 24), (33, 33), (36, 35), (38, 30)])
-    hair_front = union(bangs, left_lock, right_lock)
-    pt.part(hair_front, "hair2", shade="hair1", shade_d=(2, 3))
-    # 天使の輪（つや）：左上の 2 行のかたまり。輪郭に沿わせず、少し内側で切る
-    shine = polygon([(14, 8), (21, 5), (24, 6), (24, 8), (17, 10), (14, 11)])
-    pt.fill(shine, "hair3")
-    return pt
-
-
-def ruri_portrait(expression):
-    eyes, mouth, blush = RURI_EXPRESSIONS[expression]
-    pt = ruri_base()
-    left = RURI_EYES[eyes]
-    pt.stamp(left, RURI_EYE_KEY, 16, 21)
-    pt.stamp(mirror_eye(left), RURI_EYE_KEY, 26, 21)
-    pt.stamp(RURI_MOUTHS[mouth], MOUTH_KEY, 21, 30)
-    if blush:  # ほおの赤み：2x1 のかたまり（網点にしない）
-        for x0 in (16, 29):
-            pt.stamp(["ss"], {"s": "skin1"}, x0, 28)
-    pt.outline("hair0")
-    return pt.img
-
-
-# ネム（蛾）の顔グラフィックは nemu.py
+# v0.16 のリデザインで ruri.py に移した（輪郭線なし・月明かりの縁取り・大きな青い目・眉）。
 
 
 # ================================================================ ランプ屋の主人
@@ -339,8 +189,8 @@ def grandma_portrait(expression):
 
 def build(save):
     out = {}
-    for e in RURI_EXPRESSIONS:
-        out[f"ruri_{e}"] = save(ruri_portrait(e), "Faces", f"face_ruri_{e}.png", clean=True)
+    for e in ruri.EXPRESSIONS:
+        out[f"ruri_{e}"] = save(ruri.portrait(e), "Faces", f"face_ruri_{e}.png")
     for e in ("normal", "smile"):
         out[f"keeper_{e}"] = save(keeper_portrait(e), "Faces", f"face_keeper_{e}.png", clean=True)
     for e in ("normal", "smile", "teary"):

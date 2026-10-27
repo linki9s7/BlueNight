@@ -1,144 +1,115 @@
-"""ルリ（16x32 px、4 方向）のピクセルマップ。
+"""ルリ（16x32 px、4 方向）と顔グラフィック（48x48）。v0.16 のリデザイン。
 
-頭・胴体・脚をパーツに分けて書き、コマごとに組み合わせる。
+ユーザーと決めたこと（Tools/Art/art_plan.md「人物のリデザイン」、仕様書 7.8）
+- 描き方は B 案「月明かり」：輪郭線を引かず、明暗の差と左上の縁の光（月明かり）で形を見せる。
+- 色と目は C 案から：紺の髪、大きな青い目（瞳は上が濃く下が明るい、つやは左上）、ほおの小さな赤み。
+- 髪は G2 改「ぱっつんロング」：眉の高さで切りそろえた前髪（毛先のすき間から額が少しのぞく）、腰までの髪。
+  胸の前へ流すのは向かって左だけ、右は肩の後ろへ。頭の左上に天使の輪。
+  **頭の上の左右の小さな角（猫の耳のような寝ぐせ）はチャームポイント。消さないこと。**
+- 服は F1「ルームワンピース」：淡い青のコットンのワンピース（ひざ丈・ふくらんだ短いそで・胸の下からギャザー）、
+  すそに白いレース。素足に紺のサンダル。夜中に部屋着のまま出てきた 14 歳。青いマフラーはミオの手編み（夏でも巻いている）。
+- 静かで大人っぽいのに、まだあどけなさが残る感じ。
 
-描き方のルール（Tools/Art/STYLE.md）
-- 光はどの向きの絵でも画面の左上から。影は右下に「かたまり」で置き、輪郭に沿った内側 1 列の影は作らない。
-- 左向きは右向きの形を反転して作るが、陰影は反転しない（relight_mirror）。ゲーム側でも flipX は使わない。
-- 少ない色数、くっきりした 1 ドットの輪郭、平らな塗り＋小さな模様。
+描き方（chara.py）
+- 記号の図を書き、陰影は自動で付ける（右下へずらすと部品の外に出る所が影、左上の縁が月明かり）。
+- 左向きは記号の図を反転してから陰影を付けるので、光は左上のまま（flipX は使わない）。
 
 記号:
   .  透明
-  O  輪郭（紺）
-  H  髪   h 髪・明   k 髪・ハイライト
-  S  肌   s 肌・影   m 口
-  E  目
-  B  マフラー   b マフラー・影   c マフラー・明
-  W  コート     w コート・影     v コートのしわ
-  K  スカート
-  T  靴下       t 靴下・影
-  F  靴         f 靴・明
+  H  髪          k 髪の筋（暗い）   h 天使の輪（つや）
+  S  肌          z 奥の脚（暗い肌）  a 光の側（画面左）の腕。1 ドット幅なので自動の陰影だと全部影になるため、明るい肌のまま
+  E  目のふち（上まつげ）   e 目のつや   I 瞳   r ほおの赤み
+  B  マフラー
+  P  ワンピース  x ギャザーの線     l すそのレース
+  F  サンダル    Z 奥の足のサンダル（暗い）
 """
 
-from palette import color
+from chara import Canvas, Mat, Style, mirror, render
 
-KEY = {
-    "O": color("hair", 0),
-    "H": color("hair", 1),
-    "h": color("hair", 2),
-    "k": color("hair", 3),
-    "S": color("skin", 2),
-    "s": color("skin", 1),
-    "m": color("skin", 0),
-    "E": color("hair", 0),
-    "B": color("scarf", 1),
-    "b": color("scarf", 0),
-    "c": color("scarf", 2),
-    "W": color("coat", 2),
-    "w": color("coat", 1),
-    "v": color("coat", 0),
-    "K": color("night", 3),
-    "T": color("stone", 7),
-    "t": color("stone", 5),
-    "F": color("brown", 1),
-    "f": color("brown", 2),
+STYLE = Style("none", rim=True)
+MATS = {
+    "H": Mat("hair2", "hair1", "hair3", group="Hkh", d=2),
+    "S": Mat("skin2", "skin1", group="SEeIr"),
+    "P": Mat("pj2", "pj1", "pj3", group="Pxl", d=2),
+    "l": Mat("tee3", "tee2", group="l"),
+    "B": Mat("scarf1", "scarf0", "scarf2", group="B"),
+    "F": Mat("hair1", "hair0", "hair2"),
 }
+DIRECT = {"E": "hair0", "e": "moon3", "I": "iris1", "r": "blush0", "x": "pj1", "k": "hair1", "h": "hair3",
+          "z": "skin1", "Z": "hair0", "a": "skin2"}
 
-# 同じ素材の色のまとまり（左向きを作るときの陰影の付け直しに使う）。先頭が基本の色。
-# （コートのしわ v・口 m・目 E は陰影ではなく形なので、ここには入れない）
-MATERIALS = ["Hhk", "Ss", "Bbc", "Ww", "Tt", "Ff"]
-
-# ---------------------------------------------------------------- 下向き（正面）
+# ---------------------------------------------------------------- 下向き（正面）：頭 15 行・胴 12 行・脚 5 行
 DOWN_HEAD = [
     "................",
-    ".....OOOOOO.....",
-    "...OOHHHHHHOO...",
-    "..OHkhhHHHHHHO..",
-    "..OHhhHHHHHHHO..",
-    ".OHHHHHHHHHHHHO.",
-    ".OHHHHHHHHHHHHO.",
-    ".OHHHHHHHHHHHHO.",
-    ".OHHHHSHHSSHHHO.",
-    ".OHHSSSSSSSSHHO.",
-    ".OHHSESSSSESHHO.",
-    ".OHHSESSSSESHHO.",
-    ".OHHSSSSSSssHHO.",
-    "..OHHSSSmSsHHO..",
+    "................",
+    "...H..HHHH..H...",   # 左右の角＝猫の耳のような寝ぐせ
+    "...HHHHHHHHHH...",
+    "..HHhhHHHHHHHH..",   # 天使の輪（左上）
+    "..HhHHHHHHHHHH..",
+    "..HHHHHHHHHHHH..",
+    "..HHHHHHHHHHHH..",
+    "..HHHSHHHHSHHH..",   # ぱっつん前髪。毛先のすき間から額がのぞく
+    "...HSEESSEESH...",
+    "...HSeISSeISH...",
+    "...HSIISSIISH...",
+    "...HSrSSSSrSH...",
+    "...HHSSSSSSHH...",
+    "...HHHHSSHHHH...",
 ]
 
 DOWN_BODY = [
-    "....OBBBBBBO....",
-    "...OBBBBBBbbO...",
-    "..OWOBBBBbbOwO..",
-    "..OWWOBBbbOwwO..",
-    "..OWWWWBBWWwwO..",
-    "..OWWWWBBWWwwO..",
-    "..OSWWWBbwwwsO..",
-    "..OSOWWBbwwOsO..",
-    "...OKKKKKKKKO...",
-    "...OKKKKKKKKO...",
-    "..OKKKKKKKKKKO..",
-    "...OOOOOOOOOO...",
+    "...H.BBBBBB.H...",
+    "...HPBBBBBBPH...",
+    "...PPPBBBBPPP...",
+    "..PPPPPBBPPPPP..",   # ふくらんだ短いそで
+    "..aHPPPPPPPP.S..",   # 腕と体のすき間に、胸の前へ流した髪（向かって左）
+    "..aHPPxPPxPP.S..",
+    "..a.PPxPPxPP.S..",
+    "..aPPPxPPxPPPS..",
+    "..PPPPxPPxPPPP..",
+    "..PPPPPPPPPPPP..",
+    ".PPPPPPPPPPPPPP.",
+    ".llllllllllllll.",   # すその白いレース
 ]
 
 DOWN_LEGS = {
-    "stand": [
-        ".....OSOOsO.....",
-        ".....OTOOtO.....",
-        ".....OTOOtO.....",
-        ".....OTOOtO.....",
-        "....OfFOOFFO....",
-        "....OOOOOOOO....",
-    ],
-    "left_up": [
-        ".....OSOOsO.....",
-        ".....OTOOtO.....",
-        ".....OTOOtO.....",
-        "....OfFOOtO.....",
-        "....OOOOOFFO....",
-        "........OOOO....",
-    ],
-    "right_up": [
-        ".....OSOOsO.....",
-        ".....OTOOtO.....",
-        ".....OTOOtO.....",
-        ".....OTOOFFO....",
-        "....OfFOOOOO....",
-        "....OOOO........",
-    ],
+    "stand": [".....SS..SS.....", ".....SS..SS.....", ".....SS..SS.....", "....FFF..FFF....", "................"],
+    "left_up": [".....SS..SS.....", ".....SS..SS.....", "....FFF..SS.....", ".........FFF....", "................"],
+    "right_up": [".....SS..SS.....", ".....SS..SS.....", ".....SS..FFF....", "....FFF.........", "................"],
 }
 
 # ---------------------------------------------------------------- 上向き（背中）
 UP_HEAD = [
     "................",
-    ".....OOOOOO.....",
-    "...OOHHHHHHOO...",
-    "..OHkhhHHHHHHO..",
-    "..OHhhHHHHHHHO..",
-    ".OHHHHHHHHHHHHO.",
-    ".OHHHHHHHHHHHHO.",
-    ".OHHHHHHHHHHHHO.",
-    ".OHHHHHHHHHHHHO.",
-    ".OHHHHHHHHHHHHO.",
-    ".OHHHHHHHHHHHHO.",
-    ".OHHHHHHHHHHHHO.",
-    ".OHHHHHHHHHHHHO.",
-    "..OHHHOHHOHHHO..",
+    "................",
+    "...H..HHHH..H...",
+    "...HHHHHHHHHH...",
+    "..HHhhHHHHHHHH..",
+    "..HhHHHHHHHHHH..",
+    "..HHHHHHHHHHHH..",
+    "..HHHHHHHHHHHH..",
+    "..HHHHHHHHHHHH..",
+    "...HHHHHHHHHH...",
+    "...HHHHHHHHHH...",
+    "...HHHHHHHHHH...",
+    "...HHHHHHHHHH...",
+    "...HHHHHHHHHH...",
+    "...HHHHHHHHHH...",
 ]
 
 UP_BODY = [
-    "....OBBBBBBO....",
-    "...OBBBBBBbbO...",
-    "..OWOBBBBbbOwO..",
-    "..OWWOBBbbOwwO..",
-    "..OWWWWBBWWwwO..",
-    "..OWWWWBBWWwwO..",
-    "..OSWWWBbwwwsO..",
-    "..OSOWWBbwwOsO..",
-    "...OKKKKKKKKO...",
-    "...OKKKKKKKKO...",
-    "..OKKKKKKKKKKO..",
-    "...OOOOOOOOOO...",
+    "....HHHHHHHH....",   # 背中へ流れる髪は、毛先へ細くなる
+    "....HHHHHHHH....",
+    "...PHHHHHHHHP...",
+    "..PPHHHkHHHHPP..",
+    "..a.HHHkHHHH.S..",
+    "..a.HHHHHHHH.S..",
+    "..a.PHHHHHHP.S..",
+    "..aPPPHHHHPPPS..",
+    "..PPPPPPPPPPPP..",
+    "..PPPPPPPPPPPP..",
+    ".PPPPPPPPPPPPPP.",
+    ".llllllllllllll.",
 ]
 
 UP_LEGS = DOWN_LEGS
@@ -146,61 +117,43 @@ UP_LEGS = DOWN_LEGS
 # ---------------------------------------------------------------- 横向き（右向き）
 SIDE_HEAD = [
     "................",
-    ".....OOOOOO.....",
-    "...OOHHHHHHOO...",
-    "..OHkhhHHHHHHO..",
-    "..OHhhHHHHHHHO..",
-    ".OHHHHHHHHHHHHO.",
-    ".OHHHHHHHHHHHHO.",
-    ".OHHHHHHHHHHHHO.",
-    ".OHHHHHHHSHHSHO.",
-    ".OHHHHHHSSSSSSO.",
-    ".OHHHHHHSSSESSO.",
-    ".OHHHHHHSSSESSO.",
-    ".OHHHHHHSSSSmSO.",
-    "..OHHHHHHSssO...",
+    "................",
+    "..H..HHHH..H....",
+    "..HHHHHHHHHH....",
+    ".HHhhHHHHHHHH...",
+    ".HhHHHHHHHHHHH..",
+    ".HHHHHHHHHHHHH..",
+    ".HHHHHHHHHHHHH..",
+    ".HHHHHHHHHHSHH..",
+    "..HHHHHHHSSEES..",
+    "..HHHHHHHSSeIS..",
+    "..HHHHHHHSSIIS..",
+    "..HHHHHHHSrSSS..",
+    "..HHHHHHHHSSS...",
+    "...HHHHHHSS.....",
 ]
 
 SIDE_BODY = [
-    ".....OBBBBBO....",
-    "..OOOBcBBBBbO...",
-    ".OBBBOWWWWBbO...",
-    "..OOOWWWWWWwO...",
-    "...OWWWvWWwwO...",
-    "...OWWWvWwwwO...",
-    "...OWWWvWwwwO...",
-    "...OWWWSWwwwO...",
-    "...OKKKKKKKO....",
-    "...OKKKKKKKKO...",
-    "..OKKKKKKKKKO...",
-    "...OOOOOOOOO....",
+    "...HH.BBBBB.....",
+    "...HPPBBBBP.....",
+    "...HHPPPPPP.....",
+    "...HPPPPPPP.....",
+    "...HHPSSPPP.....",
+    "....HPSSPxP.....",
+    ".....PSSPxP.....",
+    ".....PSSPxP.....",
+    "....PPPPPPPP....",
+    "...PPPPPPPPP....",
+    "...PPPPPPPPPP...",
+    "..lllllllllll...",
 ]
 
 SIDE_LEGS = {
-    "stand": [
-        "......OSSO......",
-        "......OTTO......",
-        "......OTTO......",
-        "......OTTO......",
-        "......OfFFO.....",
-        "......OOOOO.....",
-    ],
-    "stride": [
-        ".....OSSSO......",
-        "....OtsOOTTO....",
-        "...OttO..OTTO...",
-        "...OttO...OTTO..",
-        "..OFFFO...OfFFO.",
-        "..OOOOO...OOOOO.",
-    ],
-    "stride_alt": [
-        ".....OSSSO......",
-        "....OTSOOttO....",
-        "...OTTO..OttO...",
-        "...OTTO...OttO..",
-        "..OfFFO...OFFFO.",
-        "..OOOOO...OOOOO.",
-    ],
+    "stand": ["......SS........", "......SS........", "......SS........", "......FFFF......", "................"],
+    # 手前の脚（S）が前、奥の脚（z、暗い）がうしろ
+    "stride": [".....zzSS.......", "....zz...SS.....", "...zz.....SS....", ".ZZZ......FFFF..", "................"],
+    # 手前の脚がうしろ、奥の脚が前
+    "stride_alt": [".....SSzz.......", "....SS...zz.....", "...SS.....zz....", ".FFF......ZZZZ..", "................"],
 }
 
 VIEWS = {
@@ -221,7 +174,7 @@ FRAMES = {
 
 
 def compose(view, legs_pose, lift, head_dy=0, crouch=0, lean=0):
-    """頭・胴・脚を 16x32 のピクセルマップに組み立てる。
+    """頭・胴・脚を 16x32 の記号の図に組み立てる。
 
     lift   > 0：上半身を持ち上げ、できた隙間は脚の一番上の行で埋める（歩き・走りの上下動）。
     head_dy> 0：頭だけ下げる（のぞきこむ）。頭が胴の上の行に重なる。
@@ -255,7 +208,6 @@ def compose(view, legs_pose, lift, head_dy=0, crouch=0, lean=0):
 
 # ---------------------------------------------------------------- 腕の動き（コマに上から描き足す）
 # 座標は 16 列の絵の中の位置。y は「胴の一番上の行」からの行数（lift・crouch に合わせて動く）。
-# 新しく描いた腕のまわりには、あとで自動で輪郭をつける（add_outline）。
 
 def body_top_of(view, legs_pose, lift, crouch):
     _, body, legs = VIEWS[view]
@@ -272,42 +224,25 @@ def edit(rows, changes, top, width_pad):
     return ["".join(r) for r in grid]
 
 
-def add_outline(rows, symbols="WwSsBb"):
-    """透明の所で、腕（コート・肌）に接する所に輪郭 O をつける。"""
-    grid = [list(r) for r in rows]
-    h, w = len(grid), len(grid[0])
-    out = [r[:] for r in grid]
-    for y in range(h):
-        for x in range(w):
-            if grid[y][x] != ".":
-                continue
-            for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
-                if 0 <= nx < w and 0 <= ny < h and grid[ny][nx] in symbols:
-                    out[y][x] = "O"
-                    break
-    return ["".join(r) for r in out]
-
-
 def mirror_x(changes):
-    """正面・背中の絵で、右腕の変更を左腕へ写す（コートの明るさは左が明るい W、右が影 w）。"""
-    swap = {"w": "W", "s": "S"}
-    return [(15 - x, y, swap.get(ch, ch)) for (x, y, ch) in changes]
+    """正面・背中の絵で、画面右の腕の変更を画面左の腕へ写す（画面左の腕は光の側なので明るい肌 a）。"""
+    return [(15 - x, y, "a" if ch == "S" else ch) for (x, y, ch) in changes]
 
 
-# 正面（下向き）：画面右の腕（col 12）。ランタンはこちらの手に持つ
+_FRONT_CLEAR = [(13, y, ".") for y in range(4, 8)]   # 体の横に下ろした腕（画面右）を消す
+# 正面（下向き）：画面右の腕。ランタンはこちらの手に持つ
 ARM_FRONT = {
-    "swing": [(12, 5, "s"), (12, 6, "s"), (12, 7, "O"), (11, 7, "O")],         # 手を前へ（1 ドット上がる）
-    "reach": [(12, 6, "w"), (12, 7, "w"), (11, 7, "w"),                          # 体の横の手を消して
-              (13, 3, "w"), (14, 3, "w"), (15, 3, "s")],                          # 腕を横へのばす
-    "raise": [(12, 6, "w"), (12, 7, "w"), (11, 7, "w"),
-              (13, 2, "w"), (14, 1, "w"), (15, 0, "w"), (15, -1, "w"), (15, -2, "s"), (15, -3, "s")],
+    "swing": [(13, 7, ".")],                                                      # 手を前へ（腕が短く見える）
+    "reach": _FRONT_CLEAR + [(14, 3, "S"), (15, 3, "S"), (16, 3, "S")],           # 腕を横へのばす
+    "raise": _FRONT_CLEAR + [(14, 2, "S"), (15, 1, "S"), (15, 0, "S"), (16, -1, "S"), (16, -2, "S")],
 }
-# 横向き（右向き）：手は胴の前（col 7、7 行目）
+_SIDE_CLEAR = [(x, y, "P") for x in (6, 7) for y in range(4, 8)]   # 体の前に下ろした腕を消す（下はワンピース）
+# 横向き（右向き）：腕は胴の前（6〜7 列）
 ARM_SIDE = {
-    "swing_fwd": [(7, 7, "W"), (9, 7, "S")],
-    "swing_back": [(7, 7, "W"), (5, 7, "S")],
-    "reach": [(7, 7, "W"), (13, 4, "W"), (14, 4, "W"), (15, 4, "S")],
-    "raise": [(7, 7, "W"), (13, 3, "W"), (14, 2, "W"), (15, 1, "W"), (16, 0, "S"), (16, -1, "S")],
+    "swing_fwd": _SIDE_CLEAR + [(7, 4, "S"), (8, 5, "S"), (9, 6, "S"), (10, 6, "S")],
+    "swing_back": _SIDE_CLEAR + [(6, 4, "S"), (5, 5, "S"), (4, 6, "S"), (3, 6, "S")],
+    "reach": _SIDE_CLEAR + [(8, 3, "S"), (9, 3, "S"), (10, 3, "S"), (11, 3, "S"), (12, 3, "S")],
+    "raise": _SIDE_CLEAR + [(9, 2, "S"), (10, 1, "S"), (11, 0, "S"), (11, -1, "S"), (12, -2, "S"), (12, -3, "S")],
 }
 
 
@@ -318,34 +253,6 @@ def arm(view, name):
     if view == "up":
         return mirror_x(ARM_FRONT[name])
     return ARM_FRONT[name]
-
-
-def material_of(symbol):
-    for group in MATERIALS:
-        if symbol in group:
-            return group
-    return None
-
-
-def relight_mirror(rows):
-    """
-    左右反転した絵を作る。ただし陰影は反転しない（光は常に画面の左上から）。
-    形は反転し、素材の色（髪・肌・コートなど）は「反転前の同じ位置が同じ素材ならその陰影の色」を使い、
-    違う素材なら基本の色にする（光の当たる側に来た影は消える）。目・口・輪郭などはそのまま反転する。
-    """
-    mirrored = [row[::-1] for row in rows]
-    out = []
-    for y, row in enumerate(mirrored):
-        line = []
-        for x, symbol in enumerate(row):
-            group = material_of(symbol)
-            if group is None:
-                line.append(symbol)
-                continue
-            original = rows[y][x]
-            line.append(original if original in group else group[0])
-        out.append("".join(line))
-    return out
 
 
 # 動きのコマ：dict(pose=脚のポーズ, lift, head_dy, crouch, lean, arm=腕の動き, arm2=もう一方の腕)
@@ -389,19 +296,16 @@ def action_frame(view, spec, width):
     rows = compose(view, spec["pose"], spec["lift"], spec["head_dy"], spec["crouch"], spec["lean"])
     rows = ["." * pad + r + "." * pad for r in rows]
     top = body_top_of(view, spec["pose"], spec["lift"], spec["crouch"])
-    changed = False
     if spec["arm"]:
         rows = edit(rows, arm(view, spec["arm"]), top, pad)
-        changed = True
     if spec["arm2"] and view != "side":
         other = mirror_x(ARM_FRONT[spec["arm2"]]) if view == "down" else ARM_FRONT[spec["arm2"]]
         rows = edit(rows, other, top, pad)
-        changed = True
-    return add_outline(rows) if changed else rows
+    return rows
 
 
 def frames(anim, direction):
-    """direction は down / up / right / left。"""
+    """記号の図のコマの一覧。direction は down / up / right / left。左向きは右向きの図を反転したもの。"""
     view = "side" if direction in ("left", "right") else direction
     if (anim, view) in FRAMES:
         result = [compose(view, pose, lift) for pose, lift in FRAMES[(anim, view)]]
@@ -409,8 +313,13 @@ def frames(anim, direction):
         width = 24 if anim in WIDE else 16
         result = [action_frame(view, spec, width) for spec in ACTIONS[(anim, view)]]
     if direction == "left":
-        result = [relight_mirror(rows) for rows in result]
+        result = [mirror(rows) for rows in result]
     return result
+
+
+def to_image(rows):
+    """記号の図 → 画像（陰影と月明かりの縁取りはここで付く）。"""
+    return render(rows, MATS, DIRECT, STYLE)
 
 
 def all_parts():
@@ -421,3 +330,82 @@ def all_parts():
         for name, rows in legs.items():
             parts[f"{view}_legs_{name}"] = rows
     return parts
+
+
+# ================================================================ 顔グラフィック（48x48）
+# 形は B 案（フードは無し）、髪は G2 改、服は F1。眉は前髪のすぐ下に見える（ぱっつん前髪が眉の高さ）。
+EXPRESSIONS = ("normal", "gentle", "smile", "sad", "surprised")
+
+# 目（6x6）。左右で形が違う目は (向かって左, 向かって右)。つやはどちらの目も左上。
+EYES = {
+    "normal": [".EEEE.", "EeeiiE", "EeiiIE", ".iIIo.", ".iIoI.", "..II.."],
+    "gentle": ["......", ".EEEE.", "EeeiiE", "EeiIIE", ".iIoI.", "..II.."],          # まぶたを少し下ろした、おだやかな目
+    "smile": ["......", ".EEEE.", "EeeiiE", "EiIIoE", ".nnnn.", "......"],           # 下まぶたが上がる
+    "sad": (["......", "..EEEE", "EEeii.", ".eiII.", ".iIoI.", "..II.."],            # 目じりが下がる伏し目
+            ["......", "EEEE..", ".eeiEE", ".eiII.", ".iIoI.", "..II.."]),
+    "surprised": [".EEEE.", "EeeiiE", "EeiIIE", "EiIIoE", ".IIoI.", "..II.."],
+}
+# 眉（5x2）：(向かって左, 向かって右, 上の行の y)
+BROWS = {
+    "normal": ([".qqqq", "q...."], ["qqqq.", "....q"], 20),
+    "gentle": ([".qqq.", "q...q"], [".qqq.", "q...q"], 20),
+    "smile": ([".qqq.", "q...q"], [".qqq.", "q...q"], 20),
+    "sad": (["...qq", "qqq.."], ["qq...", "..qqq"], 20),                             # 内側（眉間）が上がる
+    "surprised": ([".qqq.", "q...q"], [".qqq.", "q...q"], 19),                       # 少し上がる（前髪にかかる）
+}
+MOUTHS = {
+    "normal": ["mm"],
+    "gentle": ["n..n", ".mm."],
+    "smile": ["m..m", ".mm."],
+    "sad": [".mm.", "n..n"],
+    "surprised": ["mm", "mm"],
+}
+FACE_MATS = {
+    "H": Mat("hair2", "hair1", "hair3", group="Hhk", d=3),
+    "S": Mat("skin2", "skin1", group="SEeiIormnq", d=2),
+    "P": Mat("pj2", "pj1", "pj3", group="Pxl", d=3),
+    "l": Mat("tee3", "tee2", "tee3", group="l", d=2),
+    "B": Mat("scarf1", "scarf0", "scarf2", d=2),
+}
+FACE_DIRECT = {"E": "hair0", "e": "moon3", "i": "iris0", "I": "iris1", "o": "iris2", "r": "blush0",
+               "m": "skin0", "n": "skin1", "q": "hair1", "k": "hair1", "h": "hair3", "x": "pj1"}
+SHOULDERS = [(4, 47), (8, 40), (16, 36), (32, 36), (40, 40), (44, 47)]
+
+
+def portrait(expression="normal"):
+    c = Canvas(48, 48)
+    # 服（F1）：肩とふくらんだそで、首まわりと胸の下の白いレース
+    c.poly(SHOULDERS, "P")
+    c.ellipse((14, 33, 34, 41), "l")
+    c.ellipse((16, 33, 32, 39), "P")
+    c.rect((6, 42, 42, 42), "l", only="P")
+    # 首とマフラー（端は向かって右に垂らす）
+    c.rect((20, 29, 27, 37), "S")
+    c.poly([(15, 33), (19, 30), (29, 30), (33, 33), (30, 37), (18, 37)], "B")
+    c.poly([(26, 35), (31, 35), (32, 47), (26, 47)], "B")
+    # 髪（G2 改）
+    c.ellipse((10, 3, 38, 33), "H")
+    c.poly([(10, 18), (16, 18), (16, 38), (14, 47), (10, 47), (11, 36)], "H")     # 向かって左：胸の前へ細くなる房
+    c.poly([(32, 18), (38, 18), (39, 33), (37, 39), (33, 35)], "H")               # 向かって右：肩の後ろへ
+    c.line([(13, 24), (13, 38), (12, 45)], "k", only="H")                         # 房の中の暗い筋
+    c.ellipse((13, 10, 35, 36), "S")
+    c.rect((12, 6, 36, 19), "H", only="S.H")                                      # ぱっつん前髪（眉の高さ）
+    for x, y0 in ((19, 17), (27, 18)):                                           # 毛先のすき間から額がのぞく
+        c.line([(x, y0), (x, 19)], "S", only="H")
+    c.poly([(11, 5), (37, 5), (37, 8), (11, 8)], "H", only=".")                   # 猫の耳のような寝ぐせ（消さないこと）
+    c.rect((13, 20, 14, 33), "H")                                                 # 顔の横の髪
+    c.rect((34, 20, 35, 31), "H")
+    c.line([(13, 13), (17, 10), (23, 9)], "h", only="H")                          # 天使の輪
+    # 顔
+    left_brow, right_brow, by = BROWS[expression]
+    c.stamp(left_brow, 16, by)
+    c.stamp(right_brow, 27, by)
+    eyes = EYES[expression]
+    left, right = eyes if isinstance(eyes, tuple) else (eyes, eyes)
+    c.stamp(left, 16, 23)
+    c.stamp(right, 26, 23)
+    c.stamp(["rr"], 15, 30)
+    c.stamp(["rr"], 31, 30)
+    mouth = MOUTHS[expression]
+    c.stamp(mouth, 24 - len(mouth[0]) // 2, 32)
+    return render(c.rows(), FACE_MATS, FACE_DIRECT, STYLE)

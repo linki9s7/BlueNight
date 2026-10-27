@@ -87,7 +87,8 @@ def build_palette():
 
 # ---------------------------------------------------------------- ルリ
 def build_ruri():
-    """4 方向（下・上・右・左）。左向きは形だけ反転し、陰影は左上からの光のまま（ruri.relight_mirror）。"""
+    """4 方向（下・上・右・左）。左向きは記号の図を反転してから陰影を付けるので、光は左上のまま（chara.py）。
+    輪郭線の無い描き方なので clean_corners はかけない（目のふちの紺を輪郭と見なして消さないように）。"""
     folder = os.path.join(TEX, "Characters", "Ruri")
     if os.path.isdir(folder):
         for name in os.listdir(folder):
@@ -98,7 +99,7 @@ def build_ruri():
         for direction in ("down", "up", "right", "left"):
             imgs = []
             for i, rows in enumerate(ruri.frames(anim, direction)):
-                img = save(from_map(rows, ruri.KEY), "Characters", "Ruri", f"ruri_{anim}_{direction}_{i}.png", clean=True)
+                img = save(ruri.to_image(rows), "Characters", "Ruri", f"ruri_{anim}_{direction}_{i}.png")
                 imgs.append(img)
             sheets[(anim, direction)] = imgs
     return sheets

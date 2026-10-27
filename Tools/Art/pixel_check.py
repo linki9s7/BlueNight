@@ -29,9 +29,16 @@ DOUBLES_LIMIT = 10
 
 # 目で確かめて「直さなくてよい」と決めたもの（ファイル名の頭 → 理由）。点検の数字は残し、レポートに理由を並べて書く。
 REVIEWED = {
-    "Characters/Ruri/": "顔の肌の帯（目と髪のあいだ・あご）、口・マフラーのつや・靴のつやの点は形の細部で、陰影の帯や AA ではない",
-    "Characters/Ruri/ruri_walk_left_0": "靴下の光の向き：奥の脚を暗くしているのは奥行きの表現",
-    "Characters/Ruri/ruri_walk_right_0": "靴下の光の向き：奥の脚を暗くしているのは奥行きの表現",
+    "Characters/Ruri/": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、"
+                        "陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている",
+    "Characters/Ruri/ruri_walk_right": "光の向き（肌・ワンピース）：奥の脚を暗くしているのは奥行き。横向きは背中側に髪がかかるので、"
+                                       "ワンピースの縁の光がすその左下だけに出て、系統の重心では逆に見える（形ごとに左上の光を確認済み）",
+    "Characters/Ruri/ruri_run_right": "光の向き：walk_right と同じ（奥の脚・腕の振り・背中側の髪）",
+    "Characters/Ruri/ruri_idle_right": "光の向き：横向きは背中側に髪がかかり、ワンピースの縁の光がすその左下だけに出る（walk_right と同じ）",
+    "Characters/Ruri/ruri_inspect_right": "光の向き：idle_right と同じ",
+    "Characters/Ruri/ruri_hang_right": "光の向き：idle_right と同じ",
+    "Characters/Ruri/ruri_place_right": "光の向き：idle_right と同じ",
+    "Faces/face_ruri": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない）",
     "Characters/Grandma/": "あごの肌の帯は口まわりの形。2 コマ目の右肩の影は手との境目",
     "Characters/Keeper/": "顔の帯（めがね・口ひげ・鼻のまわり）は形の細部で、陰影の帯ではない",
     "Title/title_bg": "一枚絵：明るい星の十字形・月の欠けの先は模様。光の向きは、月（光源）・星・街灯の光のたまりが入るので系統の重心では判断できない",

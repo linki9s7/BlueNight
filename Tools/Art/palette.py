@@ -29,6 +29,18 @@ RAMPS = {
     "red": ["#7a2340", "#b0384f", "#e05a6a"],
     # 革・木
     "brown": ["#3b2626", "#5a3a32", "#80544a"],
+    # ---- 人物のリデザイン（v0.16、Tools/Art/ruri.py の説明）
+    # 白（夜の青を含んだ白）：ワンピースのすそのレース
+    "tee": ["#5b6384", "#8e97b8", "#d6dcec", "#f3f5fb"],
+    # ルリのワンピース（淡い青のコットン）
+    "pj": ["#5d6e92", "#8c9ec1", "#bccbe4", "#e3ebf7"],
+    # ルリの瞳（上が濃く、下が明るい）
+    "iris": ["#16306e", "#2d5bc0", "#6aa2ee"],
+    # ほおの赤み
+    "blush": ["#d98a86"],
+    # ネムの羽（ほのかに光る青緑）・毛（白）
+    "glow": ["#3f8f8a", "#7fd1c0", "#c8f5e6", "#f2fff9"],
+    "fluff": ["#9aa6bf", "#d3dbe8", "#f4f6fb"],
 }
 
 
@@ -70,7 +82,10 @@ MAP_PALETTES = {
                         "night0", "night1", "night2", "night3", "red0", "red1", "brown1", "brown2",
                         "stone2", "stone3", "stone4", "stone5", "stone7", "warm4", "warm5", "red2",
                         "warm3", "warm6", "moon0", "moon1", "moon2", "moon3",
-                        "moth0", "moth1", "moth2", "moth3", "moth4"),  # moon2：逃げた影の光る目、moon3：顔グラの目のつや、moth：ネムの羽
+                        "moth0", "moth1", "moth2", "moth3", "moth4",  # moon2：逃げた影の光る目、moon3：顔グラの目のつや、moth：ネムの羽
+                        # v0.16 のルリ：ワンピース・レース・瞳・ほお。ネム：光る羽・白い毛
+                        "pj1", "pj2", "pj3", "tee2", "tee3", "iris0", "iris1", "iris2", "blush0",
+                        "glow0", "glow1", "glow2", "glow3", "fluff0", "fluff1", "fluff2"),
     # ランプ屋の中（第 1 章）：木・しっくい・消えたランプ・灯り
     "lamp_shop": _pick("night0", "night1", "night2", "night3", "night4", "night5", "stone3", "stone4", "stone5",
                        "stone6", "stone7", "brown0", "brown1", "brown2", "warm3", "warm4", "warm5", "warm6",
@@ -83,5 +98,5 @@ MAP_PALETTES = {
     "title": _pick("night0", "night1", "night2", "night3", "night4", "night5", "moon1", "moon2", "moon3",
                    "stone1", "stone2", "stone3", "stone5", "stone7", "warm3", "warm4", "warm5", "warm6", "red0", "red2",
                    "hair0", "hair1", "hair2", "hair3", "skin1", "skin2", "scarf0", "scarf1", "coat1", "coat2",
-                   "brown1", "brown2"),
+                   "brown1", "brown2", "pj1", "pj2", "pj3", "tee2", "tee3"),  # pj・tee：街灯の下のルリ（v0.16 のワンピース）
 }

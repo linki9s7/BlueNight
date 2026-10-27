@@ -85,6 +85,24 @@ def keeper_frames():
 
 
 # ---------------------------------------------------------------- ルリの影
+def fill_holes(img):
+    """外につながっていない透明の穴（腕と体のすき間など）を埋める。影の中に水色のふちの点ができないように。"""
+    px = img.load()
+    w, h = img.size
+    outside = set()
+    stack = [(x, y) for x in range(w) for y in (0, h - 1)] + [(x, y) for y in range(h) for x in (0, w - 1)]
+    while stack:
+        x, y = stack.pop()
+        if (x, y) in outside or not (0 <= x < w and 0 <= y < h) or px[x, y][3]:
+            continue
+        outside.add((x, y))
+        stack += [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]
+    for y in range(h):
+        for x in range(w):
+            if not px[x, y][3] and (x, y) not in outside:
+                px[x, y] = (0, 0, 0, 255)
+
+
 def ruri_shadow_frames(anim, direction):
     """ルリのコマから作る逃げた影。下向き・横向きは目が光る（ルリの目の位置、ふちと同じ水色の明るい色）。"""
     frames = []
@@ -98,6 +116,7 @@ def ruri_shadow_frames(anim, direction):
                     px[x, y] = (0, 0, 0, 255)
                 if ch == "E" and direction != "up":
                     eyes.append((x, y))
+        fill_holes(body)
         img = silhouette(body, wobble=[0, 1, 0, -1][i % 4])
         out = img.load()
         for (x, y) in eyes:

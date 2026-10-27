@@ -340,12 +340,7 @@ def build_title(save):
     lamp_x = 104
     ground_and_lamp(bg, lamp_x)
     # 街灯の下で月を見上げるルリ（背中・影は無い）
-    girl = Image.new("RGBA", (16, 32), CLEAR)
-    gp = girl.load()
-    for y, row in enumerate(ruri.frames("idle", "up")[0]):
-        for x, ch in enumerate(row):
-            if ch != ".":
-                gp[x, y] = ruri.KEY[ch]
+    girl = ruri.to_image(ruri.frames("idle", "up")[0])
     bg.alpha_composite(girl, (lamp_x + 16, 254 - 32))
     out = {"bg": save(bg, "Title", "title_bg.png")}
     out["logo"] = save(logo(), "Title", "title_logo.png", clean=True, outline=[RAMPS["night"][0]])
