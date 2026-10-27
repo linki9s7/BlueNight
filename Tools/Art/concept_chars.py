@@ -48,6 +48,9 @@ EXTRA = {
     "denim": ["#22345c", "#33507f", "#5677a8"],                # デニムのショートパンツ
     "slate": ["#1d2b46", "#2e4466", "#466189", "#5d7ba6", "#8eaad0"],  # 夜色のワンピース
     "chambray": ["#5a7397", "#88a2c4", "#b6cbe2", "#dde8f4"],  # 淡い青のシャツ
+    # 部屋着（F 案）
+    "pj": ["#5d6e92", "#8c9ec1", "#bccbe4", "#e3ebf7"],        # 淡い青のコットン（ワンピース・パジャマ）
+    "knit": ["#34405e", "#4f5f84", "#7486ad", "#9fb0d2"],      # 薄手のカーディガン（灰青）
 }
 
 
@@ -957,8 +960,8 @@ D_DIRECT = {"E": "hair0", "e": "moon3", "i": "iris0", "I": "iris1", "o": "iris2"
 D_DOWN = [
     "................",
     "................",
-    "......HHHH......",
-    "....HHHHHHHH....",
+    "...H..HHHH..H...",
+    "...HHHHHHHHHH...",
     "...HHHHHHHHHH...",
     "..HHHHHHHHHHHH..",
     "..HHHHHHHHHHHH..",
@@ -992,8 +995,8 @@ D_DOWN = [
 D_UP = [
     "................",
     "................",
-    "......HHHH......",
-    "....HHHHHHHH....",
+    "...H..HHHH..H...",
+    "...HHHHHHHHHH...",
     "...HHHHHHHHHH...",
     "..HHHHHHHHHHHH..",
     "..HHHHHHHHHHHH..",
@@ -1027,8 +1030,8 @@ D_UP = [
 D_RIGHT = [
     "................",
     "................",
-    ".....HHHH.......",
-    "...HHHHHHHH.....",
+    "..H..HHHH..H....",
+    "..HHHHHHHHHH....",
     "..HHHHHHHHHH....",
     ".HHHHHHHHHHHH...",
     ".HHHHHHHHHHHHH..",
@@ -1111,7 +1114,8 @@ def d_portrait(expr="normal", torso=hoodie_torso, outfit_mats=None, outfit_direc
     c.poly([(9, 18), (39, 18), (40, 39), (35, 36), (31, 40), (29, 32), (19, 32), (17, 40), (13, 36), (8, 39)], "H")
     c.ellipse((13, 10, 35, 36), "S")                 # B より少し丸く大きい顔（あどけなさ）
     # 前髪：右上から左下へ流す。先が向かって左の目に少し触れる
-    c.poly([(10, 6), (38, 6), (36, 16), (31, 14), (26, 17), (21, 20), (17, 22), (14, 28), (12, 22)], "H", only="SH")
+    # 上の辺は頭の丸より左右に少し広い。はみ出した所が左右の小さな角＝猫の耳のような寝ぐせ（チャームポイント。消さないこと）
+    c.poly([(10, 6), (38, 6), (36, 16), (31, 14), (26, 17), (21, 20), (17, 22), (14, 28), (12, 22)], "H", only="S.H")
     c.stamp(["hh.", "h.."], 14, 9)                   # 髪のつや（左上）
     eyes = D_EYES[expr]
     left, right = eyes if isinstance(eyes, tuple) else (eyes, eyes)
@@ -1367,6 +1371,227 @@ def e_portrait(key, expr="normal"):
     return d_portrait(expr, E_TORSOS[key], mats, o.get("direct"))
 
 
+# ================================================================ 案 F：おしゃれな部屋着（3 種）
+# ユーザー：「E2・E3 の方向がいい。でも、夜中におしゃれな部屋着で出てきたくらいがいい」。
+# 眠れずに、部屋着のまま上だけ整えて出てきた 14 歳。足元はどれも素足にサンダル（家からそのまま出てきた感じ）。
+# - F1「ルームワンピース」：淡い青のコットンのワンピース（ひざ丈・ふくらんだ短いそで・胸の下からギャザー）、すそに白いレース。
+# - F2「パイピングのパジャマ」：淡い青の開襟シャツとショートパンツ。襟・前立て・そで口・すそに紺のパイピング、白いボタン。
+# - F3「T シャツとロングカーディガン」：白い大きめの T シャツ、紺のショートパンツに、ひざまでの薄手のカーディガン（そでが少し長い）。
+F_LEGS = {   # 27〜31 行（素足にサンダル）
+    "down": [".....SS..SS.....", ".....SS..SS.....", ".....SS..SS.....", "....FFF..FFF....", "................"],
+    "down_step": [".....SS..SS.....", ".....SS..SS.....", ".....SS..FFF....", "....FFF.........", "................"],
+    "right": ["......SS........", "......SS........", "......SS........", "......FFFF......", "................"],
+    "right_step": [".....SS.SS......", "....SS...SS.....", "...SS.....SS....", ".FFF......FFF...", "................"],
+}
+SANDAL = Mat("night4", "night3", "night5")
+
+F_OUTFITS = {
+    "f1": dict(
+        name="ルームワンピース",
+        mats={
+            "P": Mat("pj2", "pj1", "pj3", group="Pxl", d=2),
+            "l": Mat("tee3", "tee2", group="l"),
+            "F": SANDAL,
+        },
+        direct={"x": "pj1"},
+        down=[
+            "..HHHBBBBBBHHH..",
+            "..HHPBBBBBBPHH..",
+            "...PPPBBBBPPP...",
+            "..PPPPPBBPPPPP..",
+            "..S.PPPPPPPP.S..",
+            "..S.PPxPPxPP.S..",
+            "..S.PPxPPxPP.S..",
+            "..SPPPxPPxPPPS..",
+            "..PPPPxPPxPPPP..",
+            "..PPPPPPPPPPPP..",
+            ".PPPPPPPPPPPPPP.",
+            ".llllllllllllll.",
+        ],
+        up=[
+            "..HHHBBBBBBHHH..",
+            "..HHPPPPPPPPHH..",
+            "...PPPPPPPPPP...",
+            "..PPPPPPPPPPPP..",
+            "..S.PPPPPPPP.S..",
+            "..S.PPPPPPPP.S..",
+            "..S.PPPPPPPP.S..",
+            "..SPPPPPPPPPPS..",
+            "..PPPPPPPPPPPP..",
+            "..PPPPPPPPPPPP..",
+            ".PPPPPPPPPPPPPP.",
+            ".llllllllllllll.",
+        ],
+        right=[
+            "..HHHHBBBBB.....",
+            "...HPPBBBBP.....",
+            ".....PPPPPP.....",
+            "....PPPPPPP.....",
+            ".....PSSPPP.....",
+            ".....PSSPxP.....",
+            ".....PSSPxP.....",
+            ".....PSSPxP.....",
+            "....PPPPPPPP....",
+            "...PPPPPPPPP....",
+            "...PPPPPPPPPP...",
+            "..lllllllllll...",
+        ],
+    ),
+    "f2": dict(
+        name="パイピングのパジャマ",
+        mats={
+            "J": Mat("pj2", "pj1", "pj3", group="Jpb", d=2),
+            "p": Mat("marine1", "marine0", "marine2", group="pJb"),
+            "F": SANDAL,
+        },
+        direct={"b": "tee3"},
+        down=[
+            "..HHHBBBBBBHHH..",
+            "..HHpBBBBBBpHH..",
+            "..JJJpBBBBpJJJ..",
+            "..JJJJpBBpJJJJ..",
+            "..ppJJJpJJJJpp..",
+            "..SJJJJpbJJJJS..",
+            "..SJJJJpJJJJJS..",
+            "..SJJJJpbJJJJS..",
+            "...JJJJpJJJJJ...",
+            "...pppppppppp...",
+            "...JJJJ..JJJJ...",
+            "...pppp..pppp...",
+        ],
+        up=[
+            "..HHHBBBBBBHHH..",
+            "..HHppppppppHH..",
+            "..JJJJJJJJJJJJ..",
+            "..JJJJJJJJJJJJ..",
+            "..ppJJJJJJJJpp..",
+            "..SJJJJJJJJJJS..",
+            "..SJJJJJJJJJJS..",
+            "..SJJJJJJJJJJS..",
+            "...JJJJJJJJJJ...",
+            "...pppppppppp...",
+            "...JJJJ..JJJJ...",
+            "...pppp..pppp...",
+        ],
+        right=[
+            "..HHHHBBBBB.....",
+            "...HJJBBBBp.....",
+            "....JJJJJJp.....",
+            "....JJJJJJp.....",
+            "....JJpppJp.....",
+            "....JJJSSJb.....",
+            "....JJJSSJp.....",
+            "....JJJSSJb.....",
+            "....JJJJJJJ.....",
+            "....ppppppp.....",
+            ".....JJJJJ......",
+            ".....ppppp......",
+        ],
+    ),
+    "f3": dict(
+        name="T シャツとロングカーディガン",
+        mats={
+            "G": Mat("knit2", "knit1", "knit3", group="Gg", d=2),
+            "g": Mat("knit1", "knit0", "knit2", group="Gg"),
+            "W": Mat("tee3", "tee2", group="WK", d=2),
+            "K": Mat("night3", "night2", "night5"),
+            "F": SANDAL,
+        },
+        down=[
+            "..HHHBBBBBBHHH..",
+            "..HHGBBBBBBGHH..",
+            "..GGGWBBBBWGGG..",
+            "..GGGWWBBWWGGG..",
+            "..GGGWWWWWWGGG..",
+            "..GGGWWWWWWGGG..",
+            "..GGGWWWWWWGGG..",
+            "..ggGWWWWWWGgg..",
+            "..SGGWWWWWWGGS..",
+            "...GGKKKKKKGG...",
+            "...GGSS..SSGG...",
+            "...ggSS..SSgg...",
+        ],
+        up=[
+            "..HHHBBBBBBHHH..",
+            "..HHGGGGGGGGHH..",
+            "..GGGGGGGGGGGG..",
+            "..GGGGGGGGGGGG..",
+            "..GGGGGGGGGGGG..",
+            "..GGGGGGGGGGGG..",
+            "..GGGGGGGGGGGG..",
+            "..ggGGGGGGGGgg..",
+            "..SGGGGGGGGGGS..",
+            "...GGGGGGGGGG...",
+            "...GGGGGGGGGG...",
+            "...gggggggggg...",
+        ],
+        right=[
+            "..HHHHBBBBB.....",
+            "...HGGBBBBW.....",
+            "....GGGGGGW.....",
+            "....GGGGGGW.....",
+            "....GGGGGGW.....",
+            "....GGGGGGW.....",
+            "....GGGGGGW.....",
+            "....GGgggGW.....",
+            "....GGGSSGW.....",
+            "....GGGGGGK.....",
+            "....GGSSGG......",
+            "....ggSSgg......",
+        ],
+    ),
+}
+
+
+def f_frames(key):
+    o = F_OUTFITS[key]
+    legs = F_LEGS
+    down = D_DOWN[:15] + o["down"] + legs["down"]
+    down_step = D_DOWN[:15] + o["down"] + legs["down_step"]
+    up = D_UP[:15] + o["up"] + legs["down"]
+    right = D_RIGHT[:15] + o["right"] + legs["right"]
+    right_step = D_RIGHT[:15] + o["right"] + legs["right_step"]
+    mats = dict(D_MATS)
+    mats.update(o["mats"])
+    direct = dict(D_DIRECT)
+    direct.update(o.get("direct", {}))
+    return sprites(down, down_step, up, right, right_step, mats, direct, D_STYLE)
+
+
+def roomdress_torso(c):
+    c.poly(SHOULDERS, "P")
+    c.ellipse((14, 33, 34, 41), "l")                  # 首まわりの白いレース
+    c.ellipse((16, 33, 32, 39), "P")
+    c.rect((6, 42, 42, 42), "l", only="P")            # 胸の下の切りかえ（ここからギャザー）にもレース
+
+
+def pajama_torso(c):
+    c.poly(SHOULDERS, "J")
+    c.poly([(8, 39), (21, 36), (17, 47)], "p")        # 開襟（ふちが紺のパイピング）
+    c.poly([(27, 36), (40, 39), (31, 47)], "p")
+    c.poly([(10, 40), (19, 38), (17, 45)], "J")
+    c.poly([(29, 38), (38, 40), (31, 45)], "J")
+    c.line([(24, 40), (24, 47)], "p")                 # 前立て
+    c.stamp(["b"], 25, 42)                            # 白いボタン
+    c.stamp(["b"], 25, 46)
+
+
+def cardigan_torso(c):
+    c.poly(SHOULDERS, "G")
+    c.poly([(18, 36), (30, 36), (29, 47), (19, 47)], "W")   # 白い T シャツ（カーディガンの前があいている）
+
+
+F_TORSOS = {"f1": roomdress_torso, "f2": pajama_torso, "f3": cardigan_torso}
+
+
+def f_portrait(key, expr="normal"):
+    o = F_OUTFITS[key]
+    mats = {k: Mat(m.base, m.shade, m.light, m.line, m.group, 3 if k in "PJGW" else m.d) for k, m in o["mats"].items()}
+    if key == "f1":
+        mats["l"] = Mat("tee3", "tee2", "tee3", group="l", d=2)
+    return d_portrait(expr, F_TORSOS[key], mats, o.get("direct"))
+
+
 # ================================================================ 商店街に置いた見え方
 def street_views(concepts):
     """第 1 章の商店街（今の建物・小物はそのまま）に、案ごとのルリとネムを置いて、同じ場所を切り出して並べる。"""
@@ -1413,6 +1638,9 @@ CONCEPTS = {
     "d": dict(ruri=lambda: sprites(D_DOWN, D_DOWN_STEP, D_UP, D_RIGHT, D_RIGHT_STEP, D_MATS, D_DIRECT, D_STYLE),
               nemu=nemu_b_sprite, face=d_portrait, nemu_face=nemu_b_portrait),
 }
+for _k in F_OUTFITS:
+    CONCEPTS[_k] = dict(ruri=(lambda k=_k: f_frames(k)), nemu=nemu_b_sprite,
+                        face=(lambda k=_k: f_portrait(k)), nemu_face=nemu_b_portrait)
 for _k in E_OUTFITS:
     CONCEPTS[_k] = dict(ruri=(lambda k=_k: e_frames(k)), nemu=nemu_b_sprite,
                         face=(lambda k=_k: e_portrait(k)), nemu_face=nemu_b_portrait)
@@ -1455,6 +1683,7 @@ def main():
     upscale(sheet([d_portrait(e) for e in D_EYES], bg), 5).save(os.path.join(OUT, "d_expressions.png"))
     # E 案（服のリメイク）：3 種の顔グラフィックを並べる
     upscale(sheet([e_portrait(k) for k in E_OUTFITS], bg), 5).save(os.path.join(OUT, "e_faces_compare.png"))
+    upscale(sheet([f_portrait(k) for k in F_OUTFITS], bg), 5).save(os.path.join(OUT, "f_faces_compare.png"))
     print("done")
 
 
