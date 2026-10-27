@@ -12,7 +12,8 @@ import random
 
 from PIL import Image, ImageDraw
 
-from m1_assets import GRANDMA, GRANDMA_KEY, from_map as m1_from_map, silhouette
+import townsfolk
+from m1_assets import silhouette
 from palette import RAMPS, hex_to_rgba
 
 CLEAR = (0, 0, 0, 0)
@@ -144,7 +145,7 @@ def shadow_set(base):
 
 
 def grandma_shadow(save):
-    front = m1_from_map(GRANDMA, GRANDMA_KEY)
+    front = townsfolk.haru_frames()[0]
     side = mask_from_rows(GRANDMA_SIDE)
     rim = [RAMPS["moon"][0], RAMPS["moon"][1], RAMPS["moon"][2], RAMPS["moon"][3]]
     out = {}
@@ -162,38 +163,9 @@ def grandma_shadow(save):
 
 
 # ================================================================ おばあさんの居眠り（影が戻って眠りにつく）
-GRANDMA_DOZE = [
-    "................",
-    "......OOO.......",
-    ".....OHHHO......",
-    ".....OHHhO......",
-    "....OOHHHOO.....",
-    "...OHHHHHHHO....",
-    "...OHHHHHHhhO...",
-    "...OHSSSSSShO...",
-    "...OSOOSSOOsO...",   # 目を閉じる
-    "...OSSSSSSSsO...",
-    "....OSSmmSsO....",
-    "....OOSSSSOO....",
-    "...OCCCCCCCDO...",
-    "..OCCCCCCCCDDO..",
-    "..OCSSCCCCSSDO..",   # ひざの上で手を組む
-    "..OKKKKKKKKKkO..",
-    ".OKKKKKKKKKKkkO.",
-    ".OKKKKKKKKKkkkO.",
-    "..OOOOOOOOOOOO..",
-    "..ObOfFOOfFObO..",   # 足と、腰かけのあし
-    "..ObOOOOOOOObO..",
-    "..OOO......OOO..",
-]
-DOZE_KEY = dict(GRANDMA_KEY, b=hex_to_rgba(RAMPS["brown"][1]))
-
-
 def grandma_doze(save):
-    """2 コマ：ふつう／こくりと頭が 1 ドット下がる。"""
-    nod = ["." * 16] + GRANDMA_DOZE[:12] + GRANDMA_DOZE[13:]
-    frames = [m1_from_map(GRANDMA_DOZE, DOZE_KEY), m1_from_map(nod, DOZE_KEY)]
-    return [save(img, "Characters", "Grandma", f"grandma_doze_{i}.png", clean=True) for i, img in enumerate(frames)]
+    """2 コマ：ふつう／こくりと頭が 1 ドット下がる（絵は townsfolk.py）。"""
+    return [save(img, "Characters", "Grandma", f"grandma_doze_{i}.png") for i, img in enumerate(townsfolk.haru_doze_frames())]
 
 
 # ================================================================ 足元の影（影がある人の足もと）
