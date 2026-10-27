@@ -1592,6 +1592,323 @@ def f_portrait(key, expr="normal"):
     return d_portrait(expr, F_TORSOS[key], mats, o.get("direct"))
 
 
+# ================================================================ 案 G：服は F1 のまま、髪型と顔を変える（4 種）
+# ユーザー：「同じ服のまま髪型と顔をいじってみて」。服は F1 ルームワンピース。
+# どの案も、猫の耳のような寝ぐせ（頭の上の左右の角）と、大きな青い目、ほおの赤みは残す。
+# - G1「ボブ・たれ目」：あごの線で切ったボブ。目じりが下がった、やさしい目。
+# - G2「ぱっつんロング」：眉の高さで切りそろえた前髪と、腰までのまっすぐな髪。丸い目。人形のように静か。
+# - G3「ショート・つり目」：えりあしの短い、毛先のはねたショート。目じりが上がった、少し強い目。
+# - G4「おさげ」：前髪を真ん中で分けて、低い位置の三つ編み 2 本を胸の前へ。白い髪ゴム。
+G_HEADS = {
+    "g1": dict(
+        down=[
+            "................",
+            "................",
+            "...H..HHHH..H...",
+            "...HHHHHHHHHH...",
+            "..HHHHHHHHHHHH..",
+            "..HHHHHHHHHHHH..",
+            "..HHHHHHHHHHHH..",
+            "..HHHHHHHHHSHH..",
+            "..HHHHHHHSSSHH..",
+            "..HHHEESSEESHH..",
+            "..HHSeISSeISHH..",
+            "..HHSIISSIISHH..",
+            "..HHSrSSSSrSHH..",
+            "..HHHSSSSSSHHH..",
+            "..HH...SS...HH..",
+        ],
+        up=["................", "................", "...H..HHHH..H...", "...HHHHHHHHHH..."]
+           + ["..HHHHHHHHHHHH.."] * 10 + ["..HH...SS...HH.."],
+        right=[
+            "................",
+            "................",
+            "..H..HHHH..H....",
+            "..HHHHHHHHHH....",
+            ".HHHHHHHHHHHH...",
+            ".HHHHHHHHHHHHH..",
+            ".HHHHHHHHHHHHH..",
+            ".HHHHHHHHHHHHH..",
+            ".HHHHHHHHHSSSS..",
+            ".HHHHHHHHSSEES..",
+            ".HHHHHHHHSSeIS..",
+            ".HHHHHHHHSSIIS..",
+            ".HHHHHHHHSrSSS..",
+            ".HHHHHHHHHSSS...",
+            ".HHHH....SS.....",
+        ],
+        hair="short",
+    ),
+    "g2": dict(
+        down=[
+            "................",
+            "................",
+            "...H..HHHH..H...",
+            "...HHHHHHHHHH...",
+            "..HHHHHHHHHHHH..",
+            "..HHHHHHHHHHHH..",
+            "..HHHHHHHHHHHH..",
+            "..HHHHHHHHHHHH..",
+            "..HHHHHHHHHHHH..",
+            "..HHSEESSEESHH..",
+            "..HHSeISSeISHH..",
+            "..HHSIISSIISHH..",
+            "..HHSrSSSSrSHH..",
+            "..HHHSSSSSSHHH..",
+            "..HHHHHSSHHHHH..",
+        ],
+        up=["................", "................", "...H..HHHH..H...", "...HHHHHHHHHH..."]
+           + ["..HHHHHHHHHHHH.."] * 11,
+        right=[
+            "................",
+            "................",
+            "..H..HHHH..H....",
+            "..HHHHHHHHHH....",
+            ".HHHHHHHHHHHH...",
+            ".HHHHHHHHHHHHH..",
+            ".HHHHHHHHHHHHH..",
+            ".HHHHHHHHHHHHH..",
+            ".HHHHHHHHHHHHH..",
+            ".HHHHHHHHSSEES..",
+            ".HHHHHHHHSSeIS..",
+            ".HHHHHHHHSSIIS..",
+            ".HHHHHHHHSrSSS..",
+            ".HHHHHHHHHSSS...",
+            ".HHHHHHHHSS.....",
+        ],
+        hair="long",
+    ),
+    "g3": dict(
+        down=[
+            "................",
+            "................",
+            "...H..HHHH..H...",
+            "...HHHHHHHHHH...",
+            "..HHHHHHHHHHHH..",
+            "..HHHHHHHHHHHH..",
+            "..HHHHHHHHHHHH..",
+            "..HHHHHHHHHSHH..",
+            "..HHHHHHHSSSHH..",
+            "..HHHEESSEESHH..",
+            "..HHSeISSeISHH..",
+            "..HHSIISSIISHH..",
+            "...HSrSSSSrSH...",
+            "...HHSSSSSSHH...",
+            "...H...SS...H...",
+        ],
+        up=["................", "................", "...H..HHHH..H...", "...HHHHHHHHHH..."]
+           + ["..HHHHHHHHHHHH.."] * 8 + ["...HHHHHHHHHH...", "...HHHHHHHHHH...", "...H.HHSSHH.H..."],
+        right=[
+            "................",
+            "................",
+            "..H..HHHH..H....",
+            "..HHHHHHHHHH....",
+            ".HHHHHHHHHHHH...",
+            ".HHHHHHHHHHHHH..",
+            ".HHHHHHHHHHHHH..",
+            ".HHHHHHHHHHHHH..",
+            ".HHHHHHHHHSSSS..",
+            ".HHHHHHHHSSEES..",
+            ".HHHHHHHHSSeIS..",
+            "..HHHHHHHSSIIS..",
+            "..HHHHHHHSrSSS..",
+            "..HHHHHHHHSSS...",
+            "...H.H...SS.....",
+        ],
+        hair="short",
+    ),
+    "g4": dict(
+        down=[
+            "................",
+            "................",
+            "...H..HHHH..H...",
+            "...HHHHHHHHHH...",
+            "..HHHHHHHHHHHH..",
+            "..HHHHHHHHHHHH..",
+            "..HHHHHHHHHHHH..",
+            "..HHHHHSSHHHHH..",
+            "..HHHHSSSSHHHH..",
+            "..HHSEESSEESHH..",
+            "..HHSeISSeISHH..",
+            "..HHSIISSIISHH..",
+            "..HHSrSSSSrSHH..",
+            "..HHHSSSSSSHHH..",
+            "..HHH..SS..HHH..",
+        ],
+        up=["................", "................", "...H..HHHH..H...", "...HHHHHHHHHH..."]
+           + ["..HHHHHHHHHHHH.."] * 10 + ["..HHH..SS..HHH.."],
+        right=[
+            "................",
+            "................",
+            "..H..HHHH..H....",
+            "..HHHHHHHHHH....",
+            ".HHHHHHHHHHHH...",
+            ".HHHHHHHHHHHHH..",
+            ".HHHHHHHHHHHHH..",
+            ".HHHHHHHHHHSHH..",
+            ".HHHHHHHHHSSSS..",
+            ".HHHHHHHHSSEES..",
+            ".HHHHHHHHSSeIS..",
+            ".HHHHHHHHSSIIS..",
+            ".HHHHHHHHSrSSS..",
+            ".HHHHHHHHHSSS...",
+            "..HHHHH..SS.....",
+        ],
+        hair="braids",
+    ),
+}
+
+
+def _set(rows, x, y, ch):
+    r = rows[y]
+    rows[y] = r[:x] + ch + r[x + 1:]
+
+
+def g_body(rows, kind, view):
+    """服の行（15 行目〜）に髪を重ねる。short：肩の髪を消す／long：腕と体のすき間・背中に髪／braids：胸の前に三つ編み。"""
+    rows = list(rows)
+    if kind in ("short", "braids"):
+        for y in range(15, len(rows)):
+            rows[y] = rows[y].replace("H", ".")
+    if kind == "long":
+        if view == "down":
+            for y in range(15, 22):
+                for x in (2, 3, 12, 13):
+                    if rows[y][x] == ".":
+                        _set(rows, x, y, "H")
+        elif view == "up":
+            for y in range(15, 22):
+                for x in range(3, 13):
+                    _set(rows, x, y, "H")
+            for x in range(4, 12):
+                _set(rows, x, 22, "H")
+        else:
+            for y in range(15, 22):
+                for x in (2, 3, 4):
+                    if rows[y][x] == ".":
+                        _set(rows, x, y, "H")
+    if kind == "braids":
+        cols = {"down": (3, 4, 11, 12), "right": (8, 9), "up": ()}[view]
+        for y in range(15, 21):
+            for x in cols:
+                _set(rows, x, y, "u" if y == 19 else ("Q" if (y // 2) % 2 else "H"))
+        for x in cols[::2]:
+            _set(rows, x, 20, "H")
+        if view == "up":
+            for y in (15, 16):
+                for x in (3, 12):
+                    _set(rows, x, y, "H")
+    return rows
+
+
+def g_frames(key, outfit="f1"):
+    h = G_HEADS[key]
+    o = F_OUTFITS[outfit]
+    legs = F_LEGS
+    kind = h["hair"]
+    down = g_body(h["down"] + o["down"] + legs["down"], kind, "down")
+    down_step = g_body(h["down"] + o["down"] + legs["down_step"], kind, "down")
+    up = g_body(h["up"] + o["up"] + legs["down"], kind, "up")
+    right = g_body(h["right"] + o["right"] + legs["right"], kind, "right")
+    right_step = g_body(h["right"] + o["right"] + legs["right_step"], kind, "right")
+    mats = dict(D_MATS)
+    mats.update(o["mats"])
+    mats["Q"] = Mat("hair2", "hair1", "hair3", group="Q")
+    mats["H"] = Mat("hair2", "hair1", "hair3", group="H", d=2)
+    direct = dict(D_DIRECT, u="tee3")
+    direct.update(o.get("direct", {}))
+    return sprites(down, down_step, up, right, right_step, mats, direct, D_STYLE)
+
+
+# 顔グラの目（6 幅）。左右で形が違う目は (向かって左, 向かって右)。つやはどちらも左上。
+G_EYES = {
+    "g1": (["..EEEE", "EEeiiE", ".eiII.", ".iIIo.", "..II.."],      # たれ目：目じり（外側）が下がる
+           ["EEEE..", "EeeiEE", ".eiII.", ".iIIo.", "..II.."]),
+    "g2": [".EEEE.", "EeeiiE", "EeiiIE", ".iIIo.", ".iIoI.", "..II.."],  # 丸い目
+    "g3": (["EEE...", "EeeiiE", ".eiII.", ".iIIo.", "..II.."],      # つり目：目じりが上がる
+           ["...EEE", "EeeiiE", ".eiII.", ".iIIo.", "..II.."]),
+    "g4": [".EEEE.", "EeeiiE", "EeiiIE", ".iIIo.", ".iIoI.", "..II.."],
+}
+BRAID = [
+    ".HHHH...",
+    "HHHHHH..",
+    "HHHHQQQ.",
+    ".HQQQQQ.",
+    "..QQQQQQ",
+    ".HHQQQQ.",
+    "HHHHHQ..",
+    "HHHHHH..",
+    ".HHQQQ..",
+    "..QQQQQ.",
+    ".HHQQQ..",
+    ".uuuu...",
+    "..HHH...",
+    "..HHHH..",
+    "...HH...",
+]
+
+
+def g_portrait(key, outfit="f1"):
+    c = Canvas(48, 48)
+    F_TORSOS[outfit](c)
+    c.rect((20, 29, 27, 37), "S")
+    c.poly([(15, 33), (19, 30), (29, 30), (33, 33), (30, 37), (18, 37)], "B")
+    c.poly([(26, 35), (31, 35), (32, 47), (26, 47)], "B")
+    ears = [(10, 6), (38, 6), (38, 9), (10, 9)]       # 猫の耳のような寝ぐせ：頭の丸から左右にはみ出す角
+    if key == "g1":
+        c.ellipse((8, 3, 40, 34), "H")
+        c.poly([(8, 16), (40, 16), (42, 33), (37, 35), (11, 35), (6, 33)], "H")   # あごの線のボブ（毛先が少し外へ）
+        c.ellipse((13, 10, 35, 36), "S")
+        c.poly([(10, 6), (38, 6), (36, 16), (31, 14), (26, 17), (21, 20), (17, 22), (14, 28), (12, 22)], "H", only="S.H")
+    elif key == "g2":
+        c.ellipse((8, 3, 40, 34), "H")
+        c.poly([(8, 16), (16, 16), (17, 47), (6, 47)], "H")                       # 胸の前へ流れる長い髪
+        c.poly([(32, 16), (40, 16), (42, 47), (33, 47)], "H")
+        c.ellipse((13, 10, 35, 36), "S")
+        c.rect((12, 6, 36, 20), "H", only="S.H")                                  # ぱっつん前髪（眉の高さ）
+        c.poly(ears, "H", only=".")
+        c.rect((13, 21, 15, 34), "H")                                             # 顔の横の髪
+        c.rect((33, 21, 35, 34), "H")
+    elif key == "g3":
+        c.ellipse((8, 3, 40, 32), "H")
+        c.poly([(9, 16), (39, 16), (40, 28), (37, 26), (36, 31), (33, 28), (15, 28), (12, 31), (11, 26), (8, 28)], "H")
+        c.ellipse((13, 10, 35, 36), "S")
+        c.poly([(10, 6), (38, 6), (37, 23), (34, 18), (29, 15), (24, 16), (19, 18), (15, 22), (13, 18)], "H", only="S.H")
+        c.poly([(13, 20), (16, 20), (14, 30)], "H")                               # 顔の横の短い毛束
+        c.poly([(32, 20), (35, 20), (34, 30)], "H")
+    else:
+        c.ellipse((8, 3, 40, 34), "H")
+        c.rect((9, 16, 39, 32), "H")
+        c.ellipse((13, 10, 35, 36), "S")
+        c.poly([(10, 6), (24, 6), (23, 10), (18, 15), (14, 23), (12, 16)], "H", only="S.H")   # 真ん中分けの前髪
+        c.poly([(24, 6), (38, 6), (36, 16), (34, 23), (30, 15), (25, 10)], "H", only="S.H")
+        c.stamp(BRAID, 9, 32)
+        c.stamp([r[::-1] for r in BRAID], 31, 32)
+    c.stamp(["hh.", "h.."], 14, 9)
+    eyes = G_EYES[key]
+    left, right = eyes if isinstance(eyes, tuple) else (eyes, eyes)
+    ey = 23 if key == "g2" else 22
+    c.stamp(left, 16, ey)
+    c.stamp(right, 26, ey)
+    c.stamp(["rr"], 15, 29)
+    c.stamp(["rr"], 31, 29)
+    c.stamp(["mm"], 23, 32)
+    o = F_OUTFITS[outfit]
+    mats = dict(D_MATS)
+    mats["H"] = Mat("hair2", "hair1", "hair3", group="Hh", d=3)
+    mats["Q"] = Mat("hair2", "hair1", "hair3", group="Q", d=2)
+    mats["S"] = Mat("skin2", "skin1", group="SEeiIormn", d=2)
+    mats["B"] = Mat("scarf1", "scarf0", "scarf2", d=2)
+    for k, m in o["mats"].items():
+        mats[k] = Mat(m.base, m.shade, m.light, m.line, m.group, 3 if k in "PJGW" else m.d)
+    if outfit == "f1":
+        mats["l"] = Mat("tee3", "tee2", "tee3", group="l", d=2)
+    direct = dict(D_DIRECT, h="hair3", n="skin1", u="tee3")
+    direct.pop("w")
+    direct.update(o.get("direct", {}))
+    return render(c.rows(), mats, direct, D_STYLE)
+
+
 # ================================================================ 商店街に置いた見え方
 def street_views(concepts):
     """第 1 章の商店街（今の建物・小物はそのまま）に、案ごとのルリとネムを置いて、同じ場所を切り出して並べる。"""
@@ -1638,6 +1955,9 @@ CONCEPTS = {
     "d": dict(ruri=lambda: sprites(D_DOWN, D_DOWN_STEP, D_UP, D_RIGHT, D_RIGHT_STEP, D_MATS, D_DIRECT, D_STYLE),
               nemu=nemu_b_sprite, face=d_portrait, nemu_face=nemu_b_portrait),
 }
+for _k in G_HEADS:
+    CONCEPTS[_k] = dict(ruri=(lambda k=_k: g_frames(k)), nemu=nemu_b_sprite,
+                        face=(lambda k=_k: g_portrait(k)), nemu_face=nemu_b_portrait)
 for _k in F_OUTFITS:
     CONCEPTS[_k] = dict(ruri=(lambda k=_k: f_frames(k)), nemu=nemu_b_sprite,
                         face=(lambda k=_k: f_portrait(k)), nemu_face=nemu_b_portrait)
@@ -1684,6 +2004,16 @@ def main():
     # E 案（服のリメイク）：3 種の顔グラフィックを並べる
     upscale(sheet([e_portrait(k) for k in E_OUTFITS], bg), 5).save(os.path.join(OUT, "e_faces_compare.png"))
     upscale(sheet([f_portrait(k) for k in F_OUTFITS], bg), 5).save(os.path.join(OUT, "f_faces_compare.png"))
+    # G 案（髪型と顔）：顔グラとゲーム内の正面を並べる
+    upscale(sheet([g_portrait(k) for k in G_HEADS], bg), 5).save(os.path.join(OUT, "g_faces_compare.png"))
+    upscale(sheet([g_frames(k)[i] for k in G_HEADS for i in (0, 3, 2)], bg), 6).save(
+        os.path.join(OUT, "g_sprites_compare.png"))
+    streets = [Image.open(os.path.join(OUT, f"{k}_street.png")) for k in G_HEADS]
+    w, h = streets[0].width, streets[0].height
+    grid = Image.new("RGBA", (w * 2, h * 2), bg)
+    for i, im in enumerate(streets):
+        grid.paste(im, ((i % 2) * w, (i // 2) * h))
+    grid.resize((w * 4 // 3, h * 4 // 3), Image.NEAREST).save(os.path.join(OUT, "g_street_compare.png"))
     print("done")
 
 
