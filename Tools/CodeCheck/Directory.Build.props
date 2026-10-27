@@ -1,0 +1,7 @@
+<Project>
+  <!-- ビルドの中間ファイルを .build/ にまとめる（git に入れない） -->
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory).build/obj/</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(MSBuildThisFileDirectory).build/bin/</BaseOutputPath>
+  </PropertyGroup>
+</Project>

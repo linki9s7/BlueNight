@@ -1,4 +1,5 @@
 using System;
+using BlueNight.Audio;
 using BlueNight.Core;
 using BlueNight.Player;
 using BlueNight.Rendering;
@@ -91,8 +92,16 @@ namespace BlueNight.Dialogue
             int total = line.text.Length;
             if (shown < total)
             {
+                int before = (int)shown;
                 shown = Mathf.Min(total, shown + charactersPerSecond * Time.unscaledDeltaTime);
                 bodyText.text = line.text.Substring(0, (int)shown);
+                // 文字送りの音：2 文字に 1 回（空白・句読点では鳴らさない）
+                for (int i = before; i < (int)shown; i++)
+                    if (i % 2 == 0 && !char.IsWhiteSpace(line.text[i]) && "、。！？…「」".IndexOf(line.text[i]) < 0)
+                    {
+                        SoundEffects.Play("text_blip", line.shadowVoice ? 0.5f : 0.7f, 0.04f);
+                        break;
+                    }
             }
 
             bool done = shown >= total;
@@ -114,6 +123,7 @@ namespace BlueNight.Dialogue
                 return;
             }
 
+            SoundEffects.Play("decide", 0.6f, 0f);
             index++;
             if (index < lines.Length)
                 ShowLine();

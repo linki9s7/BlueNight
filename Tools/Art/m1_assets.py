@@ -1,66 +1,14 @@
-"""M1 プロトタイプ用の素材：ランタン掛け、ランタン、おばあさん、逃げた影、壁、暗がり、調べるアイコン。"""
+"""M1 プロトタイプ用の素材：ランタン掛け、ランタン、おばあさん（絵は townsfolk.py）、逃げた影、壁、暗がり、調べるアイコン。"""
 
 from PIL import Image, ImageDraw
 
+import townsfolk
 from palette import RAMPS, color, hex_to_rgba
 
 CLEAR = (0, 0, 0, 0)
 
-# ---------------------------------------------------------------- おばあさん（16x28）
-# 光は左上から：髪・顔・カーディガン・スカートとも、影は右下にかたまりで置く。
-GRANDMA_KEY = {
-    "O": color("night", 1),
-    "H": color("stone", 7),
-    "h": color("stone", 5),
-    "S": color("skin", 2),
-    "s": color("skin", 1),
-    "m": color("skin", 0),
-    "E": color("night", 1),
-    "C": color("red", 1),
-    "D": color("red", 0),
-    "K": color("stone", 3),
-    "k": color("stone", 2),
-    "F": color("brown", 1),
-    "f": color("brown", 2),
-    "T": color("brown", 1),  # 杖（体の右側＝影の側にあるので暗い方の色）
-}
-
-GRANDMA = [
-    "................",
-    "......OOO.......",
-    ".....OHHHO......",
-    ".....OHHhO......",
-    "....OOHHHOO.....",
-    "...OHHHHHHHO....",
-    "...OHHHHHHhhO...",
-    "...OHSSSSSShO...",
-    "...OSEESSEEsO...",
-    "...OSSSSSSSsO...",
-    "....OSSmmSsO....",
-    "....OOSSSSOO....",
-    "...OCCCCCCCDO...",
-    "..OCCCCCCCCDDO..",
-    "..OCCCCCCCCDDO..",
-    "..OCSOCCCCODsOT.",
-    "...OOCCCCCDOO.T.",
-    "...OKKKKKKKKO.T.",
-    "...OKKKKKKKkO.T.",
-    "..OKKKKKKKKkO.T.",
-    "..OKKKKKKKkkO.T.",
-    "..OKKKKKKKkkO.T.",
-    "..OKKKKKKkkkO.T.",
-    "..OKKKKKKkkkO.T.",
-    "...OOOOOOOOOO.T.",
-    "....OfFOOfFO..T.",
-    "....OFFOOFFO..T.",
-    "....OOOOOOOO..O.",
-]
-
-# 2 コマ目：ゆっくり呼吸（肩が 1 px 下がる）
-GRANDMA_BREATH = GRANDMA[:12] + [
-    "...OCCCCCCDDO...",
-    "...OCCCCCCDDO...",
-] + GRANDMA[14:]
+# ---------------------------------------------------------------- おばあさん
+# v0.16 のリデザインで townsfolk.py に移した（輪郭線なし・月明かりの縁取り）。
 
 
 def from_map(rows, key):
@@ -191,9 +139,8 @@ def build_overlay(alpha, rgb_hex):
 def build(save):
     """save(img, *path) で書き出す。プレビュー用に画像の辞書を返す。"""
     out = {}
-    out["grandma"] = [from_map(GRANDMA, GRANDMA_KEY), from_map(GRANDMA_BREATH, GRANDMA_KEY)]
-    for i, img in enumerate(out["grandma"]):
-        out["grandma"][i] = save(img, "Characters", "Grandma", f"grandma_idle_{i}.png", clean=True)
+    out["grandma"] = [save(img, "Characters", "Grandma", f"grandma_idle_{i}.png")
+                      for i, img in enumerate(townsfolk.haru_frames())]
 
     base = out["grandma"][0]
     out["shadow"] = [silhouette(base, 0), silhouette(base, 1), silhouette(base, 0), silhouette(base, -1)]

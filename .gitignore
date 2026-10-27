@@ -75,3 +75,6 @@ crashlytics-build.properties
 __pycache__/
 *.pyc
 
+
+# Tools/CodeCheck のプロジェクトは入れる（Unity が作る .csproj とは別）
+!Tools/CodeCheck/CodeCheck.csproj

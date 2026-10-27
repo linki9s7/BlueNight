@@ -13,6 +13,19 @@ namespace BlueNight.Core
 
         public static bool Has(string flag) => !string.IsNullOrEmpty(flag) && flags.Contains(flag);
 
+        /// <summary>いま立っているフラグ（セーブに使う）。</summary>
+        public static IEnumerable<string> All => flags;
+
+        /// <summary>セーブから読み込む（Changed は呼ばない）。</summary>
+        public static void Load(IEnumerable<string> saved)
+        {
+            flags.Clear();
+            if (saved != null)
+                foreach (var flag in saved)
+                    if (!string.IsNullOrEmpty(flag))
+                        flags.Add(flag);
+        }
+
         public static void Set(string flag)
         {
             if (string.IsNullOrEmpty(flag) || !flags.Add(flag))

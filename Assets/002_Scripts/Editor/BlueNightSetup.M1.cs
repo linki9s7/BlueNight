@@ -1,4 +1,5 @@
 using System.Linq;
+using BlueNight.Audio;
 using BlueNight.Core;
 using BlueNight.Dialogue;
 using BlueNight.Interaction;
@@ -68,7 +69,12 @@ namespace BlueNight.EditorTools
             PlayerController player = CreateRuri(lit, CellFoot(map.Find('P').Single()), withLanternLight: false);
             CreateLanternAndInteractor(player, unlit);
             CreateNemu(lit, player);
-            CreateGrandmaShadow(map.Find('S').Single(), player.transform, grandma, unlit);
+            player.gameObject.AddComponent<PlayerAreaSounds>();
+            var shadow = CreateGrandmaShadow(map.Find('S').Single(), player.transform, grandma, unlit);
+
+            // 音：町の曲、夜の虫と遠くのハイウェイ。影に近づくと「影を追う」曲へ
+            CreateAudio("ch1_shopping_street", Ambience("crickets", 0.55f), Ambience("highway", 0.35f));
+            shadow.gameObject.AddComponent<ChaseMusic>().Configure(shadow, player.transform, "ch1_shopping_street");
 
             var dialogue = new GameObject("Dialogue").AddComponent<DialogueRunner>();
             dialogue.Configure(AssetDatabase.LoadAssetAtPath<Font>(DialogueFontPath));
@@ -265,7 +271,7 @@ namespace BlueNight.EditorTools
             player.gameObject.AddComponent<PlayerInteractor>().Configure(lantern, marker);
         }
 
-        static void CreateGrandmaShadow(Cell cell, Transform player, Transform owner, Material unlit)
+        static RunawayShadow CreateGrandmaShadow(Cell cell, Transform player, Transform owner, Material unlit)
         {
             var go = new GameObject("Runaway Shadow (Grandma)");
             go.transform.position = CellFoot(cell);
@@ -290,6 +296,7 @@ namespace BlueNight.EditorTools
                     new DialogueLine("ネム", "つかまえた！ これ、あのおばあさんの影だよ。返しにいこう。"),
                 },
                 FlagCaptured, FlagReturned);
+            return shadow;
         }
 
         static void CreateIntro()

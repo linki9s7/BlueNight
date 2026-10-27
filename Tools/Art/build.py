@@ -87,7 +87,8 @@ def build_palette():
 
 # ---------------------------------------------------------------- ルリ
 def build_ruri():
-    """4 方向（下・上・右・左）。左向きは形だけ反転し、陰影は左上からの光のまま（ruri.relight_mirror）。"""
+    """4 方向（下・上・右・左）。左向きは記号の図を反転してから陰影を付けるので、光は左上のまま（chara.py）。
+    輪郭線の無い描き方なので clean_corners はかけない（目のふちの紺を輪郭と見なして消さないように）。"""
     folder = os.path.join(TEX, "Characters", "Ruri")
     if os.path.isdir(folder):
         for name in os.listdir(folder):
@@ -98,7 +99,7 @@ def build_ruri():
         for direction in ("down", "up", "right", "left"):
             imgs = []
             for i, rows in enumerate(ruri.frames(anim, direction)):
-                img = save(from_map(rows, ruri.KEY), "Characters", "Ruri", f"ruri_{anim}_{direction}_{i}.png", clean=True)
+                img = save(ruri.to_image(rows), "Characters", "Ruri", f"ruri_{anim}_{direction}_{i}.png")
                 imgs.append(img)
             sheets[(anim, direction)] = imgs
     return sheets
@@ -464,10 +465,26 @@ def build_ch1_preview(tiles, props, ch1, sheets, nemu, m1):
     small += [ch1[k] for k in ("crosswalk_0", "manhole", "drain_0", "drain_1", "block_wall", "block_wall_top", "weeds")]
     upscale(contact_sheet(small, bg, max_w=260), 5).save(os.path.join(PREVIEW, "ch1_props.png"))
 
-    # 商店街の一画面（480x270）の見え方
+    scene, ground_y = ch1_street_scene(tiles, props, ch1)
+
+    def put(img, x, foot_y):
+        scene.alpha_composite(img, (x - img.width // 2, foot_y - img.height))
+
+    put(m1["grandma"][0], 318, ground_y + 26)
+    put(sheets[("idle", "right")][0], 262, ground_y + 40)
+    put(m1["lantern"], 270, ground_y + 30)
+    put(nemu[1], 252, ground_y + 6)
+    upscale(light_ch1_street(scene, ground_y), 2).save(os.path.join(PREVIEW, "ch1_street.png"))
+
+
+CH1_GROUND_Y = 112  # 商店街の一画面で、建物の足元の高さ
+
+
+def ch1_street_scene(tiles, props, ch1):
+    """商店街の一画面（480x270）。人物は置かない（人物の案を並べて見比べるときにも使う）。"""
     W, H = 480, 270
     scene = Image.new("RGBA", (W, H), hex_to_rgba(RAMPS["night"][1]))
-    ground_y = 112  # 建物の足元
+    ground_y = CH1_GROUND_Y  # 建物の足元
     for ty in range(ground_y // 16, (H + 15) // 16):
         for tx in range(W // 16):
             y = ty * 16
@@ -511,18 +528,18 @@ def build_ch1_preview(tiles, props, ch1, sheets, nemu, m1):
     put(ch1["trash_bin"], 92, ground_y + 10)
     put(ch1["extinguisher_box"], 164, ground_y - 2)
     put(ch1["curve_mirror"], 20, ground_y + 46)
-    put(m1["grandma"][0], 318, ground_y + 26)
-    put(sheets[("idle", "right")][0], 262, ground_y + 40)
-    put(m1["lantern"], 270, ground_y + 30)
-    put(nemu[1], 252, ground_y + 6)
     put(props["puddle_moon"], 200, ground_y + 104)
-    # 月明かりで沈め、灯りのまわりを明るくする（簡易）
+    return scene, ground_y
+
+
+def light_ch1_street(scene, ground_y):
+    """月明かりで沈め、灯りのまわりを明るくする（簡易）。"""
     lit = Image.alpha_composite(scene, Image.new("RGBA", scene.size, (30, 45, 110, 100)))
     glow(lit, 250, ground_y - 4, 70, (255, 190, 110), 0.55)
     glow(lit, 270, ground_y + 20, 34, (255, 180, 100), 0.45)
     glow(lit, 458, ground_y - 20, 40, (150, 200, 255), 0.35)
     glow(lit, 249, ground_y - 22, 46, (255, 170, 90), 0.35)  # おばあさんの店の窓
-    upscale(lit, 2).save(os.path.join(PREVIEW, "ch1_street.png"))
+    return lit
 
 
 def build_ch1_rest_preview(more, interior, sheets, nemu_sprites, people, props):

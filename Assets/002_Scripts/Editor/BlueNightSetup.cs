@@ -482,12 +482,17 @@ namespace BlueNight.EditorTools
             return frames.ToArray();
         }
 
+        /// <summary>ビルドのシーン一覧に入れる。タイトル画面はいつも先頭（ゲームを起動すると最初に開く）。</summary>
         static void AddSceneToBuildSettings(string path)
         {
             var scenes = EditorBuildSettings.scenes
                 .Where(s => s.path != path && System.IO.File.Exists(s.path))
                 .ToList();
-            scenes.Insert(0, new EditorBuildSettingsScene(path, true));
+            var entry = new EditorBuildSettingsScene(path, true);
+            if (path == TitleScenePath)
+                scenes.Insert(0, entry);
+            else
+                scenes.Add(entry);
             EditorBuildSettings.scenes = scenes.ToArray();
         }
 
