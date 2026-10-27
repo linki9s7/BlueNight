@@ -190,7 +190,7 @@ namespace BlueNight.EditorTools
                             wall = row == 0 || x == 0 || x == map.Width - 1 || y == 0 ? innerTop
                                 : row == 1 ? (x % 5 == 2 ? plaster1 : plaster0) : row == 2 ? wainscot : innerTop;
                         else
-                            wall = GridMap.IsWalkable(map.At(cell + new Cell(0, 1))) && !GridMap.IsWall(map.At(cell + new Cell(0, 1))) ? block : wallTop;
+                            wall = !GridMap.IsWall(map.At(cell + new Cell(0, 1))) ? block : wallTop;   // 北が開けている壁は、正面の塀として見せる
                         walls.SetTile(p, wall);
                         if (!doors.Contains(ch))
                             continue;
@@ -205,7 +205,7 @@ namespace BlueNight.EditorTools
                         floor = (x + y) % 3 == 0 ? cross1 : cross0;
                     else if (ch == '=')
                         floor = above == '=' && below == '=' && (x & 1) == 0 ? line : random.NextDouble() < 0.15 ? road1 : road0;
-                    else if (ch == ',' || alley && "HSAT".IndexOf(ch) >= 0)
+                    else if (ch == ',' || alley && "HSATL".IndexOf(ch) >= 0)
                         floor = random.NextDouble() < 0.15 ? road1 : road0;
                     else if (below == '=' || below == ':')
                         floor = curb;

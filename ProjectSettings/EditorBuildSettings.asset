@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/001_Scenes/Ch1_ArtGallery.unity
     guid: db01c7985ff9de44183019a7ed417e7f
+  - enabled: 1
+    path: Assets/001_Scenes/Chapter1.unity
+    guid: e86b8339b2bea9b49bc987f09d1c9843
   m_configObjects: {}
