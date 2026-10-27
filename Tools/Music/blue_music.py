@@ -15,7 +15,8 @@ import pyloudnorm
 from scipy.io import wavfile
 from scipy.signal import butter, fftconvolve, sosfilt
 
-SOUNDFONT = "/usr/share/sounds/sf3/MuseScore_General_Full.sf3"
+# ローカル（Windows など）では環境変数 BLUENIGHT_SOUNDFONT で MuseScore_General.sf3 の場所を指定する
+SOUNDFONT = os.environ.get("BLUENIGHT_SOUNDFONT", "/usr/share/sounds/sf3/MuseScore_General_Full.sf3")
 SAMPLE_RATE = 48000
 
 NOTE_NAMES = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A": 9, "B": 11}
