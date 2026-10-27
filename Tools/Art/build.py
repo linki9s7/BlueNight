@@ -108,13 +108,15 @@ def build_ruri():
 # ---------------------------------------------------------------- ネム（蛾）
 def build_nemu():
     """ゲーム内のネム（nemu.py）。顔グラフィックも nemu.py で作る。"""
-    global NEMU_FACES
+    global NEMU_FACES, NEMU_SPRITES
     out = nemu.build(save)
     NEMU_FACES = out["faces"]
-    return out["sprite"]
+    NEMU_SPRITES = out["sprite"]
+    return out["sprite"]["down"]   # ほかのプレビューは正面の 4 コマを使う
 
 
 NEMU_FACES = {}
+NEMU_SPRITES = {}
 
 
 # ---------------------------------------------------------------- タイル（16x16）
@@ -597,14 +599,16 @@ def build_ch1_rest_preview(more, interior, sheets, nemu_sprites, people, props):
 
 
 def build_nemu_preview(sprites):
-    """ネムの顔グラフィック（全表情）とゲーム内の 4 コマ。"""
+    """ネムの顔グラフィック（全表情）と、ゲーム内の 4 方向 × 4 コマ（行 = 向き）。"""
     bg = hex_to_rgba(RAMPS["night"][2])
     faces = [NEMU_FACES[e] for e in nemu.EXPRESSIONS]
-    img = Image.new("RGBA", (4 + len(faces) * 52, 48 + 8 + 20 + 8), bg)
+    rows = nemu.DIRECTIONS
+    img = Image.new("RGBA", (4 + len(faces) * 52, 56 + len(rows) * 28), bg)
     for k, f in enumerate(faces):
         img.alpha_composite(f, (4 + 52 * k, 4))
-    for k, sp in enumerate(sprites):
-        img.alpha_composite(sp, (4 + 24 * k, 60))
+    for r, direction in enumerate(rows):
+        for k, sp in enumerate(NEMU_SPRITES[direction]):
+            img.alpha_composite(sp, (4 + 26 * k, 56 + 28 * r))
     upscale(img, 5).save(os.path.join(PREVIEW, "nemu.png"))
 
 

@@ -38,6 +38,8 @@ namespace BlueNight.Player
         public void HangOn(LanternHook hook)
         {
             Hook = hook;
+            // 掛けたランタンは、自分の足元の Y で前後が決まる（ルリの SortingGroup から出す）
+            transform.SetParent(null, true);
             transform.position = hook.HangPoint;
             spriteRenderer.sortingOrder = 0;
             spriteRenderer.flipX = false;
@@ -48,6 +50,9 @@ namespace BlueNight.Player
         public void TakeBack()
         {
             Hook = null;
+            // 持っている間はルリの子にして、ルリと一緒に前後を決める（下の sortingOrder はルリの中での前後）
+            if (holder != null)
+                transform.SetParent(holder.transform, true);
             if (lightSource != null && holder != null)
                 lightSource.Anchor = holder.transform;
         }

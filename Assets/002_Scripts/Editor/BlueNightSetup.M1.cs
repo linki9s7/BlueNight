@@ -37,6 +37,8 @@ namespace BlueNight.EditorTools
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 return;
 
+            EnsureProjectConfigured();
+
             EnsureFolder("Assets/001_Scenes");
             EnsureFolder(TileAssetFolder);
             EnsureFolder("Assets/009_Rendering");
@@ -246,6 +248,7 @@ namespace BlueNight.EditorTools
         static void CreateLanternAndInteractor(PlayerController player, Material unlit)
         {
             var lanternGo = new GameObject("Lantern");
+            lanternGo.transform.SetParent(player.transform, false); // 持っている間はルリの SortingGroup の中
             lanternGo.transform.position = player.transform.position + new Vector3(0.42f, 0.35f, 0f);
             var sprite = lanternGo.AddComponent<SpriteRenderer>();
             sprite.sprite = LoadSprite($"{TexturesRoot}/Props/lantern.png");

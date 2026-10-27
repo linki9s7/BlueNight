@@ -99,8 +99,9 @@ MAP_PALETTES = {
     # UI（会話ウィンドウ・アイコン）：10 色
     "ui": _pick("night0", "night1", "night2", "moon1", "moon3", "scarf0", "scarf1", "stone7", "warm4", "warm5"),
     # タイトルの一枚絵（夜空・月・ハイウェイ・遠くの町＋小さなルリ）：32 色
-    "title": _pick("night0", "night1", "night2", "night3", "night4", "night5", "moon1", "moon2", "moon3",
-                   "stone1", "stone2", "stone3", "stone5", "stone7", "warm3", "warm4", "warm5", "warm6", "red0", "red2",
+    # v0.17：月のまわりの光・雲のふち（night6・night7）、街灯の柱と屋根のふち（stone4）を足した
+    "title": _pick("night0", "night1", "night2", "night3", "night4", "night5", "night6", "night7", "moon1", "moon2", "moon3",
+                   "stone1", "stone2", "stone3", "stone4", "stone5", "stone7", "warm3", "warm4", "warm5", "warm6", "red0", "red2",
                    "hair0", "hair1", "hair2", "hair3", "skin1", "skin2", "scarf0", "scarf1", "coat1", "coat2",
                    "brown1", "brown2", "pj1", "pj2", "pj3", "tee2", "tee3"),  # pj・tee：街灯の下のルリ（v0.16 のワンピース）
 }

@@ -42,6 +42,23 @@ Unity エディタでプロジェクトを開いたままだとバッチモー�
 
 コンパイルエラーは `Logs/unity.log` の `error CS` を探す。
 
+**Unity を開いたままでの確認（v0.17〜）**：`Assets/002_Scripts/Editor/BlueNightBridge.cs` が `Temp/BlueNightBridge/` の命令を受け取る
+（Unity 6 の公式 CLI 連携は 2022.3 では使えないための代わり）。メニューを押さなくても、シーンの作り直し・再生・撮影ができる。
+
+```
+python Tools/Bridge/unity_bridge.py refresh            # 変更の取り込み（スクリプトはコンパイル）
+python Tools/Bridge/unity_bridge.py build gallery      # gallery / m1 / title
+python Tools/Bridge/unity_bridge.py play               # stop で停止
+python Tools/Bridge/unity_bridge.py move 6 -6          # 再生中のルリを移動。face down/up/left/right で向き
+python Tools/Bridge/unity_bridge.py capture Logs/shots/a.png --scale 2
+python Tools/Bridge/unity_bridge.py logs               # 警告・エラー
+```
+
+新しい C# を足した直後は、Unity のウィンドウが前に出るまでコンパイルされないことがある（その場合は Unity を一度前に出す）。
+シーンを作るメニュー（2・3・4・6）は、メニュー 1 の設定（2D Renderer・足元の Y で前後を並べる）が済んでいなければ先に実行する。
+
+`python Tools/Art/build.py` は Pillow の版が違うと、画素が同じでもファイルが書き変わることがある。画素の変わっていない PNG は元に戻してからコミットする。
+
 Unity が無い環境（クラウドなど）では `sh Tools/CodeCheck/check.sh` で、Unity の参照 DLL（NuGet の Unity3D.SDK 2021.1）と
 URP・Input System・UI の代用品（`Tools/CodeCheck/Stubs.cs`）を使って、型まで含めたコンパイルを確かめられる（Logic のテストは別に `dotnet test`）。
 

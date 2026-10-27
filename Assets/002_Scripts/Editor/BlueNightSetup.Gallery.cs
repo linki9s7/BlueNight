@@ -27,6 +27,8 @@ namespace BlueNight.EditorTools
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 return;
 
+            EnsureProjectConfigured();
+
             EnsureFolder("Assets/001_Scenes");
             EnsureFolder(TileAssetFolder);
             EnsureFolder("Assets/009_Rendering");

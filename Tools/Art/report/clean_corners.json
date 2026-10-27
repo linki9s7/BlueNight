@@ -140,5 +140,6 @@
  "Tiles/drain_1.png": 0,
  "Tiles/manhole.png": 5,
  "Tiles/weeds.png": 0,
- "Title/title_logo.png": 64
+ "Title/title_bg.png": 15,
+ "Title/title_logo.png": 0
 }

@@ -1,0 +1,241 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1592ed8f26a7f434b84bd006852d6070, type: 3}
+  m_Name: AudioLibrary
+  m_EditorClassIdentifier: 
+  music:
+  - name: ch1_shopping_street
+    title: "\u7B2C1\u7AE0 \u30D0\u30B9\u505C\u3068\u5546\u5E97\u8857"
+    bpm: 80
+    beatsPerBar: 4
+    loops: 1
+    layers:
+    - name: main
+      intro: {fileID: 8300000, guid: ce830b3314cb8894dab5f1d6b29fa27c, type: 3}
+      loop: {fileID: 8300000, guid: 7608863dbe2cefd4584c476129468133, type: 3}
+  - name: ch2_rain_alley
+    title: "\u7B2C2\u7AE0 \u96E8\u306E\u8DEF\u5730\u88CF"
+    bpm: 66
+    beatsPerBar: 4
+    loops: 1
+    layers:
+    - name: main
+      intro: {fileID: 8300000, guid: ed2e5801aca88894dbafd6da2ba8e6f2, type: 3}
+      loop: {fileID: 8300000, guid: 8ebc2abe61ccb9a47a9dced76e6c31a1, type: 3}
+  - name: ch3_night_school
+    title: "\u7B2C3\u7AE0 \u591C\u306E\u5B66\u6821"
+    bpm: 78
+    beatsPerBar: 3
+    loops: 1
+    layers:
+    - name: main
+      intro: {fileID: 8300000, guid: ffdb000d8a34f924282e747115bca435, type: 3}
+      loop: {fileID: 8300000, guid: 5cd68eb20ec748e4397bba4866307a25, type: 3}
+  - name: ch4_lighthouse_harbor
+    title: "\u7B2C4\u7AE0 \u706F\u53F0\u3068\u6E2F"
+    bpm: 150
+    beatsPerBar: 6
+    loops: 1
+    layers:
+    - name: main
+      intro: {fileID: 8300000, guid: 50410a286d46b02448bfcd90f649c41a, type: 3}
+      loop: {fileID: 8300000, guid: 3ee9ce564b54dc84c974fed5cbb290b3, type: 3}
+  - name: ch5_dawn_hill
+    title: "\u7B2C5\u7AE0 \u591C\u660E\u3051\u306E\u4E18"
+    bpm: 76
+    beatsPerBar: 4
+    loops: 1
+    layers:
+    - name: main
+      intro: {fileID: 8300000, guid: 668f016bf4a572c46ac56d6dbfa6d1c8, type: 3}
+      loop: {fileID: 8300000, guid: c253aa4d31435344d86e9c0e868b7959, type: 3}
+  - name: shadow_chase
+    title: "\u5F71\u3092\u8FFD\u3046"
+    bpm: 100
+    beatsPerBar: 4
+    loops: 1
+    layers:
+    - name: base
+      intro: {fileID: 0}
+      loop: {fileID: 8300000, guid: 96554728e2de08e4eaa165214f1c664d, type: 3}
+    - name: drums
+      intro: {fileID: 0}
+      loop: {fileID: 8300000, guid: 77d2ccd32ac7ed04a821bb5c137c3aa5, type: 3}
+    - name: strings
+      intro: {fileID: 0}
+      loop: {fileID: 8300000, guid: f87fbb7df53453447a19add8b53ad145, type: 3}
+  - name: shadow_words
+    title: "\u5F71\u306E\u8A00\u8449"
+    bpm: 60
+    beatsPerBar: 4
+    loops: 1
+    layers:
+    - name: main
+      intro: {fileID: 8300000, guid: f7a4ca5d968f17243a305b1522b7b6d4, type: 3}
+      loop: {fileID: 8300000, guid: cb5c5f6a17248b743b4a875fe24a07e1, type: 3}
+  - name: stinger_shadow_capture
+    title: "\u5F71\u3092\u6355\u307E\u3048\u305F"
+    bpm: 90
+    beatsPerBar: 4
+    loops: 0
+    layers:
+    - name: main
+      intro: {fileID: 0}
+      loop: {fileID: 8300000, guid: 3300ec878617a7345a84befdbe6afc99, type: 3}
+  - name: title_ruri_theme
+    title: "\u30BF\u30A4\u30C8\u30EB\uFF0F\u30EB\u30EA\u306E\u30C6\u30FC\u30DE"
+    bpm: 72
+    beatsPerBar: 4
+    loops: 1
+    layers:
+    - name: main
+      intro: {fileID: 8300000, guid: e35511c2bf746a347b81a4dc1034b83a, type: 3}
+      loop: {fileID: 8300000, guid: 6fffa8f1a5f8adf4dbdbafd46774fa7f, type: 3}
+  ambience:
+  - name: rain
+    title: "\u96E8\uFF08\u7B2C2\u7AE0 \u96E8\u306E\u8DEF\u5730\u88CF\uFF09"
+    clip: {fileID: 8300000, guid: 1590f2574b58c314b9be2eef037b5ce0, type: 3}
+  - name: waves
+    title: "\u6CE2\uFF08\u7B2C4\u7AE0 \u706F\u53F0\u3068\u6E2F\uFF09"
+    clip: {fileID: 8300000, guid: ceef1b1af19bdd94e84d09ef961fc4ef, type: 3}
+  - name: highway
+    title: "\u9060\u304F\u306E\u30CF\u30A4\u30A6\u30A7\u30A4"
+    clip: {fileID: 8300000, guid: 339c82f843d7c0a49bef35738fed93a1, type: 3}
+  - name: crickets
+    title: "\u591C\u306E\u866B"
+    clip: {fileID: 8300000, guid: f8951668de62a6a45b228f4a46a88dd2, type: 3}
+  sounds:
+  - name: step_stone
+    title: "\u8DB3\u97F3\uFF1A\u77F3\u7573\u30FB\u30A2\u30B9\u30D5\u30A1\u30EB\u30C8"
+    clips:
+    - {fileID: 8300000, guid: 2d20aea40261bf2439b44b45a0d6f4b6, type: 3}
+    - {fileID: 8300000, guid: 696b2b2368e781949b1e37709897c480, type: 3}
+    - {fileID: 8300000, guid: 0a8407fdfea841242a0dc69b7513fe97, type: 3}
+    - {fileID: 8300000, guid: 0f5c771885b8c0740836fa80e95f652d, type: 3}
+    - {fileID: 8300000, guid: aee95105881fc4a4ea193211aa5ed385, type: 3}
+    - {fileID: 8300000, guid: bdb72db85187c8d4a98d0531b6fec242, type: 3}
+    loop: 0
+    randomOrder: 1
+  - name: step_wet
+    title: "\u8DB3\u97F3\uFF1A\u6FE1\u308C\u305F\u8DEF\u9762\u30FB\u6C34\u305F\u307E\u308A"
+    clips:
+    - {fileID: 8300000, guid: e4164d3476e63cb4497534c9e3a39cdb, type: 3}
+    - {fileID: 8300000, guid: 1f0aaf5eb23f04a4f8c902fd6f40b122, type: 3}
+    - {fileID: 8300000, guid: ae050732068aa1c4ca011362b5bca42a, type: 3}
+    - {fileID: 8300000, guid: ad31ba789ded30a419715a3ad0a36e0a, type: 3}
+    - {fileID: 8300000, guid: 27e6c15dac29eb74fa90858213391e89, type: 3}
+    - {fileID: 8300000, guid: 1c79f19d0bd318a4abe698b1b46f3112, type: 3}
+    loop: 0
+    randomOrder: 1
+  - name: step_wood
+    title: "\u8DB3\u97F3\uFF1A\u6728\u306E\u5E8A"
+    clips:
+    - {fileID: 8300000, guid: 36c1ea84a0c3901479c23d94f2964862, type: 3}
+    - {fileID: 8300000, guid: dc95d62c2e5d75f498a25c6157eb9ddb, type: 3}
+    - {fileID: 8300000, guid: 503ce26760ec9864c907334c14297bca, type: 3}
+    - {fileID: 8300000, guid: b4a8ed1a2c4f6684a951310cdea9eb23, type: 3}
+    - {fileID: 8300000, guid: a818df58e9de9ad44a11f54839a845b6, type: 3}
+    - {fileID: 8300000, guid: 022d4149916d69f44a80523498471178, type: 3}
+    loop: 0
+    randomOrder: 1
+  - name: lantern_hang
+    title: "\u30E9\u30F3\u30BF\u30F3\u3092\u30D5\u30C3\u30AF\u306B\u639B\u3051\u308B"
+    clips:
+    - {fileID: 8300000, guid: 4445a232b0a934a4f8b83bfbbc4e0427, type: 3}
+    - {fileID: 8300000, guid: f996c46180a3c644f9030c8b10d52e63, type: 3}
+    - {fileID: 8300000, guid: 1179d916100ef7e4fbe9f8ae5cebc868, type: 3}
+    loop: 0
+    randomOrder: 1
+  - name: lantern_take
+    title: "\u30E9\u30F3\u30BF\u30F3\u3092\u30D5\u30C3\u30AF\u304B\u3089\u5916\u3059"
+    clips:
+    - {fileID: 8300000, guid: d21f7a671676f57429ee28a592aa638b, type: 3}
+    - {fileID: 8300000, guid: 4917a28ab4c12f2429813d214d6ffdb5, type: 3}
+    - {fileID: 8300000, guid: 174e69f07c3414f4db2fb58013ac159e, type: 3}
+    loop: 0
+    randomOrder: 1
+  - name: light_on
+    title: "\u8857\u706F\u3092\u3064\u3051\u308B\uFF08\u30AB\u30C1\u30C3\uFF0B\u30B8\u30B8\u30C3\uFF09"
+    clips:
+    - {fileID: 8300000, guid: a864f9aa87e4d9340909ab851359526a, type: 3}
+    - {fileID: 8300000, guid: fb95ae7e1b8f6cc4ebbcaff786820072, type: 3}
+    loop: 0
+    randomOrder: 1
+  - name: light_off
+    title: "\u8857\u706F\u3092\u6D88\u3059"
+    clips:
+    - {fileID: 8300000, guid: a82efd58a46b9c34baf651bddd0c3478, type: 3}
+    - {fileID: 8300000, guid: 7d52d34951f40b241bb00bf9883441d1, type: 3}
+    loop: 0
+    randomOrder: 1
+  - name: shadow_presence
+    title: "\u5F71\u306E\u6C17\u914D\uFF08\u8FD1\u304F\u306B\u3044\u308B\u9593\u304F\u308A\u8FD4\u3059\uFF09"
+    clips:
+    - {fileID: 8300000, guid: 47a2500a88cee9640aa6f6a2c3eaadc5, type: 3}
+    loop: 1
+    randomOrder: 0
+  - name: shadow_escape
+    title: "\u5F71\u304C\u3059\u3063\u3068\u9003\u3052\u308B"
+    clips:
+    - {fileID: 8300000, guid: cf4afb4dacc1b7a4396f6b25028d5ace, type: 3}
+    - {fileID: 8300000, guid: fca0da97306518749849441bf5c7e0b5, type: 3}
+    - {fileID: 8300000, guid: 5cad69e9169fb0343a8e35db2f71cd57, type: 3}
+    loop: 0
+    randomOrder: 1
+  - name: shadow_capture
+    title: "\u5F71\u3092\u6355\u307E\u3048\u305F"
+    clips:
+    - {fileID: 8300000, guid: 4382ad4da1764114eb2ee613e9137307, type: 3}
+    loop: 0
+    randomOrder: 0
+  - name: decide
+    title: "\u6C7A\u5B9A"
+    clips:
+    - {fileID: 8300000, guid: 55b9c264c2dd9b4449a4ea5da0277a71, type: 3}
+    loop: 0
+    randomOrder: 0
+  - name: cancel
+    title: "\u30AD\u30E3\u30F3\u30BB\u30EB"
+    clips:
+    - {fileID: 8300000, guid: 55b01e156e06bef4ab10c3b85107b5e3, type: 3}
+    loop: 0
+    randomOrder: 0
+  - name: text_blip
+    title: "\u4F1A\u8A71\u306E\u6587\u5B57\u9001\u308A"
+    clips:
+    - {fileID: 8300000, guid: fd9500ca1d76e6b4796df944f4d73034, type: 3}
+    loop: 0
+    randomOrder: 0
+  - name: menu_open
+    title: "\u30E1\u30CB\u30E5\u30FC\u3092\u958B\u304F"
+    clips:
+    - {fileID: 8300000, guid: 4ed8f659b0492624bb78cb7131f503a9, type: 3}
+    loop: 0
+    randomOrder: 0
+  - name: menu_close
+    title: "\u30E1\u30CB\u30E5\u30FC\u3092\u9589\u3058\u308B"
+    clips:
+    - {fileID: 8300000, guid: e18c3b02e09d198409007c7c7a096db5, type: 3}
+    loop: 0
+    randomOrder: 0
+  - name: cursor
+    title: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+    clips:
+    - {fileID: 8300000, guid: 8ebc8d516d091fc4fae3f21497871a74, type: 3}
+    loop: 0
+    randomOrder: 0
+  - name: journal_add
+    title: "\u3053\u3068\u3070\u5E33\u306B\u8A00\u8449\u304C\u5897\u3048\u305F"
+    clips:
+    - {fileID: 8300000, guid: 05193e130a5229f4db927a25b35294e6, type: 3}
+    loop: 0
+    randomOrder: 0

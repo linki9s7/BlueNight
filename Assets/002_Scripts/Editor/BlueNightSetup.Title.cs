@@ -19,6 +19,8 @@ namespace BlueNight.EditorTools
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 return;
 
+            EnsureProjectConfigured();
+
             EnsureFolder("Assets/001_Scenes");
             EnsureFolder("Assets/009_Rendering");
             AssetDatabase.ImportAsset(TexturesRoot, ImportAssetOptions.ImportRecursive | ImportAssetOptions.ForceUpdate);

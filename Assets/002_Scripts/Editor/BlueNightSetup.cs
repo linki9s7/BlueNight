@@ -54,8 +54,30 @@ namespace BlueNight.EditorTools
             PlayerSettings.defaultScreenWidth = 1920;
             PlayerSettings.defaultScreenHeight = 1080;
 
+            // 2D Renderer と同じ並べ方（足元の Y）を、ほかの描画（Scene ビューなど）にも
+            GraphicsSettings.transparencySortMode = TransparencySortMode.CustomAxis;
+            GraphicsSettings.transparencySortAxis = new Vector3(0f, 1f, 0f);
+
             AssetDatabase.SaveAssets();
             Debug.Log($"[BlueNight] 2D Renderer を {count} 個の URP アセットに設定しました。");
+        }
+
+        /// <summary>
+        /// シーンを作る前に、メニュー 1 の設定（2D Renderer・足元の Y で前後を並べる）を必ず済ませる。
+        /// 済んでいないと 3D 用の描き方のままになり、前後の並びも 2D の明かりも効かない。
+        /// </summary>
+        static void EnsureProjectConfigured()
+        {
+            bool ready = AssetDatabase.FindAssets("t:UniversalRenderPipelineAsset", new[] { "Assets" })
+                .Select(guid => AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>(AssetDatabase.GUIDToAssetPath(guid)))
+                .Where(asset => asset != null)
+                .All(asset =>
+                {
+                    var list = new SerializedObject(asset).FindProperty("m_RendererDataList");
+                    return list.arraySize == 1 && list.GetArrayElementAtIndex(0).objectReferenceValue is Renderer2DData;
+                });
+            if (!ready || GraphicsSettings.transparencySortMode != TransparencySortMode.CustomAxis)
+                ConfigureProject();
         }
 
         static Renderer2DData CreateOrUpdateRenderer2D()
@@ -124,6 +146,8 @@ namespace BlueNight.EditorTools
         {
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 return;
+
+            EnsureProjectConfigured();
 
             EnsureFolder("Assets/001_Scenes");
             EnsureFolder(TileAssetFolder);
@@ -383,6 +407,9 @@ namespace BlueNight.EditorTools
             renderer.spriteSortPoint = SpriteSortPoint.Pivot;
             if (spriteMaterial != null)
                 renderer.sharedMaterial = spriteMaterial;
+            // 持っているランタンとネムは子にして、ルリの足元の Y でまとめて前後を決める
+            // （番号だけで手前にすると、ルリが人や建物の後ろに回っても手前に出てしまう）
+            go.AddComponent<SortingGroup>();
 
             var idle = LoadDirectionalFrames("idle");
             var walk = LoadDirectionalFrames("walk");
@@ -397,28 +424,29 @@ namespace BlueNight.EditorTools
             return controller;
         }
 
-        static PlayerAnimator.DirectionalFrames LoadDirectionalFrames(string anim)
+        static PlayerAnimator.DirectionalFrames LoadDirectionalFrames(string anim, string prefix = "Ruri/ruri")
         {
             return new PlayerAnimator.DirectionalFrames
             {
-                down = LoadFrames($"{TexturesRoot}/Characters/Ruri/ruri_{anim}_down_"),
-                up = LoadFrames($"{TexturesRoot}/Characters/Ruri/ruri_{anim}_up_"),
-                right = LoadFrames($"{TexturesRoot}/Characters/Ruri/ruri_{anim}_right_"),
-                left = LoadFrames($"{TexturesRoot}/Characters/Ruri/ruri_{anim}_left_"),
+                down = LoadFrames($"{TexturesRoot}/Characters/{prefix}_{anim}_down_"),
+                up = LoadFrames($"{TexturesRoot}/Characters/{prefix}_{anim}_up_"),
+                right = LoadFrames($"{TexturesRoot}/Characters/{prefix}_{anim}_right_"),
+                left = LoadFrames($"{TexturesRoot}/Characters/{prefix}_{anim}_left_"),
             };
         }
 
         static void CreateNemu(Material spriteMaterial, PlayerController player)
         {
             var go = new GameObject("Nemu");
+            // ルリの子（ルリの SortingGroup の中）。ルリより手前か奥かは NemuFollower が向きで決める
+            go.transform.SetParent(player.transform, false);
             go.transform.position = player.transform.position + new Vector3(-0.7f, 1.9f, 0f);
             var renderer = go.AddComponent<SpriteRenderer>();
-            renderer.sortingOrder = 10; // 飛んでいるので常にルリより手前
             if (spriteMaterial != null)
                 renderer.sharedMaterial = spriteMaterial;
 
-            var frames = LoadFrames($"{TexturesRoot}/Characters/Nemu/nemu_fly_");
-            renderer.sprite = frames.FirstOrDefault();
+            var frames = LoadDirectionalFrames("fly", "Nemu/nemu");
+            renderer.sprite = frames.down.FirstOrDefault();
             go.AddComponent<NemuFollower>().Configure(player, frames);
         }
 
