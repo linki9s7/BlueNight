@@ -68,11 +68,11 @@ URP・Input System・UI の代用品（`Tools/CodeCheck/Stubs.cs`）を使って
 - BGM 8 曲＋スティンガー＋環境音 4 種＋効果音（`Assets/006_Audio/SE/`、`se_manifest.json`、一覧は `Tools/Music/designs/se_plan.md`）は制作済み。
   Unity 側の再生も実装済み（`Assets/002_Scripts/Audio/`：`MusicDirector`・`ChaseMusic`・`AmbiencePlayer`・`SoundEffects`・`AreaZone`・`PlayerAreaSounds`、仕様書 8.8）。M1 と素材を並べたシーンに入っている。AudioMixer は使わない。
 - ドット絵（第 1 章分）：商店街の建物・小物・タイル（`ch1_assets.py`）、人物と影（`npc.py`）、顔グラフィック 48×48（`portrait.py`）、UI・タイトル（`ui_title.py`）を制作済み。建物は横に並べるとき輪郭を 1 ドット重ねる。シーンへの配置（M2）はまだ。全体の一覧と残りは `Tools/Art/art_plan.md`。第 1 章の素材は Unity のメニュー「BlueNight > 4. 第 1 章の素材を並べたシーンを作成」（`BlueNightSetup.Gallery.cs` → `Assets/001_Scenes/Ch1_ArtGallery.unity`）で並べて確認できる。
-- M2（第 1 章の本番版）進行中：計画 `docs/M2_PLAN.md`（ユーザー確認済み）、物語の設計図と台本 `docs/STORY.md`・人物のプロフィール `docs/CHARACTERS.md`（v1.0、ユーザーの感想待ち。セリフを書くときは CHARACTERS.md の話し方と STORY.md 18 節の約束を守る）。
+- M2（第 1 章の本番版）進行中：計画 `docs/M2_PLAN.md`（ユーザー確認済み）、物語の設計図と台本 `docs/STORY.md`・人物のプロフィール `docs/CHARACTERS.md`（v2.0、ユーザーの感想待ち。セリフを書くときは CHARACTERS.md の話し方と STORY.md 19 節の約束を守る。文字数は `python Tools/Story/count_lines.py` で確認）。
   土台（エリアの移動・演出の台本・タイトル画面・オートセーブ・音量設定）はできた。次はマップ（ASCII）→ 会話 → ことば帳・メニュー。
 - メニュー：1 プロジェクト設定、2 M0、3 M1、4 第 1 章の素材、5 音のデータ、6 タイトル画面、7 第 1 章のシーン（`Chapter1Maps` から 5 エリアを並べる）。
 - M2 のマップ（v0.17）：`Logic/Chapter1Maps.cs`（5 エリア・出入口のつながり）とテスト `Chapter1MapTests`。ロジックのテストは Unity を開いたままでも `dotnet test Tools/LogicTests` で走る。
-  次は会話・演出（STORY.md 7・8 節）→ ことば帳・メニュー → タイトルの「はじめから」を第 1 章へ。`Chapter1.unity` の「ランタンを初めから持つ」「路地の仮の影」は演出を入れるときに外す。
+  次は会話・演出（STORY.md 8 節＝序章・9 節＝第 1 章）→ ことば帳・メニュー → タイトルの「はじめから」を第 1 章へ。`Chapter1.unity` の「ランタンを初めから持つ」「路地の仮の影」は演出を入れるときに外す。
 - ポストエフェクトは 480×270 のまま処理する（ミクセルを作らないため。2 段カメラ構成は採らない、仕様書 7.6）。
 - **人物のリデザイン（v0.16）**：ルリは輪郭線なし＋左上の縁に月明かり（`Tools/Art/chara.py`・`ruri.py`）。ぱっつんロング、**猫の耳のような寝ぐせはチャームポイント（消さない）**、大きな青い目と眉、淡い青のルームワンピース。案の比較は `Tools/Art/concept_chars.py`。ネム（`nemu.py`、口は描かない）と町の人（`townsfolk.py`）も同じ描き方で仕上げ済み。これから描く人物も同じ描き方で。
 - ドット絵：光はどの向きでも左上から。左向きは専用の絵（`ruri_*_left_*`）で、`flipX` は使わない。新しい絵を足したら `pixel_check.py` でダブり・バンディングを確認し、直さないものは理由を `REVIEWED` に書く。
