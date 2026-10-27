@@ -38,7 +38,7 @@ EXTRA = {
     "hood": ["#3a4f6b", "#5f7a96", "#8fabc2", "#c4d8e6"],      # 灰青のパーカー
     "teal": ["#0f2430", "#1b3a4a", "#2c5a6c", "#4f8a96"],      # B 案の髪（青緑がかった黒）
     "dress": ["#4f5d86", "#7d8bb4", "#b9c3df", "#e6ebf7"],     # C 案のワンピース
-    "cardi": ["#6f6a86", "#a9a3bd", "#ddd8e6"],                 # C 案のカーディガン（クリーム。夜の青を含む）
+    "cardi": ["#6f6a86", "#a9a3bd", "#ddd8e6", "#f4f1f7"],      # C・D 案の服（クリーム。夜の青を含む）
     "fluff": ["#9aa6bf", "#d3dbe8", "#f4f6fb"],                 # ネムの毛（白）
     "glow": ["#3f8f8a", "#7fd1c0", "#c8f5e6", "#f2fff9"],      # B 案のネム（ほのかに光る羽）
     "iris": ["#16306e", "#2d5bc0", "#6aa2ee"],                  # C 案の目（青い瞳）
@@ -929,6 +929,199 @@ def nemu_c_portrait():
     return render(c.rows(), mats, direct, Style("selout", "moth0"))
 
 
+# ================================================================ 案 D「月明かり＋青い目」（B をもとに、C の色と目）
+# ユーザーの指定：B が中心。C の色合い（紺の髪・クリームの服・淡い青・ほおの赤み）と大きな青い目を入れる。
+# 静かで大人っぽいのに、まだあどけなさが残る感じ。ネムは B のまま。
+# - 輪郭線なし、左上の縁に月明かり（B）。髪は紺（C）で、縁の光は明るい紺。
+# - 目は大きく、瞳は上が濃く下が明るい青、つやは左上（C）。まぶたの線は平らにして、見開かない（静かさ）。
+# - 頭を B より 1〜2 ドット大きく、ほおに小さな赤み（あどけなさ）。前髪は斜めに流すが、目は隠さない（先が少し触れる程度）。
+# - 服：クリーム色の大きめのパーカー（そでが手にかかる）、淡い青のスカート、白い靴下、茶色の靴。
+D_STYLE = Style("none", "cardi1", rim=True)
+D_MATS = {
+    "H": Mat("hair2", "hair1", "hair3", d=2),
+    "S": Mat("skin2", "skin1", group="SEeiIor"),
+    "W": Mat("cardi2", "cardi1", "cardi3", group="Wxw", d=2),
+    "B": Mat("scarf1", "scarf0", "scarf2", group="B"),
+    "K": Mat("dress1", "dress0", "dress2", d=1),
+    "T": Mat("stone7", "stone5", group="T"),
+    "F": Mat("brown2", "brown1"),
+}
+D_DIRECT = {"E": "hair0", "e": "moon3", "i": "iris0", "I": "iris1", "o": "iris2", "r": "blush0",
+            "x": "cardi1", "w": "cardi1", "m": "skin0"}
+
+D_DOWN = [
+    "................",
+    "................",
+    "......HHHH......",
+    "....HHHHHHHH....",
+    "...HHHHHHHHHH...",
+    "..HHHHHHHHHHHH..",
+    "..HHHHHHHHHHHH..",
+    "..HHHHHHHHHSHH..",
+    "..HHHHHHHSSSHH..",
+    "..HHHEESSEESHH..",
+    "..HHSeISSeISHH..",
+    "..HHSIISSIISHH..",
+    "..HHSrSSSSrSHH..",
+    "..HHHSSSSSSHHH..",
+    "..HHHHHSSHHHHH..",
+    "..HHHBBBBBBHHH..",
+    "..HHWBBBBBBWHH..",
+    "..WWWWBBBBWWWW..",
+    "..WWxWWBBWWxWW..",
+    "..WWxWWWWWWxWW..",
+    "..WWxWWWWWWxWW..",
+    "..WWxxxxxxxxWW..",
+    "..wwWWWWWWWWww..",
+    "...WWWWWWWWWW...",
+    "....KKKKKKKK....",
+    "...KKKKKKKKKK...",
+    ".....SS..SS.....",
+    ".....SS..SS.....",
+    ".....TT..TT.....",
+    ".....TT..TT.....",
+    "....FFF..FFF....",
+    "................",
+]
+
+D_UP = [
+    "................",
+    "................",
+    "......HHHH......",
+    "....HHHHHHHH....",
+    "...HHHHHHHHHH...",
+    "..HHHHHHHHHHHH..",
+    "..HHHHHHHHHHHH..",
+    "..HHHHHHHHHHHH..",
+    "..HHHHHHHHHHHH..",
+    "..HHHHHHHHHHHH..",
+    "..HHHHHHHHHHHH..",
+    "..HHHHHHHHHHHH..",
+    "..HHHHHHHHHHHH..",
+    "..HHHHHHHHHHHH..",
+    "..HHHHHHHHHHHH..",
+    "..HHHBBBBBBHHH..",
+    "..HHWWWWWWWWHH..",
+    "..WWWwwwwwwWWW..",
+    "..WWxWwwwwWxWW..",
+    "..WWxWWWWWWxWW..",
+    "..WWxWWWWWWxWW..",
+    "..WWxWWWWWWxWW..",
+    "..wwWWWWWWWWww..",
+    "...WWWWWWWWWW...",
+    "....KKKKKKKK....",
+    "...KKKKKKKKKK...",
+    ".....SS..SS.....",
+    ".....SS..SS.....",
+    ".....TT..TT.....",
+    ".....TT..TT.....",
+    "....FFF..FFF....",
+    "................",
+]
+
+D_RIGHT = [
+    "................",
+    "................",
+    ".....HHHH.......",
+    "...HHHHHHHH.....",
+    "..HHHHHHHHHH....",
+    ".HHHHHHHHHHHH...",
+    ".HHHHHHHHHHHHH..",
+    ".HHHHHHHHHHHHH..",
+    ".HHHHHHHHHSSSS..",
+    ".HHHHHHHHSSEES..",
+    ".HHHHHHHHSSeIS..",
+    ".HHHHHHHHSSIIS..",
+    ".HHHHHHHHSrSSS..",
+    ".HHHHHHHHHSSS...",
+    "..HHHHHHHSS.....",
+    "..HHHHBBBBB.....",
+    "...WWWBBBBWW....",
+    "...WWWWWWWWW....",
+    "...WWWWxWWWW....",
+    "...WWWWxWWWW....",
+    "...WWWWxWWWW....",
+    "...WWWWxWWWW....",
+    "...WWWWwwwWW....",
+    "...WWWWWWWWW....",
+    "....KKKKKK......",
+    "...KKKKKKKK.....",
+    "......SS........",
+    "......SS........",
+    "......TT........",
+    "......TT........",
+    "......FFFF......",
+    "................",
+]
+
+D_DOWN_STEP = D_DOWN[:24] + [
+    "....KKKKKKKK....",
+    "...KKKKKKKKKK...",
+    ".....SS..SS.....",
+    ".....SS..SS.....",
+    ".....TT..TT.....",
+    ".....TT..FFF....",
+    "....FFF.........",
+    "................",
+]
+
+D_RIGHT_STEP = D_RIGHT[:24] + [
+    "....KKKKKK......",
+    "...KKKKKKKK.....",
+    "....SS...SS.....",
+    "...SS....SS.....",
+    "...TT.....TT....",
+    "..TT......TT....",
+    ".FFF......FFFF..",
+    "................",
+]
+
+# 顔グラフィックの目（6x6）。どちらの目も、つやは左上。表情ごとに目と口を入れかえる。
+# 左右で形が変わる表情（かなしい）は (向かって左, 向かって右) の組で書く（目じりが外側）。
+D_EYES = {
+    "normal": [".EEEE.", "EeeiiE", "EeiiIE", ".iIIo.", ".iIoI.", "..II.."],
+    "smile": ["......", ".EEEE.", "EeeiiE", "EeiIIE", ".iIoI.", "......"],    # 下まぶたが少し上がる（静かなほほえみ）
+    "sad": (["......", "..EEEE", "EEeii.", ".eiII.", ".iIoI.", "..II.."],      # 目じりが下がる伏し目
+            ["......", "EEEE..", ".eeiEE", ".eiII.", ".iIoI.", "..II.."]),
+    "surprised": [".EEEE.", "EeeiiE", "EeiIIE", "EiIIoE", ".IIoI.", "..II.."],  # 少し見開く
+}
+D_MOUTHS = {"normal": ["mm"], "smile": ["n..n", ".mm."], "sad": [".m."], "surprised": ["mm", "mm"]}
+
+
+def d_portrait(expr="normal"):
+    """D 案の顔グラフィック：B の形（フード・斜めの前髪・輪郭線なし・月明かり）に、C の色と大きな青い目。"""
+    c = Canvas(48, 48)
+    c.poly([(3, 47), (7, 40), (15, 35), (33, 35), (41, 40), (45, 47)], "W")
+    c.ellipse((11, 31, 37, 43), "W")                 # 首のまわりにたまったフード
+    c.ellipse((15, 34, 33, 41), "w")
+    c.rect((20, 29, 27, 37), "S")
+    c.poly([(15, 33), (19, 30), (29, 30), (33, 33), (30, 37), (18, 37)], "B")
+    c.poly([(26, 35), (31, 35), (32, 47), (26, 47)], "B")
+    c.ellipse((8, 3, 40, 34), "H")
+    c.poly([(9, 18), (39, 18), (40, 39), (35, 36), (31, 40), (29, 32), (19, 32), (17, 40), (13, 36), (8, 39)], "H")
+    c.ellipse((13, 10, 35, 36), "S")                 # B より少し丸く大きい顔（あどけなさ）
+    # 前髪：右上から左下へ流す。先が向かって左の目に少し触れる
+    c.poly([(10, 6), (38, 6), (36, 16), (31, 14), (26, 17), (21, 20), (17, 22), (14, 28), (12, 22)], "H", only="S.H")
+    c.stamp(["hh.", "h.."], 14, 9)                   # 髪のつや（左上）
+    eyes = D_EYES[expr]
+    left, right = eyes if isinstance(eyes, tuple) else (eyes, eyes)
+    c.stamp(left, 16, 22)
+    c.stamp(right, 26, 22)
+    c.stamp(["rr"], 15, 29)
+    c.stamp(["rr"], 31, 29)
+    mouth = D_MOUTHS[expr]
+    c.stamp(mouth, 24 - len(mouth[0]) // 2, 32)
+    mats = dict(D_MATS)
+    mats["H"] = Mat("hair2", "hair1", "hair3", group="Hh", d=3)
+    mats["W"] = Mat("cardi2", "cardi1", "cardi3", group="W", d=3)
+    mats["w"] = Mat("cardi1", None, None)
+    mats["S"] = Mat("skin2", "skin1", group="SEeiIormn", d=2)
+    mats["B"] = Mat("scarf1", "scarf0", "scarf2", d=2)
+    direct = dict(D_DIRECT, h="hair3", n="skin1")
+    direct.pop("w")
+    return render(c.rows(), mats, direct, D_STYLE)
+
+
 # ================================================================ 商店街に置いた見え方
 def street_views(concepts):
     """第 1 章の商店街（今の建物・小物はそのまま）に、案ごとのルリとネムを置いて、同じ場所を切り出して並べる。"""
@@ -972,6 +1165,8 @@ CONCEPTS = {
               nemu=nemu_b_sprite, face=b_portrait, nemu_face=nemu_b_portrait),
     "c": dict(ruri=lambda: sprites(C_DOWN, C_DOWN_STEP, C_UP, C_RIGHT, C_RIGHT_STEP, C_MATS, C_DIRECT, C_STYLE),
               nemu=nemu_c_sprite, face=c_portrait, nemu_face=nemu_c_portrait),
+    "d": dict(ruri=lambda: sprites(D_DOWN, D_DOWN_STEP, D_UP, D_RIGHT, D_RIGHT_STEP, D_MATS, D_DIRECT, D_STYLE),
+              nemu=nemu_b_sprite, face=d_portrait, nemu_face=nemu_b_portrait),
 }
 
 
@@ -1008,6 +1203,8 @@ def main():
             board.alpha_composite(p.convert("RGBA"), ((w - p.width) // 2, y))
             y += p.height
         board.save(os.path.join(OUT, f"concept_{key}.png"))
+    # D 案の表情（普通・ほほえみ・かなしい・おどろき）
+    upscale(sheet([d_portrait(e) for e in D_EYES], bg), 5).save(os.path.join(OUT, "d_expressions.png"))
     print("done")
 
 
