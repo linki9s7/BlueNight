@@ -19,7 +19,7 @@ namespace BlueNight.EditorTools
     /// <summary>
     /// 第 1 章「灯をひとつ」のシーン（M2）。マップは BlueNight.Logic.Chapter1Maps（テストと同じ定義）から組み立てる。
     /// 5 つのエリア（家の前〜バス停・商店街・ランプ屋の中・路地その 1・路地その 2）を横に並べ、出入口（数字）で暗転してつなぐ。
-    /// いまは「マップを歩いて確かめる」段階：会話・演出（docs/STORY.md 7・8 節）は次の段階で入れる。
+    /// いまは「マップを歩いて確かめる」段階：会話・演出（docs/STORY.md 8 節＝序章・9 節＝第 1 章）は次の段階で入れる。
     /// 確かめやすいよう、ルリは初めからランタンを持ち、2 つの路地にはおばあさんの影を置いている（仮）。
     /// </summary>
     public static partial class BlueNightSetup
