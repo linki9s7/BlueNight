@@ -26,7 +26,7 @@ namespace BlueNight.Logic
     }
 
     /// <summary>
-    /// 第 1 章「灯をひとつ」（バス停と商店街）のマップ（docs/M2_PLAN.md 3 章、台本は docs/STORY.md 8 節＝序章・9 節＝第 1 章）。
+    /// 序章と第 1 章「灯をひとつ」（バス停と商店街）のマップ（ルリの家＋5 エリア）（docs/M2_PLAN.md 3 章、台本は docs/STORY.md 8 節＝序章・9 節＝第 1 章）。
     /// M1 と同じく、シーンの作成・テスト・プレビューがすべてこの定義を読む。
     /// エリアはシーンの中で別々の場所に並べ、出入口（数字）で暗転してつなぐ。
     /// </summary>
@@ -35,6 +35,7 @@ namespace BlueNight.Logic
         public const float StreetLampRadius = M1Map.StreetLampRadius;
         public const float LanternRadius = M1Map.LanternRadius;
 
+        public const string Room = "room";
         public const string Home = "home";
         public const string Street = "street";
         public const string LampShop = "lamp_shop";
@@ -42,8 +43,28 @@ namespace BlueNight.Logic
         public const string Alley2 = "alley2";
 
         /// <summary>
+        /// ルリの家（18x10）。坂の上の古いアパートの一室。西からルリの部屋・台所・玄関（仕切りの壁に戸口）。
+        /// 序章：ふとん（P）で目を覚ます → 机（X、スマホの未読）→ 台所の冷蔵庫（書き置き）→ 玄関の椅子（青いマフラー）→ 戸（5）からアパートの前へ。
+        /// 終章：机の引き出しの絵はがきに一行 → 玄関で母を迎える。Y は窓（湾の高架道路が見える）。
+        /// docs/STORY.md 8 節（序章）・14 節（終章）、docs/M2_PLAN.md 3.1。
+        /// </summary>
+        public static readonly string[] RoomRows =
+        {
+            "##################",
+            "##################",
+            "##################",
+            "#XX..Y..#XX.X#.XX#",
+            "#................#",
+            "#................#",
+            "#.......#.XX.#..X#",
+            "#..P....#....#...#",
+            "#.......#....#...#",
+            "###############5##",
+        };
+
+        /// <summary>
         /// 家の前〜バス停（40x16）。坂の上の通り。北にルリのアパートと家並み、南の柵の向こうは坂の下の町。
-        /// ルリはアパートの前（P）から出て、街灯（すぐ東の L）の下で足元に影が無いことに気づく。
+        /// ルリはアパートの戸（5）から出て、街灯（すぐ東の L）の下で足元に影が無いことに気づく。
         /// 東のバス停（屋根 X・ベンチ B・時刻表 Q）、Y は商店街の明かりを見下ろす所。東の端（1）が商店街へ。
         /// </summary>
         public static readonly string[] HomeRows =
@@ -54,9 +75,9 @@ namespace BlueNight.Logic
             "########################################",
             "########################################",
             "########################################",
-            "########################################",
+            "####5###################################",
             "#.............................XXX......1",
-            "#...P..........................B.......1",
+            "#..............................B.......1",
             "#......L.........U.........L......Q....1",
             "#===================:::================1",
             "#===================:::================1",
@@ -167,7 +188,7 @@ namespace BlueNight.Logic
         };
 
         /// <summary>エリアの並び（シーンでの並べ方・テストで使う）。</summary>
-        public static readonly string[] AreaIds = { Home, Street, LampShop, Alley1, Alley2 };
+        public static readonly string[] AreaIds = { Room, Home, Street, LampShop, Alley1, Alley2 };
 
         public static readonly AreaLink[] Links =
         {
@@ -175,12 +196,14 @@ namespace BlueNight.Logic
             new AreaLink('2', Street, LampShop, isDoor: true),
             new AreaLink('3', Street, Alley1),
             new AreaLink('4', Street, Alley2),
+            new AreaLink('5', Room, Home, isDoor: true),
         };
 
         public static string[] Rows(string area)
         {
             switch (area)
             {
+                case Room: return RoomRows;
                 case Home: return HomeRows;
                 case Street: return StreetRows;
                 case LampShop: return LampShopRows;

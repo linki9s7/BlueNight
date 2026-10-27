@@ -70,9 +70,10 @@ namespace BlueNight.EditorTools
                 areaObjects[id] = area;
             }
 
-            var homeMap = Chapter1Maps.Create(Chapter1Maps.Home);
-            var start = AreaCellFoot(areaObjects[Chapter1Maps.Home], homeMap.Find('P').Single());
-            areaObjects[Chapter1Maps.Home].AddSpawn("start", start);
+            // 序章：ルリの部屋のふとんで目を覚ます
+            var roomMap = Chapter1Maps.Create(Chapter1Maps.Room);
+            var start = AreaCellFoot(areaObjects[Chapter1Maps.Room], roomMap.Find('P').Single());
+            areaObjects[Chapter1Maps.Room].AddSpawn("start", start);
 
             PlayerController player = CreateRuri(lit, start, withLanternLight: false);
             CreateLanternAndInteractor(player, unlit);
@@ -95,13 +96,13 @@ namespace BlueNight.EditorTools
             dialogue.Configure(AssetDatabase.LoadAssetAtPath<Font>(DialogueFontPath));
 
             var follow = camera.gameObject.AddComponent<CameraFollow2D>();
-            follow.Configure(player.transform, areaObjects[Chapter1Maps.Home].CameraBounds);
+            follow.Configure(player.transform, areaObjects[Chapter1Maps.Room].CameraBounds);
             new GameObject("Area Manager").AddComponent<AreaManager>()
-                .Configure(areas.ToArray(), Chapter1Maps.Home, "start", player, follow);
+                .Configure(areas.ToArray(), Chapter1Maps.Room, "start", player, follow);
 
             EditorSceneManager.SaveScene(scene, Chapter1ScenePath);
             AddSceneToBuildSettings(Chapter1ScenePath);
-            Debug.Log($"[BlueNight] {Chapter1ScenePath} を作成しました。再生すると、家の前から第 1 章のマップを歩いて回れます（会話は次の段階で入れます）。");
+            Debug.Log($"[BlueNight] {Chapter1ScenePath} を作成しました。再生すると、ルリの部屋から第 1 章のマップを歩いて回れます（会話は次の段階で入れます）。");
         }
 
         static Vector3 AreaCellFoot(Area area, Cell cell) => area.transform.position + CellFoot(cell);
@@ -116,12 +117,12 @@ namespace BlueNight.EditorTools
             var area = go.AddComponent<Area>();
             area.Configure(id, new Rect(origin.x, origin.y, map.Width, map.Height), "ch1_shopping_street");
 
-            bool indoor = id == Chapter1Maps.LampShop;
+            bool indoor = id == Chapter1Maps.LampShop || id == Chapter1Maps.Room;
             bool alley = id == Chapter1Maps.Alley1 || id == Chapter1Maps.Alley2;
             Tilemap overlay = BuildAreaTiles(go, map, lit, unlit, indoor, alley);
 
             // 光と影の計算：影が動く所（路地）と、掛ける練習をする店の中だけ
-            if (alley || indoor)
+            if (alley || id == Chapter1Maps.LampShop)
             {
                 var world = new GameObject("Shadow World").AddComponent<ShadowWorld>();
                 world.transform.SetParent(go.transform, false);
@@ -139,8 +140,10 @@ namespace BlueNight.EditorTools
                 var shelter = CreateSpriteObject(go, "Bus Shelter", "Buildings/bus_shelter", origin + new Vector2(31.5f, 7f), lit);
                 shelter.GetComponent<SpriteRenderer>().sortingOrder = 0;
             }
-            else if (indoor)
+            else if (id == Chapter1Maps.LampShop)
                 FurnishLampShop(go, lit);
+            else if (id == Chapter1Maps.Room)
+                FurnishRoom(go, lit);
 
             BuildLinks(go, area, map);
             return area;
@@ -367,6 +370,31 @@ namespace BlueNight.EditorTools
             CreateSpriteObject(root, "Hanging Lamp (off)", "Interior/hanging_lamp_off", P(4.5f, 7.3f), lit);
             var lamp = CreateSpriteObject(root, "Hanging Lamp (on)", "Interior/hanging_lamp_on", P(10.5f, 7.3f), lit);
             CreatePointLight(lamp, "Light", new Vector3(0f, 0.3f, 0f), Hex("#ffc98a"), 0.9f, 5f);
+        }
+
+        /// <summary>
+        /// ルリの家の中（マップの X のマスに合わせて置く）。部屋・台所・玄関の絵はまだ無いので、ランプ屋の中の家具の絵を仮に置く
+        /// （Tools/Art/art_plan.md の「ルリの家」）。窓から月明かりが入る。
+        /// </summary>
+        static void FurnishRoom(GameObject area, Material lit)
+        {
+            var root = new GameObject("Furniture");
+            root.transform.SetParent(area.transform, false);
+            Vector3 o = area.transform.position;
+            Vector3 P(float x, float y) => o + new Vector3(x, y, 0f);
+            // y は下から：北の壁ぎわの行 = 6、テーブル・椅子の行 = 3、ふとんの行 = 2
+            var window = CreateSpriteObject(root, "Window (bay)", "Interior/window_inner", P(5.5f, 7.6f), lit);
+            CreatePointLight(window, "Moonlight", new Vector3(0f, -1.5f, 0f), Hex("#9fc4ff"), 0.6f, 4f);
+            CreateSpriteObject(root, "Desk (仮)", "Interior/workbench", P(2f, 6.05f), lit);
+            var futon = CreateSpriteObject(root, "Futon (仮)", "Interior/rug", P(3.5f, 1.6f), lit);
+            futon.GetComponent<SpriteRenderer>().sortingOrder = -60;
+            CreateSpriteObject(root, "Sink (仮)", "Interior/counter", P(10f, 6.05f), lit);
+            CreateSpriteObject(root, "Fridge (仮)", "Interior/grandfather_clock", P(12.5f, 6.05f), lit);
+            CreateSpriteObject(root, "Kitchen Table (仮)", "Interior/workbench", P(11f, 3.05f), lit);
+            CreateSpriteObject(root, "Shoe Cabinet (仮)", "Interior/crate", P(16f, 6.05f), lit);
+            CreateSpriteObject(root, "Chair with the Blue Scarf (仮)", "Interior/stool", P(16.5f, 3.1f), lit);
+            var mat = CreateSpriteObject(root, "Doormat", "Interior/doormat", P(15.5f, 0.6f), lit);
+            mat.GetComponent<SpriteRenderer>().sortingOrder = -60;
         }
 
         /// <summary>出入口：歩いて入る所は AreaExit（当たり判定はトリガー）、戸は DoorInteractable。入ったときに立つ所は Spawn。</summary>

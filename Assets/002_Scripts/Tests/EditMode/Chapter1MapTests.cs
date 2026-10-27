@@ -75,7 +75,9 @@ namespace BlueNight.Tests
         public void EachAreaHasTheThingsTheScriptNeeds()
         {
             int Count(string id, char ch) => Chapter1Maps.Create(id).Find(ch).Count();
-            Assert.AreEqual(1, Count(Chapter1Maps.Home, 'P'), "Ruri starts in front of her apartment");
+            Assert.AreEqual(1, Count(Chapter1Maps.Room, 'P'), "Ruri wakes up on her futon");
+            Assert.AreEqual(0, Count(Chapter1Maps.Home, 'P'), "Ruri comes out of the apartment door, not from a start mark");
+            Assert.AreEqual(1, Count(Chapter1Maps.Room, 'Y'), "the window that looks over the bay");
             Assert.AreEqual(1, Count(Chapter1Maps.Home, 'Q'), "bus stop timetable");
             Assert.AreEqual(1, Count(Chapter1Maps.Street, 'N'), "the old lantern at the lamp shop");
             Assert.AreEqual(1, Count(Chapter1Maps.Street, 'G'), "Haru");
