@@ -51,6 +51,8 @@ REVIEWED = {
     "Characters/Shadows/": "光の向き：逃げた影の水色のふちは影そのものが光っている色で、陰影ではない",
     "Interior/": "家具の細部（帳面の文字・振り子・ランプのほや・腰かけの脚・壁のひび）は形の線・模様",
     "Effects/": "演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない",
+    "Home/": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。"
+             "光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない",
     "Faces/": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、"
               "目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）",
     "Characters/Nemu/": "v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。"
@@ -273,6 +275,8 @@ def group_of(rel):
         return "title"
     if rel.startswith("Interior"):
         return "lamp_shop"
+    if rel.startswith("Home"):
+        return "ruri_home"
     if rel.startswith("Effects"):
         return "effects"
     if rel.startswith(("Tiles", "Props", "Buildings")):

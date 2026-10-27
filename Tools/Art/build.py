@@ -25,6 +25,7 @@ import m1_assets  # noqa: E402
 import nemu  # noqa: E402
 import npc  # noqa: E402
 import portrait  # noqa: E402
+import room  # noqa: E402
 import ui_title  # noqa: E402
 import ruri  # noqa: E402
 from palette import RAMPS, color, hex_to_rgba  # noqa: E402
@@ -360,11 +361,57 @@ def build_previews(palette, sheets, nemu, tiles, props):
 
 def read_m1_map():
     """C# 側の M1Map.Rows（Assets/002_Scripts/Logic/GridMap.cs）を読み取る。マップの定義は 1 か所だけにする。"""
+    return read_map_rows("GridMap.cs", "public static readonly string[] Rows")
+
+
+def read_map_rows(file, marker):
+    """C# のマップの定義（文字の行の配列）を読み取る。"""
     import re
-    src = open(os.path.join(ROOT, "Assets", "002_Scripts", "Logic", "GridMap.cs"), encoding="utf-8").read()
-    block = src[src.index("public static readonly string[] Rows"):]
+    src = open(os.path.join(ROOT, "Assets", "002_Scripts", "Logic", file), encoding="utf-8").read()
+    block = src[src.index(marker):]
     block = block[: block.index("};")]
     return re.findall(r'"([^"]+)"', block)
+
+
+# ルリの家の家具の置き場所（マップの X に合わせる。左上のマス・絵）。Unity の BlueNightSetup.FurnishRoom と同じ
+ROOM_FURNITURE = [
+    ((1, 3), "desk"), ((9, 3), "sink"), ((12, 3), "fridge"), ((10, 6), "kitchen_table"),
+    ((15, 3), "shoe_cabinet"), ((16, 6), "chair_scarf"),
+]
+
+
+def build_room_preview(home):
+    """ルリの家：絵の一覧と、マップ（Chapter1Maps.RoomRows）どおりに組んだ見え方。"""
+    bg = hex_to_rgba(RAMPS["night"][2])
+    upscale(contact_sheet(list(home.values()), bg, max_w=300), 4).save(os.path.join(PREVIEW, "room_parts.png"))
+    rows = read_map_rows("Chapter1Maps.cs", "public static readonly string[] RoomRows")
+    h, w = len(rows), len(rows[0])
+    img = Image.new("RGBA", (w * 16, h * 16), hex_to_rgba(RAMPS["night"][0]))
+    for ty, row in enumerate(rows):
+        for tx, ch in enumerate(row):
+            pos = (tx * 16, ty * 16)
+            if ch == "#":
+                inner = 0 < tx < w - 1 and ty < h - 1
+                tile = "home_wall_0" if ty == 1 and inner else "home_wall_base" if ty == 2 and inner else None
+                if tile:
+                    img.alpha_composite(home[tile], pos)
+                else:
+                    img.paste(hex_to_rgba(RAMPS["night"][2]), (pos[0], pos[1], pos[0] + 16, pos[1] + 16))
+                continue
+            tile = room.floor_tile(tx, ty)
+            img.alpha_composite(home[tile], pos)
+
+    def put(name, tx, ty, w_tiles=None):
+        sp = home[name]
+        img.alpha_composite(sp, (tx * 16 + (w_tiles * 16 - sp.width) // 2 if w_tiles else tx * 16, ty * 16 + 16 - sp.height))
+
+    img.alpha_composite(home["window_bay"], (4 * 16 + 8, 16 + 2))
+    img.alpha_composite(home["futon"], (1 * 16 + 8, 6 * 16 + 4))
+    for (tx, ty), name in ROOM_FURNITURE:
+        put(name, tx, ty, max(1, home[name].width // 16))
+    lit = Image.alpha_composite(img, Image.new("RGBA", img.size, (30, 45, 110, 60)))
+    glow(lit, 88, 60, 50, (150, 190, 255), 0.25)    # 窓からの月明かり
+    upscale(lit, 4).save(os.path.join(PREVIEW, "room.png"))
 
 
 def build_m1_preview(tiles, props, m1, sheets, nemu):
@@ -671,6 +718,7 @@ def main():
     people = npc.build(save)
     more = ch1_more.build(save)
     interior = ch1_interior.build(save)
+    home = room.build(save)
     faces = portrait.build(save)
     faces.update({f"nemu_{k}": v for k, v in NEMU_FACES.items()})
     ui = ui_title.build_ui(save)
@@ -687,6 +735,7 @@ def main():
     upscale(contact_sheet(list(faces.values()), hex_to_rgba(RAMPS["night"][2]), max_w=320), 4).save(
         os.path.join(PREVIEW, "faces.png"))
     build_ui_title_preview(ui, title, faces)
+    build_room_preview(home)
     print("done")
 
 

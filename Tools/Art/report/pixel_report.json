@@ -4896,6 +4896,277 @@
   "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
  },
  {
+  "file": "Home/Tiles/floor_vinyl.png",
+  "group": "ruri_home",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない"
+ },
+ {
+  "file": "Home/Tiles/home_wall_0.png",
+  "group": "ruri_home",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない"
+ },
+ {
+  "file": "Home/Tiles/home_wall_1.png",
+  "group": "ruri_home",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.4,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない"
+ },
+ {
+  "file": "Home/Tiles/home_wall_base.png",
+  "group": "ruri_home",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない"
+ },
+ {
+  "file": "Home/Tiles/tataki.png",
+  "group": "ruri_home",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 1.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない"
+ },
+ {
+  "file": "Home/Tiles/tatami_0.png",
+  "group": "ruri_home",
+  "colors": 2,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない"
+ },
+ {
+  "file": "Home/Tiles/tatami_1.png",
+  "group": "ruri_home",
+  "colors": 4,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない"
+ },
+ {
+  "file": "Home/chair.png",
+  "group": "ruri_home",
+  "colors": 3,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 8,
+  "bandingColors": [
+   "#5a3a32"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない"
+ },
+ {
+  "file": "Home/chair_scarf.png",
+  "group": "ruri_home",
+  "colors": 6,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 8,
+  "bandingColors": [
+   "#5a3a32"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 2.7,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない"
+ },
+ {
+  "file": "Home/desk.png",
+  "group": "ruri_home",
+  "colors": 10,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "stone": [
+    12.1,
+    -4.5
+   ]
+  },
+  "reviewed": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない"
+ },
+ {
+  "file": "Home/fridge.png",
+  "group": "ruri_home",
+  "colors": 8,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 3,
+  "bandingPixels": 22,
+  "bandingColors": [
+   "#9aa1bd"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "stone": [
+    -5.5,
+    15.0
+   ]
+  },
+  "reviewed": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない"
+ },
+ {
+  "file": "Home/futon.png",
+  "group": "ruri_home",
+  "colors": 7,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 3,
+  "bandingPixels": 23,
+  "bandingColors": [
+   "#d6dcec",
+   "#bccbe4",
+   "#8c9ec1"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "pj": [
+    -7.7,
+    5.2
+   ]
+  },
+  "reviewed": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない"
+ },
+ {
+  "file": "Home/kitchen_table.png",
+  "group": "ruri_home",
+  "colors": 5,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない"
+ },
+ {
+  "file": "Home/shoe_cabinet.png",
+  "group": "ruri_home",
+  "colors": 9,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 1,
+  "noisePercent": 0.7,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない"
+ },
+ {
+  "file": "Home/sink.png",
+  "group": "ruri_home",
+  "colors": 6,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 10,
+  "bandingColors": [
+   "#9aa1bd"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.3,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない"
+ },
+ {
+  "file": "Home/window_bay.png",
+  "group": "ruri_home",
+  "colors": 11,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 4,
+  "bandingPixels": 84,
+  "bandingColors": [
+   "#bccbe4",
+   "#5a3a32",
+   "#80544a"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "ルリの家：窓のカーテン・高架道路の灯り、冷蔵庫の戸の境目と取っ手、ふとんの縫い目、椅子の脚は形の線。光の向き：机の目覚まし・冷蔵庫の取っ手（左寄りの小物）は陰影ではない"
+ },
+ {
   "file": "Interior/Tiles/floor_wood_0.png",
   "group": "lamp_shop",
   "colors": 2,

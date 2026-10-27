@@ -94,6 +94,11 @@ MAP_PALETTES = {
     "lamp_shop": _pick("night0", "night1", "night2", "night3", "night4", "night5", "stone3", "stone4", "stone5",
                        "stone6", "stone7", "brown0", "brown1", "brown2", "warm3", "warm4", "warm5", "warm6",
                        "red0", "red1", "red1", "green0", "green1", "moon2"),
+    # ルリの家（序章・終章）：しっくい・畳・クッションフロア・土間、木の家具、ふとんの青、マフラー、冷蔵庫の書き置き
+    "ruri_home": _pick("night1", "night2", "night3", "stone1", "stone2", "stone3", "stone4", "stone5", "stone6", "stone7",
+                       "brown0", "brown1", "brown2", "brown3", "warm3", "warm4", "warm5", "moon1", "moon2", "moon3",
+                       "green1", "green2", "red1", "red2", "scarf0", "scarf1", "scarf2", "pj0", "pj1", "pj2", "pj3",
+                       "tee2", "tee3"),
     # 演出（光の輪・つぶ・波紋・小さな蛾・足元の影）
     "effects": _pick("night0", "night4", "night5", "moon0", "moon1", "moon2", "moon3", "stone7", "warm4", "warm5"),
     # UI（会話ウィンドウ・アイコン）：10 色

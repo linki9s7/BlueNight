@@ -119,7 +119,7 @@ namespace BlueNight.EditorTools
 
             bool indoor = id == Chapter1Maps.LampShop || id == Chapter1Maps.Room;
             bool alley = id == Chapter1Maps.Alley1 || id == Chapter1Maps.Alley2;
-            Tilemap overlay = BuildAreaTiles(go, map, lit, unlit, indoor, alley);
+            Tilemap overlay = BuildAreaTiles(go, map, lit, unlit, indoor, alley, id == Chapter1Maps.Room);
 
             // 光と影の計算：影が動く所（路地）と、掛ける練習をする店の中だけ
             if (alley || id == Chapter1Maps.LampShop)
@@ -150,7 +150,7 @@ namespace BlueNight.EditorTools
         }
 
         /// <summary>地面・壁（当たり判定つき）・暗がりの重ね絵。マスの文字から決める。</summary>
-        static Tilemap BuildAreaTiles(GameObject area, GridMap map, Material lit, Material unlit, bool indoor, bool alley)
+        static Tilemap BuildAreaTiles(GameObject area, GridMap map, Material lit, Material unlit, bool indoor, bool alley, bool home)
         {
             var grid = new GameObject("Grid").AddComponent<Grid>();
             grid.transform.SetParent(area.transform, false);
@@ -168,7 +168,13 @@ namespace BlueNight.EditorTools
             Tile plaster0 = LoadTileFrom("Interior/Tiles/wall_plaster_0", "wall_plaster_0");
             Tile plaster1 = LoadTileFrom("Interior/Tiles/wall_plaster_1", "wall_plaster_1");
             Tile wainscot = LoadTileFrom("Interior/Tiles/wall_wainscot", "wall_wainscot");
-            foreach (var t in new[] { wallTop, block, innerTop, plaster0, plaster1, wainscot })
+            // ルリの家（Tools/Art/room.py）
+            Tile homeWall0 = LoadTileFrom("Home/Tiles/home_wall_0", "home_wall_0");
+            Tile homeWall1 = LoadTileFrom("Home/Tiles/home_wall_1", "home_wall_1");
+            Tile homeWallBase = LoadTileFrom("Home/Tiles/home_wall_base", "home_wall_base");
+            var homeFloors = new[] { "tatami_0", "tatami_1", "floor_vinyl", "tataki" }
+                .ToDictionary(n => n, n => LoadTileFrom($"Home/Tiles/{n}", n));
+            foreach (var t in new[] { wallTop, block, innerTop, plaster0, plaster1, wainscot, homeWall0, homeWall1, homeWallBase })
             {
                 t.colliderType = Tile.ColliderType.Grid;
                 EditorUtility.SetDirty(t);
@@ -189,7 +195,11 @@ namespace BlueNight.EditorTools
                     if (GridMap.IsWall(ch) || doors.Contains(ch))
                     {
                         Tile wall;
-                        if (indoor)
+                        bool openBelow = GridMap.IsWalkable(map.At(cell + new Cell(0, -1)));
+                        if (home)
+                            wall = row == 0 || x == 0 || x == map.Width - 1 || y == 0 ? innerTop
+                                : row == 1 ? (x % 6 == 3 ? homeWall1 : homeWall0) : row == 2 || openBelow ? homeWallBase : innerTop;
+                        else if (indoor)
                             wall = row == 0 || x == 0 || x == map.Width - 1 || y == 0 ? innerTop
                                 : row == 1 ? (x % 5 == 2 ? plaster1 : plaster0) : row == 2 ? wainscot : innerTop;
                         else
@@ -202,7 +212,9 @@ namespace BlueNight.EditorTools
                     Tile floor;
                     char below = map.At(cell + new Cell(0, -1));
                     char above = map.At(cell + new Cell(0, 1));
-                    if (indoor)
+                    if (home)
+                        floor = homeFloors[RoomFloor(x, row)];
+                    else if (indoor)
                         floor = (x * 3 + y) % 5 == 0 ? floor1 : floor0;
                     else if (ch == ':')
                         floor = (x + y) % 3 == 0 ? cross1 : cross0;
@@ -372,9 +384,19 @@ namespace BlueNight.EditorTools
             CreatePointLight(lamp, "Light", new Vector3(0f, 0.3f, 0f), Hex("#ffc98a"), 0.9f, 5f);
         }
 
+        /// <summary>ルリの家の床（Tools/Art/room.py の floor_tile と同じ決め方）。row は上からの行。</summary>
+        static string RoomFloor(int x, int row)
+        {
+            if (x <= 7)
+                return row % 2 == 1 ? "tatami_1" : "tatami_0";   // 部屋は畳（2 行で 1 枚、上の行にへり）
+            if (x >= 14 && row >= 7)
+                return "tataki";                                  // 玄関の戸の前は土間
+            return "floor_vinyl";                                 // 台所と上がり口
+        }
+
         /// <summary>
-        /// ルリの家の中（マップの X のマスに合わせて置く）。部屋・台所・玄関の絵はまだ無いので、ランプ屋の中の家具の絵を仮に置く
-        /// （Tools/Art/art_plan.md の「ルリの家」）。窓から月明かりが入る。
+        /// ルリの家の中の家具（Tools/Art/room.py。置き場所はマップの X のマスと、build.py の ROOM_FURNITURE に合わせる）。
+        /// 窓から月明かりが入る。机の上のスマホは伏せてある（序章で光るのは演出で足す）。
         /// </summary>
         static void FurnishRoom(GameObject area, Material lit)
         {
@@ -382,17 +404,17 @@ namespace BlueNight.EditorTools
             root.transform.SetParent(area.transform, false);
             Vector3 o = area.transform.position;
             Vector3 P(float x, float y) => o + new Vector3(x, y, 0f);
-            // y は下から：北の壁ぎわの行 = 6、テーブル・椅子の行 = 3、ふとんの行 = 2
-            var window = CreateSpriteObject(root, "Window (bay)", "Interior/window_inner", P(5.5f, 7.6f), lit);
+            // y は下から：北の壁ぎわの行の足元 = 6、テーブル・椅子の行の足元 = 3
+            var window = CreateSpriteObject(root, "Window (bay)", "Home/window_bay", P(5.5f, 7.375f), lit);
             CreatePointLight(window, "Moonlight", new Vector3(0f, -1.5f, 0f), Hex("#9fc4ff"), 0.6f, 4f);
-            CreateSpriteObject(root, "Desk (仮)", "Interior/workbench", P(2f, 6.05f), lit);
-            var futon = CreateSpriteObject(root, "Futon (仮)", "Interior/rug", P(3.5f, 1.6f), lit);
+            CreateSpriteObject(root, "Desk", "Home/desk", P(2f, 6.05f), lit);
+            var futon = CreateSpriteObject(root, "Futon", "Home/futon", P(2.5f, 2.5f), lit);
             futon.GetComponent<SpriteRenderer>().sortingOrder = -60;
-            CreateSpriteObject(root, "Sink (仮)", "Interior/counter", P(10f, 6.05f), lit);
-            CreateSpriteObject(root, "Fridge (仮)", "Interior/grandfather_clock", P(12.5f, 6.05f), lit);
-            CreateSpriteObject(root, "Kitchen Table (仮)", "Interior/workbench", P(11f, 3.05f), lit);
-            CreateSpriteObject(root, "Shoe Cabinet (仮)", "Interior/crate", P(16f, 6.05f), lit);
-            CreateSpriteObject(root, "Chair with the Blue Scarf (仮)", "Interior/stool", P(16.5f, 3.1f), lit);
+            CreateSpriteObject(root, "Sink", "Home/sink", P(10f, 6.05f), lit);
+            CreateSpriteObject(root, "Fridge (note from Mom)", "Home/fridge", P(12.5f, 6.05f), lit);
+            CreateSpriteObject(root, "Kitchen Table", "Home/kitchen_table", P(11f, 3.05f), lit);
+            CreateSpriteObject(root, "Shoe Cabinet", "Home/shoe_cabinet", P(16f, 6.05f), lit);
+            CreateSpriteObject(root, "Chair with the Blue Scarf", "Home/chair_scarf", P(16.5f, 3.05f), lit);
             var mat = CreateSpriteObject(root, "Doormat", "Interior/doormat", P(15.5f, 0.6f), lit);
             mat.GetComponent<SpriteRenderer>().sortingOrder = -60;
         }
