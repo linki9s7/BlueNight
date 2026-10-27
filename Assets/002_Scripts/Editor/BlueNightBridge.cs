@@ -16,12 +16,13 @@ namespace BlueNight.EditorTools
     ///
     /// 命令（command）：
     ///   refresh                ファイルの変更を取り込む（スクリプトならコンパイル）
-    ///   build                  arg = gallery / m1 / title：メニュー 4・3・6 のシーンを作る
+    ///   build                  arg = gallery / m1 / title / ch1：メニュー 4・3・6・7 のシーンを作る
     ///   open                   arg = シーンのパス
     ///   play / stop            再生・停止
     ///   capture                Main Camera の絵を PNG に（arg = 保存先。scale 倍に拡大）
     ///   move                   再生中のルリを (x, y) へ動かす（素材シーンを見て回る）
     ///   face                   再生中のルリの向き（arg = down / up / left / right）
+    ///   goto                   再生中に別のエリアへ（arg = エリア:入口。第 1 章のシーン）
     ///   invoke                 arg = 「名前空間.型.メソッド」の static メソッドを引数なしで呼ぶ
     ///   logs                   最近の警告・エラー
     /// </summary>
@@ -117,6 +118,7 @@ namespace BlueNight.EditorTools
                         case "gallery": BlueNightSetup.BuildArtGalleryScene(); break;
                         case "m1": BlueNightSetup.BuildM1Scene(); break;
                         case "title": BlueNightSetup.BuildTitleScene(); break;
+                        case "ch1": BlueNightSetup.BuildChapter1Scene(); break;
                         default: throw new ArgumentException($"unknown scene: {r.arg}");
                     }
                     return $"built {r.arg}";
@@ -137,6 +139,12 @@ namespace BlueNight.EditorTools
                     return MovePlayer(new Vector2(r.x, r.y));
                 case "face":
                     return Face(r.arg);
+                case "goto":
+                    // arg = 「エリア:入口」（例 street:3）。暗転してそのエリアへ
+                    Player();
+                    var parts = r.arg.Split(':');
+                    BlueNight.World.AreaManager.Instance.Go(parts[0], parts.Length > 1 ? parts[1] : "start");
+                    return $"going to {r.arg}";
                 case "invoke":
                     return Invoke(r.arg);
                 case "logs":

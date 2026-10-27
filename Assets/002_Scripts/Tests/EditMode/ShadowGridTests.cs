@@ -155,7 +155,7 @@ namespace BlueNight.Tests
         /// ルリ（灯りなし）が最短経路で影を追い、影は逃げる。1 手ずつ交互に同じ速さで動く。
         /// 実際のゲームでは影のほうが速いので、ここで逃げ切れるなら本番でも逃げ切れる。
         /// </summary>
-        static bool Chase(ShadowGrid grid, Cell player, Cell shadow, int maxTurns, bool captureWhenAdjacent)
+        internal static bool Chase(ShadowGrid grid, Cell player, Cell shadow, int maxTurns, bool captureWhenAdjacent)
         {
             bool Caught() => player == shadow || (captureWhenAdjacent && System.Math.Abs(player.X - shadow.X) + System.Math.Abs(player.Y - shadow.Y) <= 1);
 
