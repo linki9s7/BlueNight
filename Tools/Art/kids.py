@@ -23,7 +23,7 @@ from palette import hex_to_rgba, RAMPS
 STYLE = Style("none", rim=True)
 MATS = {
     "H": Mat("hair2", "hair1", "hair3", group="Hh", d=2),
-    "M": Mat("brown3", "brown2", "skin1", group="Mg", d=2),
+    "M": Mat("brown2", "brown1", "brown3", group="Mg", d=2),   # ふちの月明かりも茶色に（肌色だと、ほおが白く見えた）
     "S": Mat("skin2", "skin1", group="SEeIrmOW"),
     "P": Mat("pj2", "pj1", "pj3", group="P", d=2),
     "T": Mat("tee2", "tee1", "tee3", group="T", d=2),
@@ -105,8 +105,8 @@ MIO_HEAD_DOWN = [
     ".MSOeSSSOeSM",
     ".MSOOSSSOOSM",
     ".MSrSSSSSrSM",
-    "..SSSmWWmSS.",   # 歯を見せて笑う
-    "..SSSSmmSSS.",
+    ".MSSSmWWmSSM",   # 歯を見せて笑う。顔の横の髪（ほおのふちが月明かりで白く光らないように）
+    "..MSSSmmSSM.",
     "...SSSSSSS..",
 ]
 MIO_BODY_DOWN = [
@@ -122,19 +122,19 @@ MIO_LEGS_STAND = [
     "............",
     "............",
 ]
-MIO_HEAD_SIDE = [
+MIO_HEAD_SIDE = [   # 後ろ頭まで丸く（ユーザーの指摘：横向きの頭が薄っぺら）。ポニーテールは後ろ頭から下がる
     "....M.......",
     "...MMMMMM...",
-    "..MggMMMMM..",
-    "MMMMMMMMMMM.",   # ポニーテールが後ろへなびく
-    "MMMMMMMMSSM.",
-    "M..MMMMSSSS.",
-    "...MMMMSSSS.",
-    "...MMMSSOeS.",
-    "...MMMSSOOS.",
-    "...MMMSrSSS.",
-    "...MMMSSmWS.",
-    "....MMSSSS..",
+    "..MggMMMMMM.",
+    ".RMMMMMMMMMM",   # 後ろ頭の赤い髪ゴム
+    "MMMMMMMMMSSS",
+    "MMMMMMMMSSSS",
+    "MMMMMMMMSOeS",
+    "MMMMMMMMSOOS",
+    "M.MMMMMSrSSS",
+    "..MMMMMSSmWS",
+    "..MMMMMSSSS.",
+    "...MMMSSSS..",
     ".....SSSS...",
 ]
 MIO_BODY_SIDE = [

@@ -24,22 +24,22 @@
 | Characters/Grandma/grandma_sit_1.png | 17 |  | 0 | 0/0 | 4 | 8.2 | 0.0 |  | v0.16（輪郭線なし）：目・ほお・口・組んだ手は形の細部。光の向き（茶）：杖は体の右側（影の側）なので暗い色の 1 ドットの線 |
 | Characters/Keeper/keeper_idle_0.png | 19 |  | 0 | 3/13 | 6 | 3.4 | 0.0 | night | v0.16（輪郭線なし）：めがね・口ひげ・頭のつやは形の細部。光の向き：縁の月明かりは左の縁に縦に並び、影は右下にかたまるので、系統の重心では逆に見える（部品ごとに左上の光を確認済み） |
 | Characters/Keeper/keeper_idle_1.png | 19 |  | 0 | 4/17 | 5 | 3.4 | 0.0 | night | v0.16（輪郭線なし）：めがね・口ひげ・頭のつやは形の細部。光の向き：縁の月明かりは左の縁に縦に並び、影は右下にかたまるので、系統の重心では逆に見える（部品ごとに左上の光を確認済み） |
-| Characters/Kids/kid_mio_idle_down_0.png | 18 |  | 0 | 4/15 | 5 | 7.8 | 0.0 |  |  |
-| Characters/Kids/kid_mio_idle_down_1.png | 18 |  | 0 | 4/15 | 5 | 7.8 | 0.0 |  |  |
+| Characters/Kids/kid_mio_idle_down_0.png | 18 |  | 0 | 4/19 | 5 | 8.3 | 0.0 |  |  |
+| Characters/Kids/kid_mio_idle_down_1.png | 18 |  | 0 | 4/19 | 5 | 8.3 | 0.0 |  |  |
 | Characters/Kids/kid_mio_idle_down_shadow_0.png | 1 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Kids/kid_mio_idle_down_shadow_1.png | 1 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
-| Characters/Kids/kid_mio_run_left_0.png | 18 |  | 0 | 1/6 | 2 | 9.2 | 0.0 | brown |  |
-| Characters/Kids/kid_mio_run_left_1.png | 18 |  | 0 | 1/6 | 2 | 10.0 | 0.0 | brown |  |
-| Characters/Kids/kid_mio_run_left_2.png | 17 |  | 0 | 1/6 | 3 | 10.7 | 0.0 | brown |  |
-| Characters/Kids/kid_mio_run_left_3.png | 18 |  | 0 | 1/6 | 2 | 10.7 | 0.0 | brown |  |
+| Characters/Kids/kid_mio_run_left_0.png | 18 |  | 0 | 1/4 | 0 | 8.0 | 0.0 | brown |  |
+| Characters/Kids/kid_mio_run_left_1.png | 18 |  | 0 | 1/4 | 0 | 8.8 | 0.0 | brown |  |
+| Characters/Kids/kid_mio_run_left_2.png | 17 |  | 0 | 1/4 | 1 | 9.4 | 0.0 | brown |  |
+| Characters/Kids/kid_mio_run_left_3.png | 18 |  | 0 | 1/4 | 0 | 9.4 | 0.0 | brown |  |
 | Characters/Kids/kid_mio_run_left_shadow_0.png | 1 |  | 2 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Kids/kid_mio_run_left_shadow_1.png | 1 |  | 2 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Kids/kid_mio_run_left_shadow_2.png | 1 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Kids/kid_mio_run_left_shadow_3.png | 1 |  | 2 | 0/0 | 0 | 0.0 | 0.0 |  |  |
-| Characters/Kids/kid_mio_run_right_0.png | 18 |  | 0 | 0/0 | 1 | 7.0 | 0.0 | skin |  |
-| Characters/Kids/kid_mio_run_right_1.png | 18 |  | 0 | 0/0 | 1 | 7.9 | 0.0 | skin |  |
-| Characters/Kids/kid_mio_run_right_2.png | 17 |  | 0 | 0/0 | 1 | 6.4 | 0.0 | skin |  |
-| Characters/Kids/kid_mio_run_right_3.png | 17 |  | 0 | 0/0 | 1 | 6.4 | 0.0 | skin |  |
+| Characters/Kids/kid_mio_run_right_0.png | 18 |  | 0 | 1/5 | 0 | 6.2 | 0.0 |  |  |
+| Characters/Kids/kid_mio_run_right_1.png | 18 |  | 0 | 1/5 | 0 | 6.9 | 0.0 |  |  |
+| Characters/Kids/kid_mio_run_right_2.png | 17 |  | 0 | 1/5 | 0 | 5.6 | 0.0 |  |  |
+| Characters/Kids/kid_mio_run_right_3.png | 17 |  | 0 | 1/5 | 0 | 5.6 | 0.0 |  |  |
 | Characters/Kids/kid_mio_run_right_shadow_0.png | 1 |  | 2 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Kids/kid_mio_run_right_shadow_1.png | 1 |  | 2 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Kids/kid_mio_run_right_shadow_2.png | 1 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
@@ -452,13 +452,13 @@
 | Effects/fx_sparkle_1.png | 2 |  | 0 | 0/0 | 0 | 20.0 | 0.0 |  | 演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない |
 | Effects/fx_sparkle_2.png | 2 |  | 0 | 0/0 | 0 | 44.4 | 0.0 |  | 演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない |
 | Effects/fx_sparkle_3.png | 2 |  | 0 | 0/0 | 0 | 20.0 | 0.0 |  | 演出（光の輪・つぶ・波紋・小さな蛾）は点や輪そのものが絵で、陰影ではない |
-| Faces/face_grandma_normal.png | 13 |  | 0 | 2/6 | 0 | 1.0 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない） |
+| Faces/face_grandma_normal.png | 14 |  | 0 | 1/3 | 1 | 0.9 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない） |
 | Faces/face_grandma_smile.png | 12 |  | 0 | 1/3 | 1 | 0.7 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない） |
 | Faces/face_grandma_teary.png | 13 |  | 0 | 0/0 | 1 | 0.9 | 0.0 |  | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない） |
 | Faces/face_keeper_normal.png | 15 |  | 2 | 1/3 | 1 | 1.2 | 0.0 | stone, night | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない） |
 | Faces/face_keeper_smile.png | 14 |  | 2 | 2/6 | 1 | 1.1 | 0.0 | stone, night | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない） |
-| Faces/face_mio_kid_normal.png | 14 |  | 0 | 7/34 | 0 | 0.6 | 0.0 | brown, red, tee | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない） |
-| Faces/face_mio_kid_smile.png | 13 |  | 0 | 4/21 | 0 | 0.4 | 0.0 | brown, red, tee | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない） |
+| Faces/face_mio_kid_normal.png | 15 |  | 0 | 7/34 | 0 | 0.6 | 0.0 | red, tee | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない） |
+| Faces/face_mio_kid_smile.png | 14 |  | 0 | 4/21 | 0 | 0.4 | 0.0 | red, tee | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない） |
 | Faces/face_nemu_happy.png | 10 |  | 0 | 12/73 | 1 | 0.7 | 0.0 | glow | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない） ／ 目玉模様の縁・羽の筋・触角の羽毛・前羽の帯は模様。羽のふちの明るい線は光が透けた縁（月明かりの縁取り）で、輪郭の内側の帯ではない。光の向き：尾の縁の光が下にある（Characters/Nemu と同じ） |
 | Faces/face_nemu_normal.png | 10 |  | 4 | 12/73 | 1 | 1.4 | 0.0 | glow | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない） ／ 目玉模様の縁・羽の筋・触角の羽毛・前羽の帯は模様。羽のふちの明るい線は光が透けた縁（月明かりの縁取り）で、輪郭の内側の帯ではない。光の向き：尾の縁の光が下にある（Characters/Nemu と同じ） |
 | Faces/face_nemu_sleepy.png | 10 |  | 0 | 12/73 | 1 | 0.8 | 0.0 | glow | 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない） ／ 目玉模様の縁・羽の筋・触角の羽毛・前羽の帯は模様。羽のふちの明るい線は光が透けた縁（月明かりの縁取り）で、輪郭の内側の帯ではない。光の向き：尾の縁の光が下にある（Characters/Nemu と同じ） |

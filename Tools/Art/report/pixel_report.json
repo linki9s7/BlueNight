@@ -366,14 +366,14 @@
   "offPalette": [],
   "doubles": 0,
   "banding": 4,
-  "bandingPixels": 15,
+  "bandingPixels": 19,
   "bandingColors": [
+   "#d99a7c",
    "#f2c9a8",
-   "#5a3a32",
-   "#a47366"
+   "#5a3a32"
   ],
   "floatingAA": 5,
-  "noisePercent": 7.8,
+  "noisePercent": 8.3,
   "ditherPercent": 0.0,
   "lightWrong": {},
   "reviewed": ""
@@ -385,14 +385,14 @@
   "offPalette": [],
   "doubles": 0,
   "banding": 4,
-  "bandingPixels": 15,
+  "bandingPixels": 19,
   "bandingColors": [
+   "#d99a7c",
    "#f2c9a8",
-   "#5a3a32",
-   "#a47366"
+   "#5a3a32"
   ],
   "floatingAA": 5,
-  "noisePercent": 7.8,
+  "noisePercent": 8.3,
   "ditherPercent": 0.0,
   "lightWrong": {},
   "reviewed": ""
@@ -434,17 +434,17 @@
   "offPalette": [],
   "doubles": 0,
   "banding": 1,
-  "bandingPixels": 6,
+  "bandingPixels": 4,
   "bandingColors": [
    "#f2c9a8"
   ],
-  "floatingAA": 2,
-  "noisePercent": 9.2,
+  "floatingAA": 0,
+  "noisePercent": 8.0,
   "ditherPercent": 0.0,
   "lightWrong": {
    "brown": [
-    -2.6,
-    3.8
+    -3.9,
+    4.5
    ]
   },
   "reviewed": ""
@@ -456,17 +456,17 @@
   "offPalette": [],
   "doubles": 0,
   "banding": 1,
-  "bandingPixels": 6,
+  "bandingPixels": 4,
   "bandingColors": [
    "#f2c9a8"
   ],
-  "floatingAA": 2,
-  "noisePercent": 10.0,
+  "floatingAA": 0,
+  "noisePercent": 8.8,
   "ditherPercent": 0.0,
   "lightWrong": {
    "brown": [
-    -2.6,
-    3.8
+    -3.9,
+    4.5
    ]
   },
   "reviewed": ""
@@ -478,17 +478,17 @@
   "offPalette": [],
   "doubles": 0,
   "banding": 1,
-  "bandingPixels": 6,
+  "bandingPixels": 4,
   "bandingColors": [
    "#f2c9a8"
   ],
-  "floatingAA": 3,
-  "noisePercent": 10.7,
+  "floatingAA": 1,
+  "noisePercent": 9.4,
   "ditherPercent": 0.0,
   "lightWrong": {
    "brown": [
-    -2.6,
-    3.8
+    -3.9,
+    4.5
    ]
   },
   "reviewed": ""
@@ -500,17 +500,17 @@
   "offPalette": [],
   "doubles": 0,
   "banding": 1,
-  "bandingPixels": 6,
+  "bandingPixels": 4,
   "bandingColors": [
    "#f2c9a8"
   ],
-  "floatingAA": 2,
-  "noisePercent": 10.7,
+  "floatingAA": 0,
+  "noisePercent": 9.4,
   "ditherPercent": 0.0,
   "lightWrong": {
    "brown": [
-    -2.6,
-    3.8
+    -3.9,
+    4.5
    ]
   },
   "reviewed": ""
@@ -581,18 +581,15 @@
   "colors": 18,
   "offPalette": [],
   "doubles": 0,
-  "banding": 0,
-  "bandingPixels": 0,
-  "bandingColors": [],
-  "floatingAA": 1,
-  "noisePercent": 7.0,
+  "banding": 1,
+  "bandingPixels": 5,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 6.2,
   "ditherPercent": 0.0,
-  "lightWrong": {
-   "skin": [
-    -1.5,
-    0.3
-   ]
-  },
+  "lightWrong": {},
   "reviewed": ""
  },
  {
@@ -601,18 +598,15 @@
   "colors": 18,
   "offPalette": [],
   "doubles": 0,
-  "banding": 0,
-  "bandingPixels": 0,
-  "bandingColors": [],
-  "floatingAA": 1,
-  "noisePercent": 7.9,
+  "banding": 1,
+  "bandingPixels": 5,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 6.9,
   "ditherPercent": 0.0,
-  "lightWrong": {
-   "skin": [
-    -1.4,
-    0.5
-   ]
-  },
+  "lightWrong": {},
   "reviewed": ""
  },
  {
@@ -621,18 +615,15 @@
   "colors": 17,
   "offPalette": [],
   "doubles": 0,
-  "banding": 0,
-  "bandingPixels": 0,
-  "bandingColors": [],
-  "floatingAA": 1,
-  "noisePercent": 6.4,
+  "banding": 1,
+  "bandingPixels": 5,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 5.6,
   "ditherPercent": 0.0,
-  "lightWrong": {
-   "skin": [
-    -1.5,
-    0.0
-   ]
-  },
+  "lightWrong": {},
   "reviewed": ""
  },
  {
@@ -641,18 +632,15 @@
   "colors": 17,
   "offPalette": [],
   "doubles": 0,
-  "banding": 0,
-  "bandingPixels": 0,
-  "bandingColors": [],
-  "floatingAA": 1,
-  "noisePercent": 6.4,
+  "banding": 1,
+  "bandingPixels": 5,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 5.6,
   "ditherPercent": 0.0,
-  "lightWrong": {
-   "skin": [
-    -1.3,
-    0.0
-   ]
-  },
+  "lightWrong": {},
   "reviewed": ""
  },
  {
@@ -7663,17 +7651,16 @@
  {
   "file": "Faces/face_grandma_normal.png",
   "group": "characters",
-  "colors": 13,
+  "colors": 14,
   "offPalette": [],
   "doubles": 0,
-  "banding": 2,
-  "bandingPixels": 6,
+  "banding": 1,
+  "bandingPixels": 3,
   "bandingColors": [
-   "#f2c9a8",
-   "#d99a7c"
+   "#f2c9a8"
   ],
-  "floatingAA": 0,
-  "noisePercent": 1.0,
+  "floatingAA": 1,
+  "noisePercent": 0.9,
   "ditherPercent": 0.0,
   "lightWrong": {},
   "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
@@ -7766,7 +7753,7 @@
  {
   "file": "Faces/face_mio_kid_normal.png",
   "group": "characters",
-  "colors": 14,
+  "colors": 15,
   "offPalette": [],
   "doubles": 0,
   "banding": 7,
@@ -7780,10 +7767,6 @@
   "noisePercent": 0.6,
   "ditherPercent": 0.0,
   "lightWrong": {
-   "brown": [
-    -3.9,
-    12.9
-   ],
    "red": [
     4.9,
     -9.3
@@ -7798,7 +7781,7 @@
  {
   "file": "Faces/face_mio_kid_smile.png",
   "group": "characters",
-  "colors": 13,
+  "colors": 14,
   "offPalette": [],
   "doubles": 0,
   "banding": 4,
@@ -7812,10 +7795,6 @@
   "noisePercent": 0.4,
   "ditherPercent": 0.0,
   "lightWrong": {
-   "brown": [
-    -4.4,
-    9.0
-   ],
    "red": [
     4.9,
     -9.3
