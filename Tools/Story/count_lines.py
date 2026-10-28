@@ -21,6 +21,7 @@
 
 import sys
 import os
+import re
 
 MAX_WIDTH = 22.0          # 1 行の幅（全角 22 文字分）
 MAX_LINES = 2             # 1 ウィンドウの行数
@@ -41,6 +42,7 @@ def iter_windows(path):
     with open(path, encoding="utf-8") as f:
         for no, raw in enumerate(f.readlines(), start=1):
             line = raw.rstrip("\n").rstrip("\r")
+            line = re.sub(r"〔[^〕]*〕", "", line)  # 表情タグ〔expr〕は文字数に数えない
             stripped = line.lstrip()
             if not stripped.startswith(">"):
                 continue
