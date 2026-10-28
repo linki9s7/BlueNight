@@ -66,6 +66,15 @@ namespace BlueNight.EditorTools
                 [(Chapter1Maps.Street, '4')] = (Flags.Alley1Escaped, new[] { N("路地の奥は、真っ暗だ。") }),
             };
 
+        /// <summary>
+        /// 閉まった戸を調べたときに立てるフラグ。ランプ屋の戸：ネムと会う前に戸を調べても、軒先のランタンを調べたのと同じく
+        /// ネムと出会う（戸のすぐ右がランタン。ハルに先に話しかけてから店へ来ると、戸のほうを選びやすい：ユーザーのテストプレイ）。
+        /// </summary>
+        static readonly Dictionary<(string area, char link), string> LockedDoorSets = new Dictionary<(string, char), string>
+        {
+            [(Chapter1Maps.Street, '2')] = Flags.LanternTouched,
+        };
+
         // ------------------------------------------------------------------ 書き方の道具
 
         static DialogueLine L(string speaker, string text) => new DialogueLine(speaker, text.Replace("／", "\n"));

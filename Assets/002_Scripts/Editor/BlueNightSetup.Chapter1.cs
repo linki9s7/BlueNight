@@ -451,7 +451,8 @@ namespace BlueNight.EditorTools
                     door.transform.SetParent(root.transform, false);
                     door.transform.position = origin + CellFoot(cells[0]);
                     door.SetPromptOffset(new Vector2(0f, 1.6f));
-                    door.Configure(other, spawn, gate.flag, gate.lines);
+                    LockedDoorSets.TryGetValue((area.Id, link.Symbol), out var lockedSets);
+                    door.Configure(other, spawn, gate.flag, gate.lines, lockedSets);
                     continue;
                 }
 
