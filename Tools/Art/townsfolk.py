@@ -250,14 +250,14 @@ def haru_portrait(expression):
 
 AOYAGI_FACE_MATS = {
     # ひげ（B・W）も顔の部品に入れる：別の部品だと、ひげの上の肌に太い影の帯ができて鼻のまわりが崩れて見えた（ユーザーの指摘）
-    "S": Mat("skin2", "skin1", group="SGLqEemnbBW", d=3),
+    "S": Mat("skin2", "skin1", group="SGLqEemnbBWk", d=3),
     "H": Mat("stone6", "stone4", "stone7", group="Hh", d=2),
     "B": Mat("stone7", "stone5", "tee3", group="BW", d=2),
     "A": Mat("brown2", "brown1", "brown3", group="A", d=3),
     "C": Mat("night5", "night4", "stone5", group="C", d=2),
 }
 AOYAGI_FACE_DIRECT = {"G": "night1", "L": "moon2", "q": "skin2", "E": "night1", "e": "moon3", "m": "skin0", "n": "skin1",
-                      "b": "stone5", "h": "tee3", "W": "stone7"}
+                      "b": "stone5", "h": "tee3", "W": "stone7", "k": "skin1"}
 GLASSES = {   # 細いふちの小さな丸めがね（G ふち・L 月明かりの照り返し・q レンズ越しの肌・E 目、e 目のつや）。目は細く鋭い
     "normal": [
         ".GGGG.....GGGG.",
@@ -294,6 +294,9 @@ def aoyagi_portrait(expression):
     c.stamp(["n", "n", "n", ".nn"], 24, 23)                  # 通った鼻（光は左上なので、右側に影と小鼻）
     c.stamp(["n", "n"], 14, 21)                              # 目じりのしわ
     c.stamp(["n", "n"], 33, 21)
+    # こけたほお：ほお骨の下に、短いななめの線（k）。ユーザーの案：ひげの影とまざらないよう、別の記号で描く
+    c.stamp(["k.", "k.", ".k", ".k"], 16, 25)
+    c.stamp([".k", ".k", "k.", "k."], 30, 25)
     # 短く整えた白いあごひげ（口のまわりとあごだけ）と口ひげ
     c.poly([(18, 30), (22, 31), (26, 31), (30, 30), (31, 34), (28, 38), (24, 39), (20, 38), (17, 34)], "B")
     c.stamp(["WWWWWWWWW", "W.......W"], 20, 29)
