@@ -201,14 +201,15 @@ SHOULDERS = [(3, 47), (7, 40), (15, 37), (33, 37), (41, 40), (45, 47)]
 HARU_FACE_MATS = {
     "J": Mat("stone7", "stone5", "tee3", group="J", d=2),
     "H": Mat("stone7", "stone5", "tee3", d=2),
-    "S": Mat("skin2", "skin1", group="SEeILmnrq", d=2),
+    "S": Mat("skin2", "skin1", group="SEeBLmnrq", d=2),
     "C": Mat("rose2", "rose1", "rose3", d=3),
     "w": Mat("tee3", "tee2", group="w", d=2),
 }
-HARU_FACE_DIRECT = {"E": "night1", "I": "brown0", "e": "moon3", "L": "moon1", "m": "skin0", "n": "skin1", "r": "blush0", "q": "stone5"}
+HARU_FACE_DIRECT = {"E": "night1", "B": "brown1", "e": "moon3", "L": "moon1", "m": "skin0", "n": "skin1", "r": "blush0", "q": "stone5"}
 HARU_EYES = {   # (左, 右)。やさしい目：目じりが下がり、黒目がちで、上のまぶたは丸い
-    # v0.19：黒目の大きい丸い目は「怖い」（ユーザーの指摘）。小さな黒目にまぶたをかぶせ、目じりを下げる
-    "normal": ([".EEE..", "EIIeE.", ".n...."], ["..EEE.", ".EeIIE", "....n."]),
+    # v0.19（ユーザーの指摘）：前の目は、つやを左右の目で反対に置いていたので黒目が内へ寄って見えた（斜視）。
+    # 形は前のまま、黒目を真ん中に、つやはどちらも左上（光の向き）。まわりを茶色（B）でぼかす（AA）
+    "normal": ([".BEB.", "BeEEB", ".BEB.", "n...."], [".BEB.", "BeEEB", ".BEB.", "....n"]),
     "smile": (["......", ".EEEE.", "E....E", "......"], ["......", ".EEEE.", "E....E", "......"]),     # 目を細めて笑う
     "teary": (["......", ".EEEE.", "E....E", "....L."], ["......", ".EEEE.", "E....E", ".L...."]),   # 笑いながら涙
 }

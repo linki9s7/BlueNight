@@ -7654,13 +7654,15 @@
   "colors": 14,
   "offPalette": [],
   "doubles": 0,
-  "banding": 1,
-  "bandingPixels": 3,
+  "banding": 6,
+  "bandingPixels": 18,
   "bandingColors": [
-   "#f2c9a8"
+   "#5a3a32",
+   "#f2c9a8",
+   "#d99a7c"
   ],
-  "floatingAA": 1,
-  "noisePercent": 0.9,
+  "floatingAA": 2,
+  "noisePercent": 1.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
   "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
@@ -7756,24 +7758,20 @@
   "colors": 15,
   "offPalette": [],
   "doubles": 0,
-  "banding": 7,
-  "bandingPixels": 34,
+  "banding": 8,
+  "bandingPixels": 37,
   "bandingColors": [
    "#d99a7c",
    "#a8665a",
    "#7a2340"
   ],
   "floatingAA": 0,
-  "noisePercent": 0.6,
+  "noisePercent": 0.5,
   "ditherPercent": 0.0,
   "lightWrong": {
    "red": [
     4.9,
     -9.3
-   ],
-   "tee": [
-    -2.2,
-    5.9
    ]
   },
   "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
@@ -7784,11 +7782,11 @@
   "colors": 14,
   "offPalette": [],
   "doubles": 0,
-  "banding": 4,
-  "bandingPixels": 21,
+  "banding": 5,
+  "bandingPixels": 24,
   "bandingColors": [
-   "#a8665a",
    "#d99a7c",
+   "#a8665a",
    "#7a2340"
   ],
   "floatingAA": 0,
@@ -7798,10 +7796,6 @@
    "red": [
     4.9,
     -9.3
-   ],
-   "tee": [
-    -2.2,
-    5.9
    ]
   },
   "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
