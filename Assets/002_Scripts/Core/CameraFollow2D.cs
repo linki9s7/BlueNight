@@ -5,9 +5,12 @@ namespace BlueNight.Core
     /// <summary>
     /// ターゲットをなめらかに追うカメラ。部屋の範囲（bounds）の外は映さない。
     /// 位置は 1 px 単位にそろえ、ドット絵がガタつかないようにする。
+    /// 演出では LookAt で別の場所を映し、LookBack でルリに戻す（カメラワーク）。
     /// </summary>
     public class CameraFollow2D : MonoBehaviour
     {
+        public static CameraFollow2D Instance { get; private set; }
+
         [SerializeField] Transform target;
         [SerializeField] Vector2 targetOffset = new Vector2(0f, 1f);
         [SerializeField] float smoothTime = 0.15f;
@@ -17,6 +20,34 @@ namespace BlueNight.Core
 
         Vector3 velocity;
         Vector3 unsnappedPosition;
+        bool looking;
+        Vector2 lookPoint;
+        float currentSmooth = -1f;
+
+        public bool IsLookingAway => looking;
+
+        /// <summary>演出：ターゲットの代わりに point を映す（smooth 秒くらいでゆっくり動く）。</summary>
+        public void LookAt(Vector2 point, float smooth)
+        {
+            looking = true;
+            lookPoint = point;
+            currentSmooth = smooth;
+        }
+
+        /// <summary>演出のあと：ターゲット（ルリ）に戻す。</summary>
+        public void LookBack(float smooth)
+        {
+            looking = false;
+            currentSmooth = smooth;
+        }
+
+        void Awake() => Instance = this;
+
+        void OnDestroy()
+        {
+            if (Instance == this)
+                Instance = null;
+        }
 
         public void Configure(Transform follow, Rect roomBounds)
         {
@@ -48,12 +79,18 @@ namespace BlueNight.Core
             if (target == null)
                 return;
 
-            unsnappedPosition = Vector3.SmoothDamp(unsnappedPosition, Clamp(Goal()), ref velocity, smoothTime);
+            Vector3 goal = Clamp(Goal());
+            unsnappedPosition = Vector3.SmoothDamp(unsnappedPosition, goal, ref velocity, currentSmooth > 0f ? currentSmooth : smoothTime);
             transform.position = Snap(unsnappedPosition);
+            // ルリに戻り終えたら、ふだんの追い方に戻す
+            if (!looking && currentSmooth > 0f && (goal - unsnappedPosition).sqrMagnitude < 0.0025f)
+                currentSmooth = -1f;
         }
 
         Vector3 Goal()
         {
+            if (looking)
+                return new Vector3(lookPoint.x, lookPoint.y, transform.position.z);
             Vector3 p = target.position;
             return new Vector3(p.x + targetOffset.x, p.y + targetOffset.y, transform.position.z);
         }

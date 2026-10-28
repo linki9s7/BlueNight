@@ -24,7 +24,7 @@ STYLE = Style("none", rim=True)
 MATS = {
     "H": Mat("hair2", "hair1", "hair3", group="Hh", d=2),
     "M": Mat("brown3", "brown2", "skin1", group="Mg", d=2),
-    "S": Mat("skin2", "skin1", group="SEeIrm"),
+    "S": Mat("skin2", "skin1", group="SEeIrmOW"),
     "P": Mat("pj2", "pj1", "pj3", group="P", d=2),
     "T": Mat("tee2", "tee1", "tee3", group="T", d=2),
     "D": Mat("scarf0", "night3", "scarf1", group="D"),
@@ -32,122 +32,128 @@ MATS = {
     "F": Mat("hair1", "hair0", "hair2"),
 }
 DIRECT = {"E": "hair0", "e": "moon3", "I": "iris1", "r": "blush0", "m": "brown1", "a": "skin2", "h": "hair3",
-          "L": "stone5", "Y": "warm5", "g": "skin2"}
+          "L": "stone5", "Y": "warm5", "g": "skin2", "O": "brown0", "W": "tee3"}
 W, H = 12, 22
 
 # ---------------------------------------------------------------- 8 歳のルリ
+# 8 歳らしく（ユーザーの指摘：大人っぽすぎる）：頭 13 行・胴 5 行・脚 2 行の、頭の大きい形。顔は下ぶくれで、目は低い位置。
 RURI_HEAD_DOWN = [
-    "............",
-    "..H..HH..H..",   # 猫の耳のような寝ぐせ
-    "..HHHHHHHH..",
-    ".HHhhHHHHHH.",
+    "..H......H..",   # 猫の耳のような寝ぐせ
+    "..HH.HH.HH..",
     ".HHHHHHHHHH.",
-    ".HHSHHHHSHH.",   # ぱっつんの前髪
-    ".HSEESSEESH.",
-    ".HSeISSeISH.",
-    ".HSrSSSSrSH.",
-    ".HHSSSSSSHH.",
-    "..HHSSSSHH..",   # おかっぱ（あごの高さ）
+    "HHhhHHHHHHHH",
+    "HHHHHHHHHHHH",
+    "HHHHHHHHHHHH",   # 目の上までの重たい前髪
+    "HHSSSSSSSSHH",
+    "HSEESSSSEESH",
+    "HSeISSSSeISH",
+    "HSIISSSSIISH",
+    "HHrSSmmSSrHH",
+    ".HSSSSSSSSH.",
+    "..HSSSSSSH..",   # おかっぱ（あごの高さ）
 ]
 RURI_BODY_DOWN = [
     "...PPPPPP...",
+    "..aPPPPPPS..",
+    "..aPPPPPPS..",
     "..PPPPPPPP..",
-    ".aPPPPPPPPS.",
-    ".aPPPPPPPPS.",
-    ".SPPPPPPPPS.",
-    "..PPPPPPPP..",
+    ".PPPPPPPPPP.",
 ]
 RURI_LEGS_STAND = [
-    "...SS..SS...",
     "...SS..SS...",
     "...FF..FF...",
     "............",
     "............",
 ]
 RURI_LEGS_SIT = [   # ベンチに座って足をぶらぶら（2 コマ）：ひざから下が前へ出て、足先が交互に揺れる
-    ["..SSS..SSS..", "...SS...SS..", "...FF...FF..", "............", "............"],
-    ["..SSS..SSS..", "..SS...SS...", "..FF...FF...", "............", "............"],
+    ["..SSS..SSS..", "...FF...FF..", "............", "............"],
+    ["..SSS..SSS..", "..FF...FF...", "............", "............"],
 ]
 RURI_HEAD_SIDE = [
-    "............",
-    "...H..HH....",
-    "...HHHHHH...",
-    "..HhhHHHHH..",
-    "..HHHHHHHHH.",
-    "..HHHHHHSSH.",
-    "..HHHHHSEES.",
-    "..HHHHHSeIS.",
-    "..HHHHHSrSS.",
-    "..HHHHHSSS..",
-    "...HHHHSS...",
+    "...H...H....",
+    "...HHHHH....",
+    "..HHHHHHHH..",
+    ".HhhHHHHHHH.",
+    ".HHHHHHHHHHH",
+    ".HHHHHHHHHHH",
+    ".HHHHHHHSSSH",
+    ".HHHHHHSEESS",
+    ".HHHHHHSeISS",
+    ".HHHHHHSIISS",
+    ".HHHHHHSrSmS",
+    ".HHHHHHSSSS.",
+    "..HHHHSSSS..",
 ]
 RURI_BODY_SIDE = [   # 走る：上体を少し前へ
     "....PPPP....",
     "...PPPPPP...",
-    "...PPPPPPP..",
     "...PPPPPPP..",
     "..PPPPPPPP..",
     "..PPPPPPPP..",
 ]
 
 # ---------------------------------------------------------------- 8 歳のミオ
+# ルリと別の顔つき（性格を出す）：おでこを出した前髪、まんまるの茶色の目（O）、歯を見せて笑う口（W）、頭の右上のポニーテール。
 MIO_HEAD_DOWN = [
-    "........MM..",   # ポニーテールの結び目（右上にのぞく）
-    "...MMMMMMM..",
-    "..MMggMMMMM.",
-    ".MMMMMMMMMM.",
-    ".MMMMMMMMMM.",
-    ".MSMMMMMMSM.",   # 横に流した前髪
-    ".MSEESSEESM.",
-    ".MSeISSeISM.",
-    ".MSrSSSSrSM.",
-    "..SSSmmSSS..",   # 笑っている口
-    "...SSSSSS...",
+    ".....M......",   # 頭のてっぺんのはね毛
+    "...MMMMMM.RM",   # ポニーテールの赤い髪ゴム（右上）
+    "..MMggMMMMMM",
+    ".MMMMMMMMMMM",
+    ".MMMMMMMMMMM",
+    ".MMMMSSSSSMM",   # 横に流した前髪（おでこが出る）
+    ".MMSSSSSSSSM",
+    ".MSOeSSSOeSM",
+    ".MSOOSSSOOSM",
+    ".MSrSSSSSrSM",
+    "..SSSmWWmSS.",   # 歯を見せて笑う
+    "..SSSSmmSSS.",
+    "...SSSSSSS..",
 ]
 MIO_BODY_DOWN = [
     "...TTTTTT...",
-    "..TTTTTTTT..",
-    ".aTTTTTTTTS.",
-    ".aTTTTTTTTL.",   # 右手（画面右）に懐中電灯
-    ".STTTTTTTTY.",
+    "..aTTTTTTL..",   # 右手（画面右）に懐中電灯
+    "..aTTTTTTY..",
+    "..DDDDDDDD..",
     "..DDDDDDDD..",
 ]
 MIO_LEGS_STAND = [
-    "...SS..SS...",
     "...SS..SS...",
     "...RR..RR...",
     "............",
     "............",
 ]
 MIO_HEAD_SIDE = [
-    "............",
+    "....M.......",
     "...MMMMMM...",
     "..MggMMMMM..",
     "MMMMMMMMMMM.",   # ポニーテールが後ろへなびく
-    ".MMMMMMMMSM.",
-    "MM.MMMMMSSS.",
-    "...MMMMSEES.",
-    "...MMMMSeIS.",
-    "...MMMMSrSS.",
-    "...MMMMSSmS.",
+    "MMMMMMMMSSM.",
+    "M..MMMMSSSS.",
+    "...MMMMSSSS.",
+    "...MMMSSOeS.",
+    "...MMMSSOOS.",
+    "...MMMSrSSS.",
+    "...MMMSSmWS.",
     "....MMSSSS..",
+    ".....SSSS...",
 ]
 MIO_BODY_SIDE = [
     "....TTTT....",
-    "...TTTTTT...",
-    "...TTTTTTTL.",   # 懐中電灯を前へ
-    "...TTTTTTTY.",
+    "...TTTTTTL..",   # 懐中電灯を前へ
+    "...TTTTTTY..",
     "..DDDDDDDD..",
     "..DDDDDDDD..",
 ]
 
-# 走る脚（横向き、5 行 × 4 コマ）。shoe は靴の記号
+
+# 走る脚（横向き、4 行 × 4 コマ）。shoe は靴の記号
 def run_legs(shoe):
+    s = shoe
     return [
-        ["...SS..SS...", "..SS....SS..", ".SS......S..", f".{shoe}........{shoe}.", "............"],
-        ["....SSSS....", "....S..S....", "...SS..S....", f"...{shoe}...{shoe}....", "............"],
-        ["...SS..SS...", "..S....SS...", "..S.....SS..", f"..{shoe}......{shoe}{shoe}.", "............"],
-        ["....SSSS....", "....S..S....", "....S..SS...", f"....{shoe}...{shoe}...", "............"],
+        ["...SS..SS...", "..SS....SS..", f".{s}{s}......{s}{s}.", "............"],
+        ["....SSSS....", "....S..S....", f"...{s}{s}..{s}{s}...", "............"],
+        ["...SS..SS...", "..S.....SS..", f"..{s}.......{s}{s}", "............"],
+        ["....SSSS....", "....S..SS...", f"....{s}...{s}{s}..", "............"],
     ]
 
 
@@ -217,48 +223,78 @@ def build(save):
 
 
 # ================================================================ 顔グラフィック（48x48、回想 1 の会話ウィンドウ）
-# 今のルリの顔（ruri.portrait）と同じ目・眉・口を使い、顔を少し丸く、髪を子どもの形にする。
+# 8 歳らしく（ユーザーの指摘：大人っぽすぎる）：頭を大きく丸く、顔は下ぶくれ、目は大きく低い位置、口と鼻は小さく、肩は細い。
+# ミオはルリと別の顔つきに（性格を出す）：ルリ＝おかっぱの前髪が目の上まで・下を向きがちな青い目・小さな口（人見知り）。
+# ミオ＝高いポニーテール・おでこを出した前髪・太い眉・まんまるで光の多い茶色の目・歯を見せて笑う・ほおのばんそうこう（元気で先に話しかける）。
+KID_FACE_DIRECT = {"E": "hair0", "e": "moon3", "r": "blush0", "m": "skin0", "n": "skin1", "W": "tee3", "d": "red1",
+                   "q": "hair1"}
+KID_EYES = {
+    # ルリ：上のふちが濃く、下は開いた大きな目。瞳は上が濃く下が明るい（今のルリと同じ色の付け方）
+    ("ruri", "normal"): [".EEEEE.", "EEeeiiE", "EeeiiIE", ".iiIII.", ".iIIoI.", ".iIooI.", "..III.."],
+    ("ruri", "sad"): ["......", ".......", "..EEEE.", ".EeiiE.", ".iiIII.", ".iIooI.", "..III.."],   # 伏し目
+    # ミオ：ふちで丸く囲んだ、まんまるの目。つやが 2 つ（きらきら）
+    ("mio", "normal"): [".EEEE.", "EeeIIE", "EeIIIE", "EIIIeE", "EIIIIE", ".EEEE."],
+    ("mio", "smile"): ["......", "......", ".EEEE.", "E....E", "......", "......"],              # にっこり目を閉じる
+}
+KID_MOUTHS = {
+    ("ruri", "normal"): [".mm."],
+    ("ruri", "sad"): [".mm.", "m..m"],
+    ("mio", "normal"): ["mmmmmm", "mWWWWm", ".mddm.", "..mm.."],      # 歯を見せて笑う
+    ("mio", "smile"): ["mmmmmm", "mWWWWm", ".mddm.", "..mm.."],
+}
+KID_SHOULDERS = [(8, 47), (12, 44), (18, 42), (30, 42), (36, 44), (40, 47)]
+
+
 def portrait(who="mio", expression="normal"):
     """who：mio（明るい茶色のポニーテール・白い T シャツ）／ruri（おかっぱ・猫の耳のような寝ぐせ・淡い青のワンピース）。"""
-    import ruri
     from chara import Canvas
     c = Canvas(48, 48)
     if who == "mio":
-        c.poly([(33, 12), (40, 16), (42, 30), (38, 40), (35, 30), (33, 20)], "M")   # ポニーテール（向かって右、頭のうしろ）
-        c.poly(ruri.SHOULDERS, "T")
-        c.rect((20, 30, 27, 38), "S")
-        c.ellipse((17, 34, 30, 40), "S", only="T")                                   # 丸首
-        c.ellipse((11, 5, 37, 33), "M")
-        c.ellipse((13, 11, 35, 37), "S")
-        c.poly([(11, 8), (37, 8), (37, 14), (28, 16), (20, 19), (13, 21), (11, 18)], "M", only="S.M")  # 斜めに流した前髪
-        c.line([(14, 12), (19, 9), (25, 8)], "g", only="M")                          # 髪のつや
-        c.rect((33, 13, 34, 14), "R")                                                # 赤い髪ゴム
-        c.rect((12, 18, 13, 30), "M")
-        c.rect((35, 18, 36, 28), "M")
-        mats = dict(ruri.FACE_MATS, M=MATS["M"], T=Mat("tee2", "tee1", "tee3", group="T", d=3), R=MATS["R"])
-        direct = dict(ruri.FACE_DIRECT, i="brown1", I="brown0", o="brown2", g="skin2", q="brown1")
+        c.poly([(30, 7), (37, 3), (43, 7), (45, 16), (43, 26), (40, 20), (37, 13)], "M")   # 高いポニーテール（頭の右上から下がる）
+        c.poly(KID_SHOULDERS, "T")
+        c.rect((20, 39, 27, 43), "S")
+        c.ellipse((7, 4, 41, 38), "M")
+        c.ellipse((10, 12, 38, 44), "S")
+        # 前髪：おでこを出して横へ流す（向かって左が長い）
+        c.poly([(8, 9), (40, 9), (40, 14), (31, 13), (23, 15), (15, 19), (10, 23), (8, 19)], "M", only="S.M")
+        c.poly([(21, 1), (24, 0), (26, 4), (23, 5)], "M", only=".")               # 頭のてっぺんのはね毛
+        c.line([(12, 12), (17, 8), (24, 7)], "g", only="M")                      # 髪のつや
+        c.rect((35, 5, 37, 7), "R")                                              # 赤い髪ゴム
+        c.rect((8, 20, 10, 32), "M")
+        c.rect((38, 20, 40, 30), "M")
+        c.stamp(["qqqq", "q..."], 14, 21)                                        # 太い眉
+        c.stamp(["qqqq", "...q"], 29, 21)
+        c.stamp(KID_EYES[("mio", expression)], 14, 24)
+        c.stamp(KID_EYES[("mio", expression)], 28, 24)
+        c.stamp(["rrr"], 11, 32)
+        c.stamp(["WWWW", "WnWW"], 32, 31)                                        # ほおのばんそうこう
+        c.stamp(["n"], 24, 31)
+        c.stamp(KID_MOUTHS[("mio", expression)], 21, 34)
+        mats = {"M": MATS["M"], "S": Mat("skin2", "skin1", group="SEemnrWdq", d=2),
+                "T": Mat("tee2", "tee1", "tee3", group="T", d=3), "R": MATS["R"]}
+        direct = dict(KID_FACE_DIRECT, i="brown1", I="brown0", o="brown2", g="skin2", q="brown0")
     else:
-        c.poly(ruri.SHOULDERS, "P")
-        c.rect((20, 30, 27, 38), "S")
-        c.ellipse((16, 34, 31, 40), "S", only="P")
-        c.ellipse((10, 4, 38, 33), "H")
-        c.rect((10, 16, 38, 34), "H", only=".")                                     # おかっぱ（あごの下で切りそろえる）
-        c.ellipse((13, 11, 35, 37), "S")
-        c.rect((12, 7, 36, 19), "H", only="S.H")                                     # ぱっつん前髪
-        c.poly([(12, 9), (14, 2), (18, 6)], "H", only=".")                           # 猫の耳のような寝ぐせ（このころから）
-        c.poly([(30, 6), (34, 2), (36, 9)], "H", only=".")
-        c.line([(13, 12), (17, 9), (23, 8)], "h", only="H")
-        mats = ruri.FACE_MATS
-        direct = ruri.FACE_DIRECT
-    left_brow, right_brow, by = ruri.BROWS[expression]
-    c.stamp(left_brow, 16, by)
-    c.stamp(right_brow, 27, by)
-    eyes = ruri.EYES[expression]
-    left, right = eyes if isinstance(eyes, tuple) else (eyes, eyes)
-    c.stamp(left, 16, 23)
-    c.stamp(right, 26, 23)
-    c.stamp(["rr"], 15, 31)
-    c.stamp(["rr"], 31, 31)
-    mouth = ruri.MOUTHS[expression]
-    c.stamp(mouth, 24 - len(mouth[0]) // 2, 33)
+        c.poly(KID_SHOULDERS, "P")
+        c.ellipse((16, 40, 32, 47), "l")                                         # 丸い白い襟
+        c.rect((21, 39, 26, 42), "S")
+        c.ellipse((6, 3, 42, 40), "H")
+        c.rect((6, 20, 42, 40), "H", only=".")                                  # おかっぱ（あごの下で切りそろえる）
+        c.ellipse((10, 13, 38, 44), "S")
+        c.rect((7, 22, 11, 40), "H")                                             # 顔の横の髪
+        c.rect((37, 22, 41, 40), "H")
+        c.rect((9, 7, 39, 22), "H", only="S.H")                                  # 目の上までの重たい前髪
+        for x in (18, 29):                                                       # 毛先のすき間
+            c.line([(x, 21), (x, 22)], "S", only="H")
+        c.poly([(9, 9), (11, 0), (16, 5)], "H", only=".")                        # 猫の耳のような寝ぐせ（このころから）
+        c.poly([(32, 5), (37, 0), (39, 9)], "H", only=".")
+        c.line([(11, 11), (16, 7), (23, 6)], "h", only="H")
+        c.stamp(KID_EYES[("ruri", expression)], 13, 24)
+        c.stamp(KID_EYES[("ruri", expression)], 28, 24)
+        c.stamp(["rrr"], 11, 33)
+        c.stamp(["rrr"], 34, 33)
+        c.stamp(["n"], 24, 32)
+        c.stamp(KID_MOUTHS[("ruri", expression)], 22, 35)
+        mats = {"H": Mat("hair2", "hair1", "hair3", group="Hh", d=2), "S": Mat("skin2", "skin1", group="SEeiIomnr", d=2),
+                "P": Mat("pj2", "pj1", "pj3", group="P", d=3), "l": Mat("tee3", "tee2", group="l", d=2)}
+        direct = dict(KID_FACE_DIRECT, i="iris0", I="iris1", o="iris2", h="hair3")
     return render(c.rows(), mats, direct, STYLE)

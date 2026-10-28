@@ -49,6 +49,9 @@ namespace BlueNight.Story
 
             foreach (var step in steps)
                 yield return RunStep(step);
+            // カメラを別の場所に向けたまま終わらないように
+            if (CameraFollow2D.Instance != null && CameraFollow2D.Instance.IsLookingAway)
+                CameraFollow2D.Instance.LookBack(0.6f);
 
             if (player != null)
             {
@@ -152,6 +155,21 @@ namespace BlueNight.Story
                     MemoryEffect.Instance?.FadeTo(step.volume, step.seconds);
                     break;
 
+                case CutsceneStep.Kind.Camera:
+                    if (CameraFollow2D.Instance != null)
+                    {
+                        if (step.volume > 0f)
+                            CameraFollow2D.Instance.LookAt(step.position, step.seconds);
+                        else
+                            CameraFollow2D.Instance.LookBack(step.seconds);
+                    }
+                    break;
+
+                case CutsceneStep.Kind.Alpha:
+                    if (step.actor != null && step.actor.TryGetComponent<SpriteRenderer>(out var sprite))
+                        StartCoroutine(FadeSprite(sprite, step.volume, step.seconds));
+                    break;
+
                 case CutsceneStep.Kind.PlayerVisible:
                     if (player != null)
                     {
@@ -163,6 +181,21 @@ namespace BlueNight.Story
                     }
                     break;
             }
+        }
+
+        static IEnumerator FadeSprite(SpriteRenderer sprite, float alpha, float seconds)
+        {
+            float from = sprite.color.a;
+            for (float t = 0f; t < seconds; t += Time.deltaTime)
+            {
+                var c = sprite.color;
+                c.a = Mathf.Lerp(from, alpha, t / seconds);
+                sprite.color = c;
+                yield return null;
+            }
+            var end = sprite.color;
+            end.a = alpha;
+            sprite.color = end;
         }
 
         IEnumerator Walk(CutsceneStep step)

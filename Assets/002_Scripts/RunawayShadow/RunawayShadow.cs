@@ -16,7 +16,7 @@ namespace BlueNight.Shadows
     [RequireComponent(typeof(SpriteRenderer))]
     public class RunawayShadow : MonoBehaviour
     {
-        enum State { Fleeing, Speaking, Following, Returning, Gone }
+        enum State { Fleeing, Speaking, Following, Returning, Escaping, Gone }
 
         [SerializeField] Transform player;
         [SerializeField] Transform owner;
@@ -126,6 +126,7 @@ namespace BlueNight.Shadows
                 case State.Fleeing: UpdateFleeing(); break;
                 case State.Following: UpdateFollowing(); break;
                 case State.Returning: UpdateReturning(); break;
+                case State.Escaping: UpdateEscaping(); break;
             }
         }
 
@@ -247,12 +248,14 @@ namespace BlueNight.Shadows
         Vector3 escapeDirection = Vector3.up;
 
         /// <summary>
-        /// 触れたのに逃げられる：びくっとして、会話のあと近くの低い塀を越えて消える
+        /// 触れたのに逃げられる：びくっとして、近くの低い塀を越えて消え、そのあとで会話（「惜しい！」）
         /// （低い塀の上は暗いので、影は越えられる。高い壁は越えられない）。
+        /// 会話を先にすると、逃げる前に逃げた理由を聞くことになる（ユーザーの指摘）。
         /// </summary>
         void Escape()
         {
-            state = State.Speaking;
+            state = State.Escaping;
+            escapeTime = 0f;
             PlayOnce(surprised);
             Escaped?.Invoke();
             owner = null;
@@ -269,6 +272,24 @@ namespace BlueNight.Shadows
                     }
                 }
             }
+        }
+
+        float escapeTime;
+        const float EscapeStartle = 0.45f;   // びくっとしてから逃げ出すまで
+
+        void UpdateEscaping()
+        {
+            escapeTime += Time.deltaTime;
+            if (escapeTime < EscapeStartle)
+                return;
+            transform.position += escapeDirection * (2.8f * Time.deltaTime);
+            var c = spriteRenderer.color;
+            c.a = Mathf.MoveTowards(c.a, 0f, Time.deltaTime * 0.9f);
+            spriteRenderer.color = c;
+            if (c.a > 0f)
+                return;
+            state = State.Gone;
+            spriteRenderer.enabled = false;
             if (DialogueRunner.Instance != null)
                 DialogueRunner.Instance.Play(captureLines, AfterEscape);
             else
@@ -277,8 +298,8 @@ namespace BlueNight.Shadows
 
         void AfterEscape()
         {
-            state = State.Returning;
             GameFlags.Set(capturedFlag);
+            gameObject.SetActive(false);
         }
 
         void UpdateFollowing()

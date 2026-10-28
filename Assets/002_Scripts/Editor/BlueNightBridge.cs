@@ -158,6 +158,12 @@ namespace BlueNight.EditorTools
                     return Invoke(r.arg);
                 case "state":
                     return State();
+                case "flag":
+                    // arg = 「フラグ,フラグ,…」。再生中に物語のフラグを立てる（途中の場面を確かめるため）
+                    foreach (var f in (r.arg ?? "").Split(','))
+                        if (!string.IsNullOrWhiteSpace(f))
+                            BlueNight.Core.GameFlags.Set(f.Trim());
+                    return "flags set";
                 case "next":
                     return AdvanceDialogue(1);
                 case "say":

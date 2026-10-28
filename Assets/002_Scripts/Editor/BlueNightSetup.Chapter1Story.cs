@@ -31,6 +31,7 @@ namespace BlueNight.EditorTools
             public const string Changing = "pro_changing";       // たんすを調べた（着がえの暗転が始まる）
             public const string Dressed = "pro_dressed";         // パジャマからワンピースに着がえた
             public const string Scarf = "pro_scarf";             // マフラーを巻いた（玄関から出られる）
+            public const string ScarfSaid = "pro_scarf_said";    // マフラーを巻いて「……暑い」と言った
             public const string NoShadow = "pro_no_shadow";      // 街灯の下で影が無いことに気づいた（序章の終わり）
             public const string BenchMemory = "c1_bench_memory";
             public const string LanternTouched = "c1_lantern_touched";
@@ -138,11 +139,11 @@ namespace BlueNight.EditorTools
         }
 
         static void React(GameObject root, string flag, GameObject[] show = null, GameObject[] hide = null,
-            SimpleSpriteAnimator animator = null, Sprite[] frames = null, float fps = 1f)
+            SimpleSpriteAnimator animator = null, Sprite[] frames = null, float fps = 1f, string unless = null)
         {
             var go = new GameObject($"On {flag}");
             go.transform.SetParent(root.transform, false);
-            go.AddComponent<FlagReaction>().Configure(flag, show, hide, animator, frames, fps);
+            go.AddComponent<FlagReaction>().Configure(flag, show, hide, animator, frames, fps, unless);
         }
 
         static CutsceneStep Say(params DialogueLine[] lines) => CutsceneStep.Say(lines);
@@ -232,9 +233,16 @@ namespace BlueNight.EditorTools
             var chairPlain = roomGo.transform.Find("Furniture/Chair").gameObject;
             chairPlain.SetActive(false);
             Inspect(roomGo, "Chair (blue scarf)", At(room, 16, 3, 0f, 0f),
-                When(Flags.Dressed, Flags.Scarf, Flags.Scarf, N("椅子にかけた青いマフラー"), Ru("……暑い")),
+                When(Flags.Dressed, Flags.Scarf, Flags.Scarf, N("椅子にかけた青いマフラー")),
                 When(null, Flags.Dressed, null, N("椅子にかけた青いマフラー"), Ru("……先に着がえよう")));
             React(story, Flags.Scarf, show: new[] { chairPlain }, hide: new[] { chairScarf });
+            // マフラーを巻いてから「……暑い」（ユーザーの指摘：言うときにはもう巻いている。絵と顔はフラグで替わる）
+            Scene(story, "マフラーを巻く", Flags.ScarfSaid, CutsceneTrigger.When.Flag, watch: Flags.Scarf, steps: new[]
+            {
+                CutsceneStep.FaceTo(Facing.Down),
+                CutsceneStep.WaitFor(0.5f),
+                Say(Ru("……暑い")),
+            });
 
             // 外。坂の上の街灯の下で、足元に影が無いことに気づく（何も言わない）
             var lamp = Chapter1Maps.Create(home).Find('L').OrderBy(c => c.X).First();
@@ -358,6 +366,11 @@ namespace BlueNight.EditorTools
             var roofShadow = CreateLoop(streetGo, "Ruri's Shadow (roof)", "Characters/Shadows/shadow_ruri_idle_down_",
                 At(street, r.X, r.Y, 0f, 0.8f), unlit, 4f);
             roofShadow.SetActive(false);
+            // 影を捕まえて戻ってくると、屋根の上にルリの影がうっすら見えている（ハルと話している間も。ユーザーの希望）。
+            // ネムが気づいたところで、はっきり見えるようになる
+            const float RoofShadowFaint = 0.3f;
+            roofShadow.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, RoofShadowFaint);
+            React(story, Flags.Captured, show: new[] { roofShadow }, unless: Flags.Done);
 
             Scene(story, "届ける・屋根の上・章の終わり", Flags.Done, CutsceneTrigger.When.Flag, watch: Flags.Delivered, steps: new[]
             {
@@ -376,6 +389,7 @@ namespace BlueNight.EditorTools
                 Say(Ne("……ねえ、ルリ。屋根の上", "surprised")),
                 CutsceneStep.FaceTo(Facing.Up),
                 CutsceneStep.ShowActor(roofShadow.transform),
+                CutsceneStep.AlphaTo(roofShadow.transform, 1f, 1f),
                 CutsceneStep.Sfx("shadow_presence"),
                 CutsceneStep.WaitFor(1.2f),
                 Say(Ru("……わたしの、影", "surprised"), L("ルリの影", "やっと気づいた")),
@@ -621,14 +635,27 @@ namespace BlueNight.EditorTools
                 At(street, mouth.X, mouth.Y - 1, 0.5f, -0.2f), unlit, 3f);
             hint.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.75f);
             hint.SetActive(false);
-            React(story, Flags.Alley1Escaped, show: new[] { hint });
+            const string SawHint = "c1_saw_hint";
+            React(story, SawHint, show: new[] { hint });
             React(story, Flags.Alley2Intro, hide: new[] { hint });
-            Scene(story, "左の路地の気配", "c1_saw_hint", CutsceneTrigger.When.AreaEnter, area: street,
+            // 路地から戻ると、カメラが左の路地を映し、影がその奥へ逃げ込むのが見える（ユーザーの希望）。それからルリに戻る
+            Vector2 hintAt = hint.transform.position;
+            Vector2 hintFrom = At(street, mouth.X + 5, mouth.Y - 3, 0.5f, 0f);
+            Vector2 look = At(street, mouth.X + 2, mouth.Y - 3, 0f, 0f);
+            Scene(story, "左の路地の気配", SawHint, CutsceneTrigger.When.AreaEnter, area: street,
                 required: Flags.Alley1Escaped, blocked: Flags.Alley2Intro, steps: new[]
                 {
                     CutsceneStep.WaitFor(0.5f),
+                    CutsceneStep.WalkTo(hintFrom, 999f, hint.transform),   // 歩道の上から逃げ込ませる（その場所へすぐ置く）
+                    CutsceneStep.CameraTo(look, 0.7f),
+                    CutsceneStep.WaitFor(1.6f),
+                    CutsceneStep.ShowActor(hint.transform),
                     CutsceneStep.Sfx("shadow_presence"),
+                    CutsceneStep.WalkTo(hintAt, 3f, hint.transform),
+                    CutsceneStep.WaitFor(0.4f),
                     Say(Ne("あっ……あそこ、左の路地", "surprised")),
+                    CutsceneStep.CameraBack(0.7f),
+                    CutsceneStep.WaitFor(1.2f),
                 });
 
             // 路地その 2：輪の路地。ネムのヒント（3 段階）

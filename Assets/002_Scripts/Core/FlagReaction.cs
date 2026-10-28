@@ -11,15 +11,18 @@ namespace BlueNight.Core
     public class FlagReaction : MonoBehaviour
     {
         [SerializeField] string flag;
+        [SerializeField, Tooltip("このフラグが立っていたら何もしない（空なら条件なし）")] string unlessFlag;
         [SerializeField] GameObject[] activate = Array.Empty<GameObject>();
         [SerializeField] GameObject[] deactivate = Array.Empty<GameObject>();
         [SerializeField] SimpleSpriteAnimator animator;
         [SerializeField] Sprite[] newFrames = Array.Empty<Sprite>();
         [SerializeField] float newFps = 1f;
 
-        public void Configure(string flagName, GameObject[] show, GameObject[] hide, SimpleSpriteAnimator target, Sprite[] frames, float fps)
+        public void Configure(string flagName, GameObject[] show, GameObject[] hide, SimpleSpriteAnimator target, Sprite[] frames, float fps,
+            string unless = null)
         {
             flag = flagName;
+            unlessFlag = unless;
             activate = show ?? Array.Empty<GameObject>();
             deactivate = hide ?? Array.Empty<GameObject>();
             animator = target;
@@ -47,6 +50,8 @@ namespace BlueNight.Core
 
         void Apply()
         {
+            if (!string.IsNullOrEmpty(unlessFlag) && GameFlags.Has(unlessFlag))
+                return;
             foreach (var go in activate)
                 if (go != null) go.SetActive(true);
             foreach (var go in deactivate)

@@ -5,7 +5,10 @@
 
 - ハル（82）：白髪のおだんご、やさしい目、ほおの赤み。ばら色のカーディガン（夫の正二が「似合う」と言った色）、
   灰色の長いスカート、杖。居眠りは、店先の腰かけでひざの上に手を組む。
-- 青柳（78）：はげ頭に白い横髪、丸めがね（月明かりが映る）、白い口ひげ、白いシャツに革の前かけ。
+  v0.19（ユーザーの指摘「優しそうな人に」）：いつも口もとが笑っている。目じりの下がった目、ハの字のやわらかい眉、丸いほお。
+- 青柳（78）：v0.19（ユーザーの指摘「職人肌のイケオジに」）：後ろへなでつけた銀髪、きれいに整えた白いあごひげ、太い眉、
+  深い目もと、通った鼻。細いふちの丸めがね（月明かりが映る）。藍のシャツのそでをまくり、太い腕。革の前かけのポケットにドライバー。
+  背すじがのびて肩幅が広い。
 - ゴマ：炭色の猫（ごまのような黒）。胸と足先が白い。夜に光る目。商店街の暗がりで、灰色の歩道と見分けやすい濃さ。
 """
 
@@ -19,13 +22,13 @@ STYLE = Style("none", rim=True)
 HARU_MATS = {
     "J": Mat("stone7", "stone5", "tee3", group="J"),
     "H": Mat("stone7", "stone5", "tee3", d=2),
-    "S": Mat("skin2", "skin1", group="SErm"),
+    "S": Mat("skin2", "skin1", group="SErmq"),
     "C": Mat("rose2", "rose1", "rose3", d=2),
     "K": Mat("stone3", "stone2", "stone4", d=2),
     "F": Mat("brown1", "brown0", "brown2"),
     "b": Mat("brown2", "brown1", "brown3"),
 }
-HARU_DIRECT = {"a": "skin2", "E": "night1", "r": "blush0", "m": "skin0", "T": "brown1"}
+HARU_DIRECT = {"a": "skin2", "E": "night1", "r": "blush0", "m": "skin0", "T": "brown1", "q": "stone5"}
 
 HARU = [
     "................",
@@ -35,11 +38,11 @@ HARU = [
     "....HHHHHHHH....",
     "...HHHHHHHHHH...",
     "...HHSSSSSSHH...",
-    "...HSSSSSSSSH...",
+    "...HqSSSSSSqH...",   # ハの字のやわらかい眉
     "...HSESSSSESH...",
-    "...HrSSSSSSrH...",
-    "....SSSmmSSS....",
-    ".....SSSSSS.....",
+    "...HrSSSSSSrH...",   # 丸いほお
+    "....SmSSSSmS....",   # いつも笑っている口もと
+    ".....SSmmSS.....",
     "....CCCSSCCC....",
     "...CCCCCCCCCC...",
     "..CCCCCCCCCCCC..",
@@ -69,11 +72,11 @@ HARU_DOZE = [
     "....HHHHHHHH....",
     "...HHHHHHHHHH...",
     "...HHSSSSSSHH...",
-    "...HSSSSSSSSH...",
+    "...HqSSSSSSqH...",
     "...HSEESSEESH...",   # 目を閉じる
     "...HrSSSSSSrH...",
-    "....SSSmmSSS....",
-    ".....SSSSSS.....",
+    "....SmSSSSmS....",   # 眠っていても口もとは笑っている
+    ".....SSmmSS.....",
     "....CCCSSCCC....",
     "...CCCCCCCCCC...",
     "..CCaaCCCCSSCC..",   # ひざの上で手を組む
@@ -104,40 +107,40 @@ def haru_sit_frames():
 
 
 # ================================================================ 青柳（ランプ屋の主人）
-# 記号：S 肌  g はげ頭のつや  H 白い横髪  L めがね（月明かりの照り返し）  W 口ひげ  C シャツ  A 革の前かけ
-#       P ズボン  F 靴  a 光の側の手
+# 記号：S 肌  H 銀髪  h 髪のつや  b 太い眉  E 目  L 丸めがね（月明かりの照り返し）  B あごひげ  W 口ひげ  m 口
+#       C 藍のシャツ（そでをまくる）  A 革の前かけ  y ポケットのドライバー  P ズボン  F 靴  a 光の側の腕
 AOYAGI_MATS = {
-    "S": Mat("skin2", "skin1", group="SgLW"),
-    "H": Mat("stone7", "stone5", "tee3", d=1),
-    "W": Mat("stone7", "stone5", group="W"),
-    "C": Mat("coat2", "coat1", "tee3", group="C", d=1),
-    "A": Mat("brown2", "brown1", "brown3", d=2),
+    "S": Mat("skin2", "skin1", group="SEbLm"),
+    "H": Mat("stone6", "stone4", "stone7", group="Hh", d=1),
+    "B": Mat("stone7", "stone5", "tee3", group="BW", d=1),
+    "C": Mat("night5", "night4", "stone5", group="C", d=1),
+    "A": Mat("brown2", "brown1", "brown3", group="Ay", d=2),
     "P": Mat("stone3", "stone2", "stone4"),
-    "F": Mat("night3", "night2", "night5"),
+    "F": Mat("brown1", "brown0", "brown2"),
 }
-AOYAGI_DIRECT = {"g": "tee3", "L": "moon1", "a": "skin2"}
+AOYAGI_DIRECT = {"h": "tee3", "b": "stone5", "E": "night1", "L": "moon1", "W": "stone7", "m": "skin0", "y": "warm4", "a": "skin2"}
 
 AOYAGI = [
     "................",
-    "................",
-    ".....SSSSSS.....",
-    "....SggSSSSS....",
+    ".....HHHHHH.....",   # 後ろへなでつけた銀髪
+    "....HhhHHHHH....",
+    "...HHHHHHHHHH...",
     "...HSSSSSSSSH...",
-    "...HSSSSSSSSH...",
-    "...HLLSSSSLLH...",
-    "...HSSSSSSSSH...",
-    "...HSWWWWWWSH...",
+    "...HbbbSSbbbH...",   # 太い眉
+    "...HLESSSSLEH...",   # 丸めがね（左上が光る）と、深い目もと
     "....SSSSSSSS....",
-    ".....SSSSSS.....",
-    "....CCCSSCCC....",
-    "...CCCAAAACCC...",
+    "....BSWWWWSB....",   # 口ひげと、整えたあごひげ
+    "....BBSmmSBB....",
+    ".....BBBBBB.....",
+    "......SSSS......",
+    "...CCCCSSCCCC...",   # 肩幅が広い。藍のシャツ
+    "..CCCCAAAACCCC..",
     "..CCCAAAAAACCC..",
     "..CCAAAAAAAACC..",
-    "..CCAAAAAAAACC..",
-    "..aCAAAAAAAACS..",
+    "..CCAAAAAyAACC..",   # 前かけのポケットにドライバー
+    "..aSAAAAAAyASS..",   # まくったそでから、太い腕
+    "..aSAAAAAAAASS..",
     "..a.AAAAAAAA.S..",
-    "....AAAAAAAA....",
-    "....AAAAAAAA....",
     "....AAAAAAAA....",
     "....AAAAAAAA....",
     "....PPPPPPPP....",
@@ -203,17 +206,17 @@ HARU_FACE_MATS = {
     "w": Mat("tee3", "tee2", group="w", d=2),
 }
 HARU_FACE_DIRECT = {"E": "night1", "e": "moon3", "L": "moon1", "m": "skin0", "n": "skin1", "r": "blush0", "q": "stone5"}
-HARU_EYES = {   # (左, 右)。やさしい目：まぶたが少し下りている
-    "normal": (["EEEE", ".EeE", "..E."], ["EEEE", ".EeE", "..E."]),
-    "smile": (["....", ".EE.", "E..E"], ["....", ".EE.", "E..E"]),      # 目を細めて笑う
-    "teary": (["....", ".EE.", "E..E", "...L"], ["....", ".EE.", "E..E", "L..."]),   # 笑いながら涙
+HARU_EYES = {   # (左, 右)。やさしい目：目じりが下がり、黒目がちで、上のまぶたは丸い
+    "normal": ([".EEE.", "EeEEE", ".EEE.", "....n"], [".EEE.", "EEEeE", ".EEE.", "n...."]),
+    "smile": (["......", ".EEEE.", "E....E", "......"], ["......", ".EEEE.", "E....E", "......"]),     # 目を細めて笑う
+    "teary": (["......", ".EEEE.", "E....E", "....L."], ["......", ".EEEE.", "E....E", ".L...."]),   # 笑いながら涙
 }
-HARU_BROWS = {
-    "normal": (["qqq."], [".qqq"]),
-    "smile": ([".qq.", "q..q"], [".qq.", "q..q"]),
-    "teary": (["..qq", "qq.."], ["qq..", "..qq"]),     # 眉間が上がる
+HARU_BROWS = {   # ハの字（目じり側が下がる）のやわらかい眉
+    "normal": (["..qq", "qq.."], ["qq..", "..qq"]),
+    "smile": (["..qq", "qq.."], ["qq..", "..qq"]),
+    "teary": (["...qq", "qqq.."], ["qq...", "..qqq"]),
 }
-HARU_MOUTHS = {"normal": [".mm."], "smile": ["m..m", ".mm."], "teary": ["m..m", ".mm."]}
+HARU_MOUTHS = {"normal": ["m....m", ".mmmm."], "smile": ["m....m", ".mmmm.", "..nn.."], "teary": ["m....m", ".mmmm."]}
 
 
 def haru_portrait(expression):
@@ -223,7 +226,7 @@ def haru_portrait(expression):
     c.rect((20, 30, 27, 38), "S")
     c.ellipse((10, 5, 37, 31), "H")                          # 白髪
     c.ellipse((18, 0, 29, 10), "J")                          # おだんご（別の部品として重ねる）
-    c.ellipse((13, 11, 34, 37), "S")
+    c.ellipse((12, 11, 35, 38), "S")                         # 丸い顔
     c.poly([(12, 17), (16, 10), (24, 8), (32, 10), (35, 17), (30, 13), (24, 12), (17, 13)], "H")   # 生え際
     c.poly([(12, 15), (15, 15), (15, 25), (12, 22)], "H")    # こめかみの髪
     c.poly([(32, 15), (35, 15), (35, 22), (32, 25)], "H")
@@ -231,57 +234,67 @@ def haru_portrait(expression):
     c.stamp(left_brow, 17, 18)
     c.stamp(right_brow, 27, 18)
     left, right = HARU_EYES[expression]
-    c.stamp(left, 17, 21)
+    c.stamp(left, 16, 21)
     c.stamp(right, 27, 21)
     c.stamp(["..n", ".nn"], 22, 25)                          # 鼻
-    c.stamp(["rr"], 15, 27)
-    c.stamp(["rr"], 31, 27)
-    c.stamp(["n"], 16, 30)                                   # 笑いじわ
-    c.stamp(["n"], 31, 30)
+    c.stamp(["rrr", ".rr"], 14, 27)                          # 丸いほお
+    c.stamp(["rrr", "rr."], 31, 27)
+    c.stamp(["n."], 17, 31)                                  # 笑いじわ
+    c.stamp([".n"], 29, 31)
     mouth = HARU_MOUTHS[expression]
     c.stamp(mouth, 24 - len(mouth[0]) // 2, 30)
     return render(c.rows(), HARU_FACE_MATS, HARU_FACE_DIRECT, STYLE)
 
 
 AOYAGI_FACE_MATS = {
-    "S": Mat("skin2", "skin1", group="SgGLqEmn", d=3),
-    "H": Mat("stone7", "stone5", "tee3", d=2),
-    "W": Mat("stone7", "stone5", "tee3", group="W", d=2),
-    "A": Mat("brown2", "brown1", "brown3", d=3),
-    "C": Mat("coat2", "coat1", "tee3", group="C", d=2),
+    "S": Mat("skin2", "skin1", group="SGLqEemnb", d=3),
+    "H": Mat("stone6", "stone4", "stone7", group="Hh", d=2),
+    "B": Mat("stone7", "stone5", "tee3", group="BW", d=2),
+    "A": Mat("brown2", "brown1", "brown3", group="A", d=3),
+    "C": Mat("night5", "night4", "stone5", group="C", d=2),
 }
-AOYAGI_FACE_DIRECT = {"g": "tee3", "G": "night1", "L": "moon2", "q": "skin2", "E": "night1", "m": "skin0", "n": "skin1",
-                      "B": "stone7"}
-GLASSES = {   # 丸めがね（G ふち・L 月明かりの照り返し・q レンズ越しの肌・E 目）
+AOYAGI_FACE_DIRECT = {"G": "night1", "L": "moon2", "q": "skin2", "E": "night1", "e": "moon3", "m": "skin0", "n": "skin1",
+                      "b": "stone5", "h": "tee3", "W": "stone7"}
+GLASSES = {   # 細いふちの小さな丸めがね（G ふち・L 月明かりの照り返し・q レンズ越しの肌・E 目、e 目のつや）。目は細く鋭い
     "normal": [
-        ".GGGGGG...GGGGGG.",
-        "GLLqqqqGGGLLqqqqG",
-        "GLqqEqqG.GLqqEqqG",
-        "GqqqEqqG.GqqqEqqG",
-        ".GGGGGG...GGGGGG.",
+        ".GGGG.....GGGG.",
+        "GLqqqG...GLqqqG",
+        "GEEEeGGGGGEEEeG",
+        ".GGGG.....GGGG.",
     ],
     "smile": [
-        ".GGGGGG...GGGGGG.",
-        "GLLqqqqGGGLLqqqqG",
-        "GLqEEEqG.GLqEEEqG",
-        "GqEqqqEG.GqEqqqEG",
-        ".GGGGGG...GGGGGG.",
+        ".GGGG.....GGGG.",
+        "GLqqqG...GLqqqG",
+        "GqEEqGGGGGqEEqG",
+        ".GGGG.....GGGG.",
     ],
 }
 
 
 def aoyagi_portrait(expression):
     c = Canvas(48, 48)
-    c.poly(SHOULDERS, "A")                                   # 革の前かけ
-    c.poly([(16, 37), (31, 37), (28, 44), (19, 44)], "C")    # シャツの襟
-    c.rect((19, 30, 28, 38), "S")
-    c.ellipse((11, 5, 36, 36), "S")                          # はげ頭
-    c.poly([(14, 10), (19, 7), (21, 8), (16, 12)], "g")      # 頭のつや（左上）
-    c.poly([(10, 14), (14, 13), (15, 26), (12, 28), (9, 22)], "H")    # 白い横髪
-    c.poly([(37, 14), (33, 13), (32, 26), (35, 28), (38, 22)], "H")
-    c.stamp(["BBBB......BBBB"], 16, 15)                      # 白い眉
-    c.stamp(GLASSES[expression], 15, 17)
-    c.stamp(["..nn..", ".nnnn."], 21, 23)                    # 鼻
-    c.stamp(["..WWWWWWWWW..", ".WWWWWWWWWWW.", "WWW.......WWW"], 17, 26)   # 口ひげ
-    c.stamp(["mmm"] if expression == "normal" else ["m.m", ".m."], 22, 29)
+    c.poly(SHOULDERS, "C")                                   # 肩幅の広い、藍のシャツ
+    c.poly([(13, 40), (19, 39), (22, 47), (14, 47)], "A")    # 革の前かけのつり紐
+    c.poly([(35, 40), (29, 39), (26, 47), (34, 47)], "A")
+    c.rect((19, 31, 28, 40), "S")                            # 太い首
+    c.poly([(19, 38), (24, 44), (29, 38)], "S")              # 開いた襟もと
+    c.ellipse((11, 1, 37, 24), "H")                          # 後ろへなでつけた銀髪（上にボリューム）
+    c.poly([(13, 13), (35, 13), (36, 26), (33, 34), (27, 39), (21, 39), (15, 34), (12, 26)], "S")   # 面長で角ばったあご
+    c.poly([(13, 14), (15, 9), (20, 10), (24, 8), (28, 10), (33, 9), (35, 14), (30, 12), (24, 11), (18, 12)], "H")   # 生え際（こめかみが少し上がる）
+    c.rect((12, 13, 13, 22), "H")                            # もみあげ
+    c.rect((35, 13, 36, 22), "H")
+    for pts in ([(15, 7), (20, 4), (27, 3)], [(14, 10), (19, 7), (24, 6)], [(28, 5), (33, 7)]):   # なでつけた髪の筋
+        c.line(pts, "h", only="H")
+    c.stamp(["bbbbbb", "..bbbb"], 14, 16)                    # 太い眉（眉間へ向けて少し下がる）
+    c.stamp(["bbbbbb", "bbbb.."], 28, 16)
+    c.stamp(GLASSES[expression], 16, 19)
+    c.stamp(["n", "n", "n", "n", "nn"], 24, 22)              # 通った鼻
+    c.stamp(["n", "n"], 14, 21)                              # 目じりのしわ
+    c.stamp(["n", "n"], 33, 21)
+    c.stamp(["n", "n", "n"], 16, 26)                         # こけたほお
+    c.stamp(["n", "n", "n"], 31, 26)
+    # 短く整えた白いあごひげ（口のまわりとあごだけ）と口ひげ
+    c.poly([(18, 30), (22, 31), (26, 31), (30, 30), (31, 34), (28, 38), (24, 39), (20, 38), (17, 34)], "B")
+    c.stamp(["WWWWWWWWW", "W.......W"], 20, 29)
+    c.stamp(["mmm"] if expression == "normal" else ["m...m", ".mmm."], 23 if expression == "normal" else 22, 32)
     return render(c.rows(), AOYAGI_FACE_MATS, AOYAGI_FACE_DIRECT, STYLE)

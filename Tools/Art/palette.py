@@ -95,7 +95,9 @@ MAP_PALETTES = {
                         # 回想 1 の 8 歳のミオ：白い T シャツの影（tee1）
                         "tee1",
                         # 序章のルリのパジャマ（v0.19）
-                        "slp0", "slp1", "slp2", "slp3"),
+                        "slp0", "slp1", "slp2", "slp3",
+                        # 主人（青柳）の藍のシャツの影（v0.19）
+                        "night4"),
     # ランプ屋の中（第 1 章）：木・しっくい・消えたランプ・灯り
     "lamp_shop": _pick("night0", "night1", "night2", "night3", "night4", "night5", "stone3", "stone4", "stone5",
                        "stone6", "stone7", "brown0", "brown1", "brown2", "warm3", "warm4", "warm5", "warm6",
