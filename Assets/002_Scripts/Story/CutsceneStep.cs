@@ -26,6 +26,9 @@ namespace BlueNight.Story
             Effect,     // frames を actor（空ならルリ）の位置に 1 回出す
             AutoSave,   // いまの場所でオートセーブ
             Ambience,   // 環境音 text を volume まで seconds 秒で（雨の降り出しなど）
+            WalkAsync,  // Walk と同じだが、歩き終わるのを待たずに次の行へ（二人を同時に動かす）
+            Memory,     // 回想の「思い出の色」を volume（0〜1）まで seconds 秒で
+            PlayerVisible, // ルリ（とネム・ランタン）を見せる／隠す（volume > 0 で見せる）。回想のあいだ隠す
         }
 
         public Kind kind;
@@ -57,5 +60,8 @@ namespace BlueNight.Story
         public static CutsceneStep Fx(Sprite[] f, Transform at = null) => new CutsceneStep { kind = Kind.Effect, frames = f, actor = at };
         public static CutsceneStep Save() => new CutsceneStep { kind = Kind.AutoSave };
         public static CutsceneStep Amb(string name, float vol, float s = 3f) => new CutsceneStep { kind = Kind.Ambience, text = name, volume = vol, seconds = s };
+        public static CutsceneStep Run(Transform who, Vector2 p, float s = 3f) => new CutsceneStep { kind = Kind.WalkAsync, position = p, speed = s, actor = who };
+        public static CutsceneStep MemoryTo(float weight, float s = 1f) => new CutsceneStep { kind = Kind.Memory, volume = weight, seconds = s };
+        public static CutsceneStep ShowRuri(bool show) => new CutsceneStep { kind = Kind.PlayerVisible, volume = show ? 1f : 0f };
     }
 }

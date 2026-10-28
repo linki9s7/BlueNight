@@ -58,6 +58,7 @@ namespace BlueNight.EditorTools
             Camera camera = CreateCamera();
             CreateMoonlight();
             CreateVolume();
+            CreateMemoryVolume();   // 回想の思い出の色
 
             var areas = new List<Area>();
             var areaObjects = new Dictionary<string, Area>();

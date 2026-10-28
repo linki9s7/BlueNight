@@ -22,6 +22,48 @@
 | Characters/Grandma/grandma_idle_1.png | 17 |  | 0 | 0/0 | 2 | 3.0 | 0.0 | brown | v0.16（輪郭線なし）：目・ほお・口・組んだ手は形の細部。光の向き（茶）：杖は体の右側（影の側）なので暗い色の 1 ドットの線 |
 | Characters/Keeper/keeper_idle_0.png | 15 |  | 0 | 2/8 | 2 | 2.2 | 0.0 | stone, coat, brown | v0.16（輪郭線なし）：めがね・口ひげ・頭のつやは形の細部。光の向き：縁の月明かりは左の縁に縦に並び、影は右下にかたまるので、系統の重心では逆に見える（部品ごとに左上の光を確認済み） |
 | Characters/Keeper/keeper_idle_1.png | 15 |  | 0 | 1/5 | 1 | 1.8 | 0.0 | stone, coat, brown | v0.16（輪郭線なし）：めがね・口ひげ・頭のつやは形の細部。光の向き：縁の月明かりは左の縁に縦に並び、影は右下にかたまるので、系統の重心では逆に見える（部品ごとに左上の光を確認済み） |
+| Characters/Kids/kid_mio_idle_down_0.png | 18 |  | 0 | 2/9 | 7 | 12.2 | 0.0 |  |  |
+| Characters/Kids/kid_mio_idle_down_1.png | 18 |  | 0 | 2/9 | 7 | 12.2 | 0.0 |  |  |
+| Characters/Kids/kid_mio_idle_down_shadow_0.png | 1 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_mio_idle_down_shadow_1.png | 1 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_mio_run_left_0.png | 18 |  | 0 | 0/0 | 1 | 7.2 | 0.0 | skin |  |
+| Characters/Kids/kid_mio_run_left_1.png | 18 |  | 0 | 0/0 | 2 | 8.1 | 0.0 |  |  |
+| Characters/Kids/kid_mio_run_left_2.png | 19 |  | 0 | 0/0 | 2 | 10.1 | 0.0 |  |  |
+| Characters/Kids/kid_mio_run_left_3.png | 18 |  | 0 | 0/0 | 1 | 8.1 | 0.0 |  |  |
+| Characters/Kids/kid_mio_run_left_shadow_0.png | 1 |  | 2 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_mio_run_left_shadow_1.png | 1 |  | 1 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_mio_run_left_shadow_2.png | 1 |  | 3 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_mio_run_left_shadow_3.png | 1 |  | 1 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_mio_run_right_0.png | 18 |  | 0 | 1/6 | 2 | 6.5 | 0.0 | skin |  |
+| Characters/Kids/kid_mio_run_right_1.png | 18 |  | 0 | 1/6 | 2 | 7.4 | 0.0 | skin |  |
+| Characters/Kids/kid_mio_run_right_2.png | 18 |  | 0 | 1/6 | 3 | 6.5 | 0.0 | skin |  |
+| Characters/Kids/kid_mio_run_right_3.png | 18 |  | 0 | 1/6 | 3 | 7.4 | 0.0 | skin |  |
+| Characters/Kids/kid_mio_run_right_shadow_0.png | 1 |  | 2 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_mio_run_right_shadow_1.png | 1 |  | 1 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_mio_run_right_shadow_2.png | 1 |  | 3 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_mio_run_right_shadow_3.png | 1 |  | 1 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_idle_down_0.png | 12 |  | 0 | 3/12 | 7 | 10.4 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_idle_down_1.png | 12 |  | 0 | 3/12 | 7 | 10.4 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_idle_down_shadow_0.png | 1 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_idle_down_shadow_1.png | 1 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_run_left_0.png | 12 |  | 0 | 0/0 | 1 | 7.0 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_run_left_1.png | 12 |  | 0 | 0/0 | 2 | 7.9 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_run_left_2.png | 12 |  | 0 | 0/0 | 2 | 9.3 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_run_left_3.png | 12 |  | 0 | 0/0 | 1 | 7.9 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_run_left_shadow_0.png | 1 |  | 1 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_run_left_shadow_1.png | 1 |  | 1 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_run_left_shadow_2.png | 1 |  | 2 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_run_left_shadow_3.png | 1 |  | 1 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_run_right_0.png | 12 |  | 0 | 3/13 | 1 | 3.9 | 0.0 | skin |  |
+| Characters/Kids/kid_ruri_run_right_1.png | 12 |  | 0 | 3/13 | 1 | 4.7 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_run_right_2.png | 12 |  | 0 | 3/13 | 2 | 3.9 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_run_right_3.png | 12 |  | 0 | 3/13 | 2 | 4.7 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_run_right_shadow_0.png | 1 |  | 1 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_run_right_shadow_1.png | 1 |  | 1 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_run_right_shadow_2.png | 1 |  | 2 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_run_right_shadow_3.png | 1 |  | 1 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_sit_down_0.png | 12 |  | 0 | 3/12 | 7 | 9.0 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_sit_down_1.png | 12 |  | 0 | 3/12 | 8 | 10.3 | 0.0 |  |  |
 | Characters/Nemu/nemu_fly_down_0.png | 10 |  | 2 | 6/28 | 3 | 3.5 | 0.0 | glow | v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる |
 | Characters/Nemu/nemu_fly_down_1.png | 10 |  | 2 | 3/12 | 4 | 3.7 | 0.0 | glow | v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる |
 | Characters/Nemu/nemu_fly_down_2.png | 10 |  | 2 | 1/3 | 3 | 6.6 | 0.0 | glow | v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる |

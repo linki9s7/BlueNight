@@ -10,7 +10,10 @@ using BlueNight.Rendering;
 using BlueNight.Shadows;
 using BlueNight.Story;
 using BlueNight.World;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace BlueNight.EditorTools
 {
@@ -207,15 +210,9 @@ namespace BlueNight.EditorTools
                 Always(Ru("最終、22 時 48 分。／……とっくに行っちゃった")));
             var bench = One(home, 'B');
             Inspect(homeGo, "Bench", At(home, bench.X, bench.Y, 0f, 0f),
-                When(null, Flags.BenchMemory, Flags.BenchMemory, N("——8 歳の夜。／このベンチで、母のバスを待っていた。")),
+                When(null, Flags.BenchMemory, Flags.BenchMemory, Ru("……")),
                 Always(Ru("……")));
-            Scene(story, "回想 1（ベンチ）", null, CutsceneTrigger.When.Flag, watch: Flags.BenchMemory, steps: new[]
-            {
-                CutsceneStep.Fade(true, 0.8f),
-                Say(L("ミオ", "ひとり？"), Ru("……"), L("ミオ", "わたしも。／影踏みしよ。街灯の下なら、影あるよ")),
-                CutsceneStep.Fade(false, 0.8f),
-                Say(Ru("……今は、無いけど")),
-            });
+            BuildBenchMemory(story, areas, At);
             var view = One(home, 'Y');
             Inspect(homeGo, "Lights of the shopping street", At(home, view.X, view.Y, 0f, 0f),
                 Always(Ru("明かりのついてる窓、／数えてた。昔から"), Ru("起きてる人がいると、／ひとりじゃない気がして"),
@@ -329,6 +326,155 @@ namespace BlueNight.EditorTools
                 CutsceneStep.Save(),
                 CutsceneStep.Fade(false, 2f),
             });
+        }
+
+        // ---- 回想 1（9.1、バス停のベンチ）：ゲームの中で動く回想（ユーザーの希望）。思い出の色のバス停で、
+        //      8 歳のルリとミオが出会い、街灯の下で影を踏み合う。二人とも足元に影がある（今のルリには無い）。セリフは台本のまま、影踏みは動きだけ。
+        static void BuildBenchMemory(GameObject story, Dictionary<string, Area> areas,
+            System.Func<string, int, int, float, float, Vector3> At)
+        {
+            string home = Chapter1Maps.Home;
+            var root = new GameObject("Memory 1 (8 years old)");
+            root.transform.SetParent(areas[home].transform, false);
+            var bench = Chapter1Maps.Create(home).Find('B').Single();
+            var lamp = Chapter1Maps.Create(home).Find('L').OrderBy(c => System.Math.Abs(c.X - bench.X)).First();
+            Vector3 o = areas[home].transform.position;
+            Vector2 P(float x, float y) => new Vector2(o.x + x, o.y + y);
+
+            var kidRuri = CreateKid(root, "Ruri (8)", "kid_ruri", P(bench.X + 0.5f, bench.Y + 0.25f), withSit: true);
+            var mio = CreateKid(root, "Mio (8)", "kid_mio", P(lamp.X - 3f, bench.Y + 0.3f), withSit: false);
+            CreatePointLight(mio.gameObject, "Flashlight", new Vector3(0.4f, 0.7f, 0f), Hex("#ffe2a8"), 0.9f, 2.6f);
+            kidRuri.gameObject.SetActive(false);
+            mio.gameObject.SetActive(false);
+
+            float lx = lamp.X + 0.5f, ly = lamp.Y - 0.9f;   // 街灯のすぐ下（影は手前＝下へのびる）
+            // 回想のあいだだけ、街灯の光の輪を明るく（思い出の中の街灯は、今よりまぶしい。二人の影がくっきり見えるように）
+            var glow = new GameObject("Memory Lamp Glow");
+            glow.transform.SetParent(root.transform, false);
+            glow.transform.position = (Vector3)P(lamp.X + 0.5f, lamp.Y + 1.6f);
+            CreatePointLight(glow, "Light", Vector3.zero, Hex("#ffd9a0"), 1.3f, 5f);
+            glow.SetActive(false);
+            Scene(story, "回想 1（ベンチ・影踏み）", null, CutsceneTrigger.When.Flag, watch: Flags.BenchMemory, steps: new[]
+            {
+                CutsceneStep.Fade(true, 0.8f),
+                CutsceneStep.ShowRuri(false),
+                CutsceneStep.MemoryTo(1f, 0.01f),
+                CutsceneStep.ShowActor(kidRuri),
+                CutsceneStep.ShowActor(mio),
+                CutsceneStep.ShowActor(glow.transform),
+                CutsceneStep.Fade(false, 1.2f),
+                CutsceneStep.WaitFor(1.4f),                                   // ルリはベンチで足をぶらぶら
+                CutsceneStep.WalkTo(P(bench.X - 1.2f, bench.Y + 0.3f), 2.2f, mio),   // 懐中電灯のミオが来る
+                CutsceneStep.WaitFor(0.5f),
+                Say(L("ミオ", "ひとり？"), Ru("……"), L("ミオ", "わたしも。／影踏みしよ。街灯の下なら、影あるよ")),
+                CutsceneStep.Run(mio, P(lx, ly + 0.3f), 3f),                 // ミオが街灯の下へ走る
+                CutsceneStep.WaitFor(0.7f),
+                CutsceneStep.WalkTo(P(lx + 2.2f, ly + 0.6f), 2.2f, kidRuri),  // ルリは少し遅れて、ついていく
+                CutsceneStep.WaitFor(0.5f),
+                CutsceneStep.Run(mio, P(lx - 2.3f, ly + 0.1f), 3.2f),        // ミオが逃げる
+                CutsceneStep.WaitFor(0.25f),
+                CutsceneStep.WalkTo(P(lx - 2.1f, ly - 0.8f), 3.2f, kidRuri), // ルリがミオの影を踏む（影は足元から手前へ）
+                CutsceneStep.WaitFor(0.5f),
+                CutsceneStep.Run(mio, P(lx + 2.0f, ly - 0.2f), 3.4f),        // 踏まれたミオが跳んで逃げる
+                CutsceneStep.WaitFor(0.3f),
+                CutsceneStep.WalkTo(P(lx + 1.8f, ly - 1.0f), 3.2f, kidRuri),
+                CutsceneStep.WaitFor(0.4f),
+                CutsceneStep.Run(kidRuri, P(lx - 1.0f, ly + 0.4f), 3f),      // こんどはルリが逃げる
+                CutsceneStep.WaitFor(0.25f),
+                CutsceneStep.WalkTo(P(lx - 0.9f, ly - 0.5f), 3.2f, mio),     // ミオがルリの影を踏む
+                CutsceneStep.WaitFor(0.7f),
+                CutsceneStep.Run(kidRuri, P(lx - 0.3f, ly + 0.2f), 1.4f),    // 二人で並んで立つ。影が二つ、並ぶ
+                CutsceneStep.WalkTo(P(lx + 0.5f, ly + 0.2f), 1.4f, mio),
+                CutsceneStep.WaitFor(1.8f),
+                CutsceneStep.Fade(true, 1.2f),
+                CutsceneStep.HideActor(kidRuri),
+                CutsceneStep.HideActor(mio),
+                CutsceneStep.HideActor(glow.transform),
+                CutsceneStep.MemoryTo(0f, 0.01f),
+                CutsceneStep.ShowRuri(true),
+                CutsceneStep.Fade(false, 1.2f),
+                CutsceneStep.WaitFor(0.6f),
+                Say(Ru("……今は、無いけど")),
+            });
+        }
+
+        const string MemoryProfilePath = "Assets/009_Rendering/Memory_Profile.asset";
+
+        /// <summary>
+        /// 回想の「思い出の色」の Volume（ふだんは重み 0）。暖かく、色を少し抜き、ふちを暗く、粒子を少し。
+        /// 夜の画面効果より優先度を高くして、重みで出し入れする（MemoryEffect）。
+        /// </summary>
+        static void CreateMemoryVolume()
+        {
+            var profile = AssetDatabase.LoadAssetAtPath<VolumeProfile>(MemoryProfilePath);
+            if (profile == null)
+            {
+                profile = ScriptableObject.CreateInstance<VolumeProfile>();
+                AssetDatabase.CreateAsset(profile, MemoryProfilePath);
+            }
+            else
+            {
+                foreach (var component in profile.components.ToList())
+                    Object.DestroyImmediate(component, true);
+                profile.components.Clear();
+            }
+            var color = AddOverride<ColorAdjustments>(profile);
+            color.saturation.Override(-45f);
+            color.colorFilter.Override(Hex("#ffd8b0"));
+            color.postExposure.Override(0.3f);
+            color.contrast.Override(-12f);
+            var vignette = AddOverride<Vignette>(profile);
+            vignette.color.Override(Hex("#140b06"));
+            vignette.intensity.Override(0.5f);
+            vignette.smoothness.Override(0.6f);
+            var grain = AddOverride<FilmGrain>(profile);
+            grain.type.Override(FilmGrainLookup.Medium1);
+            grain.intensity.Override(0.35f);
+            EditorUtility.SetDirty(profile);
+            AssetDatabase.SaveAssets();
+
+            var volume = new GameObject("Memory Volume").AddComponent<Volume>();
+            volume.isGlobal = true;
+            volume.priority = 10f;
+            volume.weight = 0f;
+            volume.sharedProfile = profile;
+            volume.gameObject.AddComponent<MemoryEffect>();
+        }
+
+        /// <summary>回想の子ども（Tools/Art/kids.py の絵）。足元の影は子にして、同じコマで動かす。</summary>
+        static Transform CreateKid(GameObject parent, string name, string prefix, Vector2 position, bool withSit)
+        {
+            var lit = AssetDatabase.LoadAssetAtPath<Material>(SpriteLitMaterialPath);
+            var unlit = AssetDatabase.LoadAssetAtPath<Material>(SpriteUnlitMaterialPath);
+            string k = $"{TexturesRoot}/Characters/Kids/{prefix}";
+            var go = new GameObject(name);
+            go.transform.SetParent(parent.transform, false);
+            go.transform.position = position;
+            var renderer = go.AddComponent<SpriteRenderer>();
+            renderer.spriteSortPoint = SpriteSortPoint.Pivot;
+            renderer.sortingOrder = 1;   // ベンチに座っていても、ベンチより手前に
+            renderer.sharedMaterial = lit;
+            var body = new ActorAnimator.Frames
+            {
+                idle = LoadFrames($"{k}_idle_down_"), runRight = LoadFrames($"{k}_run_right_"),
+                runLeft = LoadFrames($"{k}_run_left_"), sit = withSit ? LoadFrames($"{k}_sit_down_") : new Sprite[0],
+            };
+            var shadowFrames = new ActorAnimator.Frames
+            {
+                idle = LoadFrames($"{k}_idle_down_shadow_"), runRight = LoadFrames($"{k}_run_right_shadow_"),
+                runLeft = LoadFrames($"{k}_run_left_shadow_"),
+            };
+            renderer.sprite = withSit ? body.sit.FirstOrDefault() : body.idle.FirstOrDefault();
+            var shadowGo = new GameObject("Shadow");
+            shadowGo.transform.SetParent(go.transform, false);
+            var shadow = shadowGo.AddComponent<SpriteRenderer>();
+            shadow.sharedMaterial = unlit;
+            shadow.sortingOrder = -40;   // 地面の上
+            var first = shadowFrames.idle.FirstOrDefault();
+            float h = first != null ? first.rect.height / PixelsPerUnit : 1f;
+            shadowGo.transform.localPosition = new Vector3(0f, -h + 1f / PixelsPerUnit, 0f);   // 影の上のふちを足元に
+            go.AddComponent<ActorAnimator>().Configure(body, shadowFrames, shadow);
+            return go.transform;
         }
 
         // ---- ランプ屋の中（9.3）：影のきまり・ランタンをもらう・掛ける練習・出口の一言

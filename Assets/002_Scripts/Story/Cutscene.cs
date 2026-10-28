@@ -143,6 +143,25 @@ namespace BlueNight.Story
                 case CutsceneStep.Kind.Ambience:
                     AmbiencePlayer.Instance?.Set(step.text, step.volume, step.seconds);
                     break;
+
+                case CutsceneStep.Kind.WalkAsync:
+                    StartCoroutine(Walk(step));
+                    break;
+
+                case CutsceneStep.Kind.Memory:
+                    MemoryEffect.Instance?.FadeTo(step.volume, step.seconds);
+                    break;
+
+                case CutsceneStep.Kind.PlayerVisible:
+                    if (player != null)
+                    {
+                        bool show = step.volume > 0f;
+                        foreach (var r in player.GetComponentsInChildren<Renderer>(true))
+                            r.enabled = show;
+                        foreach (var l in player.GetComponentsInChildren<UnityEngine.Rendering.Universal.Light2D>(true))
+                            l.enabled = show;
+                    }
+                    break;
             }
         }
 

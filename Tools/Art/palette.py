@@ -89,7 +89,9 @@ MAP_PALETTES = {
                         "pj1", "pj2", "pj3", "tee2", "tee3", "iris0", "iris1", "iris2", "blush0",
                         "glow0", "glow1", "glow2", "glow3", "fluff0", "fluff1", "fluff2",
                         # v0.16 の町の人：ハルのカーディガン、革・木の縁、白いシャツ・髪の縁
-                        "rose1", "rose2", "rose3", "brown0", "brown3", "stone1", "stone6", "night5"),
+                        "rose1", "rose2", "rose3", "brown0", "brown3", "stone1", "stone6", "night5",
+                        # 回想 1 の 8 歳のミオ：白い T シャツの影（tee1）
+                        "tee1"),
     # ランプ屋の中（第 1 章）：木・しっくい・消えたランプ・灯り
     "lamp_shop": _pick("night0", "night1", "night2", "night3", "night4", "night5", "stone3", "stone4", "stone5",
                        "stone6", "stone7", "brown0", "brown1", "brown2", "warm3", "warm4", "warm5", "warm6",
