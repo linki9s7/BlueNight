@@ -430,7 +430,8 @@ namespace BlueNight.EditorTools
             kidRuri.gameObject.SetActive(false);
             mio.gameObject.SetActive(false);
 
-            float lx = lamp.X + 0.5f, ly = lamp.Y - 0.9f;   // 街灯のすぐ下（影は手前＝下へのびる）
+            // 街灯（歩道の奥）の手前の歩道で遊ぶ（影は手前＝下へのびる）。車道には出ない（ユーザーの指摘）
+            float lx = lamp.X + 0.5f, ly = lamp.Y - 0.6f;
             // 回想のあいだだけ、街灯の光の輪を明るく（思い出の中の街灯は、今よりまぶしい。二人の影がくっきり見えるように）
             var glow = new GameObject("Memory Lamp Glow");
             glow.transform.SetParent(root.transform, false);
@@ -456,15 +457,15 @@ namespace BlueNight.EditorTools
                 CutsceneStep.WaitFor(0.5f),
                 CutsceneStep.Run(mio, P(lx - 2.3f, ly + 0.1f), 3.2f),        // ミオが逃げる
                 CutsceneStep.WaitFor(0.25f),
-                CutsceneStep.WalkTo(P(lx - 2.1f, ly - 0.8f), 3.2f, kidRuri), // ルリがミオの影を踏む（影は足元から手前へ）
+                CutsceneStep.WalkTo(P(lx - 2.1f, ly - 0.5f), 3.2f, kidRuri), // ルリがミオの影を踏む（影は足元から手前へ）
                 CutsceneStep.WaitFor(0.5f),
                 CutsceneStep.Run(mio, P(lx + 2.0f, ly - 0.2f), 3.4f),        // 踏まれたミオが跳んで逃げる
                 CutsceneStep.WaitFor(0.3f),
-                CutsceneStep.WalkTo(P(lx + 1.8f, ly - 1.0f), 3.2f, kidRuri),
+                CutsceneStep.WalkTo(P(lx + 1.8f, ly - 0.6f), 3.2f, kidRuri),
                 CutsceneStep.WaitFor(0.4f),
                 CutsceneStep.Run(kidRuri, P(lx - 1.0f, ly + 0.4f), 3f),      // こんどはルリが逃げる
                 CutsceneStep.WaitFor(0.25f),
-                CutsceneStep.WalkTo(P(lx - 0.9f, ly - 0.5f), 3.2f, mio),     // ミオがルリの影を踏む
+                CutsceneStep.WalkTo(P(lx - 0.9f, ly - 0.3f), 3.2f, mio),     // ミオがルリの影を踏む
                 CutsceneStep.WaitFor(0.7f),
                 CutsceneStep.Run(kidRuri, P(lx - 0.3f, ly + 0.2f), 1.4f),    // 二人で並んで立つ。影が二つ、並ぶ
                 CutsceneStep.WalkTo(P(lx + 0.5f, ly + 0.2f), 1.4f, mio),
