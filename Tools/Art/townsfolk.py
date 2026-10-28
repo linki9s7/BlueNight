@@ -252,7 +252,8 @@ AOYAGI_FACE_MATS = {
     # ひげ（B・W）も顔の部品に入れる：別の部品だと、ひげの上の肌に太い影の帯ができて鼻のまわりが崩れて見えた（ユーザーの指摘）
     "S": Mat("skin2", "skin1", group="SGLqEemnbBWk", d=3),
     "H": Mat("stone6", "stone4", "stone7", group="Hh", d=2),
-    "B": Mat("stone7", "stone5", "tee3", group="BW", d=2),
+    # 口（m）もひげの部品に入れる：別の部品だと、笑った口の上のひげに影の色が出た（ユーザーの指摘）
+    "B": Mat("stone7", "stone5", "tee3", group="BWm", d=2),
     "A": Mat("brown2", "brown1", "brown3", group="A", d=3),
     "C": Mat("night5", "night4", "stone5", group="C", d=2),
 }
