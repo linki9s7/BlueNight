@@ -53,7 +53,7 @@ namespace BlueNight.Player
                 // 動き：ランタン掛けは腕をのばして掛ける、人と話すときはそのまま、それ以外はのぞきこむ
                 if (animator != null && current is LanternHook)
                     animator.PlayAction(PlayerAnimator.Action.Hang);
-                else if (animator != null && !(current is TalkInteractable))
+                else if (animator != null && (!(current is TalkInteractable) || current is InspectInteractable))
                     animator.PlayAction(PlayerAnimator.Action.Inspect);
                 current.Interact(this);
             }

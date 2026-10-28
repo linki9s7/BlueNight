@@ -19,8 +19,7 @@ namespace BlueNight.EditorTools
     /// <summary>
     /// 第 1 章「灯をひとつ」のシーン（M2）。マップは BlueNight.Logic.Chapter1Maps（テストと同じ定義）から組み立てる。
     /// 5 つのエリア（家の前〜バス停・商店街・ランプ屋の中・路地その 1・路地その 2）を横に並べ、出入口（数字）で暗転してつなぐ。
-    /// いまは「マップを歩いて確かめる」段階：会話・演出（docs/STORY.md 8 節＝序章・9 節＝第 1 章）は次の段階で入れる。
-    /// 確かめやすいよう、ルリは初めからランタンを持ち、2 つの路地にはおばあさんの影を置いている（仮）。
+    /// 会話・演出（docs/STORY.md 8 節＝序章・9 節＝第 1 章）は BlueNightSetup.Chapter1Story で入れる。
     /// </summary>
     public static partial class BlueNightSetup
     {
@@ -80,20 +79,12 @@ namespace BlueNight.EditorTools
             CreateNemu(lit, player);
             player.gameObject.AddComponent<PlayerAreaSounds>();
 
-            // 仮：2 つの路地におばあさんの影（追いつめの手ごたえを確かめる）。持ち主はハル
-            var haru = areaObjects[Chapter1Maps.Street].transform.Find("Characters/Haru");
-            foreach (var alley in new[] { Chapter1Maps.Alley1, Chapter1Maps.Alley2 })
-            {
-                var map = Chapter1Maps.Create(alley);
-                var shadow = CreateGrandmaShadow(map.Find('S').Single(), player.transform, haru, unlit);
-                shadow.transform.SetParent(areaObjects[alley].transform, false);
-                shadow.transform.position = AreaCellFoot(areaObjects[alley], map.Find('S').Single());
-                shadow.gameObject.AddComponent<ChaseMusic>().Configure(shadow, player.transform, "ch1_shopping_street");
-            }
-
-            CreateAudio("ch1_shopping_street", Ambience("crickets", 0.55f), Ambience("highway", 0.35f));
+            // 序章は曲なし（虫の声と遠くのハイウェイ）。曲は街灯の下の演出のあとから
+            CreateAudio("", Ambience("crickets", 0.55f), Ambience("highway", 0.35f));
             var dialogue = new GameObject("Dialogue").AddComponent<DialogueRunner>();
             dialogue.Configure(AssetDatabase.LoadAssetAtPath<Font>(DialogueFontPath));
+
+            BuildChapter1Story(areaObjects, player, lit, unlit);
 
             var follow = camera.gameObject.AddComponent<CameraFollow2D>();
             follow.Configure(player.transform, areaObjects[Chapter1Maps.Room].CameraBounds);
@@ -102,7 +93,7 @@ namespace BlueNight.EditorTools
 
             EditorSceneManager.SaveScene(scene, Chapter1ScenePath);
             AddSceneToBuildSettings(Chapter1ScenePath);
-            Debug.Log($"[BlueNight] {Chapter1ScenePath} を作成しました。再生すると、ルリの部屋から第 1 章のマップを歩いて回れます（会話は次の段階で入れます）。");
+            Debug.Log($"[BlueNight] {Chapter1ScenePath} を作成しました。再生すると、ルリの部屋（序章）から第 1 章の終わりまで遊べます。");
         }
 
         static Vector3 AreaCellFoot(Area area, Cell cell) => area.transform.position + CellFoot(cell);
@@ -115,7 +106,9 @@ namespace BlueNight.EditorTools
             var go = new GameObject($"Area: {id}");
             go.transform.position = origin;
             var area = go.AddComponent<Area>();
-            area.Configure(id, new Rect(origin.x, origin.y, map.Width, map.Height), "ch1_shopping_street");
+            // 序章の場所（ルリの家・家の前）は曲を変えない（序章は曲なし。第 1 章が始まると町の曲のまま）
+            bool prologue = id == Chapter1Maps.Room || id == Chapter1Maps.Home;
+            area.Configure(id, new Rect(origin.x, origin.y, map.Width, map.Height), prologue ? "" : "ch1_shopping_street");
 
             bool indoor = id == Chapter1Maps.LampShop || id == Chapter1Maps.Room;
             bool alley = id == Chapter1Maps.Alley1 || id == Chapter1Maps.Alley2;
@@ -415,6 +408,12 @@ namespace BlueNight.EditorTools
             CreateSpriteObject(root, "Kitchen Table", "Home/kitchen_table", P(11f, 3.05f), lit);
             CreateSpriteObject(root, "Shoe Cabinet", "Home/shoe_cabinet", P(16f, 6.05f), lit);
             CreateSpriteObject(root, "Chair with the Blue Scarf", "Home/chair_scarf", P(16.5f, 3.05f), lit);
+            CreateSpriteObject(root, "Chair", "Home/chair", P(16.5f, 3.05f), lit);          // マフラーを取ったあと
+            var glow = new GameObject("Phone Glow");                                          // 序章：ミオからの通知で光る
+            glow.transform.SetParent(root.transform, false);
+            glow.transform.position = P(1.9f, 6.9f);
+            CreatePointLight(glow, "Light", Vector3.zero, Hex("#cfe8ff"), 0.9f, 2.2f);
+            glow.SetActive(false);
             var mat = CreateSpriteObject(root, "Doormat", "Interior/doormat", P(15.5f, 0.6f), lit);
             mat.GetComponent<SpriteRenderer>().sortingOrder = -60;
         }
@@ -434,13 +433,14 @@ namespace BlueNight.EditorTools
                 area.AddSpawn(spawn, origin + CellFoot(Chapter1Maps.SpawnCell(map, link.Symbol)));
 
                 var cells = map.Find(link.Symbol).ToList();
+                LinkGates.TryGetValue((area.Id, link.Symbol), out var gate);
                 if (link.IsDoor)
                 {
                     var door = new GameObject($"Door → {other}").AddComponent<DoorInteractable>();
                     door.transform.SetParent(root.transform, false);
                     door.transform.position = origin + CellFoot(cells[0]);
                     door.SetPromptOffset(new Vector2(0f, 1.6f));
-                    door.Configure(other, spawn);
+                    door.Configure(other, spawn, gate.flag, gate.lines);
                     continue;
                 }
 
@@ -451,7 +451,7 @@ namespace BlueNight.EditorTools
                 var box = exit.AddComponent<BoxCollider2D>();
                 box.isTrigger = true;
                 box.size = new Vector2(maxX - minX + 1, maxY - minY + 1) * 0.8f;
-                exit.AddComponent<AreaExit>().Configure(other, spawn);
+                exit.AddComponent<AreaExit>().Configure(other, spawn, gate.flag, gate.lines);
             }
         }
     }

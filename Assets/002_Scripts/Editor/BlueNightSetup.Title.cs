@@ -49,17 +49,17 @@ namespace BlueNight.EditorTools
 
             var menu = new GameObject("Title Screen").AddComponent<TitleScreen>();
             menu.Configure(AssetDatabase.LoadAssetAtPath<Font>(DialogueFontPath), LoadSprite($"{TexturesRoot}/UI/ui_cursor.png"),
-                System.IO.Path.GetFileNameWithoutExtension(M1ScenePath));
+                System.IO.Path.GetFileNameWithoutExtension(Chapter1ScenePath));   // 「はじめから」で序章・第 1 章へ
 
             CreateAudio("title_ruri_theme", Ambience("highway", 0.3f));
 
             EditorSceneManager.SaveScene(scene, TitleScenePath);
             AddSceneToBuildSettings(TitleScenePath);
-            if (System.IO.File.Exists(M1ScenePath))
-                AddSceneToBuildSettings(M1ScenePath);
+            if (System.IO.File.Exists(Chapter1ScenePath))
+                AddSceneToBuildSettings(Chapter1ScenePath);
             else
-                Debug.LogWarning("[BlueNight] M1 プロトタイプのシーンがまだありません。先にメニュー 3 で作ってください（「はじめから」で開くシーン）。");
-            Debug.Log($"[BlueNight] {TitleScenePath} を作成しました。再生すると、タイトルから M1 プロトタイプを始められます。");
+                Debug.LogWarning("[BlueNight] 第 1 章のシーンがまだありません。先にメニュー 7 で作ってください（「はじめから」で開くシーン）。");
+            Debug.Log($"[BlueNight] {TitleScenePath} を作成しました。再生すると、タイトルから序章・第 1 章を始められます。");
         }
 
         /// <summary>480x270 の絵の中の位置（左上が原点、ドット）を、カメラの中心を原点としたワールド座標に。</summary>

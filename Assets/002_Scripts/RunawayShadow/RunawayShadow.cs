@@ -41,6 +41,7 @@ namespace BlueNight.Shadows
         [SerializeField] DialogueLine[] captureLines = Array.Empty<DialogueLine>();
         [SerializeField] string capturedFlag = "shadow_captured";
         [SerializeField] string returnedFlag = "shadow_returned";
+        [SerializeField, Tooltip("触れると捕まらずに逃げていく（第 1 章の路地その 1：塀を越えて奥の路地へ）")] bool escapeOnTouch;
 
         SpriteRenderer spriteRenderer;
         ShadowWorld world;
@@ -59,6 +60,11 @@ namespace BlueNight.Shadows
         public event Action Surprised;
         /// <summary>捕まったとき。</summary>
         public event Action Captured;
+        /// <summary>触れたのに逃げられたとき（escapeOnTouch）。</summary>
+        public event Action Escaped;
+
+        /// <summary>触れると捕まらずに逃げていく影にする。逃げたら capturedFlag を立てる。</summary>
+        public void SetEscapeOnTouch(bool escape) => escapeOnTouch = escape;
 
         public bool IsFleeing => state == State.Fleeing;
         public bool IsSpeaking => state == State.Speaking;
@@ -213,6 +219,11 @@ namespace BlueNight.Shadows
 
         void Capture()
         {
+            if (escapeOnTouch)
+            {
+                Escape();
+                return;
+            }
             state = State.Speaking;
             transform.position = player.position + new Vector3(0.9f, 0f, 0f);
             lastPosition = transform.position;
@@ -228,6 +239,27 @@ namespace BlueNight.Shadows
         void AfterCapture()
         {
             state = State.Following;
+            // エリアを移っても持ち主のところまでついてこられるよう、エリアの子から外す
+            transform.SetParent(null, true);
+            GameFlags.Set(capturedFlag);
+        }
+
+        /// <summary>触れたのに逃げられる：びくっとして、会話のあと塀を越えて（上へ）消える。</summary>
+        void Escape()
+        {
+            state = State.Speaking;
+            PlayOnce(surprised);
+            Escaped?.Invoke();
+            owner = null;
+            if (DialogueRunner.Instance != null)
+                DialogueRunner.Instance.Play(captureLines, AfterEscape);
+            else
+                AfterEscape();
+        }
+
+        void AfterEscape()
+        {
+            state = State.Returning;
             GameFlags.Set(capturedFlag);
         }
 
@@ -235,8 +267,13 @@ namespace BlueNight.Shadows
         {
             if (player == null)
                 return;
-            // ルリの少し後ろを、ゆっくりついてくる
+            // ルリの少し後ろを、ゆっくりついてくる。エリアを移ったら（遠く離れたら）すぐそばへ
             Vector3 goal = player.position + new Vector3(-0.9f, 0.1f, 0f);
+            if ((goal - transform.position).sqrMagnitude > 36f)
+            {
+                transform.position = goal;
+                followVelocity = Vector3.zero;
+            }
             transform.position = Vector3.SmoothDamp(transform.position, goal, ref followVelocity, 0.4f);
         }
 
@@ -248,7 +285,8 @@ namespace BlueNight.Shadows
 
         void UpdateReturning()
         {
-            Vector3 goal = owner != null ? owner.position : transform.position;
+            // 持ち主の足元へ帰る。持ち主がいない（逃げていく）ときは、塀を越えて上へ
+            Vector3 goal = owner != null ? owner.position : transform.position + Vector3.up;
             transform.position = Vector3.MoveTowards(transform.position, goal, 2.5f * Time.deltaTime);
 
             var c = spriteRenderer.color;

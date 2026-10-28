@@ -24,6 +24,7 @@ namespace BlueNight.Story
 
         Cutscene cutscene;
         PlayerController player;
+        bool pending;   // 別の演出の最中に条件がそろった：その演出が終わってから始める
 
         public void Configure(When start, string area = null, Rect? touch = null, string required = null, string blocked = null, string watch = null)
         {
@@ -63,17 +64,34 @@ namespace BlueNight.Story
         void OnEntered(Area area)
         {
             if (when == When.AreaEnter && area.Id == areaId && Allowed())
-                cutscene.Play();
+                Begin();
         }
 
         void OnFlag(string flag)
         {
             if (when == When.Flag && flag == watchFlag && Allowed())
+                Begin();
+        }
+
+        void Begin()
+        {
+            if (Cutscene.IsPlaying)
+                pending = true;   // 例：演出の中でエリアを移り、移った先の演出が続く
+            else
                 cutscene.Play();
         }
 
         void Update()
         {
+            if (pending && !Cutscene.IsPlaying)
+            {
+                pending = false;
+                bool stillHere = when != When.AreaEnter || (AreaManager.Instance != null && AreaManager.Instance.Current != null
+                    && AreaManager.Instance.Current.Id == areaId);
+                if (stillHere && Allowed())
+                    cutscene.Play();
+            }
+
             if (when != When.Touch || player == null || Cutscene.IsPlaying || !player.InputEnabled)
                 return;
             if (touchArea.Contains(player.transform.position) && Allowed())

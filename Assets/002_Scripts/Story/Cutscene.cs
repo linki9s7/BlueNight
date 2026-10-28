@@ -139,6 +139,10 @@ namespace BlueNight.Story
                 case CutsceneStep.Kind.AutoSave:
                     AreaManager.Instance?.AutoSave();
                     break;
+
+                case CutsceneStep.Kind.Ambience:
+                    AmbiencePlayer.Instance?.Set(step.text, step.volume, step.seconds);
+                    break;
             }
         }
 

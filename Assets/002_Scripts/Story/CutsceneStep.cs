@@ -25,6 +25,7 @@ namespace BlueNight.Story
             GoArea,     // text のエリアの area2 の入口へ（暗転つき）
             Effect,     // frames を actor（空ならルリ）の位置に 1 回出す
             AutoSave,   // いまの場所でオートセーブ
+            Ambience,   // 環境音 text を volume まで seconds 秒で（雨の降り出しなど）
         }
 
         public Kind kind;
@@ -37,6 +38,7 @@ namespace BlueNight.Story
         public float seconds = 1f;
         public string text;
         public string area2;
+        public float volume;
         public Sprite[] frames = new Sprite[0];
 
         // ---- 台本を書くための短い作り方（エディタのシーン作成で使う）
@@ -54,5 +56,6 @@ namespace BlueNight.Story
         public static CutsceneStep Go(string area, string spawn) => new CutsceneStep { kind = Kind.GoArea, text = area, area2 = spawn };
         public static CutsceneStep Fx(Sprite[] f, Transform at = null) => new CutsceneStep { kind = Kind.Effect, frames = f, actor = at };
         public static CutsceneStep Save() => new CutsceneStep { kind = Kind.AutoSave };
+        public static CutsceneStep Amb(string name, float vol, float s = 3f) => new CutsceneStep { kind = Kind.Ambience, text = name, volume = vol, seconds = s };
     }
 }
