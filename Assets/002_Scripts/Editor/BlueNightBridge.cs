@@ -19,7 +19,8 @@ namespace BlueNight.EditorTools
     ///   build                  arg = gallery / m1 / title / ch1：メニュー 4・3・6・7 のシーンを作る
     ///   open                   arg = シーンのパス
     ///   play / stop            再生・停止
-    ///   capture                Main Camera の絵を PNG に（arg = 保存先。scale 倍に拡大）
+    ///   capture                Main Camera の絵を PNG に（arg = 保存先。scale 倍に拡大）。UI は写らない
+    ///   screen                 Game ビューを UI（会話ウィンドウ）ごと PNG に（arg = 保存先。再生中）
     ///   move                   再生中のルリを (x, y) へ動かす（素材シーンを見て回る）
     ///   face                   再生中のルリの向き（arg = down / up / left / right）
     ///   goto                   再生中に別のエリアへ（arg = エリア:入口。第 1 章のシーン）
@@ -135,6 +136,14 @@ namespace BlueNight.EditorTools
                     return "stopping";
                 case "capture":
                     return Capture(string.IsNullOrEmpty(r.arg) ? Path.Combine(Folder, "capture.png") : r.arg, Mathf.Max(1, r.scale));
+                case "screen":
+                    // Game ビューを UI（会話ウィンドウ・暗転）ごと撮る。ファイルはそのフレームの描画のあとで書かれる
+                    var screenPath = string.IsNullOrEmpty(r.arg) ? Path.Combine(Folder, "screen.png") : r.arg;
+                    Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(screenPath)));
+                    if (File.Exists(screenPath))
+                        File.Delete(screenPath);
+                    ScreenCapture.CaptureScreenshot(screenPath);
+                    return Path.GetFullPath(screenPath);
                 case "move":
                     return MovePlayer(new Vector2(r.x, r.y));
                 case "face":
@@ -151,6 +160,9 @@ namespace BlueNight.EditorTools
                     return State();
                 case "next":
                     return AdvanceDialogue(1);
+                case "say":
+                    // arg = 「名前<TAB>本文<TAB>影の声なら 1」。会話ウィンドウに 1 行だけ、全部の文字を出した状態で出す（収まりの確認用）
+                    return SayForCheck(r.arg);
                 case "skip":
                     // 会話を最後まで送り、出た文を返す（演出は続きの会話や待ちがあるので、何度か呼ぶ）
                     return AdvanceDialogue(200);
@@ -300,6 +312,24 @@ namespace BlueNight.EditorTools
                     type.GetMethod("Close", Private).Invoke(runner, null);   // 閉じると会話のあとの処理（フラグ・演出の続き）が動く
             }
             return said.Count == 0 ? "(no dialogue)" : string.Join(NewLine, said);
+        }
+
+        static string SayForCheck(string arg)
+        {
+            var runner = BlueNight.Dialogue.DialogueRunner.Instance;
+            if (runner == null)
+                throw new InvalidOperationException("会話ウィンドウがありません（再生中のシーンで）。");
+            var type = typeof(BlueNight.Dialogue.DialogueRunner);
+            if (BlueNight.Dialogue.DialogueRunner.IsBusy)
+            {
+                type.GetField("lines", Private).SetValue(runner, null);   // 前の 1 行を、会話のあとの処理を動かさずに閉じる
+            }
+            var parts = arg.Split('\t');
+            var line = new BlueNight.Dialogue.DialogueLine(parts[0], parts[1].Replace("／", NewLine), parts.Length > 2 && parts[2] == "1");
+            runner.Play(new[] { line });
+            type.GetField("shown", Private).SetValue(runner, (float)line.text.Length);
+            ((UnityEngine.UI.Text)type.GetField("bodyText", Private).GetValue(runner)).text = line.text;
+            return "shown";
         }
 
         /// <summary>ルリのいちばん近くの「調べられるもの」を調べる（hook：ランタン掛けを使う）。</summary>

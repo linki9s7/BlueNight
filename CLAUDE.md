@@ -52,7 +52,13 @@ python Tools/Bridge/unity_bridge.py play               # stop で停止
 python Tools/Bridge/unity_bridge.py move 6 -6          # 再生中のルリを移動。face down/up/left/right で向き
 python Tools/Bridge/unity_bridge.py capture Logs/shots/a.png --scale 2
 python Tools/Bridge/unity_bridge.py logs               # 警告・エラー
+python Tools/Bridge/unity_bridge.py screen Logs/shots/b.png   # 会話ウィンドウ（UI）ごと撮る。capture は UI が写らない
+python Tools/Bridge/unity_bridge.py state              # 通しの確認：エリア・会話の文・フラグ（next／skip／interact／cell も）
 ```
+
+**セリフを足したり変えたりしたら、会話ウィンドウを実際に出して確かめる**（ユーザーとの約束）。文字数を数えるだけでは足りない
+（DotGothic16 は行の間隔が広く、数えて収まっていても表示ではみ出したことがある）。`say`（名前<TAB>本文）でウィンドウに出し、`screen` で撮る。
+暗転と重なる場面（回想・章のタイトル）も見る。会話ウィンドウは暗転（ScreenFader）より手前に出る。
 
 新しい C# を足した直後は、Unity のウィンドウが前に出るまでコンパイルされないことがある（その場合は Unity を一度前に出す）。
 シーンを作るメニュー（2・3・4・6）は、メニュー 1 の設定（2D Renderer・足元の Y で前後を並べる）が済んでいなければ先に実行する。

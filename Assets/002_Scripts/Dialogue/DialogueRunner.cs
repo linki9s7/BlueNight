@@ -43,6 +43,10 @@ namespace BlueNight.Dialogue
         RectTransform bodyRect;
         Vector2 bodyBasePosition;
 
+        // 本文の位置（ウィンドウの左上から、480x270 のドット）。名前があるときは名前の欄の下、無いときは上から
+        static readonly Vector2 BodyWithSpeaker = new Vector2(10f, -21f);
+        static readonly Vector2 BodyWithoutSpeaker = new Vector2(10f, -8f);
+
         public void Configure(Font dialogueFont) => font = dialogueFont;
 
         void Awake()
@@ -136,7 +140,11 @@ namespace BlueNight.Dialogue
             var line = lines[index];
             shown = 0f;
             speakerText.text = line.speaker;
-            speakerText.enabled = !string.IsNullOrEmpty(line.speaker);
+            bool hasSpeaker = !string.IsNullOrEmpty(line.speaker);
+            speakerText.enabled = hasSpeaker;
+            // 名前の無いト書き・画面の文字は、名前の欄の高さを詰めて上から書く（1 行目の上に空き行ができないように）
+            bodyBasePosition = hasSpeaker ? BodyWithSpeaker : BodyWithoutSpeaker;
+            bodyRect.anchoredPosition = bodyBasePosition;
             bodyText.text = string.Empty;
             bodyText.color = line.shadowVoice ? shadowTextColor : textColor;
         }
@@ -162,7 +170,8 @@ namespace BlueNight.Dialogue
             canvasGo.transform.SetParent(transform, false);
             var canvas = canvasGo.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.sortingOrder = 100;
+            // 暗転（ScreenFader：1000）より手前。回想や章のタイトルは、暗転した画面の上に言葉を出す
+            canvas.sortingOrder = 1100;
             canvasGo.AddComponent<CanvasScaler>();
             // 拡大率は 480×270 の整数倍に固定（文字もゲーム画面と同じドットの大きさになる）
             var pixelCanvas = canvasGo.AddComponent<PixelPerfectCanvas>();
@@ -173,7 +182,8 @@ namespace BlueNight.Dialogue
             windowRect.anchorMin = new Vector2(0f, 0f);
             windowRect.anchorMax = new Vector2(1f, 0f);
             windowRect.pivot = new Vector2(0.5f, 0f);
-            windowRect.sizeDelta = new Vector2(-24f, 64f);
+            // 高さは「名前の欄＋本文 2 行」が収まるように（DotGothic16 は行の間隔が広いので、本文は lineSpacing で詰める）
+            windowRect.sizeDelta = new Vector2(-24f, 72f);
             windowRect.anchoredPosition = new Vector2(0f, 8f);
             var background = window.AddComponent<Image>();
             background.color = new Color(0.03f, 0.04f, 0.1f, 0.88f);
@@ -181,8 +191,9 @@ namespace BlueNight.Dialogue
             outline.effectColor = new Color(0.62f, 0.82f, 1f, 0.6f);
             outline.effectDistance = new Vector2(1f, -1f);
 
-            speakerText = CreateText("Speaker", window.transform, new Vector2(10f, -5f), new Vector2(-20f, 18f), speakerColor);
-            bodyText = CreateText("Body", window.transform, new Vector2(10f, -23f), new Vector2(-20f, 38f), textColor);
+            speakerText = CreateText("Speaker", window.transform, new Vector2(10f, -3f), new Vector2(-20f, 18f), speakerColor);
+            bodyText = CreateText("Body", window.transform, BodyWithSpeaker, new Vector2(-20f, 48f), textColor);
+            bodyText.lineSpacing = 0.85f;
             bodyRect = (RectTransform)bodyText.transform;
             bodyBasePosition = bodyRect.anchoredPosition;
 
