@@ -552,7 +552,9 @@ namespace BlueNight.EditorTools
             shadow1.transform.position = At(alley1, s1.X, s1.Y, 0f, 0f);
             shadow1.SetEscapeOnTouch(true);
             shadow1.Configure(player.transform, haru, LoadFrames($"{TexturesRoot}/Characters/Shadows/shadow_grandma_"),
-                new[] { Ne("惜しい！"), Ne("でも、わかったでしょ"), Ne("灯りの置き方しだいなんだ") },
+                // 逃げられた理由（ユーザーの決定：低い塀の案）。塀の上は暗いので越えられる。高い壁の行き止まりなら逃げられない
+                new[] { Ne("惜しい！"), Ne("低い塀の上は、暗いでしょ"), Ne("影は、そこを伝って逃げちゃう"),
+                    Ne("高い壁の行き止まりなら／もう逃げられないはず") },
                 Flags.Alley1Escaped, "c1_unused_returned");
             shadow1.gameObject.AddComponent<ChaseMusic>().Configure(shadow1, player.transform, "ch1_shopping_street");
 

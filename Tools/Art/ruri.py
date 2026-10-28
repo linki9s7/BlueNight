@@ -6,8 +6,9 @@
 - 髪は G2 改「ぱっつんロング」：眉の高さで切りそろえた前髪（毛先のすき間から額が少しのぞく）、腰までの髪。
   胸の前へ流すのは向かって左だけ、右は肩の後ろへ。頭の左上に天使の輪。
   **頭の上の左右の小さな角（猫の耳のような寝ぐせ）はチャームポイント。消さないこと。**
-- 服は F1「ルームワンピース」：淡い青のコットンのワンピース（ひざ丈・ふくらんだ短いそで・胸の下からギャザー）、
-  すそに白いレース。素足に紺のサンダル。夜中に部屋着のまま出てきた 14 歳。青いマフラーはミオの手編み（夏でも巻いている）。
+- 服は F1「ルームワンピース」：淡い青のコットンのワンピース（ひざ丈・ふつうの短いそで・すとんとした形）。
+  素足に紺のサンダル。夜中に部屋着のまま出てきた 14 歳。青いマフラーはミオの手編み（夏でも巻いている）。
+  v0.17：ユーザーの指摘（「おしゃれな服に見える」）で、すそのレース・ふくらんだそで・ギャザーの線をやめて、部屋着らしく簡素にした。
 - 静かで大人っぽいのに、まだあどけなさが残る感じ。
 
 描き方（chara.py）
@@ -61,15 +62,15 @@ DOWN_BODY = [
     "...H.BBBBBB.H...",
     "...HPBBBBBBPH...",
     "...PPPBBBBPPP...",
-    "..PPPPPBBPPPPP..",   # ふくらんだ短いそで
+    "..aPPPPBBPPPPS..",   # ふつうの短いそで（そでの下から腕）
     "..aHPPPPPPPP.S..",   # 腕と体のすき間に、胸の前へ流した髪（向かって左）
-    "..aHPPxPPxPP.S..",
-    "..a.PPxPPxPP.S..",
-    "..aPPPxPPxPPPS..",
-    "..PPPPxPPxPPPP..",
+    "..aHPPPPPPPP.S..",
+    "..a.PPPPPPPP.S..",
+    "..aPPPPPPPPPPS..",
+    "..PPPPPPPPPPPP..",
     "..PPPPPPPPPPPP..",
     ".PPPPPPPPPPPPPP.",
-    ".llllllllllllll.",   # すその白いレース
+    ".PPPPPPPPPPPPPP.",   # すそ（レースは付けない：部屋着）
 ]
 
 DOWN_LEGS = {
@@ -109,7 +110,7 @@ UP_BODY = [
     "..PPPPPPPPPPPP..",
     "..PPPPPPPPPPPP..",
     ".PPPPPPPPPPPPPP.",
-    ".llllllllllllll.",
+    ".PPPPPPPPPPPPPP.",
 ]
 
 UP_LEGS = DOWN_LEGS
@@ -139,13 +140,13 @@ SIDE_BODY = [
     "...HHPPPPPP.....",
     "...HPPPPPPP.....",
     "...HHPSSPPP.....",
-    "....HPSSPxP.....",
-    ".....PSSPxP.....",
-    ".....PSSPxP.....",
+    "....HPSSPPP.....",
+    ".....PSSPPP.....",
+    ".....PSSPPP.....",
     "....PPPPPPPP....",
     "...PPPPPPPPP....",
     "...PPPPPPPPPP...",
-    "..lllllllllll...",
+    "..PPPPPPPPPPP...",
 ]
 
 SIDE_LEGS = {
@@ -398,11 +399,8 @@ SHOULDERS = [(4, 47), (8, 40), (16, 36), (32, 36), (40, 40), (44, 47)]
 
 def portrait(expression="normal"):
     c = Canvas(48, 48)
-    # 服（F1）：肩とふくらんだそで、首まわりと胸の下の白いレース
+    # 服（F1）：肩と首まわり。レース・ふくらんだそでは付けない（v0.17、部屋着らしく簡素に）
     c.poly(SHOULDERS, "P")
-    c.ellipse((14, 33, 34, 41), "l")
-    c.ellipse((16, 33, 32, 39), "P")
-    c.rect((6, 42, 42, 42), "l", only="P")
     # 首とマフラー（端は向かって右に垂らす）
     c.rect((20, 29, 27, 37), "S")
     c.poly([(15, 33), (19, 30), (29, 30), (33, 33), (30, 37), (18, 37)], "B")

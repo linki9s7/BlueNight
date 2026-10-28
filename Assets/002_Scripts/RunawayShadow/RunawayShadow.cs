@@ -244,13 +244,31 @@ namespace BlueNight.Shadows
             GameFlags.Set(capturedFlag);
         }
 
-        /// <summary>触れたのに逃げられる：びくっとして、会話のあと塀を越えて（上へ）消える。</summary>
+        Vector3 escapeDirection = Vector3.up;
+
+        /// <summary>
+        /// 触れたのに逃げられる：びくっとして、会話のあと近くの低い塀を越えて消える
+        /// （低い塀の上は暗いので、影は越えられる。高い壁は越えられない）。
+        /// </summary>
         void Escape()
         {
             state = State.Speaking;
             PlayOnce(surprised);
             Escaped?.Invoke();
             owner = null;
+            escapeDirection = Vector3.up;
+            if (world != null && world.Map != null)
+            {
+                foreach (var d in new[] { new Cell(0, 1), new Cell(1, 0), new Cell(-1, 0), new Cell(0, -1),
+                                          new Cell(1, 1), new Cell(-1, 1), new Cell(1, -1), new Cell(-1, -1) })
+                {
+                    if (GridMap.IsLowFence(world.Map.At(current + d)))
+                    {
+                        escapeDirection = new Vector3(d.X, d.Y, 0f).normalized;
+                        break;
+                    }
+                }
+            }
             if (DialogueRunner.Instance != null)
                 DialogueRunner.Instance.Play(captureLines, AfterEscape);
             else
@@ -286,7 +304,7 @@ namespace BlueNight.Shadows
         void UpdateReturning()
         {
             // 持ち主の足元へ帰る。持ち主がいない（逃げていく）ときは、塀を越えて上へ
-            Vector3 goal = owner != null ? owner.position : transform.position + Vector3.up;
+            Vector3 goal = owner != null ? owner.position : transform.position + escapeDirection;
             transform.position = Vector3.MoveTowards(transform.position, goal, 2.5f * Time.deltaTime);
 
             var c = spriteRenderer.color;

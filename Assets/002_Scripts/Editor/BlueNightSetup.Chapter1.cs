@@ -196,6 +196,10 @@ namespace BlueNight.EditorTools
                         else if (indoor)
                             wall = row == 0 || x == 0 || x == map.Width - 1 || y == 0 ? innerTop
                                 : row == 1 ? (x % 5 == 2 ? plaster1 : plaster0) : row == 2 ? wainscot : innerTop;
+                        else if (GridMap.IsLowFence(ch))
+                            wall = block;                     // 低い塀（路地その 1）：ブロック塀。影は上を越えられる
+                        else if (alley)
+                            wall = wallTop;                   // 路地その 2 など：高い建物の壁（越えられない）
                         else
                             wall = !GridMap.IsWall(map.At(cell + new Cell(0, 1))) ? block : wallTop;   // 北が開けている壁は、正面の塀として見せる
                         walls.SetTile(p, wall);

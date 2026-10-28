@@ -7,6 +7,7 @@ namespace BlueNight.Logic
     /// 文字で書いたマップ。1 文字 = 1 マス（16 px）。上の行ほど北（Y が大きい）。
     ///
     ///   #  壁・建物（光も人も通さない）     R  屋根の上（壁。第 1 章でルリの影が立つ所）
+    ///   w  低い塀（壁と同じく光も人も通さない。ただし塀の上は暗いので、逃げた影は触れられると越えて逃げる）
     ///   .  歩道（広場・床）  ,  路地（アスファルト）  =  車道  :  横断歩道
     ///   L  街灯（柱は通れない。光源）
     ///   H  路地のランタン掛け   h  広場・店の中のランタン掛け
@@ -43,7 +44,8 @@ namespace BlueNight.Logic
                         yield return new Cell(x, y);
         }
 
-        public static bool IsWall(char c) => c == '#' || c == 'R';
+        public static bool IsWall(char c) => c == '#' || c == 'R' || c == 'w';
+        public static bool IsLowFence(char c) => c == 'w';
         public static bool IsSolid(char c) => "LVGATXBMUQKC".IndexOf(c) >= 0;
         public static bool IsAlley(char c) => c == ',' || c == 'H' || c == 'S';
         public static bool IsLink(char c) => c >= '1' && c <= '9';

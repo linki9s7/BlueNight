@@ -180,6 +180,37 @@ namespace BlueNight.Tests
             Assert.IsTrue(ShadowGridTests.Chase(grid, Entry(Chapter1Maps.Alley1, '3'), Single(Chapter1Maps.Alley1, 'S'), 200, true));
         }
 
+        /// <summary>
+        /// 1 回目に逃げられる理由（ユーザーの決定）：路地その 1 の行き止まりは低い塀。角に掛けたあと影が追いつめられる行き止まりは、
+        /// どれも低い塀に面している（触れると塀を越えて逃げる）。路地その 2 には低い塀が無い（高い壁なので逃げられない）。
+        /// </summary>
+        [Test]
+        public void Alley1DeadEndsAreLowFencesButAlley2HasNone()
+        {
+            var map = Chapter1Maps.Create(Chapter1Maps.Alley1);
+            var grid = Lit(Chapter1Maps.Alley1, Single(Chapter1Maps.Alley1, 'H'));
+            var reach = grid.DistancesFrom(Single(Chapter1Maps.Alley1, 'S'), grid.IsDark);
+            int deadEnds = 0;
+            for (int y = 0; y < map.Height; y++)
+            {
+                for (int x = 0; x < map.Width; x++)
+                {
+                    var c = new Cell(x, y);
+                    if (grid.DistanceAt(reach, c) == ShadowGrid.Unreachable)
+                        continue;
+                    int darkNeighbours = Cell.Directions.Count(d => grid.DistanceAt(reach, c + d) != ShadowGrid.Unreachable);
+                    if (darkNeighbours > 1)
+                        continue;
+                    deadEnds++;
+                    bool nearFence = Cell.Directions.Concat(new[] { new Cell(1, 1), new Cell(-1, 1), new Cell(1, -1), new Cell(-1, -1) })
+                        .Any(d => GridMap.IsLowFence(map.At(c + d)));
+                    Assert.IsTrue(nearFence, $"alley 1 dead end {c} is not next to a low fence");
+                }
+            }
+            Assert.Greater(deadEnds, 0);
+            Assert.IsEmpty(Chapter1Maps.Create(Chapter1Maps.Alley2).Find('w'), "alley 2 must have only tall walls");
+        }
+
         [Test]
         public void Alley2ShadowCannotGetOutToTheBackStreet()
         {
