@@ -249,7 +249,8 @@ def haru_portrait(expression):
 
 
 AOYAGI_FACE_MATS = {
-    "S": Mat("skin2", "skin1", group="SGLqEemnb", d=3),
+    # ひげ（B・W）も顔の部品に入れる：別の部品だと、ひげの上の肌に太い影の帯ができて鼻のまわりが崩れて見えた（ユーザーの指摘）
+    "S": Mat("skin2", "skin1", group="SGLqEemnbBW", d=3),
     "H": Mat("stone6", "stone4", "stone7", group="Hh", d=2),
     "B": Mat("stone7", "stone5", "tee3", group="BW", d=2),
     "A": Mat("brown2", "brown1", "brown3", group="A", d=3),
@@ -290,11 +291,9 @@ def aoyagi_portrait(expression):
     c.stamp(["bbbbbb", "..bbbb"], 14, 16)                    # 太い眉（眉間へ向けて少し下がる）
     c.stamp(["bbbbbb", "bbbb.."], 28, 16)
     c.stamp(GLASSES[expression], 16, 19)
-    c.stamp(["n", "n", "n", "n", "nn"], 24, 22)              # 通った鼻
+    c.stamp(["n", "n", "n", ".nn"], 24, 23)                  # 通った鼻（光は左上なので、右側に影と小鼻）
     c.stamp(["n", "n"], 14, 21)                              # 目じりのしわ
     c.stamp(["n", "n"], 33, 21)
-    c.stamp(["n", "n", "n"], 16, 26)                         # こけたほお
-    c.stamp(["n", "n", "n"], 31, 26)
     # 短く整えた白いあごひげ（口のまわりとあごだけ）と口ひげ
     c.poly([(18, 30), (22, 31), (26, 31), (30, 30), (31, 34), (28, 38), (24, 39), (20, 38), (17, 34)], "B")
     c.stamp(["WWWWWWWWW", "W.......W"], 20, 29)

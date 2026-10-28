@@ -7711,7 +7711,7 @@
    "#f2c9a8"
   ],
   "floatingAA": 1,
-  "noisePercent": 1.2,
+  "noisePercent": 1.3,
   "ditherPercent": 0.0,
   "lightWrong": {
    "stone": [
@@ -7731,11 +7731,10 @@
   "colors": 14,
   "offPalette": [],
   "doubles": 2,
-  "banding": 2,
-  "bandingPixels": 6,
+  "banding": 1,
+  "bandingPixels": 3,
   "bandingColors": [
-   "#f2c9a8",
-   "#c3c8dc"
+   "#f2c9a8"
   ],
   "floatingAA": 1,
   "noisePercent": 1.1,
