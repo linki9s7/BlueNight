@@ -42,6 +42,13 @@ namespace BlueNight.Rendering
             shadowRenderer = shadowSprite;
         }
 
+        /// <summary>演出で「立つ」絵を替える（回想で笑う顔など）。足元の影はそのまま。</summary>
+        public void SetIdleFrames(Sprite[] frames)
+        {
+            if (frames != null && frames.Length > 0)
+                body.idle = frames;
+        }
+
         void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();

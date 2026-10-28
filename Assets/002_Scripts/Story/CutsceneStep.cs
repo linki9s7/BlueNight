@@ -31,6 +31,7 @@ namespace BlueNight.Story
             PlayerVisible, // ルリ（とネム・ランタン）を見せる／隠す（volume > 0 で見せる）。回想のあいだ隠す
             Camera,     // volume > 0：カメラで position を映す（seconds はゆっくりさ）。volume = 0：ルリに戻す
             Alpha,      // actor の絵の濃さ（不透明度）を volume まで seconds 秒で（待たずに次の行へ）
+            IdleFrames, // 演出で動かす人（ActorAnimator）の「立つ」絵を frames に替える（回想で笑う）
         }
 
         public Kind kind;
@@ -68,5 +69,6 @@ namespace BlueNight.Story
         public static CutsceneStep CameraTo(Vector2 p, float s = 0.6f) => new CutsceneStep { kind = Kind.Camera, position = p, seconds = s, volume = 1f };
         public static CutsceneStep CameraBack(float s = 0.6f) => new CutsceneStep { kind = Kind.Camera, seconds = s, volume = 0f };
         public static CutsceneStep AlphaTo(Transform t, float alpha, float s = 1f) => new CutsceneStep { kind = Kind.Alpha, actor = t, volume = alpha, seconds = s };
+        public static CutsceneStep IdleFrames(Transform t, Sprite[] f) => new CutsceneStep { kind = Kind.IdleFrames, actor = t, frames = f };
     }
 }

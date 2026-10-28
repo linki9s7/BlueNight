@@ -428,6 +428,74 @@
   "reviewed": ""
  },
  {
+  "file": "Characters/Kids/kid_mio_laugh_down_0.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 3,
+  "bandingPixels": 14,
+  "bandingColors": [
+   "#d99a7c",
+   "#5a3a32",
+   "#80544a"
+  ],
+  "floatingAA": 5,
+  "noisePercent": 7.1,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": ""
+ },
+ {
+  "file": "Characters/Kids/kid_mio_laugh_down_1.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 3,
+  "bandingPixels": 14,
+  "bandingColors": [
+   "#d99a7c",
+   "#5a3a32",
+   "#80544a"
+  ],
+  "floatingAA": 5,
+  "noisePercent": 7.1,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": ""
+ },
+ {
+  "file": "Characters/Kids/kid_mio_laugh_down_shadow_0.png",
+  "group": "characters",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": ""
+ },
+ {
+  "file": "Characters/Kids/kid_mio_laugh_down_shadow_1.png",
+  "group": "characters",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": ""
+ },
+ {
   "file": "Characters/Kids/kid_mio_run_left_0.png",
   "group": "characters",
   "colors": 18,
@@ -1050,6 +1118,70 @@
   ],
   "floatingAA": 4,
   "noisePercent": 4.9,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": ""
+ },
+ {
+  "file": "Characters/Kids/kid_ruri_smile_down_0.png",
+  "group": "characters",
+  "colors": 13,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 2,
+  "bandingPixels": 8,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 4,
+  "noisePercent": 5.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": ""
+ },
+ {
+  "file": "Characters/Kids/kid_ruri_smile_down_1.png",
+  "group": "characters",
+  "colors": 13,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 2,
+  "bandingPixels": 8,
+  "bandingColors": [
+   "#f2c9a8"
+  ],
+  "floatingAA": 4,
+  "noisePercent": 5.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": ""
+ },
+ {
+  "file": "Characters/Kids/kid_ruri_smile_down_shadow_0.png",
+  "group": "characters",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": ""
+ },
+ {
+  "file": "Characters/Kids/kid_ruri_smile_down_shadow_1.png",
+  "group": "characters",
+  "colors": 1,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
   "reviewed": ""

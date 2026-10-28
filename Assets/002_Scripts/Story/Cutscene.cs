@@ -170,6 +170,11 @@ namespace BlueNight.Story
                         StartCoroutine(FadeSprite(sprite, step.volume, step.seconds));
                     break;
 
+                case CutsceneStep.Kind.IdleFrames:
+                    if (step.actor != null && step.actor.TryGetComponent<ActorAnimator>(out var actorAnimator))
+                        actorAnimator.SetIdleFrames(step.frames);
+                    break;
+
                 case CutsceneStep.Kind.PlayerVisible:
                     if (player != null)
                     {

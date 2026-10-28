@@ -28,6 +28,10 @@
 | Characters/Kids/kid_mio_idle_down_1.png | 18 |  | 0 | 4/19 | 5 | 8.3 | 0.0 |  |  |
 | Characters/Kids/kid_mio_idle_down_shadow_0.png | 1 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Kids/kid_mio_idle_down_shadow_1.png | 1 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_mio_laugh_down_0.png | 17 |  | 0 | 3/14 | 5 | 7.1 | 0.0 |  |  |
+| Characters/Kids/kid_mio_laugh_down_1.png | 17 |  | 0 | 3/14 | 5 | 7.1 | 0.0 |  |  |
+| Characters/Kids/kid_mio_laugh_down_shadow_0.png | 1 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_mio_laugh_down_shadow_1.png | 1 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Kids/kid_mio_run_left_0.png | 18 |  | 0 | 1/4 | 0 | 8.0 | 0.0 | brown |  |
 | Characters/Kids/kid_mio_run_left_1.png | 18 |  | 0 | 1/4 | 0 | 8.8 | 0.0 | brown |  |
 | Characters/Kids/kid_mio_run_left_2.png | 17 |  | 0 | 1/4 | 1 | 9.4 | 0.0 | brown |  |
@@ -66,6 +70,10 @@
 | Characters/Kids/kid_ruri_run_right_shadow_3.png | 1 |  | 2 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Kids/kid_ruri_sit_down_0.png | 13 |  | 0 | 1/5 | 4 | 4.9 | 0.0 |  |  |
 | Characters/Kids/kid_ruri_sit_down_1.png | 13 |  | 0 | 1/5 | 4 | 4.9 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_smile_down_0.png | 13 |  | 0 | 2/8 | 4 | 5.0 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_smile_down_1.png | 13 |  | 0 | 2/8 | 4 | 5.0 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_smile_down_shadow_0.png | 1 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Characters/Kids/kid_ruri_smile_down_shadow_1.png | 1 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Characters/Nemu/nemu_fly_down_0.png | 10 |  | 2 | 6/28 | 3 | 3.5 | 0.0 | glow | v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる |
 | Characters/Nemu/nemu_fly_down_1.png | 10 |  | 2 | 3/12 | 4 | 3.7 | 0.0 | glow | v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる |
 | Characters/Nemu/nemu_fly_down_2.png | 10 |  | 2 | 1/3 | 3 | 6.6 | 0.0 | glow | v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる |

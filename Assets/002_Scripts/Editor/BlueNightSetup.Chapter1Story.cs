@@ -344,7 +344,7 @@ namespace BlueNight.EditorTools
                     Ha("年寄りは眠れないもんだけど"), Ha("今夜はまた、特別でね"), Ha("あたしの影がいなくなった"),
                     Ha("あっちの路地へ、すうっと"), Ne("ほらね"), Ha("なんだい、その虫。／……まあ、いいや"),
                     Ha("最近の子は変わったもん／連れてるね", "smile"), Ha("ミオちゃんは？"), Ha("あんたたち、いつも二人／だったじゃないか", "smile"),
-                    Ha("ラムネ、二本ずつ"), Ru("…………", "sad"), Ha("ああ、そうか。明日だったね"), Ha("……ごめんよ"),
+                    Ha("ラムネ、一本ずつ買ってった", "smile"), Ru("…………", "sad"), Ha("ああ、そうか。明日だったね"), Ha("……ごめんよ"),
                     Ha("年寄りは余計なこと／ばっかり言う"), Ha("青い夜が明けないのはね"), Ha("だれかが朝をこわがって／るんだってさ"),
                     Ha("むかし、うちのばあさんが／言ってた"), Ru("……影、さがしてきます"), Ha("無理するんじゃないよ", "smile"),
                     Ha("……ほら、気をつけて")),
@@ -468,7 +468,15 @@ namespace BlueNight.EditorTools
                 CutsceneStep.WaitFor(0.7f),
                 CutsceneStep.Run(kidRuri, P(lx - 0.3f, ly + 0.2f), 1.4f),    // 二人で並んで立つ。影が二つ、並ぶ
                 CutsceneStep.WalkTo(P(lx + 0.5f, ly + 0.2f), 1.4f, mio),
-                CutsceneStep.WaitFor(1.8f),
+                // ミオが声を上げて笑い、ルリも、ほんの少しだけ笑う。最後に二人の小さな影が、ひとつに重なる（台本 9.1。第 5 章「影を重ねる」の伏線）
+                CutsceneStep.WaitFor(0.4f),
+                CutsceneStep.IdleFrames(mio, LoadFrames($"{TexturesRoot}/Characters/Kids/kid_mio_laugh_down_")),
+                CutsceneStep.WaitFor(0.9f),
+                CutsceneStep.IdleFrames(kidRuri, LoadFrames($"{TexturesRoot}/Characters/Kids/kid_ruri_smile_down_")),
+                CutsceneStep.WaitFor(1.0f),
+                CutsceneStep.Run(kidRuri, P(lx - 0.08f, ly + 0.2f), 0.6f),
+                CutsceneStep.WalkTo(P(lx + 0.3f, ly + 0.2f), 0.6f, mio),
+                CutsceneStep.WaitFor(2.2f),
                 CutsceneStep.Fade(true, 1.2f),
                 CutsceneStep.HideActor(kidRuri),
                 CutsceneStep.HideActor(mio),
@@ -614,6 +622,8 @@ namespace BlueNight.EditorTools
             // 路地その 1：近づくと逃げる。角に掛けて追いつめると、触れた瞬間に塀を越えて奥の路地へ
             Scene(story, "逃げた！", Flags.Alley1Intro, CutsceneTrigger.When.Touch, touch: Box(alley1, 4.8f, 4.5f, 2.6f, 3.5f), steps: new[]
             {
+                Say(Ru("……おばあさんの影"), Ne("うん。あの杖、まちがいない")),   // 影は持ち主に似る。ネムが気づく（台本 9.5）
+                CutsceneStep.Sfx("shadow_escape"),
                 Say(Ne("逃げた！", "surprised"), Ne("光で道をふさがなきゃ"), Ne("あそこにランタン掛け"), Ne("あの角を明るくすれば"), Ne("影は奥に閉じこめられる")),
             });
             var s1 = One(alley1, 'S');

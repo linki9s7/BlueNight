@@ -52,6 +52,8 @@ RURI_HEAD_DOWN = [
     ".HSSSSSSSSH.",
     "..HSSSSSSH..",   # おかっぱ（あごの高さ）
 ]
+# ほんの少しだけ笑う：口のはしが上がる
+RURI_HEAD_SMILE = RURI_HEAD_DOWN[:10] + ["HHrSmSSmSrHH", ".HSSSmmSSSH."] + RURI_HEAD_DOWN[12:]
 RURI_BODY_DOWN = [
     "...PPPPPP...",
     "..aPPPPPPS..",
@@ -109,6 +111,8 @@ MIO_HEAD_DOWN = [
     "..MSSSmmSSM.",
     "...SSSSSSS..",
 ]
+# 声を上げて笑う：目を閉じる（弓なり）
+MIO_HEAD_LAUGH = MIO_HEAD_DOWN[:7] + [".MSSSSSSSSSM", ".MOOSSSSOOSM"] + MIO_HEAD_DOWN[9:]
 MIO_BODY_DOWN = [
     "...TTTTTT...",
     "..aTTTTTTL..",   # 右手（画面右）に懐中電灯
@@ -203,6 +207,9 @@ def frames():
     out["kid_ruri_idle_down"] = [to_image(compose(RURI_HEAD_DOWN, RURI_BODY_DOWN, RURI_LEGS_STAND, bob))
                                  for bob in (0, 0)]
     out["kid_mio_idle_down"] = [to_image(compose(MIO_HEAD_DOWN, MIO_BODY_DOWN, MIO_LEGS_STAND, bob)) for bob in (0, 0)]
+    # 回想の終わり（台本 9.1）：ミオが声を上げて笑い（目を閉じて、肩が上下）、ルリもほんの少しだけ笑う
+    out["kid_mio_laugh_down"] = [to_image(compose(MIO_HEAD_LAUGH, MIO_BODY_DOWN, MIO_LEGS_STAND, bob)) for bob in (0, 1)]
+    out["kid_ruri_smile_down"] = [to_image(compose(RURI_HEAD_SMILE, RURI_BODY_DOWN, RURI_LEGS_STAND, bob)) for bob in (0, 0)]
     for who, head, body, shoe in (("ruri", RURI_HEAD_SIDE, RURI_BODY_SIDE, "F"), ("mio", MIO_HEAD_SIDE, MIO_BODY_SIDE, "R")):
         right = [compose(head, body, legs, RUN_BOB[i]) for i, legs in enumerate(run_legs(shoe))]
         out[f"kid_{who}_run_right"] = [to_image(r) for r in right]
