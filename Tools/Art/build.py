@@ -106,6 +106,9 @@ def build_ruri():
                 if anim in ruri.NO_SCARF_ANIMS:   # 序章：マフラーを手に取るまでの絵
                     save(ruri.to_image(ruri.without_scarf(rows)), "Characters", "Ruri", f"ruri_noscarf_{anim}_{direction}_{i}.png")
             sheets[(anim, direction)] = imgs
+            if anim in ruri.NO_SCARF_ANIMS:       # 序章：タンスで着がえるまでのパジャマ（v0.19）
+                for i, rows in enumerate(ruri.frames(anim, direction, "pajama")):
+                    save(ruri.to_image(rows), "Characters", "Ruri", f"ruri_pajama_{anim}_{direction}_{i}.png")
     return sheets
 
 

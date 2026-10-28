@@ -6,10 +6,11 @@
 - 髪は G2 改「ぱっつんロング」：眉の高さで切りそろえた前髪（毛先のすき間から額が少しのぞく）、腰までの髪。
   胸の前へ流すのは向かって左だけ、右は肩の後ろへ。頭の左上に天使の輪。
   **頭の上の左右の小さな角（猫の耳のような寝ぐせ）はチャームポイント。消さないこと。**
-- 服は F1「ルームワンピース」：淡い青のコットンのワンピース（ひざ丈・ふつうの短いそで・すとんとした形）。
-  素足に紺のサンダル。夜中に部屋着のまま出てきた 14 歳。青いマフラーはミオの手編み（夏でも巻いている）。
-  v0.17：ユーザーの指摘（「おしゃれな服に見える」）で、すそのレース・ふくらんだそで・ギャザーの線をやめて、部屋着らしく簡素にした。
+- 服は F1「ルームワンピース」：淡い青のコットンのワンピース（ひざ丈・ふくらんだ短いそで・胸の下からギャザー）、
+  すそに白いレース。素足に紺のサンダル。夜中に部屋着のまま出てきた 14 歳。青いマフラーはミオの手編み（夏でも巻いている）。
 - 静かで大人っぽいのに、まだあどけなさが残る感じ。
+- 序章（v0.19、ユーザーの決定）：目を覚ましたときは**パジャマ**（淡いピンクの上下、長そで・長ズボン、白い襟とボタン、はだし）。
+  部屋のタンスでワンピースに着がえ、玄関の椅子でマフラーを巻いてから家を出る。パジャマの絵は PAJAMA_VIEWS。
 
 描き方（chara.py）
 - 記号の図を書き、陰影は自動で付ける（右下へずらすと部品の外に出る所が影、左上の縁が月明かり）。
@@ -23,6 +24,8 @@
   B  マフラー
   P  ワンピース  x ギャザーの線     l すそのレース
   F  サンダル    Z 奥の足のサンダル（暗い）
+  パジャマ：Q 布   y 白い襟・ボタン・すそ   u 光の側（画面左）のそで（a と同じ理由で明るいまま）
+           J 奥の脚のズボン（暗い）   j 奥の脚のすそ（暗い）
 """
 
 from chara import Canvas, Mat, Style, mirror, render
@@ -35,9 +38,12 @@ MATS = {
     "l": Mat("tee3", "tee2", group="l"),
     "B": Mat("scarf1", "scarf0", "scarf2", group="B"),
     "F": Mat("hair1", "hair0", "hair2"),
+    "Q": Mat("slp2", "slp1", "slp3", group="Qy", d=2),
+    "y": Mat("tee3", "tee2", group="y"),
 }
 DIRECT = {"E": "hair0", "e": "moon3", "I": "iris1", "r": "blush0", "x": "pj1", "k": "hair1", "h": "hair3",
-          "z": "skin1", "Z": "hair0", "a": "skin2"}
+          "z": "skin1", "Z": "hair0", "a": "skin2",
+          "u": "slp2", "J": "slp1", "j": "tee2"}
 
 # ---------------------------------------------------------------- 下向き（正面）：頭 15 行・胴 12 行・脚 5 行
 DOWN_HEAD = [
@@ -62,15 +68,15 @@ DOWN_BODY = [
     "...H.BBBBBB.H...",
     "...HPBBBBBBPH...",
     "...PPPBBBBPPP...",
-    "..aPPPPBBPPPPS..",   # ふつうの短いそで（そでの下から腕）
+    "..PPPPPBBPPPPP..",   # ふくらんだ短いそで
     "..aHPPPPPPPP.S..",   # 腕と体のすき間に、胸の前へ流した髪（向かって左）
-    "..aHPPPPPPPP.S..",
-    "..a.PPPPPPPP.S..",
-    "..aPPPPPPPPPPS..",
-    "..PPPPPPPPPPPP..",
+    "..aHPPxPPxPP.S..",
+    "..a.PPxPPxPP.S..",
+    "..aPPPxPPxPPPS..",
+    "..PPPPxPPxPPPP..",
     "..PPPPPPPPPPPP..",
     ".PPPPPPPPPPPPPP.",
-    ".PPPPPPPPPPPPPP.",   # すそ（レースは付けない：部屋着）
+    ".llllllllllllll.",   # すその白いレース
 ]
 
 DOWN_LEGS = {
@@ -110,7 +116,7 @@ UP_BODY = [
     "..PPPPPPPPPPPP..",
     "..PPPPPPPPPPPP..",
     ".PPPPPPPPPPPPPP.",
-    ".PPPPPPPPPPPPPP.",
+    ".llllllllllllll.",
 ]
 
 UP_LEGS = DOWN_LEGS
@@ -140,13 +146,13 @@ SIDE_BODY = [
     "...HHPPPPPP.....",
     "...HPPPPPPP.....",
     "...HHPSSPPP.....",
-    "....HPSSPPP.....",
-    ".....PSSPPP.....",
-    ".....PSSPPP.....",
+    "....HPSSPxP.....",
+    ".....PSSPxP.....",
+    ".....PSSPxP.....",
     "....PPPPPPPP....",
     "...PPPPPPPPP....",
     "...PPPPPPPPPP...",
-    "..PPPPPPPPPPP...",
+    "..lllllllllll...",
 ]
 
 SIDE_LEGS = {
@@ -163,6 +169,68 @@ VIEWS = {
     "side": (SIDE_HEAD, SIDE_BODY, SIDE_LEGS),
 }
 
+# ---------------------------------------------------------------- パジャマ（序章、着がえるまで）：胴 10 行・脚 7 行
+# 上着は胸の下まで、ズボンは足首まで。白い襟とボタン、すそに白い線。はだし。腕の位置はワンピースと同じ（腕の動きを使い回す）。
+PJ_DOWN_BODY = [
+    "...H...SS...H...",
+    "...HQQySSyQQH...",   # 白い襟
+    "...QQQQyyQQQQ...",
+    "..QQQQQQQQQQQQ..",
+    "..uHQQQQyQQQ.Q..",   # 長そで。胸の前へ流した髪（向かって左）。ボタン
+    "..uHQQQQQQQQ.Q..",
+    "..u.QQQQyQQQ.Q..",
+    "..aQQQQQQQQQQS..",   # そで口から手
+    "....QQQQQQQQ....",   # ズボン
+    "....QQQQQQQQ....",
+]
+PJ_DOWN_LEGS = {
+    "stand": ["....QQQ..QQQ....", "....QQQ..QQQ....", "....QQQ..QQQ....", "....yyy..yyy....",
+              ".....SS..SS.....", "....SSS..SSS....", "................"],
+    "left_up": ["....QQQ..QQQ....", "....QQQ..QQQ....", "....yyy..QQQ....", ".....SS..yyy....",
+                "....SSS..SS.....", ".........SSS....", "................"],
+    "right_up": ["....QQQ..QQQ....", "....QQQ..QQQ....", "....QQQ..yyy....", "....yyy..SS.....",
+                 ".....SS..SSS....", "....SSS.........", "................"],
+}
+PJ_UP_BODY = [
+    "....HHHHHHHH....",
+    "....HHHHHHHH....",
+    "...QHHHHHHHHQ...",
+    "..QQHHHkHHHHQQ..",
+    "..u.HHHkHHHH.Q..",
+    "..u.HHHHHHHH.Q..",
+    "..u.QHHHHHHQ.Q..",
+    "..aQQQHHHHQQQS..",
+    "....QQQQQQQQ....",
+    "....QQQQQQQQ....",
+]
+PJ_SIDE_BODY = [
+    "...HH....SS.....",
+    "...HQQQQySy.....",   # 白い襟
+    "...HHQQQQQQ.....",
+    "...HQQQQQQQ.....",
+    "...HHQuuQQQ.....",   # 体の前の腕（長そで）
+    "....HQuuQyQ.....",
+    ".....QuuQQQ.....",
+    ".....QSSQyQ.....",   # 手
+    ".....QQQQQ......",
+    ".....QQQQQ......",
+]
+PJ_SIDE_LEGS = {
+    "stand": [".....QQQ........", ".....QQQ........", ".....QQQ........", ".....yyy........",
+              "......SS........", "......SSSS......", "................"],
+    # 手前の脚（Q）が前、奥の脚（J、暗い）がうしろ
+    "stride": [".....JJQQ.......", "....JJ..QQ......", "...JJ....QQ.....", "..jj.....yy.....",
+               "..zz......SS....", ".zzz......SSSS..", "................"],
+    "stride_alt": [".....QQJJ.......", "....QQ..JJ......", "...QQ....JJ.....", "..yy.....jj.....",
+                   "..SS......zz....", ".SSS......zzzz..", "................"],
+}
+PAJAMA_VIEWS = {
+    "down": (DOWN_HEAD, PJ_DOWN_BODY, PJ_DOWN_LEGS),
+    "up": (UP_HEAD, PJ_UP_BODY, PJ_DOWN_LEGS),
+    "side": (SIDE_HEAD, PJ_SIDE_BODY, PJ_SIDE_LEGS),
+}
+OUTFITS = {"dress": VIEWS, "pajama": PAJAMA_VIEWS}
+
 # idle・walk：(脚のポーズ, 上半身を持ち上げる px)
 FRAMES = {
     ("idle", "down"): [("stand", 0), ("stand", 0), ("stand", 1), ("stand", 0)],
@@ -174,15 +242,16 @@ FRAMES = {
 }
 
 
-def compose(view, legs_pose, lift, head_dy=0, crouch=0, lean=0):
+def compose(view, legs_pose, lift, head_dy=0, crouch=0, lean=0, outfit="dress"):
     """頭・胴・脚を 16x32 の記号の図に組み立てる。
 
     lift   > 0：上半身を持ち上げ、できた隙間は脚の一番上の行で埋める（歩き・走りの上下動）。
     head_dy> 0：頭だけ下げる（のぞきこむ）。頭が胴の上の行に重なる。
     crouch > 0：すねを crouch 行ぶん縮めて、上半身を下げる（しゃがむ）。
     lean       ：頭を横へずらす（走るときの前のめり）。
+    outfit     ："dress"（ワンピース）か "pajama"（序章のパジャマ）。
     """
-    head, body, legs = VIEWS[view]
+    head, body, legs = OUTFITS[outfit][view]
     leg_rows = legs[legs_pose]
     if crouch:
         leg_rows = leg_rows[:1] + leg_rows[1 + crouch:]
@@ -210,8 +279,8 @@ def compose(view, legs_pose, lift, head_dy=0, crouch=0, lean=0):
 # ---------------------------------------------------------------- 腕の動き（コマに上から描き足す）
 # 座標は 16 列の絵の中の位置。y は「胴の一番上の行」からの行数（lift・crouch に合わせて動く）。
 
-def body_top_of(view, legs_pose, lift, crouch):
-    _, body, legs = VIEWS[view]
+def body_top_of(view, legs_pose, lift, crouch, outfit="dress"):
+    _, body, legs = OUTFITS[outfit][view]
     return 32 - (len(legs[legs_pose]) - crouch) - len(body) - lift
 
 
@@ -292,27 +361,43 @@ ANIMS = ("idle", "walk", "run", "inspect", "hang", "place")
 WIDE = {"hang", "place", "inspect"}
 
 
-def action_frame(view, spec, width):
+def in_sleeves(changes):
+    """パジャマの腕：ワンピースの絵の上の変更（腕は肌、消した所はワンピース）を、長そで＋手に置きかえる。
+    肌の点のうち最後の 1 つが手（ARM_FRONT・ARM_SIDE はどれも肩から手の順に並べてある）。"""
+    skin = [i for i, (_, _, ch) in enumerate(changes) if ch in "Sa"]
+    hand = skin[-1] if skin else None
+    out = []
+    for i, (x, y, ch) in enumerate(changes):
+        if ch == "P":
+            ch = "Q"
+        elif ch in "Sa" and i != hand:
+            ch = "u" if ch == "a" else "Q"
+        out.append((x, y, ch))
+    return out
+
+
+def action_frame(view, spec, width, outfit="dress"):
     pad = (width - 16) // 2
-    rows = compose(view, spec["pose"], spec["lift"], spec["head_dy"], spec["crouch"], spec["lean"])
+    rows = compose(view, spec["pose"], spec["lift"], spec["head_dy"], spec["crouch"], spec["lean"], outfit)
     rows = ["." * pad + r + "." * pad for r in rows]
-    top = body_top_of(view, spec["pose"], spec["lift"], spec["crouch"])
+    top = body_top_of(view, spec["pose"], spec["lift"], spec["crouch"], outfit)
+    dress = (lambda c: c) if outfit == "dress" else in_sleeves
     if spec["arm"]:
-        rows = edit(rows, arm(view, spec["arm"]), top, pad)
+        rows = edit(rows, dress(arm(view, spec["arm"])), top, pad)
     if spec["arm2"] and view != "side":
         other = mirror_x(ARM_FRONT[spec["arm2"]]) if view == "down" else ARM_FRONT[spec["arm2"]]
-        rows = edit(rows, other, top, pad)
+        rows = edit(rows, dress(other), top, pad)
     return rows
 
 
-def frames(anim, direction):
+def frames(anim, direction, outfit="dress"):
     """記号の図のコマの一覧。direction は down / up / right / left。左向きは右向きの図を反転したもの。"""
     view = "side" if direction in ("left", "right") else direction
     if (anim, view) in FRAMES:
-        result = [compose(view, pose, lift) for pose, lift in FRAMES[(anim, view)]]
+        result = [compose(view, pose, lift, outfit=outfit) for pose, lift in FRAMES[(anim, view)]]
     else:
         width = 24 if anim in WIDE else 16
-        result = [action_frame(view, spec, width) for spec in ACTIONS[(anim, view)]]
+        result = [action_frame(view, spec, width, outfit) for spec in ACTIONS[(anim, view)]]
     if direction == "left":
         result = [mirror(rows) for rows in result]
     return result
@@ -339,7 +424,7 @@ def without_scarf(rows):
     return ["".join(r) for r in rows]
 
 
-NO_SCARF_ANIMS = ("idle", "walk", "run", "inspect")   # 序章（部屋の中）で使う動きだけ
+NO_SCARF_ANIMS = ("idle", "walk", "run", "inspect")   # 序章（部屋の中）で使う動きだけ。パジャマの絵も同じ動きだけ描く
 
 
 def to_image(rows):
@@ -399,8 +484,11 @@ SHOULDERS = [(4, 47), (8, 40), (16, 36), (32, 36), (40, 40), (44, 47)]
 
 def portrait(expression="normal"):
     c = Canvas(48, 48)
-    # 服（F1）：肩と首まわり。レース・ふくらんだそでは付けない（v0.17、部屋着らしく簡素に）
+    # 服（F1）：肩とふくらんだそで、首まわりと胸の下の白いレース
     c.poly(SHOULDERS, "P")
+    c.ellipse((14, 33, 34, 41), "l")
+    c.ellipse((16, 33, 32, 39), "P")
+    c.rect((6, 42, 42, 42), "l", only="P")
     # 首とマフラー（端は向かって右に垂らす）
     c.rect((20, 29, 27, 37), "S")
     c.poly([(15, 33), (19, 30), (29, 30), (33, 33), (30, 37), (18, 37)], "B")

@@ -6,6 +6,7 @@
 - 母と二人暮らし。物は少なく、きちんとしている（母は夜勤。書き置きでしか話さない家）。
 - 台本（docs/STORY.md 8 節＝序章・14 節＝終章）で使うもの：ふとん、机（伏せたスマホ・3 時 12 分の目覚まし・引き出し）、
   湾と高架道路の見える窓、冷蔵庫の書き置き、玄関の椅子にかけた青いマフラー。
+  v0.19：部屋の整理だんす（パジャマからワンピースに着がえる）。
 - 参考にしたもの：昭和の終わりごろのアパートの 2K（畳の部屋＋台所＋小さな玄関）。
 """
 
@@ -252,6 +253,29 @@ def shoe_cabinet():
     return cv.img
 
 
+def tansu(folded):
+    """小さな整理だんす（16x32、ルリの部屋）：引き出し 3 段。上の面にたたんだ服。序章でここで着がえる（v0.19）。
+    folded="dress"：たたんだワンピース（淡い青、すそに白いレース）。"pajama"：着がえたあと、たたんだパジャマ（淡いピンク）。"""
+    cv = Canvas(16, 32)
+    cv.rect(0, 8, 15, 31, OUT)
+    cv.rect(1, 9, 14, 11, "brown2")                # 上の面
+    cv.line(0, 12, 15, 12, OUT)
+    cv.rect(1, 13, 14, 30, "brown1")               # 正面
+    cv.rect(13, 13, 14, 30, "brown0")              # 右の影
+    for y0 in (14, 20, 26):                        # 引き出し
+        cv.rect(2, y0, 12, y0 + 4, OUT)
+        cv.rect(3, y0 + 1, 11, y0 + 3, "brown2")
+        cv.dot(7, y0 + 2, "stone5")                # 取っ手
+    # たたんだ服（上の面にのせる）
+    ramp = ("pj1", "pj2", "pj3", "tee3") if folded == "dress" else ("slp1", "slp2", "slp3", "tee3")
+    cv.rect(2, 5, 12, 10, OUT)
+    cv.rect(3, 6, 11, 7, ramp[2])                  # たたんだ上の面
+    cv.rect(3, 8, 11, 9, ramp[1])                  # 重ねた厚み
+    cv.line(10, 6, 11, 6, ramp[1])
+    cv.line(3, 9, 11, 9, ramp[3] if folded == "dress" else ramp[0])   # ワンピースはすそのレース、パジャマは影
+    return cv.img
+
+
 def floor_tile(x, row):
     """床のタイル（マップの x と、上からの行）。部屋（x 1〜7）は畳：2 行で 1 枚、上の行にへり。
     台所と玄関の上がり口はクッションフロア、玄関の戸の前（下の 2 行、x 14 以上）は土間。
@@ -274,7 +298,7 @@ def build(save):
     things = {
         "futon": futon(), "desk": desk(), "window_bay": window_bay(), "sink": sink(), "fridge": fridge(),
         "kitchen_table": kitchen_table(), "chair": chair(False), "chair_scarf": chair(True),
-        "shoe_cabinet": shoe_cabinet(),
+        "shoe_cabinet": shoe_cabinet(), "tansu_dress": tansu("dress"), "tansu_pajama": tansu("pajama"),
     }
     for name, img in things.items():
         out[name] = save(img, "Home", f"{name}.png", clean=True)

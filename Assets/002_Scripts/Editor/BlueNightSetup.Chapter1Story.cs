@@ -28,6 +28,8 @@ namespace BlueNight.EditorTools
         static class Flags
         {
             public const string Woke = "pro_woke";               // 部屋で目を覚ました
+            public const string Changing = "pro_changing";       // たんすを調べた（着がえの暗転が始まる）
+            public const string Dressed = "pro_dressed";         // パジャマからワンピースに着がえた
             public const string Scarf = "pro_scarf";             // マフラーを巻いた（玄関から出られる）
             public const string NoShadow = "pro_no_shadow";      // 街灯の下で影が無いことに気づいた（序章の終わり）
             public const string BenchMemory = "c1_bench_memory";
@@ -126,10 +128,11 @@ namespace BlueNight.EditorTools
             var lantern = player.transform.Find("Lantern").gameObject;
             nemu.SetActive(false);       // ネムはランプ屋の前で出会う
             lantern.SetActive(false);    // ランタンは主人からもらう
-            // 序章：玄関の椅子でマフラーを手に取るまでは、マフラー無しの絵（Tools/Art/ruri.py の without_scarf）
-            player.GetComponent<PlayerAnimator>().ConfigureWithoutScarf(Flags.Scarf,
-                LoadDirectionalFrames("idle", "Ruri/ruri_noscarf"), LoadDirectionalFrames("walk", "Ruri/ruri_noscarf"),
-                LoadDirectionalFrames("run", "Ruri/ruri_noscarf"), LoadDirectionalFrames("inspect", "Ruri/ruri_noscarf"));
+            // 序章：たんすで着がえるまではパジャマ、玄関の椅子でマフラーを手に取るまではマフラー無しのワンピース（Tools/Art/ruri.py）
+            var animator = player.GetComponent<PlayerAnimator>();
+            foreach (var (flag, prefix) in new[] { (Flags.Dressed, "Ruri/ruri_pajama"), (Flags.Scarf, "Ruri/ruri_noscarf") })
+                animator.AddOutfitUntil(flag, LoadDirectionalFrames("idle", prefix), LoadDirectionalFrames("walk", prefix),
+                    LoadDirectionalFrames("run", prefix), LoadDirectionalFrames("inspect", prefix));
             React(story, Flags.MetNemu, show: new[] { nemu });
             var eaves = areas[Chapter1Maps.Street].transform.Find("Props/Old Lantern (Nemu's home)").gameObject;
             React(story, Flags.GotLantern, show: new[] { lantern }, hide: new[] { eaves });
@@ -174,11 +177,29 @@ namespace BlueNight.EditorTools
                 Always(N("おかず、冷蔵庫。／先に寝ててね。　母"), N("その下に、ルリの字で／小さく『了解』。")));
             Inspect(roomGo, "Window (bay)", At(room, 5, 6, 0f, 0f),
                 Always(N("湾の上を、高架道路の車の／光が流れていく。")));
+            // たんすで着がえる（v0.19、ユーザーの決定）：暗転のあいだにパジャマ → ワンピース
+            var tansuDress = roomGo.transform.Find("Furniture/Tansu with the Dress").gameObject;
+            var tansuPajama = roomGo.transform.Find("Furniture/Tansu with the Pajamas").gameObject;
+            tansuPajama.SetActive(false);
+            Inspect(roomGo, "Tansu (dress)", At(room, 7, 6, 0f, 0f),
+                When(null, Flags.Changing, Flags.Changing, N("たんすの上に、／たたんだワンピース。")),
+                Always(N("たたんだパジャマ。")));
+            Scene(story, "着がえる", Flags.Dressed, CutsceneTrigger.When.Flag, watch: Flags.Changing, steps: new[]
+            {
+                CutsceneStep.Fade(true, 0.6f),
+                CutsceneStep.WaitFor(0.8f),
+                CutsceneStep.Flag(Flags.Dressed),             // 絵がワンピースに変わる（PlayerAnimator）、たんすの上はパジャマに
+                CutsceneStep.FaceTo(Facing.Down),
+                CutsceneStep.WaitFor(0.6f),
+                CutsceneStep.Fade(false, 0.8f),
+            });
+            React(story, Flags.Dressed, show: new[] { tansuPajama }, hide: new[] { tansuDress });
             var chairScarf = roomGo.transform.Find("Furniture/Chair with the Blue Scarf").gameObject;
             var chairPlain = roomGo.transform.Find("Furniture/Chair").gameObject;
             chairPlain.SetActive(false);
             Inspect(roomGo, "Chair (blue scarf)", At(room, 16, 3, 0f, 0f),
-                When(null, Flags.Scarf, Flags.Scarf, N("椅子にかけた、青いマフラー。"), Ru("……暑い")));
+                When(Flags.Dressed, Flags.Scarf, Flags.Scarf, N("椅子にかけた、青いマフラー。"), Ru("……暑い")),
+                When(null, Flags.Dressed, null, N("椅子にかけた、青いマフラー。"), Ru("……先に、着がえよう")));
             React(story, Flags.Scarf, show: new[] { chairPlain }, hide: new[] { chairScarf });
 
             // 外。坂の上の街灯の下で、足元に影が無いことに気づく（何も言わない）

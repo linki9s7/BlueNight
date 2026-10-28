@@ -34,6 +34,8 @@ RAMPS = {
     "tee": ["#5b6384", "#8e97b8", "#d6dcec", "#f3f5fb"],
     # ルリのワンピース（淡い青のコットン）
     "pj": ["#5d6e92", "#8c9ec1", "#bccbe4", "#e3ebf7"],
+    # ルリのパジャマ（序章、着がえるまで。淡いピンクのコットン、白いパイピング＝tee3）v0.19
+    "slp": ["#5e4058", "#946684", "#c497b2", "#e8c8d8"],
     # ルリの瞳（上が濃く、下が明るい）
     "iris": ["#16306e", "#2d5bc0", "#6aa2ee"],
     # ほおの赤み
@@ -91,7 +93,9 @@ MAP_PALETTES = {
                         # v0.16 の町の人：ハルのカーディガン、革・木の縁、白いシャツ・髪の縁
                         "rose1", "rose2", "rose3", "brown0", "brown3", "stone1", "stone6", "night5",
                         # 回想 1 の 8 歳のミオ：白い T シャツの影（tee1）
-                        "tee1"),
+                        "tee1",
+                        # 序章のルリのパジャマ（v0.19）
+                        "slp0", "slp1", "slp2", "slp3"),
     # ランプ屋の中（第 1 章）：木・しっくい・消えたランプ・灯り
     "lamp_shop": _pick("night0", "night1", "night2", "night3", "night4", "night5", "stone3", "stone4", "stone5",
                        "stone6", "stone7", "brown0", "brown1", "brown2", "warm3", "warm4", "warm5", "warm6",
@@ -100,7 +104,7 @@ MAP_PALETTES = {
     "ruri_home": _pick("night1", "night2", "night3", "stone1", "stone2", "stone3", "stone4", "stone5", "stone6", "stone7",
                        "brown0", "brown1", "brown2", "brown3", "warm3", "warm4", "warm5", "moon1", "moon2", "moon3",
                        "green1", "green2", "red1", "red2", "scarf0", "scarf1", "scarf2", "pj0", "pj1", "pj2", "pj3",
-                       "tee2", "tee3"),
+                       "tee2", "tee3", "slp1", "slp2", "slp3"),   # slp：タンスの上にたたんだパジャマ（v0.19）
     # 演出（光の輪・つぶ・波紋・小さな蛾・足元の影）
     "effects": _pick("night0", "night4", "night5", "moon0", "moon1", "moon2", "moon3", "stone7", "warm4", "warm5"),
     # UI（会話ウィンドウ・アイコン）：10 色

@@ -410,6 +410,8 @@ namespace BlueNight.EditorTools
             var window = CreateSpriteObject(root, "Window (bay)", "Home/window_bay", P(5.5f, 7.375f), lit);
             CreatePointLight(window, "Moonlight", new Vector3(0f, -1.5f, 0f), Hex("#9fc4ff"), 0.6f, 4f);
             CreateSpriteObject(root, "Desk", "Home/desk", P(2f, 6.05f), lit);
+            CreateSpriteObject(root, "Tansu with the Dress", "Home/tansu_dress", P(7.5f, 6.05f), lit);      // 序章：ここで着がえる
+            CreateSpriteObject(root, "Tansu with the Pajamas", "Home/tansu_pajama", P(7.5f, 6.05f), lit);  // 着がえたあと
             var futon = CreateSpriteObject(root, "Futon", "Home/futon", P(2.5f, 2.5f), lit);
             futon.GetComponent<SpriteRenderer>().sortingOrder = -60;
             CreateSpriteObject(root, "Sink", "Home/sink", P(10f, 6.05f), lit);
