@@ -147,8 +147,21 @@ namespace BlueNight.EditorTools
                     return $"going to {r.arg}";
                 case "invoke":
                     return Invoke(r.arg);
+                case "state":
+                    return State();
+                case "next":
+                    return AdvanceDialogue(1);
+                case "skip":
+                    // 会話を最後まで送り、出た文を返す（演出は続きの会話や待ちがあるので、何度か呼ぶ）
+                    return AdvanceDialogue(200);
+                case "interact":
+                    return InteractNearest(r.arg == "hook");
+                case "cell":
+                    // arg = エリア名。x, y = マス。そのマスの足元へルリを動かす
+                    var areaObj = BlueNight.World.AreaManager.Instance.Find(r.arg);
+                    return MovePlayer((Vector2)areaObj.transform.position + new Vector2(r.x + 0.5f, r.y + 0.1f));
                 case "logs":
-                    var text = string.Join("\n", Logs);
+                    var text = string.Join(NewLine, Logs);
                     Logs.Clear();
                     return text;
                 default:
@@ -235,6 +248,82 @@ namespace BlueNight.EditorTools
             var facing = (BlueNight.Player.Facing)Enum.Parse(typeof(BlueNight.Player.Facing), direction, true);
             player.Face(facing);
             return $"facing {facing}";
+        }
+
+        // ------------------------------------------------------------------ 通しの確認（再生中）
+
+        static readonly BindingFlags Private = BindingFlags.Instance | BindingFlags.NonPublic;
+        static readonly string NewLine = ((char)10).ToString();
+
+        static string State()
+        {
+            var lines = new List<string>();
+            var manager = BlueNight.World.AreaManager.Instance;
+            lines.Add($"area={(manager != null && manager.Current != null ? manager.Current.Id : "-")}");
+            lines.Add($"cutscene={BlueNight.Story.Cutscene.IsPlaying} dialogue={BlueNight.Dialogue.DialogueRunner.IsBusy}");
+            var player = UnityEngine.Object.FindObjectOfType<BlueNight.Player.PlayerController>();
+            if (player != null)
+                lines.Add($"ruri={player.transform.position} input={player.InputEnabled}");
+            var line = CurrentLine();
+            if (line != null)
+                lines.Add($"line={line.speaker}「{line.text.Replace(NewLine, "／")}」");
+            lines.Add("flags=" + string.Join(",", BlueNight.Core.GameFlags.All));
+            return string.Join(NewLine, lines);
+        }
+
+        static BlueNight.Dialogue.DialogueLine CurrentLine()
+        {
+            var runner = BlueNight.Dialogue.DialogueRunner.Instance;
+            if (runner == null || !BlueNight.Dialogue.DialogueRunner.IsBusy)
+                return null;
+            var all = (BlueNight.Dialogue.DialogueLine[])typeof(BlueNight.Dialogue.DialogueRunner).GetField("lines", Private).GetValue(runner);
+            int index = (int)typeof(BlueNight.Dialogue.DialogueRunner).GetField("index", Private).GetValue(runner);
+            return all != null && index < all.Length ? all[index] : null;
+        }
+
+        /// <summary>会話を count 行ぶん送る（決定ボタンを押したのと同じ）。送った文を返す。</summary>
+        static string AdvanceDialogue(int count)
+        {
+            var runner = BlueNight.Dialogue.DialogueRunner.Instance;
+            var type = typeof(BlueNight.Dialogue.DialogueRunner);
+            var said = new List<string>();
+            for (int i = 0; i < count && BlueNight.Dialogue.DialogueRunner.IsBusy; i++)
+            {
+                var line = CurrentLine();
+                said.Add($"{line.speaker}「{line.text.Replace(NewLine, "／")}」");
+                var all = (BlueNight.Dialogue.DialogueLine[])type.GetField("lines", Private).GetValue(runner);
+                int index = (int)type.GetField("index", Private).GetValue(runner) + 1;
+                type.GetField("index", Private).SetValue(runner, index);
+                if (index < all.Length)
+                    type.GetMethod("ShowLine", Private).Invoke(runner, null);
+                else
+                    type.GetMethod("Close", Private).Invoke(runner, null);   // 閉じると会話のあとの処理（フラグ・演出の続き）が動く
+            }
+            return said.Count == 0 ? "(no dialogue)" : string.Join(NewLine, said);
+        }
+
+        /// <summary>ルリのいちばん近くの「調べられるもの」を調べる（hook：ランタン掛けを使う）。</summary>
+        static string InteractNearest(bool hookOnly)
+        {
+            var player = Player();
+            var who = player.GetComponent<BlueNight.Player.PlayerInteractor>();
+            BlueNight.Interaction.Interactable best = null;
+            float bestDistance = float.MaxValue;
+            foreach (var target in BlueNight.Interaction.Interactable.All)
+            {
+                if (hookOnly && !(target is BlueNight.Interaction.LanternHook))
+                    continue;
+                float d = Vector2.Distance(target.transform.position, player.transform.position);
+                if (d <= target.Range && d < bestDistance && target.CanInteract(who))
+                {
+                    best = target;
+                    bestDistance = d;
+                }
+            }
+            if (best == null)
+                return "nothing to interact with here";
+            best.Interact(who);
+            return $"interacted with {best.name}";
         }
 
         static string Invoke(string fullName)

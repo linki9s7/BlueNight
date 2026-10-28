@@ -8,6 +8,12 @@
     python Tools/Bridge/unity_bridge.py face left
     python Tools/Bridge/unity_bridge.py capture Logs/shots/a.png --scale 2
     python Tools/Bridge/unity_bridge.py logs
+    # 通しの確認（再生中）
+    python Tools/Bridge/unity_bridge.py state                 # エリア・演出中か・会話の文・フラグ
+    python Tools/Bridge/unity_bridge.py next                  # 会話を 1 行送る（skip は最後まで）
+    python Tools/Bridge/unity_bridge.py interact              # いちばん近くのものを調べる（interact hook でランタン掛け）
+    python Tools/Bridge/unity_bridge.py cell street 18 8      # そのエリアのマスへルリを動かす
+    python Tools/Bridge/unity_bridge.py goto street:1         # 暗転してエリアを移る
 
 エディタが裏にあると、Unity は数秒に 1 回しか動かないことがある。待ち時間は --timeout（秒）で変えられる。
 """
@@ -58,6 +64,8 @@ def main():
     arg, x, y = "", 0.0, 0.0
     if a.command == "move":
         x, y = float(a.args[0]), float(a.args[1])
+    elif a.command == "cell":              # cell エリア x y：そのエリアのマス (x, y) へ
+        arg, x, y = a.args[0], float(a.args[1]), float(a.args[2])
     elif a.args:
         arg = a.args[0]
     data = send(a.command, arg, x, y, a.scale, a.timeout)

@@ -223,13 +223,17 @@ namespace BlueNight.Logic
             var cells = new List<Cell>(map.Find(link));
             if (cells.Count == 0)
                 throw new ArgumentException($"link {link} not in map");
+            // 画面の端の出入口（何マスもある）は、車道ではなく歩道の側に立つ
+            var sidewalk = cells.FindAll(c => Array.Exists(Cell.Directions, d => map.At(c + d) == '.'));
+            if (sidewalk.Count > 0)
+                cells = sidewalk;
             cells.Sort((a, b) => a.X != b.X ? a.X.CompareTo(b.X) : a.Y.CompareTo(b.Y));
             var middle = cells[cells.Count / 2];
             foreach (var d in Cell.Directions)
             {
                 var n = middle + d;
                 char ch = map.At(n);
-                if (GridMap.IsWalkable(ch) && !GridMap.IsLink(ch))
+                if (GridMap.IsWalkable(ch) && !GridMap.IsLink(ch) && (ch == '.' || sidewalk.Count == 0))
                     return n;
             }
             throw new ArgumentException($"link {link} at {middle} has no walkable neighbour");
