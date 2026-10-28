@@ -174,9 +174,22 @@ namespace BlueNight.Story
                 yield break;
 
             float timeout = 10f;
-            while (((Vector2)(goal - who.position)).sqrMagnitude > 0.01f && timeout > 0f)
+            // 何かに引っかかって進めなくなったら（0.6 秒ほとんど近づかない）、そこで止める（ぶつかったまま歩き続けない）
+            float best = ((Vector2)(goal - who.position)).magnitude;
+            float stuck = 0f;
+            while (((Vector2)(goal - who.position)).sqrMagnitude > 0.01f && timeout > 0f && stuck < 0.6f)
             {
                 timeout -= Time.deltaTime;
+                float now = ((Vector2)(goal - who.position)).magnitude;
+                if (now < best - 0.02f)
+                {
+                    best = now;
+                    stuck = 0f;
+                }
+                else
+                {
+                    stuck += Time.deltaTime;
+                }
                 Vector2 dir = ((Vector2)(goal - who.position)).normalized;
                 if (isPlayer && player != null)
                 {

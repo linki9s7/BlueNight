@@ -126,6 +126,10 @@ namespace BlueNight.EditorTools
             var lantern = player.transform.Find("Lantern").gameObject;
             nemu.SetActive(false);       // ネムはランプ屋の前で出会う
             lantern.SetActive(false);    // ランタンは主人からもらう
+            // 序章：玄関の椅子でマフラーを手に取るまでは、マフラー無しの絵（Tools/Art/ruri.py の without_scarf）
+            player.GetComponent<PlayerAnimator>().ConfigureWithoutScarf(Flags.Scarf,
+                LoadDirectionalFrames("idle", "Ruri/ruri_noscarf"), LoadDirectionalFrames("walk", "Ruri/ruri_noscarf"),
+                LoadDirectionalFrames("run", "Ruri/ruri_noscarf"), LoadDirectionalFrames("inspect", "Ruri/ruri_noscarf"));
             React(story, Flags.MetNemu, show: new[] { nemu });
             var eaves = areas[Chapter1Maps.Street].transform.Find("Props/Old Lantern (Nemu's home)").gameObject;
             React(story, Flags.GotLantern, show: new[] { lantern }, hide: new[] { eaves });
@@ -182,7 +186,8 @@ namespace BlueNight.EditorTools
             Scene(story, "影が無い", Flags.NoShadow, CutsceneTrigger.When.Touch,
                 touch: Box(home, lamp.X - 1.5f, lamp.Y - 1f, 4f, 3.5f), steps: new[]
                 {
-                    CutsceneStep.WalkTo((Vector2)At(home, lamp.X + 1, lamp.Y, 0f, 0f), 2f),
+                    // 街灯の柱の左わき（アパートの戸から来ても、柱にぶつからずに着ける）
+                    CutsceneStep.WalkTo((Vector2)At(home, lamp.X - 1, lamp.Y, 0.2f, 0f), 2f),
                     CutsceneStep.WaitFor(0.6f),
                     CutsceneStep.FaceTo(Facing.Up),
                     CutsceneStep.WaitFor(1.4f),
@@ -224,6 +229,11 @@ namespace BlueNight.EditorTools
             var n = One(street, 'N');
             Inspect(streetGo, "Old lantern", At(street, n.X, n.Y, 0f, 0f),
                 When(null, Flags.LanternTouched, Flags.LanternTouched, N("軒先の古いランタンだけが、／ぼんやり灯っている。")));
+            // 主人が戸口に出てくる（店の戸の前。当たり判定は付けない：ルリはすぐそばに立っている）
+            var keeperAtDoor = CreateLoopWithFootShadow(streetGo, "Keeper (at the door)", "Characters/Keeper/keeper_idle_",
+                At(street, 14, 9, 0f, -0.35f), AssetDatabase.LoadAssetAtPath<Material>(SpriteLitMaterialPath), 0.8f);
+            Object.DestroyImmediate(keeperAtDoor.GetComponent<BoxCollider2D>());
+            keeperAtDoor.SetActive(false);
             Scene(story, "ネムと出会う", Flags.MetNemu, CutsceneTrigger.When.Flag, watch: Flags.LanternTouched, steps: new[]
             {
                 CutsceneStep.Sfx("light_on"),
@@ -240,6 +250,7 @@ namespace BlueNight.EditorTools
                 Say(Ru("……虫なのに、しゃべるんだ"), Ne("でしょ？ しかもぼく"), Ne("口、ないんだよ"), Ne("ものも、食べない"),
                     Ne("しゃべるのは、ないしょの特技"), Ru("…………"), Ne("いま、ちょっと笑った？"), Ru("……べつに")),
                 CutsceneStep.Sfx("lantern_take"),             // 店の戸が開く
+                CutsceneStep.ShowActor(keeperAtDoor.transform),   // 主人が戸口に顔を出す（「入んな」まで立っている）
                 CutsceneStep.WaitFor(0.5f),
                 Say(Ke("……こんな夜ふけに、なんだ"), Ne("青柳さん！ この子も／影がないんだ"), Ne("手伝ってもらおうと思って"),
                     Ke("……そうか")),
@@ -247,12 +258,15 @@ namespace BlueNight.EditorTools
                 Say(Ke("入んな。夜風は、体に毒だ")),
                 CutsceneStep.Flag(Flags.KeeperOpen),
                 CutsceneStep.Go(Chapter1Maps.LampShop, "2"),
+                CutsceneStep.HideActor(keeperAtDoor.transform),   // 主人は店の中へ（暗転のあいだに消す）
             });
 
             // 佐伯商店：ハル・日よけ・ゴマ
             var haruTransform = streetGo.transform.Find("Characters/Haru");
             var haru = haruTransform.gameObject;
-            haru.AddComponent<TalkInteractable>().Configure(
+            var haruTalk = haru.AddComponent<TalkInteractable>();
+            haruTalk.SetRange(1.9f);                       // 軒先へ寄せたので、歩道から話しかけられる距離にする
+            haruTalk.Configure(
                 When(Flags.HaruSleep, null, null, N("……すう……すう……")),
                 When(Flags.Captured, Flags.Delivered, Flags.Delivered,
                     Ru("……あの"), Ru("影が言ってました"), Ru("『ありがとう』って"), Ru("『あの朝、言えなかった』"),
@@ -541,6 +555,23 @@ namespace BlueNight.EditorTools
                 new[] { Ne("惜しい！"), Ne("でも、わかったでしょ"), Ne("灯りの置き方しだいなんだ") },
                 Flags.Alley1Escaped, "c1_unused_returned");
             shadow1.gameObject.AddComponent<ChaseMusic>().Configure(shadow1, player.transform, "ch1_shopping_street");
+
+            // 逃げられたあと：商店街の左の路地（路地その 2）の口に、影の気配が見える。次の行き先がわかるように（ユーザーの指摘）
+            var street = Chapter1Maps.Street;
+            var mouth = Chapter1Maps.Create(street).Find('4').OrderBy(c => c.X).First();
+            var hint = CreateLoop(areas[street].gameObject, "Shadow at the left alley (hint)", "Characters/Shadows/shadow_grandma_",
+                At(street, mouth.X, mouth.Y - 1, 0.5f, -0.2f), unlit, 3f);
+            hint.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.75f);
+            hint.SetActive(false);
+            React(story, Flags.Alley1Escaped, show: new[] { hint });
+            React(story, Flags.Alley2Intro, hide: new[] { hint });
+            Scene(story, "左の路地の気配", "c1_saw_hint", CutsceneTrigger.When.AreaEnter, area: street,
+                required: Flags.Alley1Escaped, blocked: Flags.Alley2Intro, steps: new[]
+                {
+                    CutsceneStep.WaitFor(0.5f),
+                    CutsceneStep.Sfx("shadow_presence"),
+                    Say(Ne("あっ……あそこ、左の路地")),
+                });
 
             // 路地その 2：輪の路地。ネムのヒント（3 段階）
             Scene(story, "輪の路地", Flags.Alley2Intro, CutsceneTrigger.When.AreaEnter, area: alley2, steps: new[]

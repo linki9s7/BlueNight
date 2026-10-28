@@ -86,6 +86,9 @@ HARU_DOZE = [
     "..b..........b..",
 ]
 HARU_NOD = ["." * 16] + HARU_DOZE[:12] + HARU_DOZE[13:]
+# 起きて店先の腰かけに座っている（台本 9.4「店先の明かりの中に、椅子に座っている」）：居眠りの図の目を開ける
+HARU_SIT = [r if i != 8 else "...HSESSSSESH..." for i, r in enumerate(HARU_DOZE)]
+HARU_SIT_BREATH = ["." * 16] + HARU_SIT[:12] + HARU_SIT[13:]
 
 
 def haru_frames():
@@ -94,6 +97,10 @@ def haru_frames():
 
 def haru_doze_frames():
     return [render(r, HARU_MATS, HARU_DIRECT, STYLE) for r in (HARU_DOZE, HARU_NOD)]
+
+
+def haru_sit_frames():
+    return [render(r, HARU_MATS, HARU_DIRECT, STYLE) for r in (HARU_SIT, HARU_SIT_BREATH)]
 
 
 # ================================================================ 青柳（ランプ屋の主人）

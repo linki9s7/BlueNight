@@ -16,6 +16,7 @@ namespace BlueNight.Interaction
         public Vector3 PromptPosition => transform.position + (Vector3)promptOffset;
 
         public void SetPromptOffset(Vector2 offset) => promptOffset = offset;
+        public void SetRange(float distance) => range = distance;
 
         protected virtual void OnEnable() => All.Add(this);
         protected virtual void OnDisable() => All.Remove(this);

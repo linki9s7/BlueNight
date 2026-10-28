@@ -40,6 +40,12 @@ namespace BlueNight.Player
         [SerializeField] DirectionalFrames inspect = new DirectionalFrames();
         [SerializeField] DirectionalFrames hang = new DirectionalFrames();
         [SerializeField] DirectionalFrames place = new DirectionalFrames();
+        [Header("序章：マフラーを手に取るまでの絵（flag が立つと、上のふだんの絵に戻る）")]
+        [SerializeField] string scarfFlag;
+        [SerializeField] DirectionalFrames idleNoScarf = new DirectionalFrames();
+        [SerializeField] DirectionalFrames walkNoScarf = new DirectionalFrames();
+        [SerializeField] DirectionalFrames runNoScarf = new DirectionalFrames();
+        [SerializeField] DirectionalFrames inspectNoScarf = new DirectionalFrames();
         [SerializeField] float idleFps = 3f;
         [SerializeField] float walkFps = 10f;
         [SerializeField] float runFps = 12f;
@@ -65,6 +71,39 @@ namespace BlueNight.Player
             inspect = inspectFrames ?? new DirectionalFrames();
             hang = hangFrames ?? new DirectionalFrames();
             place = placeFrames ?? new DirectionalFrames();
+        }
+
+        /// <summary>マフラーを巻く前の絵。flag が立つまではこちらを使う。</summary>
+        public void ConfigureWithoutScarf(string flag, DirectionalFrames idleFrames, DirectionalFrames walkFrames,
+            DirectionalFrames runFrames, DirectionalFrames inspectFrames)
+        {
+            scarfFlag = flag;
+            idleNoScarf = idleFrames;
+            walkNoScarf = walkFrames;
+            runNoScarf = runFrames;
+            inspectNoScarf = inspectFrames;
+        }
+
+        DirectionalFrames idleWithScarf, walkWithScarf, runWithScarf, inspectWithScarf;
+
+        void Start()
+        {
+            if (string.IsNullOrEmpty(scarfFlag) || BlueNight.Core.GameFlags.Has(scarfFlag))
+                return;
+            idleWithScarf = idle; walkWithScarf = walk; runWithScarf = run; inspectWithScarf = inspect;
+            idle = idleNoScarf; walk = walkNoScarf; run = runNoScarf; inspect = inspectNoScarf;
+            BlueNight.Core.GameFlags.Changed += OnFlag;
+        }
+
+        void OnDestroy() => BlueNight.Core.GameFlags.Changed -= OnFlag;
+
+        void OnFlag(string flag)
+        {
+            if (flag != scarfFlag || idleWithScarf == null)
+                return;
+            idle = idleWithScarf; walk = walkWithScarf; run = runWithScarf; inspect = inspectWithScarf;
+            idleWithScarf = null;
+            BlueNight.Core.GameFlags.Changed -= OnFlag;
         }
 
         /// <summary>調べる・ランタンを掛ける・置くの動きを 1 回だけ再生する。歩き出すと止まる。</summary>

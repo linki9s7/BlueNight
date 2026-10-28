@@ -317,6 +317,30 @@ def frames(anim, direction):
     return result
 
 
+def without_scarf(rows):
+    """マフラーを巻く前（序章、玄関の椅子で手に取るまで）の図：マフラー（B）を、首は肌、胸はワンピースに置きかえる。
+    マフラーのいちばん上の行は首：その行のマフラーの真ん中 2 ドットだけ肌にして、ほかは透明（首は細い）。"""
+    rows = [list(r) for r in rows]
+    top = next((y for y, r in enumerate(rows) if "B" in r), None)
+    if top is None:
+        return ["".join(r) for r in rows]
+    for y, r in enumerate(rows):
+        xs = [x for x, ch in enumerate(r) if ch == "B"]
+        if not xs:
+            continue
+        if y == top:
+            mid = (xs[0] + xs[-1]) // 2
+            for x in xs:
+                r[x] = "S" if x in (mid, mid + 1) else "."
+        else:
+            for x in xs:
+                r[x] = "P"
+    return ["".join(r) for r in rows]
+
+
+NO_SCARF_ANIMS = ("idle", "walk", "run", "inspect")   # 序章（部屋の中）で使う動きだけ
+
+
 def to_image(rows):
     """記号の図 → 画像（陰影と月明かりの縁取りはここで付く）。"""
     return render(rows, MATS, DIRECT, STYLE)

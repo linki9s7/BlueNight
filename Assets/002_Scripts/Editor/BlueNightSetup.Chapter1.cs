@@ -286,9 +286,13 @@ namespace BlueNight.EditorTools
                             Caster(new GameObject("Furniture (shadow)"), ch, props, foot);
                             break;
                         case 'G':
-                            var haru = CreateLoopWithFootShadow(people, "Haru", "Characters/Grandma/grandma_idle_", foot, lit, 1.2f);
+                            // 店先の腰かけに座っている（台本 9.4）。道の真ん中に見えないよう、軒先（店の戸のすぐ前）へ寄せる
+                            var haru = CreateLoopWithFootShadow(people, "Haru", "Characters/Grandma/grandma_sit_", foot + new Vector3(0f, 0.55f, 0f), lit, 1.2f);
                             haru.transform.Find("Foot Shadow").gameObject.SetActive(false); // 影はまだ無い（返すと戻る）
                             CreatePointLight(haru, "Shop Light", new Vector3(0f, 2f, 0f), Hex("#ffb866"), 0.9f, 3.5f);
+                            // 店先の小物（棚の前のビールケース・鉢植え）で「店先」に見せる。通れる（見た目だけ）
+                            CreateSpriteObject(props, "Storefront: crates", "Props/beer_crates", foot + new Vector3(-1.6f, 0.85f, 0f), lit);
+                            CreateSpriteObject(props, "Storefront: pot", "Props/pot_plant", foot + new Vector3(2.2f, 0.85f, 0f), lit);
                             break;
                         case 'K':
                             CreateLoopWithFootShadow(people, "Keeper", "Characters/Keeper/keeper_idle_", foot, lit, 0.8f);

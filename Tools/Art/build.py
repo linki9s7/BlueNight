@@ -103,6 +103,8 @@ def build_ruri():
             for i, rows in enumerate(ruri.frames(anim, direction)):
                 img = save(ruri.to_image(rows), "Characters", "Ruri", f"ruri_{anim}_{direction}_{i}.png")
                 imgs.append(img)
+                if anim in ruri.NO_SCARF_ANIMS:   # 序章：マフラーを手に取るまでの絵
+                    save(ruri.to_image(ruri.without_scarf(rows)), "Characters", "Ruri", f"ruri_noscarf_{anim}_{direction}_{i}.png")
             sheets[(anim, direction)] = imgs
     return sheets
 
