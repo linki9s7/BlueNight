@@ -476,23 +476,42 @@ FACE_MATS = {
     "P": Mat("pj2", "pj1", "pj3", group="Pxl", d=3),
     "l": Mat("tee3", "tee2", "tee3", group="l", d=2),
     "B": Mat("scarf1", "scarf0", "scarf2", d=2),
+    "Q": Mat("slp2", "slp1", "slp3", group="Qy", d=3),
+    "y": Mat("tee3", "tee2", "tee3", group="y", d=2),
 }
 FACE_DIRECT = {"E": "hair0", "e": "moon3", "i": "iris0", "I": "iris1", "o": "iris2", "r": "blush0",
                "m": "skin0", "n": "skin1", "q": "hair1", "k": "hair1", "h": "hair3", "x": "pj1"}
 SHOULDERS = [(4, 47), (8, 40), (16, 36), (32, 36), (40, 40), (44, 47)]
 
 
-def portrait(expression="normal"):
+# 顔グラフィックの服（v0.19）：序章は「パジャマ」→ たんすで着がえて「マフラー無しのワンピース」→ 玄関で「ふだん（マフラー）」。
+# 会話ウィンドウの顔も、そのときの服に合わせる（DialogueRunner がフラグで選ぶ）。
+OUTFIT_FACES = ("dress", "noscarf", "pajama")
+
+
+def portrait_rows(expression="normal", outfit="dress"):
+    """顔グラフィックの記号の図。outfit：dress（マフラー）・noscarf（マフラー無しのワンピース）・pajama（パジャマ）。"""
     c = Canvas(48, 48)
-    # 服（F1）：肩とふくらんだそで、首まわりと胸の下の白いレース
-    c.poly(SHOULDERS, "P")
-    c.ellipse((14, 33, 34, 41), "l")
-    c.ellipse((16, 33, 32, 39), "P")
-    c.rect((6, 42, 42, 42), "l", only="P")
-    # 首とマフラー（端は向かって右に垂らす）
-    c.rect((20, 29, 27, 37), "S")
-    c.poly([(15, 33), (19, 30), (29, 30), (33, 33), (30, 37), (18, 37)], "B")
-    c.poly([(26, 35), (31, 35), (32, 47), (26, 47)], "B")
+    if outfit == "pajama":
+        # パジャマ：肩、白い襟（首もとで V に開く）、前のボタン
+        c.poly(SHOULDERS, "Q")
+        c.rect((20, 29, 27, 40), "S")
+        c.poly([(15, 37), (20, 36), (23, 42), (18, 43)], "y")
+        c.poly([(32, 37), (27, 36), (24, 42), (29, 43)], "y")
+        c.poly([(21, 37), (26, 37), (23, 43)], "S")
+        for y in (44, 47):
+            c.rect((23, y, 24, y), "y")
+    else:
+        # 服（F1）：肩とふくらんだそで、首まわりと胸の下の白いレース
+        c.poly(SHOULDERS, "P")
+        c.ellipse((14, 33, 34, 41), "l")
+        c.ellipse((16, 33, 32, 39), "P")
+        c.rect((6, 42, 42, 42), "l", only="P")
+        c.rect((20, 29, 27, 37), "S")
+        if outfit == "dress":
+            # マフラー（端は向かって右に垂らす）
+            c.poly([(15, 33), (19, 30), (29, 30), (33, 33), (30, 37), (18, 37)], "B")
+            c.poly([(26, 35), (31, 35), (32, 47), (26, 47)], "B")
     # 髪（G2 改）
     c.ellipse((10, 3, 38, 33), "H")
     c.poly([(10, 18), (16, 18), (16, 38), (14, 47), (10, 47), (11, 36)], "H")     # 向かって左：胸の前へ細くなる房
@@ -518,4 +537,35 @@ def portrait(expression="normal"):
     c.stamp(["rr"], 31, 30)
     mouth = MOUTHS[expression]
     c.stamp(mouth, 24 - len(mouth[0]) // 2, 32)
-    return render(c.rows(), FACE_MATS, FACE_DIRECT, STYLE)
+    return c.rows()
+
+
+def portrait(expression="normal", outfit="dress"):
+    return render(portrait_rows(expression, outfit), FACE_MATS, FACE_DIRECT, STYLE)
+
+
+def shadow_portrait():
+    """ルリの影の顔グラフィック：逃げた影と同じ「真っ黒＋水色のふち」。顔の所だけ少し明るい黒で髪形が分かるように。
+    目は光る（いたずら好き。npc.py の ruri_shadow_frames と同じ）。"""
+    from PIL import Image
+    from palette import RAMPS, hex_to_rgba
+    rows = portrait_rows("normal")
+    h, w = len(rows), len(rows[0])
+    on = {(x, y) for y in range(h) for x in range(w) if rows[y][x] != "."}
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    px = img.load()
+    col = lambda ramp, i: hex_to_rgba(RAMPS[ramp][i])
+    for (x, y) in on:
+        ch = rows[y][x]
+        edge = any((x + dx, y + dy) not in on for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))) and y < h - 1
+        if edge:
+            px[x, y] = col("moon", 0) if y < h // 2 else col("moon", 1)
+        elif ch in "Iio":
+            px[x, y] = col("moon", 2)
+        elif ch == "e":
+            px[x, y] = col("moon", 3)
+        elif ch in "SrmnE":
+            px[x, y] = col("night", 1)
+        else:
+            px[x, y] = col("night", 0)
+    return img

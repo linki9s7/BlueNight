@@ -53,6 +53,18 @@ namespace BlueNight.EditorTools
             public const string Done = "c1_done";
         }
 
+        // 顔グラフィック（Faces/face_〇〇.png）：話し手ごとの名前の頭と、表情。表情の絵が無ければ normal にする。
+        // LinkGates などの静的な会話より前に置く（静的な値は上から順に作られる。L が使う）
+        static readonly Dictionary<string, (string face, string[] expressions)> Faces = new Dictionary<string, (string, string[])>
+        {
+            ["ルリ"] = ("ruri", new[] { "normal", "gentle", "smile", "sad", "surprised" }),   // 序章の服の顔は DialogueRunner が替える
+            ["ネム"] = ("nemu", new[] { "normal", "happy", "sleepy", "surprised" }),
+            ["主人"] = ("keeper", new[] { "normal", "smile" }),
+            ["ハル"] = ("grandma", new[] { "normal", "smile", "teary" }),
+            ["ミオ"] = ("mio_kid", new[] { "normal", "smile" }),          // 第 1 章のミオは回想 1 の 8 歳だけ
+            ["ルリの影"] = ("ruri_shadow", new[] { "normal" }),
+        };
+
         // ------------------------------------------------------------------ 出入口の条件
 
         /// <summary>出入口（エリア・数字）ごとの「通れる条件」と、まだ通れないときの一言。BuildLinks が使う。</summary>
@@ -77,12 +89,25 @@ namespace BlueNight.EditorTools
 
         // ------------------------------------------------------------------ 書き方の道具
 
-        static DialogueLine L(string speaker, string text) => new DialogueLine(speaker, text.Replace("／", "\n"));
+        static DialogueLine L(string speaker, string text, string expression = "normal")
+        {
+            string face = null;
+            if (Faces.TryGetValue(speaker, out var f))
+                face = $"{f.face}_{(System.Array.IndexOf(f.expressions, expression) >= 0 ? expression : "normal")}";
+            return new DialogueLine(speaker, text.Replace("／", "\n"), face: face);
+        }
+
         static DialogueLine N(string text) => L("", text);                         // ト書き・画面の文字
-        static DialogueLine Ru(string text) => L("ルリ", text);
-        static DialogueLine Ne(string text) => L("ネム", text);
-        static DialogueLine Ke(string text) => L("主人", text);
-        static DialogueLine Ha(string text) => L("ハル", text);
+        static DialogueLine Ru(string text, string expression = "normal") => L("ルリ", text, expression);
+        static DialogueLine RuKid(string text, string expression = "normal")      // 回想 1 の 8 歳のルリ
+        {
+            var line = L("ルリ", text);
+            line.face = expression == "sad" ? "ruri_kid_sad" : "ruri_kid_normal";
+            return line;
+        }
+        static DialogueLine Ne(string text, string expression = "normal") => L("ネム", text, expression);
+        static DialogueLine Ke(string text, string expression = "normal") => L("主人", text, expression);
+        static DialogueLine Ha(string text, string expression = "normal") => L("ハル", text, expression);
         static DialogueLine ShadowVoice(string text) => new DialogueLine("", text.Replace("／", "\n"), shadowVoice: true);
 
         static ConditionalDialogue When(string requires, string unless, string sets, params DialogueLine[] lines) =>
@@ -176,12 +201,12 @@ namespace BlueNight.EditorTools
                 Say(N("ミオ　新着メッセージ 2 件")),
                 CutsceneStep.HideActor(phoneGlow),
                 CutsceneStep.WaitFor(0.5f),
-                Say(Ru("……見ない")),
+                Say(Ru("……見ない", "sad")),
                 Say(N("移動 WASD・矢印キー／調べる Space・E・Z")),
             });
 
             Inspect(roomGo, "Desk (phone)", At(room, 2, 6, 0f, 0f),
-                When(Flags.Woke, null, null, Ru("……見ない")));
+                When(Flags.Woke, null, null, Ru("……見ない", "sad")));
             Inspect(roomGo, "Fridge (note from Mom)", At(room, 12, 6, 0f, 0f),
                 Always(N("おかず、冷蔵庫。／先に寝ててね。　母"), N("その下に、ルリの字で／小さく『了解』。")));
             Inspect(roomGo, "Window (bay)", At(room, 5, 6, 0f, 0f),
@@ -269,20 +294,20 @@ namespace BlueNight.EditorTools
                 CutsceneStep.Sfx("light_on"),
                 CutsceneStep.Flag(Flags.MetNemu),
                 CutsceneStep.WaitFor(0.6f),
-                Say(Ne("わっ！ ……びっくりした"), Ne("人間だ。こんな時間に"), Ru("……蛾が、しゃべった"),
+                Say(Ne("わっ！ ……びっくりした", "surprised"), Ne("人間だ。こんな時間に", "surprised"), Ru("……蛾が、しゃべった", "surprised"),
                     Ne("蛾じゃない。オオミズアオ"), Ne("ネム。……って、きみ、影は？"), Ru("……"), Ne("やっぱり。きみもか"),
                     Ne("今夜ね、町じゅうの影が／逃げちゃったんだ"), Ne("影がないと、人は眠れない"), Ne("眠れないと、朝が来ない"),
-                    Ne("だから今夜はずっと夜"), Ru("……べつに困らない"), Ne("困るよ！ ……えっと"),
+                    Ne("だから今夜はずっと夜"), Ru("……べつに困らない"), Ne("困るよ！ ……えっと", "surprised"),
                     Ne("ぼくは困らないけど。／いや、困るんだって"), Ne("影を連れ戻せば、朝は来る"), Ne("ねえ、手伝ってくれない？"),
                     Ne("ぼく、暗いところ、苦手で"), Ru("……夜の虫なのに？"), Ne("夜の虫だからだよ"), Ne("ぼくらは灯りが好きなの"),
                     Ne("暗いのは灯りがない／ところでしょ")),
                 CutsceneStep.WaitFor(0.8f),
-                Say(Ru("……虫なのに、しゃべるんだ"), Ne("でしょ？ しかもぼく"), Ne("口、ないんだよ"), Ne("ものも、食べない"),
-                    Ne("しゃべるのは、ないしょの特技"), Ru("…………"), Ne("いま、ちょっと笑った？"), Ru("……べつに")),
+                Say(Ru("……虫なのに、しゃべるんだ", "gentle"), Ne("でしょ？ しかもぼく", "happy"), Ne("口、ないんだよ"), Ne("ものも、食べない"),
+                    Ne("しゃべるのは、ないしょの特技", "happy"), Ru("…………"), Ne("いま、ちょっと笑った？", "happy"), Ru("……べつに", "gentle")),
                 CutsceneStep.Sfx("lantern_take"),             // 店の戸が開く
                 CutsceneStep.ShowActor(keeperAtDoor.transform),   // 主人が戸口に顔を出す（「入んな」まで立っている）
                 CutsceneStep.WaitFor(0.5f),
-                Say(Ke("……こんな夜ふけに、なんだ"), Ne("青柳さん！ この子も／影がないんだ"), Ne("手伝ってもらおうと思って"),
+                Say(Ke("……こんな夜ふけに、なんだ"), Ne("青柳さん！ この子も／影がないんだ", "happy"), Ne("手伝ってもらおうと思って"),
                     Ke("……そうか")),
                 CutsceneStep.WaitFor(1.2f),
                 Say(Ke("入んな。夜風は、体に毒だ")),
@@ -300,18 +325,18 @@ namespace BlueNight.EditorTools
                 When(Flags.HaruSleep, null, null, N("……すう……すう……")),
                 When(Flags.Captured, Flags.Delivered, Flags.Delivered,
                     Ru("……あの"), Ru("影が言ってました"), Ru("『ありがとう』って"), Ru("『あの朝、言えなかった』"),
-                    Ru("『帽子のことなんか、／どうでもよかったのに』って"), Ha("…………"), Ha("……ああ。そうだよ"), Ha("そうだった"),
+                    Ru("『帽子のことなんか、／どうでもよかったのに』って", "gentle"), Ha("…………", "teary"), Ha("……ああ。そうだよ", "teary"), Ha("そうだった", "teary"),
                     Ha("じいさんが入院した朝ね"), Ha("あたしが言ったのは"), Ha("『ほら、帽子かぶってきな』"), Ha("それが、最後さ"),
-                    Ha("ありがとうなんて／安い言葉なのにさ"), Ha("とうとう、言えなかった"),
+                    Ha("ありがとうなんて／安い言葉なのにさ"), Ha("とうとう、言えなかった", "teary"),
                     Ha("この日よけもね"), Ha("あの人が、つくろったんだよ"), Ha("毎年、春に何も言わずに"),
-                    Ha("……ありがとね、あんた"), Ha("帽子、似合ってたよ")),
+                    Ha("……ありがとね、あんた", "teary"), Ha("帽子、似合ってたよ", "smile")),
                 When(Flags.TalkedHaru, Flags.Captured, null, Ha("無理するんじゃないよ"), Ha("……ほら、気をつけて")),
                 When(Flags.GotLantern, null, Flags.TalkedHaru,
-                    Ha("おや……ルリちゃんじゃないか"), Ha("こんな時間に、どうしたんだい"), Ru("……眠れなくて"), Ha("あたしもだよ"),
+                    Ha("おや……ルリちゃんじゃないか", "smile"), Ha("こんな時間に、どうしたんだい"), Ru("……眠れなくて"), Ha("あたしもだよ", "smile"),
                     Ha("年寄りは眠れないもんだけど"), Ha("今夜はまた、特別でね"), Ha("あたしの影がいなくなった"),
                     Ha("あっちの路地へ、すうっと"), Ne("ほらね"), Ha("なんだい、その虫。／……まあ、いいや"),
                     Ha("最近の子は変わったもん／連れてるね"), Ha("ミオちゃんは？"), Ha("あんたたち、いつも二人／だったじゃないか"),
-                    Ha("ラムネ、二本ずつ"), Ru("…………"), Ha("ああ、そうか。明日だったね"), Ha("……ごめんよ"),
+                    Ha("ラムネ、二本ずつ", "smile"), Ru("…………", "sad"), Ha("ああ、そうか。明日だったね"), Ha("……ごめんよ"),
                     Ha("年寄りは余計なこと／ばっかり言う"), Ha("青い夜が明けないのはね"), Ha("だれかが朝をこわがって／るんだってさ"),
                     Ha("むかし、うちのばあさんが／言ってた"), Ru("……影、さがしてきます"), Ha("無理するんじゃないよ"),
                     Ha("……ほら、気をつけて")),
@@ -341,7 +366,7 @@ namespace BlueNight.EditorTools
                 Say(Ha("……おや"), Ha("なんだか、急に眠くなってきた"), Ha("ルリちゃん"), Ha("言えるときに言わないと"),
                     Ha("言えなくなるんだねえ"), Ha("……年寄りのつまらない話")),
                 CutsceneStep.WaitFor(0.6f),
-                Say(Ha("そうだ、これ、持っておいき"), Ha("じいさんが作った／ランタン立て"), Ha("地面に置いても倒れない"),
+                Say(Ha("そうだ、これ、持っておいき", "smile"), Ha("じいさんが作った／ランタン立て"), Ha("地面に置いても倒れない"),
                     Ha("あたしが持ってても／しょうがないからね")),
                 CutsceneStep.Sfx("journal_add"),
                 Say(N("ランタン立てを、もらった。")),
@@ -353,7 +378,7 @@ namespace BlueNight.EditorTools
                 CutsceneStep.ShowActor(roofShadow.transform),
                 CutsceneStep.Sfx("shadow_presence"),
                 CutsceneStep.WaitFor(1.2f),
-                Say(Ru("……わたしの、影"), L("ルリの影", "やっと気づいた")),
+                Say(Ru("……わたしの、影", "surprised"), L("ルリの影", "やっと気づいた")),
                 CutsceneStep.WaitFor(0.6f),
                 Say(L("ルリの影", "おばあちゃん、よかったね"), L("ルリの影", "ありがとうって言えて"), L("ルリの影", "ルリはさ"),
                     L("ルリの影", "ミオに言えなかったこと、／あるでしょ"), Ru("……"), L("ルリの影", "……あるよね？"),
@@ -362,7 +387,7 @@ namespace BlueNight.EditorTools
                 CutsceneStep.HideActor(roofShadow.transform),
                 CutsceneStep.Amb("rain", 0.45f, 6f),          // ぽつり、と雨が降り出す
                 CutsceneStep.WaitFor(1.5f),
-                Say(Ne("ルリ……今の、知り合い？"), Ru("……べつに"), Ne("べつにって顔じゃないよ"), Ru("…………行く"), Ru("追いかける")),
+                Say(Ne("ルリ……今の、知り合い？", "surprised"), Ru("……べつに"), Ne("べつにって顔じゃないよ"), Ru("…………行く"), Ru("追いかける")),
                 CutsceneStep.WaitFor(0.8f),
                 CutsceneStep.Fade(true, 2f),
                 CutsceneStep.WaitFor(1f),
@@ -410,7 +435,7 @@ namespace BlueNight.EditorTools
                 CutsceneStep.WaitFor(1.4f),                                   // ルリはベンチで足をぶらぶら
                 CutsceneStep.WalkTo(P(bench.X - 1.2f, bench.Y + 0.3f), 2.2f, mio),   // 懐中電灯のミオが来る
                 CutsceneStep.WaitFor(0.5f),
-                Say(L("ミオ", "ひとり？"), Ru("……"), L("ミオ", "わたしも。／影踏みしよ。街灯の下なら、影あるよ")),
+                Say(L("ミオ", "ひとり？", "smile"), RuKid("……"), L("ミオ", "わたしも。／影踏みしよ。街灯の下なら、影あるよ", "smile")),
                 CutsceneStep.Run(mio, P(lx, ly + 0.3f), 3f),                 // ミオが街灯の下へ走る
                 CutsceneStep.WaitFor(0.7f),
                 CutsceneStep.WalkTo(P(lx + 2.2f, ly + 0.6f), 2.2f, kidRuri),  // ルリは少し遅れて、ついていく
@@ -438,7 +463,7 @@ namespace BlueNight.EditorTools
                 CutsceneStep.ShowRuri(true),
                 CutsceneStep.Fade(false, 1.2f),
                 CutsceneStep.WaitFor(0.6f),
-                Say(Ru("……今は、無いけど")),
+                Say(Ru("……今は、無いけど", "sad")),
             });
         }
 
@@ -496,7 +521,8 @@ namespace BlueNight.EditorTools
             go.transform.position = position;
             var renderer = go.AddComponent<SpriteRenderer>();
             renderer.spriteSortPoint = SpriteSortPoint.Pivot;
-            renderer.sortingOrder = 1;   // ベンチに座っていても、ベンチより手前に
+            // 前後は足元の Y で決まる（sortingOrder 0）。座っている間だけ ActorAnimator がベンチより手前に出す。
+            // ここで 1 にすると、電柱や街灯のうしろを通っても手前に描かれてしまう（ユーザーのテストプレイ）
             renderer.sharedMaterial = lit;
             var body = new ActorAnimator.Frames
             {
@@ -540,7 +566,7 @@ namespace BlueNight.EditorTools
                     Say(Ke("持っていけ")),
                     CutsceneStep.Flag(Flags.GotLantern),
                     CutsceneStep.Sfx("lantern_take"),
-                    Say(Ne("えっ、それ、ぼくの家……"), Ke("おまえも行くんだ"), Ne("……ですよね"), Ru("……いいんですか"),
+                    Say(Ne("えっ、それ、ぼくの家……", "surprised"), Ke("おまえも行くんだ", "smile"), Ne("……ですよね", "sleepy"), Ru("……いいんですか", "surprised"),
                         Ru("大事なものじゃ"), Ke("灯りは、暗いところでしか／役に立たん"), Ke("しまっておいても／しょうがない")),
                     Say(N("ランタン掛けの前で F（X）／ランタンを掛ける・外す")),
                 });
@@ -550,16 +576,16 @@ namespace BlueNight.EditorTools
             {
                 CutsceneStep.WaitFor(0.8f),
                 Say(Ne("ほら、影の向きが変わった"), Ne("灯りを動かすと、影も動く"), Ke("……長い夜には、わけがある"), Ru("……わけ？"),
-                    Ke("そのうち、わかる")),
+                    Ke("そのうち、わかる", "smile")),
             });
             Scene(story, "出口の一言", Flags.KeeperBye, CutsceneTrigger.When.Touch, touch: Box(shop, 5.5f, 0f, 4f, 1.6f),
                 required: Flags.PracticeDone, steps: new[]
                 {
-                    Say(Ke("おまえさん"), Ke("……ひとりで、平気か"), Ru("……大丈夫。慣れてるから"), Ke("……そうか")),
+                    Say(Ke("おまえさん"), Ke("……ひとりで、平気か"), Ru("……大丈夫。慣れてるから", "sad"), Ke("……そうか")),
                 });
-            Inspect(shopGo, "Grandfather clock", At(shop, 12, 6, 0f, 0f), Always(Ru("……3 時 12 分"), Ru("うちの時計と同じ")));
+            Inspect(shopGo, "Grandfather clock", At(shop, 12, 6, 0f, 0f), Always(Ru("……3 時 12 分", "surprised"), Ru("うちの時計と同じ")));
             Inspect(shopGo, "Shelves", At(shop, 5, 6, 0f, 0f),
-                When(Flags.MetNemu, null, null, Ne("ここのランプ、ぜんぶ／青柳さんが直したんだ"), Ne("ぼくの評価？ 全部、三ツ星")));
+                When(Flags.MetNemu, null, null, Ne("ここのランプ、ぜんぶ／青柳さんが直したんだ"), Ne("ぼくの評価？ 全部、三ツ星", "happy")));
             Inspect(shopGo, "Workbench", At(shop, 2, 4, 0f, 0f), Always(N("分解されたランプ。／ガラスのほやが並んでいる")));
         }
 
@@ -574,7 +600,7 @@ namespace BlueNight.EditorTools
             // 路地その 1：近づくと逃げる。角に掛けて追いつめると、触れた瞬間に塀を越えて奥の路地へ
             Scene(story, "逃げた！", Flags.Alley1Intro, CutsceneTrigger.When.Touch, touch: Box(alley1, 4.8f, 4.5f, 2.6f, 3.5f), steps: new[]
             {
-                Say(Ne("逃げた！"), Ne("光で道をふさがなきゃ"), Ne("あそこにランタン掛け"), Ne("あの角を明るくすれば"), Ne("影は奥に閉じこめられる")),
+                Say(Ne("逃げた！", "surprised"), Ne("光で道をふさがなきゃ"), Ne("あそこにランタン掛け"), Ne("あの角を明るくすれば"), Ne("影は奥に閉じこめられる")),
             });
             var s1 = One(alley1, 'S');
             var shadow1 = CreateGrandmaShadow(s1, player.transform, haru, unlit);
@@ -583,7 +609,7 @@ namespace BlueNight.EditorTools
             shadow1.SetEscapeOnTouch(true);
             shadow1.Configure(player.transform, haru, LoadFrames($"{TexturesRoot}/Characters/Shadows/shadow_grandma_"),
                 // 逃げられた理由（ユーザーの決定：低い塀の案）。塀の上は暗いので越えられる。高い壁の行き止まりなら逃げられない
-                new[] { Ne("惜しい！"), Ne("低い塀の上は暗いでしょ"), Ne("影はそこを伝って逃げちゃう"),
+                new[] { Ne("惜しい！", "surprised"), Ne("低い塀の上は暗いでしょ"), Ne("影はそこを伝って逃げちゃう"),
                     Ne("高い壁の行き止まりなら／もう逃げられないはず") },
                 Flags.Alley1Escaped, "c1_unused_returned");
             shadow1.gameObject.AddComponent<ChaseMusic>().Configure(shadow1, player.transform, "ch1_shopping_street");
@@ -602,7 +628,7 @@ namespace BlueNight.EditorTools
                 {
                     CutsceneStep.WaitFor(0.5f),
                     CutsceneStep.Sfx("shadow_presence"),
-                    Say(Ne("あっ……あそこ、左の路地")),
+                    Say(Ne("あっ……あそこ、左の路地", "surprised")),
                 });
 
             // 路地その 2：輪の路地。ネムのヒント（3 段階）
@@ -624,7 +650,7 @@ namespace BlueNight.EditorTools
             // 捕まえた会話のすぐあとに続ける（間をあけると「影の言葉」の曲が町の曲へ戻ってしまう）
             Scene(story, "影の言葉", Flags.Words, CutsceneTrigger.When.Flag, watch: Flags.Captured, steps: new[]
             {
-                Say(Ne("……これが、影の言葉"), Ne("持ち主が言えなかった言葉"), Ru("…………"), Ne("ルリ？"), Ru("……届けよう")),
+                Say(Ne("……これが、影の言葉"), Ne("持ち主が言えなかった言葉"), Ru("…………"), Ne("ルリ？"), Ru("……届けよう", "gentle")),
                 CutsceneStep.Sfx("journal_add"),
                 Say(N("ことば帳に書いた。／佐伯ハル『ありがとう』")),
             });

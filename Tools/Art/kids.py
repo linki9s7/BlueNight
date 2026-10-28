@@ -214,3 +214,51 @@ def build(save):
             if "_sit_" not in name:   # 座っているときの影はベンチの影にまぎれるので作らない
                 save(shadow_of(img), "Characters", "Kids", f"{name}_shadow_{i}.png")
     return out
+
+
+# ================================================================ 顔グラフィック（48x48、回想 1 の会話ウィンドウ）
+# 今のルリの顔（ruri.portrait）と同じ目・眉・口を使い、顔を少し丸く、髪を子どもの形にする。
+def portrait(who="mio", expression="normal"):
+    """who：mio（明るい茶色のポニーテール・白い T シャツ）／ruri（おかっぱ・猫の耳のような寝ぐせ・淡い青のワンピース）。"""
+    import ruri
+    from chara import Canvas
+    c = Canvas(48, 48)
+    if who == "mio":
+        c.poly([(33, 12), (40, 16), (42, 30), (38, 40), (35, 30), (33, 20)], "M")   # ポニーテール（向かって右、頭のうしろ）
+        c.poly(ruri.SHOULDERS, "T")
+        c.rect((20, 30, 27, 38), "S")
+        c.ellipse((17, 34, 30, 40), "S", only="T")                                   # 丸首
+        c.ellipse((11, 5, 37, 33), "M")
+        c.ellipse((13, 11, 35, 37), "S")
+        c.poly([(11, 8), (37, 8), (37, 14), (28, 16), (20, 19), (13, 21), (11, 18)], "M", only="S.M")  # 斜めに流した前髪
+        c.line([(14, 12), (19, 9), (25, 8)], "g", only="M")                          # 髪のつや
+        c.rect((33, 13, 34, 14), "R")                                                # 赤い髪ゴム
+        c.rect((12, 18, 13, 30), "M")
+        c.rect((35, 18, 36, 28), "M")
+        mats = dict(ruri.FACE_MATS, M=MATS["M"], T=Mat("tee2", "tee1", "tee3", group="T", d=3), R=MATS["R"])
+        direct = dict(ruri.FACE_DIRECT, i="brown1", I="brown0", o="brown2", g="skin2", q="brown1")
+    else:
+        c.poly(ruri.SHOULDERS, "P")
+        c.rect((20, 30, 27, 38), "S")
+        c.ellipse((16, 34, 31, 40), "S", only="P")
+        c.ellipse((10, 4, 38, 33), "H")
+        c.rect((10, 16, 38, 34), "H", only=".")                                     # おかっぱ（あごの下で切りそろえる）
+        c.ellipse((13, 11, 35, 37), "S")
+        c.rect((12, 7, 36, 19), "H", only="S.H")                                     # ぱっつん前髪
+        c.poly([(12, 9), (14, 2), (18, 6)], "H", only=".")                           # 猫の耳のような寝ぐせ（このころから）
+        c.poly([(30, 6), (34, 2), (36, 9)], "H", only=".")
+        c.line([(13, 12), (17, 9), (23, 8)], "h", only="H")
+        mats = ruri.FACE_MATS
+        direct = ruri.FACE_DIRECT
+    left_brow, right_brow, by = ruri.BROWS[expression]
+    c.stamp(left_brow, 16, by)
+    c.stamp(right_brow, 27, by)
+    eyes = ruri.EYES[expression]
+    left, right = eyes if isinstance(eyes, tuple) else (eyes, eyes)
+    c.stamp(left, 16, 23)
+    c.stamp(right, 26, 23)
+    c.stamp(["rr"], 15, 31)
+    c.stamp(["rr"], 31, 31)
+    mouth = ruri.MOUTHS[expression]
+    c.stamp(mouth, 24 - len(mouth[0]) // 2, 33)
+    return render(c.rows(), mats, direct, STYLE)

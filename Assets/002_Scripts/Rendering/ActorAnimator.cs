@@ -6,6 +6,7 @@ namespace BlueNight.Rendering
     /// <summary>
     /// 演出で動かす人（回想の 8 歳のルリとミオ）のアニメーション。動いた向きで「走る（右・左）」、止まると「立つ」の絵にする。
     /// 足元の影（shadow）も同じコマで動かす。sit の絵があれば、最初に動き出すまでは座っている。
+    /// 前後はほかの物と同じく足元の Y で決まる（sortingOrder は 0）。座っている間だけ、腰かけたベンチより手前に出す。
     /// </summary>
     [RequireComponent(typeof(SpriteRenderer))]
     public class ActorAnimator : MonoBehaviour
@@ -24,6 +25,8 @@ namespace BlueNight.Rendering
         [SerializeField] SpriteRenderer shadowRenderer;
         [SerializeField] float runFps = 10f;
         [SerializeField] float idleFps = 2f;
+        [SerializeField, Tooltip("座っている間の sortingOrder（腰かけた物より手前に）。立てば 0 に戻り、足元の Y で前後が決まる")]
+        int sittingSortingOrder = 1;
 
         SpriteRenderer spriteRenderer;
         Vector3 lastPosition;
@@ -85,6 +88,7 @@ namespace BlueNight.Rendering
             {
                 frames = body.idle; shadowFrames = shadow.idle; fps = idleFps;
             }
+            spriteRenderer.sortingOrder = sitting ? sittingSortingOrder : 0;
             if (frames.Length == 0)
                 return;
             int i = (int)(time * fps) % frames.Length;

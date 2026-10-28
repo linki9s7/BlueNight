@@ -84,6 +84,18 @@ namespace BlueNight.EditorTools
             CreateAudio("", Ambience("crickets", 0.55f), Ambience("highway", 0.35f));
             var dialogue = new GameObject("Dialogue").AddComponent<DialogueRunner>();
             dialogue.Configure(AssetDatabase.LoadAssetAtPath<Font>(DialogueFontPath));
+            // 顔グラフィック（Faces フォルダの face_〇〇.png ぜんぶ）。序章のルリは服に合わせた顔（パジャマ → マフラー無し → ふだん）
+            var faces = AssetDatabase.FindAssets("t:Sprite", new[] { $"{TexturesRoot}/Faces" })
+                .Select(AssetDatabase.GUIDToAssetPath)
+                .Select(path => AssetDatabase.LoadAssetAtPath<Sprite>(path))
+                .Where(sprite => sprite != null && sprite.name.StartsWith("face_"))
+                .Select(sprite => new DialogueRunner.Face { name = sprite.name.Substring("face_".Length), sprite = sprite })
+                .ToArray();
+            dialogue.ConfigureFaces(faces, new[]
+            {
+                new DialogueRunner.FaceOutfit { prefix = "ruri_", untilFlag = Flags.Dressed, replacement = "ruri_pajama_" },
+                new DialogueRunner.FaceOutfit { prefix = "ruri_", untilFlag = Flags.Scarf, replacement = "ruri_noscarf_" },
+            });
 
             BuildChapter1Story(areaObjects, player, lit, unlit);
 

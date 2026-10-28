@@ -11,6 +11,7 @@ namespace BlueNight.Dialogue
     /// <summary>
     /// 画面下の会話ウィンドウ。1 文字ずつ表示し、決定ボタンで進める。
     /// UI は起動時にコードで組み立てる（480x270 基準で拡大）。
+    /// 話し手の顔グラフィック（48x48）をウィンドウの左に出す（ユーザーの希望：名前だけでは一目で分かりにくい）。
     /// </summary>
     public class DialogueRunner : MonoBehaviour
     {
@@ -27,6 +28,25 @@ namespace BlueNight.Dialogue
         [SerializeField] Color speakerColor = new Color(0.99f, 0.91f, 0.66f);
         [SerializeField] Color textColor = new Color(0.96f, 0.96f, 1f);
         [SerializeField] Color shadowTextColor = new Color(0.62f, 0.82f, 1f);
+        [SerializeField, Tooltip("顔グラフィック（名前 → 絵）")] Face[] faces = Array.Empty<Face>();
+        [SerializeField, Tooltip("服で顔を替える（序章のパジャマ・マフラー無し）。上から順に、untilFlag が立つまで使う")]
+        FaceOutfit[] outfits = Array.Empty<FaceOutfit>();
+
+        [Serializable]
+        public class Face
+        {
+            public string name;
+            public Sprite sprite;
+        }
+
+        /// <summary>prefix で始まる顔を、untilFlag が立つまで replacement で始まる顔に替える（例：ruri_ → ruri_pajama_）。替えの絵が無ければそのまま。</summary>
+        [Serializable]
+        public class FaceOutfit
+        {
+            public string prefix;
+            public string untilFlag;
+            public string replacement;
+        }
 
         DialogueLine[] lines;
         Action onComplete;
@@ -40,6 +60,8 @@ namespace BlueNight.Dialogue
         Text speakerText;
         Text bodyText;
         Text nextMark;
+        Image faceImage;
+        RectTransform speakerRect;
         RectTransform bodyRect;
         Vector2 bodyBasePosition;
 
@@ -47,7 +69,42 @@ namespace BlueNight.Dialogue
         static readonly Vector2 BodyWithSpeaker = new Vector2(10f, -21f);
         static readonly Vector2 BodyWithoutSpeaker = new Vector2(10f, -8f);
 
+        // 顔グラフィック（48x48）はウィンドウの左、上下の真ん中。顔があるときは、名前と本文をその右から書く
+        const float FaceSize = 48f;
+        const float FaceLeft = 8f;
+        const float TextLeftWithFace = FaceLeft + FaceSize + 8f;
+
         public void Configure(Font dialogueFont) => font = dialogueFont;
+
+        public void ConfigureFaces(Face[] faceSprites, FaceOutfit[] outfitRules)
+        {
+            faces = faceSprites ?? Array.Empty<Face>();
+            outfits = outfitRules ?? Array.Empty<FaceOutfit>();
+        }
+
+        Sprite FindFace(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                return null;
+            foreach (var rule in outfits)
+            {
+                if (string.IsNullOrEmpty(rule.prefix) || !name.StartsWith(rule.prefix)
+                    || string.IsNullOrEmpty(rule.untilFlag) || GameFlags.Has(rule.untilFlag))
+                    continue;
+                var dressed = FaceNamed(rule.replacement + name.Substring(rule.prefix.Length));
+                if (dressed != null)
+                    return dressed;
+            }
+            return FaceNamed(name);
+        }
+
+        Sprite FaceNamed(string name)
+        {
+            foreach (var f in faces)
+                if (f.name == name)
+                    return f.sprite;
+            return null;
+        }
 
         void Awake()
         {
@@ -144,6 +201,14 @@ namespace BlueNight.Dialogue
             speakerText.enabled = hasSpeaker;
             // 名前の無いト書き・画面の文字は、名前の欄の高さを詰めて上から書く（1 行目の上に空き行ができないように）
             bodyBasePosition = hasSpeaker ? BodyWithSpeaker : BodyWithoutSpeaker;
+            var face = FindFace(line.face);
+            faceImage.enabled = face != null;
+            faceImage.sprite = face;
+            float left = face != null ? TextLeftWithFace : BodyWithSpeaker.x;
+            bodyBasePosition.x = left;
+            bodyRect.sizeDelta = new Vector2(-left - 10f, bodyRect.sizeDelta.y);
+            speakerRect.anchoredPosition = new Vector2(left, speakerRect.anchoredPosition.y);
+            speakerRect.sizeDelta = new Vector2(-left - 10f, speakerRect.sizeDelta.y);
             bodyRect.anchoredPosition = bodyBasePosition;
             bodyText.text = string.Empty;
             bodyText.color = line.shadowVoice ? shadowTextColor : textColor;
@@ -191,7 +256,19 @@ namespace BlueNight.Dialogue
             outline.effectColor = new Color(0.62f, 0.82f, 1f, 0.6f);
             outline.effectDistance = new Vector2(1f, -1f);
 
+            var faceGo = new GameObject("Face", typeof(RectTransform));
+            faceGo.transform.SetParent(window.transform, false);
+            var faceRect = (RectTransform)faceGo.transform;
+            faceRect.anchorMin = faceRect.anchorMax = new Vector2(0f, 0.5f);
+            faceRect.pivot = new Vector2(0f, 0.5f);
+            faceRect.anchoredPosition = new Vector2(FaceLeft, 0f);
+            faceRect.sizeDelta = new Vector2(FaceSize, FaceSize);
+            faceImage = faceGo.AddComponent<Image>();
+            faceImage.raycastTarget = false;
+            faceImage.enabled = false;
+
             speakerText = CreateText("Speaker", window.transform, new Vector2(10f, -3f), new Vector2(-20f, 18f), speakerColor);
+            speakerRect = (RectTransform)speakerText.transform;
             bodyText = CreateText("Body", window.transform, BodyWithSpeaker, new Vector2(-20f, 48f), textColor);
             bodyText.lineSpacing = 0.85f;
             bodyRect = (RectTransform)bodyText.transform;

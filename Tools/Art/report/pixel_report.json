@@ -7758,6 +7758,51 @@
   "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
  },
  {
+  "file": "Faces/face_mio_kid_normal.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 5,
+  "bandingPixels": 21,
+  "bandingColors": [
+   "#5a3a32",
+   "#3b2626"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "brown": [
+    -3.4,
+    11.0
+   ]
+  },
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
+ },
+ {
+  "file": "Faces/face_mio_kid_smile.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 4,
+  "bandingColors": [
+   "#5a3a32"
+  ],
+  "floatingAA": 5,
+  "noisePercent": 0.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "brown": [
+    -3.8,
+    10.3
+   ]
+  },
+  "reviewed": "目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
+ },
+ {
   "file": "Faces/face_nemu_happy.png",
   "group": "characters",
   "colors": 10,
@@ -7873,6 +7918,49 @@
   "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
  },
  {
+  "file": "Faces/face_ruri_kid_normal.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 6,
+  "bandingPixels": 24,
+  "bandingColors": [
+   "#2d5bc0",
+   "#16306e",
+   "#34366a"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "iris": [
+    -1.2,
+    -1.3
+   ]
+  },
+  "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
+ },
+ {
+  "file": "Faces/face_ruri_kid_sad.png",
+  "group": "characters",
+  "colors": 15,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 6,
+  "bandingPixels": 23,
+  "bandingColors": [
+   "#2d5bc0",
+   "#16306e",
+   "#34366a"
+  ],
+  "floatingAA": 0,
+  "noisePercent": 0.9,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
+ },
+ {
   "file": "Faces/face_ruri_normal.png",
   "group": "characters",
   "colors": 19,
@@ -7897,6 +7985,206 @@
   "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
  },
  {
+  "file": "Faces/face_ruri_noscarf_gentle.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 5,
+  "bandingPixels": 19,
+  "bandingColors": [
+   "#16306e",
+   "#2d5bc0",
+   "#8c9ec1"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 1.3,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
+ },
+ {
+  "file": "Faces/face_ruri_noscarf_normal.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 5,
+  "bandingPixels": 19,
+  "bandingColors": [
+   "#2d5bc0",
+   "#16306e",
+   "#8c9ec1"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 1.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "iris": [
+    -1.2,
+    -1.3
+   ]
+  },
+  "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
+ },
+ {
+  "file": "Faces/face_ruri_noscarf_sad.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 5,
+  "bandingPixels": 18,
+  "bandingColors": [
+   "#2d5bc0",
+   "#16306e",
+   "#8c9ec1"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 1.2,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
+ },
+ {
+  "file": "Faces/face_ruri_noscarf_smile.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 3,
+  "bandingColors": [
+   "#8c9ec1"
+  ],
+  "floatingAA": 6,
+  "noisePercent": 1.3,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
+ },
+ {
+  "file": "Faces/face_ruri_noscarf_surprised.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 4,
+  "bandingPixels": 14,
+  "bandingColors": [
+   "#16306e",
+   "#f2c9a8",
+   "#8c9ec1"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 1.1,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "iris": [
+    -1.0,
+    -1.8
+   ]
+  },
+  "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
+ },
+ {
+  "file": "Faces/face_ruri_pajama_gentle.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 4,
+  "bandingPixels": 16,
+  "bandingColors": [
+   "#16306e",
+   "#2d5bc0"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 1.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
+ },
+ {
+  "file": "Faces/face_ruri_pajama_normal.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 4,
+  "bandingPixels": 16,
+  "bandingColors": [
+   "#2d5bc0",
+   "#16306e"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.7,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "iris": [
+    -1.2,
+    -1.3
+   ]
+  },
+  "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
+ },
+ {
+  "file": "Faces/face_ruri_pajama_sad.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 4,
+  "bandingPixels": 15,
+  "bandingColors": [
+   "#2d5bc0",
+   "#16306e"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.9,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
+ },
+ {
+  "file": "Faces/face_ruri_pajama_smile.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 5,
+  "noisePercent": 1.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
+ },
+ {
+  "file": "Faces/face_ruri_pajama_surprised.png",
+  "group": "characters",
+  "colors": 17,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 3,
+  "bandingPixels": 11,
+  "bandingColors": [
+   "#16306e",
+   "#f2c9a8"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "iris": [
+    -1.0,
+    -1.8
+   ]
+  },
+  "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
+ },
+ {
   "file": "Faces/face_ruri_sad.png",
   "group": "characters",
   "colors": 19,
@@ -7913,6 +8201,26 @@
   "noisePercent": 1.0,
   "ditherPercent": 0.0,
   "lightWrong": {},
+  "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
+ },
+ {
+  "file": "Faces/face_ruri_shadow_normal.png",
+  "group": "characters",
+  "colors": 6,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "moon": [
+    1.7,
+    -14.2
+   ]
+  },
   "reviewed": "瞳は上が濃く下が明るい（目の中の照り返し。陰影の向きではない） ／ 目・口・めがね・口ひげなどの顔の細部（形の線）は陰影の帯ではない。v0.16 の顔は輪郭線が無いので、目やめがねのふちの紺が「輪郭の段差」として数えられることがある（ダブりではない）"
  },
  {
