@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Memory_Profile
   m_EditorClassIdentifier: 
   components:
-  - {fileID: 7568550626670732774}
-  - {fileID: 270534022294999781}
-  - {fileID: 1265245761528635317}
---- !u!114 &270534022294999781
+  - {fileID: 5307990663624072457}
+  - {fileID: 4074846273550733528}
+  - {fileID: 5006951207338683498}
+--- !u!114 &4074846273550733528
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   rounded:
     m_OverrideState: 1
     m_Value: 0
---- !u!114 &1265245761528635317
+--- !u!114 &5006951207338683498
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,7 +69,7 @@ MonoBehaviour:
   texture:
     m_OverrideState: 1
     m_Value: {fileID: 0}
---- !u!114 &7568550626670732774
+--- !u!114 &5307990663624072457
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}

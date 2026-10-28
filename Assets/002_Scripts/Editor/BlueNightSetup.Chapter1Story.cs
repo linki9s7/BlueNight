@@ -182,8 +182,8 @@ namespace BlueNight.EditorTools
             var tansuPajama = roomGo.transform.Find("Furniture/Tansu with the Pajamas").gameObject;
             tansuPajama.SetActive(false);
             Inspect(roomGo, "Tansu (dress)", At(room, 7, 6, 0f, 0f),
-                When(null, Flags.Changing, Flags.Changing, N("たんすの上に、／たたんだワンピース。")),
-                Always(N("たたんだパジャマ。")));
+                When(null, Flags.Changing, Flags.Changing, N("たんすの上に／たたんだワンピース")),
+                Always(N("たたんだパジャマ")));
             Scene(story, "着がえる", Flags.Dressed, CutsceneTrigger.When.Flag, watch: Flags.Changing, steps: new[]
             {
                 CutsceneStep.Fade(true, 0.6f),
@@ -198,8 +198,8 @@ namespace BlueNight.EditorTools
             var chairPlain = roomGo.transform.Find("Furniture/Chair").gameObject;
             chairPlain.SetActive(false);
             Inspect(roomGo, "Chair (blue scarf)", At(room, 16, 3, 0f, 0f),
-                When(Flags.Dressed, Flags.Scarf, Flags.Scarf, N("椅子にかけた、青いマフラー。"), Ru("……暑い")),
-                When(null, Flags.Dressed, null, N("椅子にかけた、青いマフラー。"), Ru("……先に、着がえよう")));
+                When(Flags.Dressed, Flags.Scarf, Flags.Scarf, N("椅子にかけた青いマフラー"), Ru("……暑い")),
+                When(null, Flags.Dressed, null, N("椅子にかけた青いマフラー"), Ru("……先に着がえよう")));
             React(story, Flags.Scarf, show: new[] { chairPlain }, hide: new[] { chairScarf });
 
             // 外。坂の上の街灯の下で、足元に影が無いことに気づく（何も言わない）
