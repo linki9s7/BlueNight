@@ -168,6 +168,14 @@ namespace BlueNight.Story
                 case CutsceneStep.Kind.Alpha:
                     if (step.actor != null && step.actor.TryGetComponent<SpriteRenderer>(out var sprite))
                         StartCoroutine(FadeSprite(sprite, step.volume, step.seconds));
+                    else if (step.actor != null)
+                        foreach (var light in step.actor.GetComponentsInChildren<UnityEngine.Rendering.Universal.Light2D>())
+                            StartCoroutine(FadeLight(light, step.volume, step.seconds));
+                    break;
+
+                case CutsceneStep.Kind.PlayerAction:
+                    if (player != null && System.Enum.TryParse(step.text, out PlayerAnimator.Action action))
+                        player.GetComponentInChildren<PlayerAnimator>()?.PlayAction(action);
                     break;
 
                 case CutsceneStep.Kind.IdleFrames:
@@ -201,6 +209,20 @@ namespace BlueNight.Story
             var end = sprite.color;
             end.a = alpha;
             sprite.color = end;
+        }
+
+        /// <summary>光を、もとの明るさの volume 倍まで seconds 秒で（0 で消える）。</summary>
+        static IEnumerator FadeLight(UnityEngine.Rendering.Universal.Light2D light, float scale, float seconds)
+        {
+            float from = light.intensity, to = from * scale;
+            for (float t = 0f; t < seconds; t += Time.deltaTime)
+            {
+                light.intensity = Mathf.Lerp(from, to, t / seconds);
+                yield return null;
+            }
+            light.intensity = to;
+            yield return null;
+            light.intensity = from;   // 消したあとは HideActor で隠す。次に出すときは、もとの明るさで
         }
 
         IEnumerator Walk(CutsceneStep step)

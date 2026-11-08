@@ -1639,6 +1639,598 @@
   "reviewed": "v0.17（4 方向・丸い頭と大きな目）：前羽の赤茶の帯・目玉模様・おなかの節・目とほおは模様・形。光の向き：外へふくらむ細い尾は 1 ドット幅で全部が縁の光になり、下のほうに明るい色が集まる"
  },
  {
+  "file": "Characters/Ruri/ruri_grip_down_0.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 3,
+  "bandingPixels": 14,
+  "bandingColors": [
+   "#d99a7c",
+   "#f2c9a8",
+   "#232448"
+  ],
+  "floatingAA": 5,
+  "noisePercent": 7.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_down_1.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 3,
+  "bandingPixels": 14,
+  "bandingColors": [
+   "#d99a7c",
+   "#f2c9a8",
+   "#232448"
+  ],
+  "floatingAA": 5,
+  "noisePercent": 7.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_down_2.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 3,
+  "bandingPixels": 14,
+  "bandingColors": [
+   "#d99a7c",
+   "#f2c9a8",
+   "#232448"
+  ],
+  "floatingAA": 5,
+  "noisePercent": 7.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_down_3.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 3,
+  "bandingPixels": 14,
+  "bandingColors": [
+   "#d99a7c",
+   "#f2c9a8",
+   "#232448"
+  ],
+  "floatingAA": 5,
+  "noisePercent": 7.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_down_4.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 3,
+  "bandingPixels": 14,
+  "bandingColors": [
+   "#d99a7c",
+   "#f2c9a8",
+   "#232448"
+  ],
+  "floatingAA": 5,
+  "noisePercent": 7.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_down_5.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 3,
+  "bandingPixels": 14,
+  "bandingColors": [
+   "#d99a7c",
+   "#f2c9a8",
+   "#232448"
+  ],
+  "floatingAA": 5,
+  "noisePercent": 7.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_down_6.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 3,
+  "bandingPixels": 14,
+  "bandingColors": [
+   "#d99a7c",
+   "#f2c9a8",
+   "#232448"
+  ],
+  "floatingAA": 5,
+  "noisePercent": 7.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_down_7.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 3,
+  "bandingPixels": 14,
+  "bandingColors": [
+   "#d99a7c",
+   "#f2c9a8",
+   "#232448"
+  ],
+  "floatingAA": 5,
+  "noisePercent": 6.6,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_left_0.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 2,
+  "bandingPixels": 8,
+  "bandingColors": [
+   "#f2c9a8",
+   "#d99a7c"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 2.4,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_left_1.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 2,
+  "bandingPixels": 8,
+  "bandingColors": [
+   "#f2c9a8",
+   "#d99a7c"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 2.4,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_left_2.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 2,
+  "bandingPixels": 8,
+  "bandingColors": [
+   "#f2c9a8",
+   "#d99a7c"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 2.4,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_left_3.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 2,
+  "bandingPixels": 8,
+  "bandingColors": [
+   "#f2c9a8",
+   "#d99a7c"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 2.4,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_left_4.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 2,
+  "bandingPixels": 8,
+  "bandingColors": [
+   "#f2c9a8",
+   "#d99a7c"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 2.4,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_left_5.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 2,
+  "bandingPixels": 8,
+  "bandingColors": [
+   "#f2c9a8",
+   "#d99a7c"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 2.4,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_left_6.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 2,
+  "bandingPixels": 8,
+  "bandingColors": [
+   "#f2c9a8",
+   "#d99a7c"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 2.4,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_left_7.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 2,
+  "bandingPixels": 8,
+  "bandingColors": [
+   "#f2c9a8",
+   "#d99a7c"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 2.4,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_right_0.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 4,
+  "bandingColors": [
+   "#d99a7c"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 4.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "pj": [
+    2.1,
+    -1.4
+   ]
+  },
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_right_1.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 4,
+  "bandingColors": [
+   "#d99a7c"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 4.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "pj": [
+    2.1,
+    -1.4
+   ]
+  },
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_right_2.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 4,
+  "bandingColors": [
+   "#d99a7c"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 4.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "pj": [
+    2.1,
+    -1.4
+   ]
+  },
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_right_3.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 4,
+  "bandingColors": [
+   "#d99a7c"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 4.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "pj": [
+    2.1,
+    -1.4
+   ]
+  },
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_right_4.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 4,
+  "bandingColors": [
+   "#d99a7c"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 4.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "pj": [
+    2.1,
+    -1.4
+   ]
+  },
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_right_5.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 4,
+  "bandingColors": [
+   "#d99a7c"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 4.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "pj": [
+    2.1,
+    -1.4
+   ]
+  },
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_right_6.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 4,
+  "bandingColors": [
+   "#d99a7c"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 4.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "pj": [
+    2.1,
+    -1.4
+   ]
+  },
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_right_7.png",
+  "group": "characters",
+  "colors": 16,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 4,
+  "bandingColors": [
+   "#d99a7c"
+  ],
+  "floatingAA": 2,
+  "noisePercent": 4.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {
+   "pj": [
+    2.1,
+    -1.4
+   ]
+  },
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_up_0.png",
+  "group": "characters",
+  "colors": 10,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 2.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_up_1.png",
+  "group": "characters",
+  "colors": 10,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 2.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_up_2.png",
+  "group": "characters",
+  "colors": 10,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 2.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_up_3.png",
+  "group": "characters",
+  "colors": 10,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 2.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_up_4.png",
+  "group": "characters",
+  "colors": 10,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 2.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_up_5.png",
+  "group": "characters",
+  "colors": 10,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 2.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_up_6.png",
+  "group": "characters",
+  "colors": 10,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 2.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
+  "file": "Characters/Ruri/ruri_grip_up_7.png",
+  "group": "characters",
+  "colors": 10,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 3,
+  "noisePercent": 2.8,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "v0.16（輪郭線なし・月明かりの縁取り）：目・ほおの赤み・天使の輪・前髪のすき間・すそのレース・ギャザーの線は形の細部で、陰影の帯や AA ではない。1 ドット幅の腕・脚は、光の側（画面左）を明るい肌、反対側を影の肌にしている"
+ },
+ {
   "file": "Characters/Ruri/ruri_hang_down_0.png",
   "group": "characters",
   "colors": 16,

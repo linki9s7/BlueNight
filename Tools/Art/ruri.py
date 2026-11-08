@@ -305,6 +305,7 @@ ARM_FRONT = {
     "swing": [(13, 7, ".")],                                                      # 手を前へ（腕が短く見える）
     "reach": _FRONT_CLEAR + [(14, 3, "S"), (15, 3, "S"), (16, 3, "S")],           # 腕を横へのばす
     "raise": _FRONT_CLEAR + [(14, 2, "S"), (15, 1, "S"), (15, 0, "S"), (16, -1, "S"), (16, -2, "S")],
+    "grip": _FRONT_CLEAR + [(12, 4, "S"), (11, 3, "S"), (10, 2, "S")],             # 胸もとのマフラーの端を握る
 }
 _SIDE_CLEAR = [(x, y, "P") for x in (6, 7) for y in range(4, 8)]   # 体の前に下ろした腕を消す（下はワンピース）
 # 横向き（右向き）：腕は胴の前（6〜7 列）
@@ -354,9 +355,14 @@ ACTIONS = {
                       F(crouch=2, head_dy=1, arm="reach"), F(crouch=1)],
     ("place", "side"): [F(), F(crouch=2, head_dy=1, lean=1), F(crouch=2, head_dy=1, lean=1, arm="reach"),
                         F(crouch=2, head_dy=1, lean=1, arm="reach"), F(crouch=1)],
+    # マフラーの端を握って、すぐ離す（演出。台本 9.4）：正面だけ動く。8 コマ＝0.8 秒
+    # ランタンを持つ右手（画面右）だとランタンに隠れるので、空いている左手（画面左）で握る
+    ("grip", "down"): [F(arm2="grip")] * 7 + [F()],
+    ("grip", "up"): [F()] * 8,
+    ("grip", "side"): [F()] * 8,
 }
 
-ANIMS = ("idle", "walk", "run", "inspect", "hang", "place")
+ANIMS = ("idle", "walk", "run", "inspect", "hang", "place", "grip")
 # 腕を体の外へのばす動きは、絵の幅を 24 にする（左右 4 ドットずつ広げる。足元の中心は同じ）
 WIDE = {"hang", "place", "inspect"}
 
