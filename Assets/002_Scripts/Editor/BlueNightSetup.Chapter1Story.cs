@@ -665,8 +665,8 @@ namespace BlueNight.EditorTools
                 At(street, mouth.X, mouth.Y - 1, 0.5f, -0.2f), unlit, 3f);
             hint.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.75f);
             hint.SetActive(false);
-            const string SawHint = "c1_saw_hint";
-            React(story, SawHint, show: new[] { hint });
+            const string SawHint = "c1_saw_hint", HintFled = "c1_hint_fled";
+            React(story, SawHint, show: new[] { hint }, unless: HintFled);
             React(story, Flags.Alley2Intro, hide: new[] { hint });
             // 路地から戻ると、カメラが左の路地を映し、影がその奥へ逃げ込むのが見える（ユーザーの希望）。それからルリに戻る
             Vector2 hintAt = hint.transform.position;
@@ -686,6 +686,16 @@ namespace BlueNight.EditorTools
                     Say(Ne("あっ……あそこ、左の路地", "surprised")),
                     CutsceneStep.CameraBack(0.7f),
                     CutsceneStep.WaitFor(1.2f),
+                });
+            // ルリが近づくと、影は路地の奥へ逃げて見えなくなる（その場で触れられると「捕まえられるのでは？」と思わせてしまう：ユーザーの指摘）
+            Scene(story, "左の路地の影が奥へ", HintFled, CutsceneTrigger.When.Touch,
+                touch: Box(street, mouth.X - 1.5f, mouth.Y - 4.2f, 5f, 3.5f), required: SawHint, blocked: Flags.Alley2Intro, steps: new[]
+                {
+                    CutsceneStep.Sfx("shadow_escape"),
+                    CutsceneStep.Run(hint.transform, At(street, mouth.X, mouth.Y + 1, 0.5f, 0f), 4f),
+                    CutsceneStep.AlphaTo(hint.transform, 0f, 0.6f),
+                    CutsceneStep.WaitFor(0.7f),
+                    CutsceneStep.HideActor(hint.transform),
                 });
 
             // 路地その 2：輪の路地。ネムのヒント（3 段階）
