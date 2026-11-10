@@ -55,6 +55,16 @@ namespace BlueNight.Core
             bounds = roomBounds;
         }
 
+        /// <summary>ルリを一瞬で映す（やり直しで暗転している間に使う）。</summary>
+        public void SnapToTarget()
+        {
+            velocity = Vector3.zero;
+            if (target == null)
+                return;
+            unsnappedPosition = Clamp(Goal());
+            transform.position = Snap(unsnappedPosition);
+        }
+
         /// <summary>エリアを移動したとき：範囲を変えて、すぐにその位置へ（なめらかに追わない）。</summary>
         public void SetBounds(Rect roomBounds)
         {

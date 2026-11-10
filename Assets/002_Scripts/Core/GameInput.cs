@@ -80,6 +80,19 @@ namespace BlueNight.Core
             }
         }
 
+        /// <summary>第 2 章の追いかけっこを最初からやり直す：R ／ ゲームパッドの select。</summary>
+        public static bool ResetPressed
+        {
+            get
+            {
+                var keyboard = Keyboard.current;
+                if (keyboard != null && keyboard.rKey.wasPressedThisFrame)
+                    return true;
+                var gamepad = Gamepad.current;
+                return gamepad != null && gamepad.selectButton.wasPressedThisFrame;
+            }
+        }
+
         public static bool LanternPressed
         {
             get
