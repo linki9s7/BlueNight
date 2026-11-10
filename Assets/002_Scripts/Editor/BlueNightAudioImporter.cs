@@ -22,9 +22,14 @@ namespace BlueNight.EditorTools
             bool music = assetPath.Contains("/BGM/") || assetPath.Contains("/Ambient/");
             importer.forceToMono = false;
             importer.loadInBackground = music;
-            importer.preloadAudioData = !music;
 
             var settings = importer.defaultSampleSettings;
+#if UNITY_2022_2_OR_NEWER
+            // 2022.2 から preloadAudioData は SampleSettings 側に移った（Unity なしの確認は古い参照 DLL なので下を使う）
+            settings.preloadAudioData = !music;
+#else
+            importer.preloadAudioData = !music;
+#endif
             settings.loadType = AudioClipLoadType.DecompressOnLoad;
             settings.compressionFormat = AudioCompressionFormat.Vorbis;
             settings.quality = music ? 0.8f : 0.7f;

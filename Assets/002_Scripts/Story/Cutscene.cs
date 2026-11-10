@@ -49,6 +49,9 @@ namespace BlueNight.Story
 
             foreach (var step in steps)
                 yield return RunStep(step);
+            // カメラを別の場所に向けたまま終わらないように
+            if (CameraFollow2D.Instance != null && CameraFollow2D.Instance.IsLookingAway)
+                CameraFollow2D.Instance.LookBack(0.6f);
 
             if (player != null)
             {
@@ -139,7 +142,87 @@ namespace BlueNight.Story
                 case CutsceneStep.Kind.AutoSave:
                     AreaManager.Instance?.AutoSave();
                     break;
+
+                case CutsceneStep.Kind.Ambience:
+                    AmbiencePlayer.Instance?.Set(step.text, step.volume, step.seconds);
+                    break;
+
+                case CutsceneStep.Kind.WalkAsync:
+                    StartCoroutine(Walk(step));
+                    break;
+
+                case CutsceneStep.Kind.Memory:
+                    MemoryEffect.Instance?.FadeTo(step.volume, step.seconds);
+                    break;
+
+                case CutsceneStep.Kind.Camera:
+                    if (CameraFollow2D.Instance != null)
+                    {
+                        if (step.volume > 0f)
+                            CameraFollow2D.Instance.LookAt(step.position, step.seconds);
+                        else
+                            CameraFollow2D.Instance.LookBack(step.seconds);
+                    }
+                    break;
+
+                case CutsceneStep.Kind.Alpha:
+                    if (step.actor != null && step.actor.TryGetComponent<SpriteRenderer>(out var sprite))
+                        StartCoroutine(FadeSprite(sprite, step.volume, step.seconds));
+                    else if (step.actor != null)
+                        foreach (var light in step.actor.GetComponentsInChildren<UnityEngine.Rendering.Universal.Light2D>())
+                            StartCoroutine(FadeLight(light, step.volume, step.seconds));
+                    break;
+
+                case CutsceneStep.Kind.PlayerAction:
+                    if (player != null && System.Enum.TryParse(step.text, out PlayerAnimator.Action action))
+                        player.GetComponentInChildren<PlayerAnimator>()?.PlayAction(action);
+                    break;
+
+                case CutsceneStep.Kind.IdleFrames:
+                    if (step.actor != null && step.actor.TryGetComponent<ActorAnimator>(out var actorAnimator))
+                        actorAnimator.SetIdleFrames(step.frames);
+                    break;
+
+                case CutsceneStep.Kind.PlayerVisible:
+                    if (player != null)
+                    {
+                        bool show = step.volume > 0f;
+                        foreach (var r in player.GetComponentsInChildren<Renderer>(true))
+                            r.enabled = show;
+                        foreach (var l in player.GetComponentsInChildren<UnityEngine.Rendering.Universal.Light2D>(true))
+                            l.enabled = show;
+                    }
+                    break;
             }
+        }
+
+        static IEnumerator FadeSprite(SpriteRenderer sprite, float alpha, float seconds)
+        {
+            float from = sprite.color.a;
+            for (float t = 0f; t < seconds; t += Time.deltaTime)
+            {
+                var c = sprite.color;
+                c.a = Mathf.Lerp(from, alpha, t / seconds);
+                sprite.color = c;
+                yield return null;
+            }
+            var end = sprite.color;
+            end.a = alpha;
+            sprite.color = end;
+        }
+
+        /// <summary>光を、もとの明るさの volume 倍まで seconds 秒で（0 で消える）。</summary>
+        static IEnumerator FadeLight(UnityEngine.Rendering.Universal.Light2D light, float scale, float seconds)
+        {
+            float from = light.intensity, to = from * scale;
+            for (float t = 0f; t < seconds; t += Time.deltaTime)
+            {
+                light.intensity = Mathf.Lerp(from, to, t / seconds);
+                yield return null;
+            }
+            light.intensity = to;
+            yield return null;
+            light.intensity = from;   // 消したあとは HideActor で隠す。次に出すときは、もとの明るさで
         }
 
         IEnumerator Walk(CutsceneStep step)
@@ -151,9 +234,22 @@ namespace BlueNight.Story
                 yield break;
 
             float timeout = 10f;
-            while (((Vector2)(goal - who.position)).sqrMagnitude > 0.01f && timeout > 0f)
+            // 何かに引っかかって進めなくなったら（0.6 秒ほとんど近づかない）、そこで止める（ぶつかったまま歩き続けない）
+            float best = ((Vector2)(goal - who.position)).magnitude;
+            float stuck = 0f;
+            while (((Vector2)(goal - who.position)).sqrMagnitude > 0.01f && timeout > 0f && stuck < 0.6f)
             {
                 timeout -= Time.deltaTime;
+                float now = ((Vector2)(goal - who.position)).magnitude;
+                if (now < best - 0.02f)
+                {
+                    best = now;
+                    stuck = 0f;
+                }
+                else
+                {
+                    stuck += Time.deltaTime;
+                }
                 Vector2 dir = ((Vector2)(goal - who.position)).normalized;
                 if (isPlayer && player != null)
                 {

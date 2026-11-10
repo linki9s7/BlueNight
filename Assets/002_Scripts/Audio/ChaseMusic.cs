@@ -40,6 +40,7 @@ namespace BlueNight.Audio
             if (shadow == null)
                 return;
             shadow.Captured += OnCaptured;
+            shadow.Escaped += OnEscaped;
             shadow.Surprised += () => SoundEffects.Play("shadow_escape", 0.8f);
             presence = SoundEffects.CreateLoop("shadow_presence", shadow.transform);
         }
@@ -54,6 +55,13 @@ namespace BlueNight.Audio
                 return;
             music.PlayStinger(stinger);
             music.CrossFade(wordsTrack, 3.5f);
+        }
+
+        void OnEscaped()
+        {
+            captured = true;
+            wordsPlaying = false;
+            MusicDirector.Instance?.CrossFade(fieldTrack, 3f);
         }
 
         void Update()

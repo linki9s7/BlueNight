@@ -165,6 +165,8 @@ def grandma_shadow(save):
 # ================================================================ おばあさんの居眠り（影が戻って眠りにつく）
 def grandma_doze(save):
     """2 コマ：ふつう／こくりと頭が 1 ドット下がる（絵は townsfolk.py）。"""
+    for i, img in enumerate(townsfolk.haru_sit_frames()):   # 起きて座っている（店先の腰かけ）
+        save(img, "Characters", "Grandma", f"grandma_sit_{i}.png")
     return [save(img, "Characters", "Grandma", f"grandma_doze_{i}.png") for i, img in enumerate(townsfolk.haru_doze_frames())]
 
 

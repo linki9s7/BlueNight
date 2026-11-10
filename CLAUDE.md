@@ -42,6 +42,29 @@ Unity エディタでプロジェクトを開いたままだとバッチモー�
 
 コンパイルエラーは `Logs/unity.log` の `error CS` を探す。
 
+**Unity を開いたままでの確認（v0.17〜）**：`Assets/002_Scripts/Editor/BlueNightBridge.cs` が `Temp/BlueNightBridge/` の命令を受け取る
+（Unity 6 の公式 CLI 連携は 2022.3 では使えないための代わり）。メニューを押さなくても、シーンの作り直し・再生・撮影ができる。
+
+```
+python Tools/Bridge/unity_bridge.py refresh            # 変更の取り込み（スクリプトはコンパイル）
+python Tools/Bridge/unity_bridge.py build gallery      # gallery / m1 / title
+python Tools/Bridge/unity_bridge.py play               # stop で停止
+python Tools/Bridge/unity_bridge.py move 6 -6          # 再生中のルリを移動。face down/up/left/right で向き
+python Tools/Bridge/unity_bridge.py capture Logs/shots/a.png --scale 2
+python Tools/Bridge/unity_bridge.py logs               # 警告・エラー
+python Tools/Bridge/unity_bridge.py screen Logs/shots/b.png   # 会話ウィンドウ（UI）ごと撮る。capture は UI が写らない
+python Tools/Bridge/unity_bridge.py state              # 通しの確認：エリア・会話の文・フラグ（next／skip／interact／cell も）
+```
+
+**セリフを足したり変えたりしたら、会話ウィンドウを実際に出して確かめる**（ユーザーとの約束）。文字数を数えるだけでは足りない
+（DotGothic16 は行の間隔が広く、数えて収まっていても表示ではみ出したことがある）。`say`（名前<TAB>本文）でウィンドウに出し、`screen` で撮る。
+暗転と重なる場面（回想・章のタイトル）も見る。会話ウィンドウは暗転（ScreenFader）より手前に出る。
+
+新しい C# を足した直後は、Unity のウィンドウが前に出るまでコンパイルされないことがある（その場合は Unity を一度前に出す）。
+シーンを作るメニュー（2・3・4・6）は、メニュー 1 の設定（2D Renderer・足元の Y で前後を並べる）が済んでいなければ先に実行する。
+
+`python Tools/Art/build.py` は Pillow の版が違うと、画素が同じでもファイルが書き変わることがある。画素の変わっていない PNG は元に戻してからコミットする。
+
 Unity が無い環境（クラウドなど）では `sh Tools/CodeCheck/check.sh` で、Unity の参照 DLL（NuGet の Unity3D.SDK 2021.1）と
 URP・Input System・UI の代用品（`Tools/CodeCheck/Stubs.cs`）を使って、型まで含めたコンパイルを確かめられる（Logic のテストは別に `dotnet test`）。
 
@@ -51,9 +74,11 @@ URP・Input System・UI の代用品（`Tools/CodeCheck/Stubs.cs`）を使って
 - BGM 8 曲＋スティンガー＋環境音 4 種＋効果音（`Assets/006_Audio/SE/`、`se_manifest.json`、一覧は `Tools/Music/designs/se_plan.md`）は制作済み。
   Unity 側の再生も実装済み（`Assets/002_Scripts/Audio/`：`MusicDirector`・`ChaseMusic`・`AmbiencePlayer`・`SoundEffects`・`AreaZone`・`PlayerAreaSounds`、仕様書 8.8）。M1 と素材を並べたシーンに入っている。AudioMixer は使わない。
 - ドット絵（第 1 章分）：商店街の建物・小物・タイル（`ch1_assets.py`）、人物と影（`npc.py`）、顔グラフィック 48×48（`portrait.py`）、UI・タイトル（`ui_title.py`）を制作済み。建物は横に並べるとき輪郭を 1 ドット重ねる。シーンへの配置（M2）はまだ。全体の一覧と残りは `Tools/Art/art_plan.md`。第 1 章の素材は Unity のメニュー「BlueNight > 4. 第 1 章の素材を並べたシーンを作成」（`BlueNightSetup.Gallery.cs` → `Assets/001_Scenes/Ch1_ArtGallery.unity`）で並べて確認できる。
-- M2（第 1 章の本番版）進行中：計画 `docs/M2_PLAN.md`（ユーザー確認済み）、物語の設計図と台本 `docs/STORY.md`・人物のプロフィール `docs/CHARACTERS.md`（v1.0、ユーザーの感想待ち。セリフを書くときは CHARACTERS.md の話し方と STORY.md 18 節の約束を守る）。
+- M2（第 1 章の本番版）進行中：計画 `docs/M2_PLAN.md`（ユーザー確認済み）、物語の設計図と台本 `docs/STORY.md`・人物のプロフィール `docs/CHARACTERS.md`（v2.0、ユーザーの感想待ち。セリフを書くときは CHARACTERS.md の話し方と STORY.md 19 節の約束を守る。文字数は `python Tools/Story/count_lines.py` で確認）。
   土台（エリアの移動・演出の台本・タイトル画面・オートセーブ・音量設定）はできた。次はマップ（ASCII）→ 会話 → ことば帳・メニュー。
-- メニュー：1 プロジェクト設定、2 M0、3 M1、4 第 1 章の素材、5 音のデータ、6 タイトル画面。
+- メニュー：1 プロジェクト設定、2 M0、3 M1、4 第 1 章の素材、5 音のデータ、6 タイトル画面、7 第 1 章のシーン（`Chapter1Maps` から 5 エリアを並べる）。
+- M2 のマップ（v0.17）：`Logic/Chapter1Maps.cs`（5 エリア・出入口のつながり）とテスト `Chapter1MapTests`。ロジックのテストは Unity を開いたままでも `dotnet test Tools/LogicTests` で走る。
+  次は会話・演出（STORY.md 8 節＝序章・9 節＝第 1 章）→ ことば帳・メニュー → タイトルの「はじめから」を第 1 章へ。`Chapter1.unity` の「ランタンを初めから持つ」「路地の仮の影」は演出を入れるときに外す。
 - ポストエフェクトは 480×270 のまま処理する（ミクセルを作らないため。2 段カメラ構成は採らない、仕様書 7.6）。
 - **人物のリデザイン（v0.16）**：ルリは輪郭線なし＋左上の縁に月明かり（`Tools/Art/chara.py`・`ruri.py`）。ぱっつんロング、**猫の耳のような寝ぐせはチャームポイント（消さない）**、大きな青い目と眉、淡い青のルームワンピース。案の比較は `Tools/Art/concept_chars.py`。ネム（`nemu.py`、口は描かない）と町の人（`townsfolk.py`）も同じ描き方で仕上げ済み。これから描く人物も同じ描き方で。
 - ドット絵：光はどの向きでも左上から。左向きは専用の絵（`ruri_*_left_*`）で、`flipX` は使わない。新しい絵を足したら `pixel_check.py` でダブり・バンディングを確認し、直さないものは理由を `REVIEWED` に書く。

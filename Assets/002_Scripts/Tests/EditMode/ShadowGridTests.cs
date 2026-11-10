@@ -155,7 +155,7 @@ namespace BlueNight.Tests
         /// ルリ（灯りなし）が最短経路で影を追い、影は逃げる。1 手ずつ交互に同じ速さで動く。
         /// 実際のゲームでは影のほうが速いので、ここで逃げ切れるなら本番でも逃げ切れる。
         /// </summary>
-        static bool Chase(ShadowGrid grid, Cell player, Cell shadow, int maxTurns, bool captureWhenAdjacent)
+        internal static bool Chase(ShadowGrid grid, Cell player, Cell shadow, int maxTurns, bool captureWhenAdjacent)
         {
             bool Caught() => player == shadow || (captureWhenAdjacent && System.Math.Abs(player.X - shadow.X) + System.Math.Abs(player.Y - shadow.Y) <= 1);
 
@@ -195,6 +195,49 @@ namespace BlueNight.Tests
                 }
             }
             return Caught();
+        }
+
+        internal enum ChaseResult { Caught, Escaped, Timeout }
+
+        /// <summary>
+        /// 第 2 章：Chase と同じ追い方で、影は ChaseStep（開いた抜け道を目指す）で動く。
+        /// 影が開いた抜け道の上に着いたら Escaped。
+        /// </summary>
+        internal static ChaseResult ChaseWithExits(ShadowGrid grid, Cell player, Cell shadow, int maxTurns)
+        {
+            bool Caught() => System.Math.Abs(player.X - shadow.X) + System.Math.Abs(player.Y - shadow.Y) <= 1;
+
+            var recent = new Queue<Cell>();
+            for (int turn = 0; turn < maxTurns; turn++)
+            {
+                if (Caught()) return ChaseResult.Caught;
+                if (grid.HasEscaped(shadow)) return ChaseResult.Escaped;
+
+                var toShadow = grid.WalkDistancesFrom(shadow);
+                var next = player;
+                for (int pass = 0; pass < 2 && next == player; pass++)
+                {
+                    foreach (var d in Cell.Directions)
+                    {
+                        var n = player + d;
+                        if (grid.IsBlocked(n) || (pass == 0 && recent.Contains(n)))
+                            continue;
+                        if (next == player || grid.DistanceAt(toShadow, n) < grid.DistanceAt(toShadow, next))
+                            next = n;
+                    }
+                }
+                recent.Enqueue(player);
+                if (recent.Count > 12)
+                    recent.Dequeue();
+                player = next;
+                if (Caught()) return ChaseResult.Caught;
+
+                shadow = grid.IsDark(shadow)
+                    ? grid.ChaseStep(shadow, grid.WalkDistancesFrom(player))
+                    : grid.StepTowardNearestDark(shadow);
+            }
+            if (Caught()) return ChaseResult.Caught;
+            return grid.HasEscaped(shadow) ? ChaseResult.Escaped : ChaseResult.Timeout;
         }
 
         static Cell PlayerStart => M1Map.Create().Find('P').Single();

@@ -30,8 +30,19 @@ namespace BlueNight.Player
             }
         }
 
+        /// <summary>序章の服（パジャマ・マフラー無しのワンピース）。untilFlag が立つまで、ふだんの絵の代わりに使う。</summary>
+        [Serializable]
+        public class Outfit
+        {
+            public string untilFlag;
+            public DirectionalFrames idle = new DirectionalFrames();
+            public DirectionalFrames walk = new DirectionalFrames();
+            public DirectionalFrames run = new DirectionalFrames();
+            public DirectionalFrames inspect = new DirectionalFrames();
+        }
+
         /// <summary>1 回だけ再生する動き。</summary>
-        public enum Action { None, Inspect, Hang, Place }
+        public enum Action { None, Inspect, Hang, Place, Grip }
 
         [SerializeField] PlayerController controller;
         [SerializeField] DirectionalFrames idle = new DirectionalFrames();
@@ -40,6 +51,9 @@ namespace BlueNight.Player
         [SerializeField] DirectionalFrames inspect = new DirectionalFrames();
         [SerializeField] DirectionalFrames hang = new DirectionalFrames();
         [SerializeField] DirectionalFrames place = new DirectionalFrames();
+        [SerializeField, Tooltip("マフラーの端を握って、すぐ離す（演出だけで使う）")] DirectionalFrames grip = new DirectionalFrames();
+        [Header("序章の服（上から順に、untilFlag が立つまでその絵を使う。どれも立てば上のふだんの絵）")]
+        [SerializeField] Outfit[] outfits = Array.Empty<Outfit>();
         [SerializeField] float idleFps = 3f;
         [SerializeField] float walkFps = 10f;
         [SerializeField] float runFps = 12f;
@@ -67,6 +81,48 @@ namespace BlueNight.Player
             place = placeFrames ?? new DirectionalFrames();
         }
 
+        public void ConfigureGrip(DirectionalFrames gripFrames) => grip = gripFrames ?? new DirectionalFrames();
+
+        /// <summary>序章の服を足す（足した順に使う）。flag が立つまでは、ふだんの絵の代わりにこの絵を使う。</summary>
+        public void AddOutfitUntil(string flag, DirectionalFrames idleFrames, DirectionalFrames walkFrames,
+            DirectionalFrames runFrames, DirectionalFrames inspectFrames)
+        {
+            var list = new System.Collections.Generic.List<Outfit>(outfits)
+            {
+                new Outfit { untilFlag = flag, idle = idleFrames, walk = walkFrames, run = runFrames, inspect = inspectFrames },
+            };
+            outfits = list.ToArray();
+        }
+
+        DirectionalFrames baseIdle, baseWalk, baseRun, baseInspect;
+
+        void Start()
+        {
+            if (outfits.Length == 0)
+                return;
+            baseIdle = idle; baseWalk = walk; baseRun = run; baseInspect = inspect;
+            Dress();
+            BlueNight.Core.GameFlags.Changed += OnFlag;
+        }
+
+        void OnDestroy() => BlueNight.Core.GameFlags.Changed -= OnFlag;
+
+        void OnFlag(string flag) => Dress();
+
+        /// <summary>まだ flag の立っていない最初の服を着る。どれも立っていれば、ふだんの絵。</summary>
+        void Dress()
+        {
+            foreach (var outfit in outfits)
+            {
+                if (!string.IsNullOrEmpty(outfit.untilFlag) && !BlueNight.Core.GameFlags.Has(outfit.untilFlag))
+                {
+                    idle = outfit.idle; walk = outfit.walk; run = outfit.run; inspect = outfit.inspect;
+                    return;
+                }
+            }
+            idle = baseIdle; walk = baseWalk; run = baseRun; inspect = baseInspect;
+        }
+
         /// <summary>調べる・ランタンを掛ける・置くの動きを 1 回だけ再生する。歩き出すと止まる。</summary>
         public void PlayAction(Action kind)
         {
@@ -84,6 +140,7 @@ namespace BlueNight.Player
                 case Action.Inspect: return inspect;
                 case Action.Hang: return hang;
                 case Action.Place: return place;
+                case Action.Grip: return grip;
                 default: return null;
             }
         }

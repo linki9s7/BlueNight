@@ -9,14 +9,16 @@ namespace BlueNight.Dialogue
         public string speaker;
         [TextArea(2, 4)] public string text;
         [Tooltip("逃げた影の声（白抜き・揺れる表示）")] public bool shadowVoice;
+        [Tooltip("顔グラフィックの名前（Faces/face_〇〇.png の〇〇。例：ruri_smile）。空なら顔を出さない")] public string face;
 
         public DialogueLine() { }
 
-        public DialogueLine(string speaker, string text, bool shadowVoice = false)
+        public DialogueLine(string speaker, string text, bool shadowVoice = false, string face = null)
         {
             this.speaker = speaker;
             this.text = text;
             this.shadowVoice = shadowVoice;
+            this.face = face;
         }
     }
 

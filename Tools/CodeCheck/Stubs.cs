@@ -81,7 +81,7 @@ namespace UnityEngine.InputSystem
     public class Keyboard
     {
         public static Keyboard current;
-        public Controls.KeyControl aKey, dKey, sKey, wKey, eKey, fKey, xKey, zKey, spaceKey, enterKey, numpadEnterKey,
+        public Controls.KeyControl aKey, cKey, rKey, dKey, sKey, wKey, eKey, fKey, xKey, zKey, spaceKey, enterKey, numpadEnterKey,
             leftArrowKey, rightArrowKey, upArrowKey, downArrowKey, leftShiftKey, rightShiftKey, escapeKey, backspaceKey, tabKey;
     }
     public class Gamepad
@@ -89,6 +89,6 @@ namespace UnityEngine.InputSystem
         public static Gamepad current;
         public Controls.StickControl leftStick;
         public Controls.DpadControl dpad;
-        public Controls.ButtonControl buttonSouth, buttonWest, buttonEast, startButton, rightTrigger;
+        public Controls.ButtonControl buttonSouth, buttonWest, buttonEast, startButton, selectButton, buttonNorth, rightTrigger;
     }
 }

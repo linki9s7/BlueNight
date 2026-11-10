@@ -9,6 +9,8 @@
 - 服は F1「ルームワンピース」：淡い青のコットンのワンピース（ひざ丈・ふくらんだ短いそで・胸の下からギャザー）、
   すそに白いレース。素足に紺のサンダル。夜中に部屋着のまま出てきた 14 歳。青いマフラーはミオの手編み（夏でも巻いている）。
 - 静かで大人っぽいのに、まだあどけなさが残る感じ。
+- 序章（v0.19、ユーザーの決定）：目を覚ましたときは**パジャマ**（淡いピンクの上下、長そで・長ズボン、白い襟とボタン、はだし）。
+  部屋のタンスでワンピースに着がえ、玄関の椅子でマフラーを巻いてから家を出る。パジャマの絵は PAJAMA_VIEWS。
 
 描き方（chara.py）
 - 記号の図を書き、陰影は自動で付ける（右下へずらすと部品の外に出る所が影、左上の縁が月明かり）。
@@ -22,6 +24,8 @@
   B  マフラー
   P  ワンピース  x ギャザーの線     l すそのレース
   F  サンダル    Z 奥の足のサンダル（暗い）
+  パジャマ：Q 布   y 白い襟・ボタン・すそ   u 光の側（画面左）のそで（a と同じ理由で明るいまま）
+           J 奥の脚のズボン（暗い）   j 奥の脚のすそ（暗い）
 """
 
 from chara import Canvas, Mat, Style, mirror, render
@@ -34,9 +38,12 @@ MATS = {
     "l": Mat("tee3", "tee2", group="l"),
     "B": Mat("scarf1", "scarf0", "scarf2", group="B"),
     "F": Mat("hair1", "hair0", "hair2"),
+    "Q": Mat("slp2", "slp1", "slp3", group="Qy", d=2),
+    "y": Mat("tee3", "tee2", group="y"),
 }
 DIRECT = {"E": "hair0", "e": "moon3", "I": "iris1", "r": "blush0", "x": "pj1", "k": "hair1", "h": "hair3",
-          "z": "skin1", "Z": "hair0", "a": "skin2"}
+          "z": "skin1", "Z": "hair0", "a": "skin2",
+          "u": "slp2", "J": "slp1", "j": "tee2"}
 
 # ---------------------------------------------------------------- 下向き（正面）：頭 15 行・胴 12 行・脚 5 行
 DOWN_HEAD = [
@@ -162,6 +169,68 @@ VIEWS = {
     "side": (SIDE_HEAD, SIDE_BODY, SIDE_LEGS),
 }
 
+# ---------------------------------------------------------------- パジャマ（序章、着がえるまで）：胴 10 行・脚 7 行
+# 上着は胸の下まで、ズボンは足首まで。白い襟とボタン、すそに白い線。はだし。腕の位置はワンピースと同じ（腕の動きを使い回す）。
+PJ_DOWN_BODY = [
+    "...H...SS...H...",
+    "...HQQySSyQQH...",   # 白い襟
+    "...QQQQyyQQQQ...",
+    "..QQQQQQQQQQQQ..",
+    "..uHQQQQyQQQ.Q..",   # 長そで。胸の前へ流した髪（向かって左）。ボタン
+    "..uHQQQQQQQQ.Q..",
+    "..u.QQQQyQQQ.Q..",
+    "..aQQQQQQQQQQS..",   # そで口から手
+    "....QQQQQQQQ....",   # ズボン
+    "....QQQQQQQQ....",
+]
+PJ_DOWN_LEGS = {
+    "stand": ["....QQQ..QQQ....", "....QQQ..QQQ....", "....QQQ..QQQ....", "....yyy..yyy....",
+              ".....SS..SS.....", "....SSS..SSS....", "................"],
+    "left_up": ["....QQQ..QQQ....", "....QQQ..QQQ....", "....yyy..QQQ....", ".....SS..yyy....",
+                "....SSS..SS.....", ".........SSS....", "................"],
+    "right_up": ["....QQQ..QQQ....", "....QQQ..QQQ....", "....QQQ..yyy....", "....yyy..SS.....",
+                 ".....SS..SSS....", "....SSS.........", "................"],
+}
+PJ_UP_BODY = [
+    "....HHHHHHHH....",
+    "....HHHHHHHH....",
+    "...QHHHHHHHHQ...",
+    "..QQHHHkHHHHQQ..",
+    "..u.HHHkHHHH.Q..",
+    "..u.HHHHHHHH.Q..",
+    "..u.QHHHHHHQ.Q..",
+    "..aQQQHHHHQQQS..",
+    "....QQQQQQQQ....",
+    "....QQQQQQQQ....",
+]
+PJ_SIDE_BODY = [
+    "...HH....SS.....",
+    "...HQQQQySy.....",   # 白い襟
+    "...HHQQQQQQ.....",
+    "...HQQQQQQQ.....",
+    "...HHQuuQQQ.....",   # 体の前の腕（長そで）
+    "....HQuuQyQ.....",
+    ".....QuuQQQ.....",
+    ".....QSSQyQ.....",   # 手
+    ".....QQQQQ......",
+    ".....QQQQQ......",
+]
+PJ_SIDE_LEGS = {
+    "stand": [".....QQQ........", ".....QQQ........", ".....QQQ........", ".....yyy........",
+              "......SS........", "......SSSS......", "................"],
+    # 手前の脚（Q）が前、奥の脚（J、暗い）がうしろ
+    "stride": [".....JJQQ.......", "....JJ..QQ......", "...JJ....QQ.....", "..jj.....yy.....",
+               "..zz......SS....", ".zzz......SSSS..", "................"],
+    "stride_alt": [".....QQJJ.......", "....QQ..JJ......", "...QQ....JJ.....", "..yy.....jj.....",
+                   "..SS......zz....", ".SSS......zzzz..", "................"],
+}
+PAJAMA_VIEWS = {
+    "down": (DOWN_HEAD, PJ_DOWN_BODY, PJ_DOWN_LEGS),
+    "up": (UP_HEAD, PJ_UP_BODY, PJ_DOWN_LEGS),
+    "side": (SIDE_HEAD, PJ_SIDE_BODY, PJ_SIDE_LEGS),
+}
+OUTFITS = {"dress": VIEWS, "pajama": PAJAMA_VIEWS}
+
 # idle・walk：(脚のポーズ, 上半身を持ち上げる px)
 FRAMES = {
     ("idle", "down"): [("stand", 0), ("stand", 0), ("stand", 1), ("stand", 0)],
@@ -173,15 +242,16 @@ FRAMES = {
 }
 
 
-def compose(view, legs_pose, lift, head_dy=0, crouch=0, lean=0):
+def compose(view, legs_pose, lift, head_dy=0, crouch=0, lean=0, outfit="dress"):
     """頭・胴・脚を 16x32 の記号の図に組み立てる。
 
     lift   > 0：上半身を持ち上げ、できた隙間は脚の一番上の行で埋める（歩き・走りの上下動）。
     head_dy> 0：頭だけ下げる（のぞきこむ）。頭が胴の上の行に重なる。
     crouch > 0：すねを crouch 行ぶん縮めて、上半身を下げる（しゃがむ）。
     lean       ：頭を横へずらす（走るときの前のめり）。
+    outfit     ："dress"（ワンピース）か "pajama"（序章のパジャマ）。
     """
-    head, body, legs = VIEWS[view]
+    head, body, legs = OUTFITS[outfit][view]
     leg_rows = legs[legs_pose]
     if crouch:
         leg_rows = leg_rows[:1] + leg_rows[1 + crouch:]
@@ -209,8 +279,8 @@ def compose(view, legs_pose, lift, head_dy=0, crouch=0, lean=0):
 # ---------------------------------------------------------------- 腕の動き（コマに上から描き足す）
 # 座標は 16 列の絵の中の位置。y は「胴の一番上の行」からの行数（lift・crouch に合わせて動く）。
 
-def body_top_of(view, legs_pose, lift, crouch):
-    _, body, legs = VIEWS[view]
+def body_top_of(view, legs_pose, lift, crouch, outfit="dress"):
+    _, body, legs = OUTFITS[outfit][view]
     return 32 - (len(legs[legs_pose]) - crouch) - len(body) - lift
 
 
@@ -235,6 +305,7 @@ ARM_FRONT = {
     "swing": [(13, 7, ".")],                                                      # 手を前へ（腕が短く見える）
     "reach": _FRONT_CLEAR + [(14, 3, "S"), (15, 3, "S"), (16, 3, "S")],           # 腕を横へのばす
     "raise": _FRONT_CLEAR + [(14, 2, "S"), (15, 1, "S"), (15, 0, "S"), (16, -1, "S"), (16, -2, "S")],
+    "grip": _FRONT_CLEAR + [(12, 4, "S"), (11, 3, "S"), (10, 2, "S")],             # 胸もとのマフラーの端を握る
 }
 _SIDE_CLEAR = [(x, y, "P") for x in (6, 7) for y in range(4, 8)]   # 体の前に下ろした腕を消す（下はワンピース）
 # 横向き（右向き）：腕は胴の前（6〜7 列）
@@ -284,37 +355,82 @@ ACTIONS = {
                       F(crouch=2, head_dy=1, arm="reach"), F(crouch=1)],
     ("place", "side"): [F(), F(crouch=2, head_dy=1, lean=1), F(crouch=2, head_dy=1, lean=1, arm="reach"),
                         F(crouch=2, head_dy=1, lean=1, arm="reach"), F(crouch=1)],
+    # マフラーの端を握って、すぐ離す（演出。台本 9.4）：正面だけ動く。8 コマ＝0.8 秒
+    # ランタンを持つ右手（画面右）だとランタンに隠れるので、空いている左手（画面左）で握る
+    ("grip", "down"): [F(arm2="grip")] * 7 + [F()],
+    ("grip", "up"): [F()] * 8,
+    ("grip", "side"): [F()] * 8,
 }
 
-ANIMS = ("idle", "walk", "run", "inspect", "hang", "place")
+ANIMS = ("idle", "walk", "run", "inspect", "hang", "place", "grip")
 # 腕を体の外へのばす動きは、絵の幅を 24 にする（左右 4 ドットずつ広げる。足元の中心は同じ）
 WIDE = {"hang", "place", "inspect"}
 
 
-def action_frame(view, spec, width):
+def in_sleeves(changes):
+    """パジャマの腕：ワンピースの絵の上の変更（腕は肌、消した所はワンピース）を、長そで＋手に置きかえる。
+    肌の点のうち最後の 1 つが手（ARM_FRONT・ARM_SIDE はどれも肩から手の順に並べてある）。"""
+    skin = [i for i, (_, _, ch) in enumerate(changes) if ch in "Sa"]
+    hand = skin[-1] if skin else None
+    out = []
+    for i, (x, y, ch) in enumerate(changes):
+        if ch == "P":
+            ch = "Q"
+        elif ch in "Sa" and i != hand:
+            ch = "u" if ch == "a" else "Q"
+        out.append((x, y, ch))
+    return out
+
+
+def action_frame(view, spec, width, outfit="dress"):
     pad = (width - 16) // 2
-    rows = compose(view, spec["pose"], spec["lift"], spec["head_dy"], spec["crouch"], spec["lean"])
+    rows = compose(view, spec["pose"], spec["lift"], spec["head_dy"], spec["crouch"], spec["lean"], outfit)
     rows = ["." * pad + r + "." * pad for r in rows]
-    top = body_top_of(view, spec["pose"], spec["lift"], spec["crouch"])
+    top = body_top_of(view, spec["pose"], spec["lift"], spec["crouch"], outfit)
+    dress = (lambda c: c) if outfit == "dress" else in_sleeves
     if spec["arm"]:
-        rows = edit(rows, arm(view, spec["arm"]), top, pad)
+        rows = edit(rows, dress(arm(view, spec["arm"])), top, pad)
     if spec["arm2"] and view != "side":
         other = mirror_x(ARM_FRONT[spec["arm2"]]) if view == "down" else ARM_FRONT[spec["arm2"]]
-        rows = edit(rows, other, top, pad)
+        rows = edit(rows, dress(other), top, pad)
     return rows
 
 
-def frames(anim, direction):
+def frames(anim, direction, outfit="dress"):
     """記号の図のコマの一覧。direction は down / up / right / left。左向きは右向きの図を反転したもの。"""
     view = "side" if direction in ("left", "right") else direction
     if (anim, view) in FRAMES:
-        result = [compose(view, pose, lift) for pose, lift in FRAMES[(anim, view)]]
+        result = [compose(view, pose, lift, outfit=outfit) for pose, lift in FRAMES[(anim, view)]]
     else:
         width = 24 if anim in WIDE else 16
-        result = [action_frame(view, spec, width) for spec in ACTIONS[(anim, view)]]
+        result = [action_frame(view, spec, width, outfit) for spec in ACTIONS[(anim, view)]]
     if direction == "left":
         result = [mirror(rows) for rows in result]
     return result
+
+
+def without_scarf(rows):
+    """マフラーを巻く前（序章、玄関の椅子で手に取るまで）の図：マフラー（B）を、首は肌、胸はワンピースに置きかえる。
+    マフラーのいちばん上の行は首：その行のマフラーの真ん中 2 ドットだけ肌にして、ほかは透明（首は細い）。"""
+    rows = [list(r) for r in rows]
+    top = next((y for y, r in enumerate(rows) if "B" in r), None)
+    if top is None:
+        return ["".join(r) for r in rows]
+    for y, r in enumerate(rows):
+        xs = [x for x, ch in enumerate(r) if ch == "B"]
+        if not xs:
+            continue
+        if y == top:
+            mid = (xs[0] + xs[-1]) // 2
+            for x in xs:
+                r[x] = "S" if x in (mid, mid + 1) else "."
+        else:
+            for x in xs:
+                r[x] = "P"
+    return ["".join(r) for r in rows]
+
+
+NO_SCARF_ANIMS = ("idle", "walk", "run", "inspect")   # 序章（部屋の中）で使う動きだけ。パジャマの絵も同じ動きだけ描く
 
 
 def to_image(rows):
@@ -366,23 +482,42 @@ FACE_MATS = {
     "P": Mat("pj2", "pj1", "pj3", group="Pxl", d=3),
     "l": Mat("tee3", "tee2", "tee3", group="l", d=2),
     "B": Mat("scarf1", "scarf0", "scarf2", d=2),
+    "Q": Mat("slp2", "slp1", "slp3", group="Qy", d=3),
+    "y": Mat("tee3", "tee2", "tee3", group="y", d=2),
 }
 FACE_DIRECT = {"E": "hair0", "e": "moon3", "i": "iris0", "I": "iris1", "o": "iris2", "r": "blush0",
                "m": "skin0", "n": "skin1", "q": "hair1", "k": "hair1", "h": "hair3", "x": "pj1"}
 SHOULDERS = [(4, 47), (8, 40), (16, 36), (32, 36), (40, 40), (44, 47)]
 
 
-def portrait(expression="normal"):
+# 顔グラフィックの服（v0.19）：序章は「パジャマ」→ たんすで着がえて「マフラー無しのワンピース」→ 玄関で「ふだん（マフラー）」。
+# 会話ウィンドウの顔も、そのときの服に合わせる（DialogueRunner がフラグで選ぶ）。
+OUTFIT_FACES = ("dress", "noscarf", "pajama")
+
+
+def portrait_rows(expression="normal", outfit="dress"):
+    """顔グラフィックの記号の図。outfit：dress（マフラー）・noscarf（マフラー無しのワンピース）・pajama（パジャマ）。"""
     c = Canvas(48, 48)
-    # 服（F1）：肩とふくらんだそで、首まわりと胸の下の白いレース
-    c.poly(SHOULDERS, "P")
-    c.ellipse((14, 33, 34, 41), "l")
-    c.ellipse((16, 33, 32, 39), "P")
-    c.rect((6, 42, 42, 42), "l", only="P")
-    # 首とマフラー（端は向かって右に垂らす）
-    c.rect((20, 29, 27, 37), "S")
-    c.poly([(15, 33), (19, 30), (29, 30), (33, 33), (30, 37), (18, 37)], "B")
-    c.poly([(26, 35), (31, 35), (32, 47), (26, 47)], "B")
+    if outfit == "pajama":
+        # パジャマ：肩、白い襟（首もとで V に開く）、前のボタン
+        c.poly(SHOULDERS, "Q")
+        c.rect((20, 29, 27, 40), "S")
+        c.poly([(15, 37), (20, 36), (23, 42), (18, 43)], "y")
+        c.poly([(32, 37), (27, 36), (24, 42), (29, 43)], "y")
+        c.poly([(21, 37), (26, 37), (23, 43)], "S")
+        for y in (44, 47):
+            c.rect((23, y, 24, y), "y")
+    else:
+        # 服（F1）：肩とふくらんだそで、首まわりと胸の下の白いレース
+        c.poly(SHOULDERS, "P")
+        c.ellipse((14, 33, 34, 41), "l")
+        c.ellipse((16, 33, 32, 39), "P")
+        c.rect((6, 42, 42, 42), "l", only="P")
+        c.rect((20, 29, 27, 37), "S")
+        if outfit == "dress":
+            # マフラー（端は向かって右に垂らす）
+            c.poly([(15, 33), (19, 30), (29, 30), (33, 33), (30, 37), (18, 37)], "B")
+            c.poly([(26, 35), (31, 35), (32, 47), (26, 47)], "B")
     # 髪（G2 改）
     c.ellipse((10, 3, 38, 33), "H")
     c.poly([(10, 18), (16, 18), (16, 38), (14, 47), (10, 47), (11, 36)], "H")     # 向かって左：胸の前へ細くなる房
@@ -408,4 +543,35 @@ def portrait(expression="normal"):
     c.stamp(["rr"], 31, 30)
     mouth = MOUTHS[expression]
     c.stamp(mouth, 24 - len(mouth[0]) // 2, 32)
-    return render(c.rows(), FACE_MATS, FACE_DIRECT, STYLE)
+    return c.rows()
+
+
+def portrait(expression="normal", outfit="dress"):
+    return render(portrait_rows(expression, outfit), FACE_MATS, FACE_DIRECT, STYLE)
+
+
+def shadow_portrait():
+    """ルリの影の顔グラフィック：逃げた影と同じ「真っ黒＋水色のふち」。顔の所だけ少し明るい黒で髪形が分かるように。
+    目は光る（いたずら好き。npc.py の ruri_shadow_frames と同じ）。"""
+    from PIL import Image
+    from palette import RAMPS, hex_to_rgba
+    rows = portrait_rows("normal")
+    h, w = len(rows), len(rows[0])
+    on = {(x, y) for y in range(h) for x in range(w) if rows[y][x] != "."}
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    px = img.load()
+    col = lambda ramp, i: hex_to_rgba(RAMPS[ramp][i])
+    for (x, y) in on:
+        ch = rows[y][x]
+        edge = any((x + dx, y + dy) not in on for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))) and y < h - 1
+        if edge:
+            px[x, y] = col("moon", 0) if y < h // 2 else col("moon", 1)
+        elif ch in "Iio":
+            px[x, y] = col("moon", 2)
+        elif ch == "e":
+            px[x, y] = col("moon", 3)
+        elif ch in "SrmnE":
+            px[x, y] = col("night", 1)
+        else:
+            px[x, y] = col("night", 0)
+    return img

@@ -37,6 +37,9 @@ namespace BlueNight.LightShadow
             set => anchor = value;
         }
 
+        /// <summary>光源の高さ（マス）。低い灯り（門灯など）は、そばの物の影が長くなる。</summary>
+        public void SetHeight(float lightHeight) => height = lightHeight;
+
         public void Configure(float lightRadius, Light2D light)
         {
             radius = lightRadius;

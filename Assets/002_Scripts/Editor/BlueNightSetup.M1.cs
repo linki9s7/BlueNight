@@ -37,6 +37,8 @@ namespace BlueNight.EditorTools
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 return;
 
+            EnsureProjectConfigured();
+
             EnsureFolder("Assets/001_Scenes");
             EnsureFolder(TileAssetFolder);
             EnsureFolder("Assets/009_Rendering");
@@ -246,6 +248,7 @@ namespace BlueNight.EditorTools
         static void CreateLanternAndInteractor(PlayerController player, Material unlit)
         {
             var lanternGo = new GameObject("Lantern");
+            lanternGo.transform.SetParent(player.transform, false); // 持っている間はルリの SortingGroup の中
             lanternGo.transform.position = player.transform.position + new Vector3(0.42f, 0.35f, 0f);
             var sprite = lanternGo.AddComponent<SpriteRenderer>();
             sprite.sprite = LoadSprite($"{TexturesRoot}/Props/lantern.png");
@@ -260,6 +263,18 @@ namespace BlueNight.EditorTools
 
             var lantern = lanternGo.AddComponent<Lantern>();
             lantern.Configure(player, sprite, gridLight);
+            lanternGo.AddComponent<PlacedLantern>().SetPromptOffset(new Vector2(0f, 1.4f)); // 地面に置いたら、調べて拾う（第 2 章）
+            // ランタン立て（木の丸い台座と、吊るす鉄のフック。Tools/Art/ch2_proto.py）。地面に置いたときだけ見せる。
+            // ランタンはフックの先に吊るす：立ての足元から右へ 5、上へ 9 ドット
+            var hang = new Vector2(5f / 16f, 9f / 16f);
+            var standGo = new GameObject("Lantern Stand");
+            standGo.transform.SetParent(lanternGo.transform, false);
+            standGo.transform.localPosition = -(Vector3)hang;
+            var stand = standGo.AddComponent<SpriteRenderer>();
+            stand.sprite = LoadSprite($"{TexturesRoot}/Props/lantern_stand.png");
+            stand.spriteSortPoint = SpriteSortPoint.Pivot;
+            stand.sharedMaterial = AssetDatabase.LoadAssetAtPath<Material>(SpriteLitMaterialPath);
+            lantern.ConfigureStand(stand, hang);
 
             var marker = new GameObject("Interact Prompt").AddComponent<SpriteRenderer>();
             marker.sprite = LoadSprite($"{TexturesRoot}/UI/prompt.png");
