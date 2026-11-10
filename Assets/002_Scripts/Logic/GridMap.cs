@@ -16,6 +16,7 @@ namespace BlueNight.Logic
     ///   G  おばあさん（ハル）  K  ランプ屋の主人  C  のら猫ゴマ（通れない）
     ///   N  軒先の古いランタン（ネムの住みか。通れる）  Y  調べる場所（通れる）
     ///   P  ルリの初期位置   S  逃げた影の初期位置   c  落とし影（ゴマの影）の初期位置
+    ///   o  水たまり（第 2 章。路地のマス。モノの影が光のほうへ逆さに映り、その上は影が通れる）
     ///   E  抜け道（第 2 章。路地のマス。暗いときに逃げた影がたどり着くと、越えて逃げる。明るいとふさがる）
     ///   1〜9  ほかのエリアへの出入口（同じ数字どうしがつながる。通れる。Chapter1Maps.Links）
     /// </summary>
@@ -48,7 +49,7 @@ namespace BlueNight.Logic
         public static bool IsWall(char c) => c == '#' || c == 'R' || c == 'w';
         public static bool IsLowFence(char c) => c == 'w';
         public static bool IsSolid(char c) => "LVGATXBMUQKC".IndexOf(c) >= 0;
-        public static bool IsAlley(char c) => c == ',' || c == 'H' || c == 'S' || c == 'E';
+        public static bool IsAlley(char c) => c == ',' || c == 'H' || c == 'S' || c == 'E' || c == 'o';
         public static bool IsLink(char c) => c >= '1' && c <= '9';
         public static bool IsWalkable(char c) => !IsWall(c) && !IsSolid(c);
 
@@ -78,6 +79,7 @@ namespace BlueNight.Logic
                     if (IsWall(ch)) grid.SetWall(c);
                     else if (IsSolid(ch)) grid.SetSolid(c);
                     if (ch == 'E') grid.SetExit(c);
+                    if (ch == 'o') grid.SetPuddle(c);
                 }
             }
             return grid;

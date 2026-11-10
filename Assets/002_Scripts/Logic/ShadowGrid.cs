@@ -77,6 +77,8 @@ namespace BlueNight.Logic
         readonly bool[] walls;   // 光も人も通さない（壁・建物）
         readonly bool[] solids;  // 人は通れないが光は越える（自販機・街灯の柱など）
         readonly CellState[] states;
+        readonly bool[] puddles;     // 水たまり（第 2 章）。モノの影が光のほうへ逆さに映る
+        bool[] reflected;            // 最後の Compute で逆さの影になったマス
 
         public ShadowGrid(int width, int height)
         {
@@ -85,6 +87,8 @@ namespace BlueNight.Logic
             walls = new bool[width * height];
             solids = new bool[width * height];
             states = new CellState[width * height];
+            puddles = new bool[width * height];
+            reflected = new bool[width * height];
             for (int i = 0; i < states.Length; i++)
                 states[i] = CellState.Dark;
         }
@@ -116,6 +120,18 @@ namespace BlueNight.Logic
 
         public bool IsWall(Cell c) => !InBounds(c) || walls[Index(c)];
 
+        /// <summary>水たまりのマス（人も影も通れる）。</summary>
+        public void SetPuddle(Cell c, bool value = true)
+        {
+            if (!InBounds(c)) return;
+            puddles[Index(c)] = value;
+        }
+
+        public bool IsPuddle(Cell c) => InBounds(c) && puddles[Index(c)];
+
+        /// <summary>最後の Compute で、水たまりに逆さの影が映ったマス（光が当たっていても影が通れる）。</summary>
+        public bool IsReflection(Cell c) => InBounds(c) && reflected[Index(c)];
+
         /// <summary>人（ルリ・影）が入れないマス。</summary>
         public bool IsBlocked(Cell c) => !InBounds(c) || walls[Index(c)] || solids[Index(c)];
 
@@ -133,8 +149,10 @@ namespace BlueNight.Logic
         {
             var lit = new bool[states.Length];
             var shaded = new bool[states.Length];
+            reflected = new bool[states.Length];
             var casterList = new List<GridCaster>(casters);
             var shadowCells = new HashSet<Cell>();
+            var reflectionCells = new HashSet<Cell>();
 
             foreach (var light in lights)
             {
@@ -142,9 +160,17 @@ namespace BlueNight.Logic
                     continue;
 
                 shadowCells.Clear();
+                reflectionCells.Clear();
                 foreach (var caster in casterList)
+                {
                     foreach (var cell in caster.Cells)
-                        AddCastShadow(light, cell, caster.Height, shadowCells);
+                    {
+                        AddCastShadow(light, cell, caster.Height, shadowCells, +1);
+                        AddCastShadow(light, cell, caster.Height, reflectionCells, -1);
+                    }
+                }
+                foreach (var c in reflectionCells)
+                    reflected[Index(c)] = true;
 
                 int r = (int)Math.Ceiling(light.Radius);
                 for (int y = light.Position.Y - r; y <= light.Position.Y + r; y++)
@@ -171,6 +197,7 @@ namespace BlueNight.Logic
                     var c = new Cell(x, y);
                     int i = Index(c);
                     if (IsBlocked(c)) states[i] = CellState.Blocked;
+                    else if (reflected[i]) states[i] = CellState.CastShadow; // 水たまりの逆さの影は光より強い
                     else if (lit[i]) states[i] = CellState.Lit;
                     else if (shaded[i]) states[i] = CellState.CastShadow;
                     else states[i] = CellState.Dark;
@@ -178,8 +205,11 @@ namespace BlueNight.Logic
             }
         }
 
-        /// <summary>光源から見てモノの向こう側へ、距離に応じた長さの影を伸ばす（遠いほど長い）。</summary>
-        void AddCastShadow(GridLight light, Cell caster, float casterHeight, HashSet<Cell> result)
+        /// <summary>
+        /// 光源から見てモノの向こう側へ、距離に応じた長さの影を伸ばす（遠いほど長い）。
+        /// direction = -1 は水たまりの逆さの影：同じ長さで光のほうへ伸ばし、水たまりのマスだけを入れる。
+        /// </summary>
+        void AddCastShadow(GridLight light, Cell caster, float casterHeight, HashSet<Cell> result, int direction)
         {
             float distance = light.Position.DistanceTo(caster);
             if (distance <= 0f || distance > light.Radius || !HasLineOfSight(light.Position, caster))
@@ -189,8 +219,8 @@ namespace BlueNight.Logic
                 ? MaxShadowLength
                 : Math.Max(1, Math.Min(MaxShadowLength, (int)Math.Round(distance * casterHeight / (light.Height - casterHeight))));
 
-            double dx = (caster.X - light.Position.X) / distance;
-            double dy = (caster.Y - light.Position.Y) / distance;
+            double dx = direction * (caster.X - light.Position.X) / distance;
+            double dy = direction * (caster.Y - light.Position.Y) / distance;
             for (int k = 1; k <= length * 2; k++)
             {
                 double t = k * 0.5;
@@ -198,7 +228,8 @@ namespace BlueNight.Logic
                 var c = new Cell((int)Math.Round(caster.X + dx * t), (int)Math.Round(caster.Y + dy * t));
                 if (c == caster) continue;
                 if (IsWall(c)) break;
-                result.Add(c);
+                if (direction > 0 || IsPuddle(c))
+                    result.Add(c);
             }
         }
 
