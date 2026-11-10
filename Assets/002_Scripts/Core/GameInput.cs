@@ -80,6 +80,19 @@ namespace BlueNight.Core
             }
         }
 
+        /// <summary>第 2 章：路地全体を見渡す：C ／ ゲームパッドの north（Y）。</summary>
+        public static bool OverviewPressed
+        {
+            get
+            {
+                var keyboard = Keyboard.current;
+                if (keyboard != null && keyboard.cKey.wasPressedThisFrame)
+                    return true;
+                var gamepad = Gamepad.current;
+                return gamepad != null && gamepad.buttonNorth.wasPressedThisFrame;
+            }
+        }
+
         /// <summary>第 2 章の追いかけっこを最初からやり直す：R ／ ゲームパッドの select。</summary>
         public static bool ResetPressed
         {

@@ -22,6 +22,8 @@ namespace BlueNight.Core
         Vector3 unsnappedPosition;
         bool looking;
         Vector2 lookPoint;
+        bool freeLook;
+        Vector3 freePoint;
         float currentSmooth = -1f;
 
         public bool IsLookingAway => looking;
@@ -53,6 +55,28 @@ namespace BlueNight.Core
         {
             target = follow;
             bounds = roomBounds;
+        }
+
+        /// <summary>第 2 章の「見渡す」：カメラを自由に動かせるようにする（いまの位置から）。</summary>
+        public void BeginFreeLook()
+        {
+            freeLook = true;
+            freePoint = Clamp(unsnappedPosition);
+        }
+
+        /// <summary>見渡している間、カメラを delta（ワールド座標）だけ動かす。部屋の外は映さない。</summary>
+        public void PanFreeLook(Vector2 delta)
+        {
+            if (!freeLook)
+                return;
+            freePoint = Clamp(freePoint + (Vector3)delta);
+        }
+
+        /// <summary>見渡すのをやめて、smooth 秒くらいでルリに戻す。</summary>
+        public void EndFreeLook(float smooth)
+        {
+            freeLook = false;
+            currentSmooth = smooth;
         }
 
         /// <summary>ルリを一瞬で映す（やり直しで暗転している間に使う）。</summary>
@@ -90,6 +114,13 @@ namespace BlueNight.Core
                 return;
 
             Vector3 goal = Clamp(Goal());
+            if (freeLook)
+            {
+                // 見渡している間は遊びが止まっていても動くよう、実時間で追う
+                unsnappedPosition = Vector3.SmoothDamp(unsnappedPosition, goal, ref velocity, 0.06f, Mathf.Infinity, Time.unscaledDeltaTime);
+                transform.position = Snap(unsnappedPosition);
+                return;
+            }
             unsnappedPosition = Vector3.SmoothDamp(unsnappedPosition, goal, ref velocity, currentSmooth > 0f ? currentSmooth : smoothTime);
             transform.position = Snap(unsnappedPosition);
             // ルリに戻り終えたら、ふだんの追い方に戻す
@@ -99,6 +130,8 @@ namespace BlueNight.Core
 
         Vector3 Goal()
         {
+            if (freeLook)
+                return new Vector3(freePoint.x, freePoint.y, transform.position.z);
             if (looking)
                 return new Vector3(lookPoint.x, lookPoint.y, transform.position.z);
             Vector3 p = target.position;
