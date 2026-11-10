@@ -302,6 +302,84 @@ namespace BlueNight.Logic
             return step;
         }
 
+        // ------------------------------------------------------------------ 抜け道（第 2 章）
+
+        readonly HashSet<Cell> exits = new HashSet<Cell>();
+
+        /// <summary>抜け道のマス。暗いときに影がたどり着くと、越えて逃げる（明るいとふさがる）。</summary>
+        public void SetExit(Cell c, bool value = true)
+        {
+            if (!InBounds(c)) return;
+            if (value) exits.Add(c);
+            else exits.Remove(c);
+        }
+
+        public bool IsExit(Cell c) => exits.Contains(c);
+
+        public IReadOnlyCollection<Cell> Exits => exits;
+
+        /// <summary>影が抜け道の上にいて、そこが暗い（＝逃げられた）。</summary>
+        public bool HasEscaped(Cell shadow) => IsExit(shadow) && IsDark(shadow);
+
+        /// <summary>
+        /// 影が「ルリより先にたどり着ける暗いマス」だけを通って行ける、いちばん近い開いた抜け道。
+        /// 同じ歩数なら、探索で先に見つかったもの（Cell.Directions の順）。毎回同じ答えになる。
+        /// </summary>
+        public bool TryFindOpenExit(Cell shadow, int[] playerDistances, float speedRatio, out Cell exit) =>
+            FindOpenExit(shadow, playerDistances, speedRatio, out exit, out _);
+
+        bool FindOpenExit(Cell shadow, int[] playerDistances, float speedRatio, out Cell exit, out Dictionary<Cell, Cell> parent)
+        {
+            parent = new Dictionary<Cell, Cell> { [shadow] = shadow };
+            exit = shadow;
+            if (exits.Count == 0)
+                return false;
+            if (HasEscaped(shadow))
+                return true;
+
+            var steps = new Dictionary<Cell, int> { [shadow] = 0 };
+            var queue = new Queue<Cell>();
+            queue.Enqueue(shadow);
+            while (queue.Count > 0)
+            {
+                var c = queue.Dequeue();
+                foreach (var d in Cell.Directions)
+                {
+                    var n = c + d;
+                    if (!IsDark(n) || steps.ContainsKey(n))
+                        continue;
+                    int k = steps[c] + 1;
+                    int player = DistanceAt(playerDistances, n);
+                    if (player != Unreachable && k >= player * speedRatio)
+                        continue; // ルリのほうが先に着く：通れない（FleeStep と同じ決まり）
+                    steps[n] = k;
+                    parent[n] = c;
+                    if (exits.Contains(n))
+                    {
+                        exit = n;
+                        return true;
+                    }
+                    queue.Enqueue(n);
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 第 2 章の影の次の 1 歩。開いた抜け道があればそこへ向かい、無ければ FleeStep（ルリから逃げる）。
+        /// </summary>
+        public Cell ChaseStep(Cell shadow, int[] playerDistances, float speedRatio = 1f)
+        {
+            if (!FindOpenExit(shadow, playerDistances, speedRatio, out var exit, out var parent))
+                return FleeStep(shadow, playerDistances, speedRatio);
+            if (exit == shadow)
+                return shadow;
+            var step = exit;
+            while (parent[step] != shadow)
+                step = parent[step];
+            return step;
+        }
+
         /// <summary>どの暗いマスへ動いても、今より遠ざかれない（追いつめられた）。</summary>
         public bool IsCornered(Cell shadow, int[] playerDistances)
         {
