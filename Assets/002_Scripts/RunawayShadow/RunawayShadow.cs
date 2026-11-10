@@ -16,7 +16,7 @@ namespace BlueNight.Shadows
     [RequireComponent(typeof(SpriteRenderer))]
     public class RunawayShadow : MonoBehaviour
     {
-        enum State { Fleeing, Speaking, Following, Returning, Escaping, Gone }
+        enum State { Waiting, Fleeing, AtExit, ExitEscaping, Speaking, Following, Returning, Escaping, Gone }
 
         [SerializeField] Transform player;
         [SerializeField] Transform owner;
@@ -42,11 +42,20 @@ namespace BlueNight.Shadows
         [SerializeField] string capturedFlag = "shadow_captured";
         [SerializeField] string returnedFlag = "shadow_returned";
         [SerializeField, Tooltip("触れると捕まらずに逃げていく（第 1 章の路地その 1：塀を越えて奥の路地へ）")] bool escapeOnTouch;
+        [Header("第 2 章")]
+        [SerializeField, Tooltip("開いた抜け道（E）を目指す（ShadowGrid.ChaseStep）。第 1 章の影は false のまま")] bool useExits;
+        [SerializeField, Tooltip("ルリが近づくか、光が当たるまで、その場で待つ（作戦を立てる時間）")] bool waitUntilNoticed;
+        [SerializeField] float noticeDistance = 4f;
+        [SerializeField, Tooltip("向きが変わるマスで止まる秒数（海斗の影：投げる前の間）。0 で止まらない")] float cornerPause;
 
         SpriteRenderer spriteRenderer;
         ShadowWorld world;
         State state = State.Fleeing;
         Cell current;
+        Cell startCell;
+        Cell lastStep;
+        float pauseTimer;
+        Action exitFinished;
         Cell target;
         float animTime;
         Vector3 followVelocity;
@@ -62,6 +71,8 @@ namespace BlueNight.Shadows
         public event Action Captured;
         /// <summary>触れたのに逃げられたとき（escapeOnTouch）。</summary>
         public event Action Escaped;
+        /// <summary>開いた抜け道に着いたとき（第 2 章）。影はそこで止まり、ChasePuzzle が EscapeThroughExit を呼ぶ。</summary>
+        public event Action<Cell> ReachedExit;
 
         /// <summary>触れると捕まらずに逃げていく影にする。逃げたら capturedFlag を立てる。</summary>
         public void SetEscapeOnTouch(bool escape) => escapeOnTouch = escape;
@@ -69,6 +80,17 @@ namespace BlueNight.Shadows
         public bool IsFleeing => state == State.Fleeing;
         public bool IsSpeaking => state == State.Speaking;
         public bool IsGone => state == State.Gone || state == State.Returning;
+        public bool IsWaiting => state == State.Waiting;
+        public Cell StartCell => startCell;
+
+        /// <summary>第 2 章の影にする（抜け道を目指す・待つ・角で止まる）。</summary>
+        public void ConfigureChapter2(bool exits, bool wait, float notice, float pauseAtCorners)
+        {
+            useExits = exits;
+            waitUntilNoticed = wait;
+            noticeDistance = notice;
+            cornerPause = pauseAtCorners;
+        }
 
         static readonly Vector3 FootOffset = new Vector3(0f, -0.45f, 0f); // マスの中心 → 足元
 
@@ -108,8 +130,11 @@ namespace BlueNight.Shadows
         {
             world = ShadowWorld.Instance;
             current = world.WorldToCell(transform.position);
+            startCell = current;
             target = current;
             transform.position = world.CellToWorld(current) + FootOffset;
+            if (waitUntilNoticed)
+                state = State.Waiting;
             GameFlags.Changed += OnFlagChanged;
         }
 
@@ -121,8 +146,12 @@ namespace BlueNight.Shadows
         void Update()
         {
             Animate();
+            if (GamePause.IsPaused)
+                return;
             switch (state)
             {
+                case State.Waiting: UpdateWaiting(); break;
+                case State.ExitEscaping: UpdateExitEscaping(); break;
                 case State.Fleeing: UpdateFleeing(); break;
                 case State.Following: UpdateFollowing(); break;
                 case State.Returning: UpdateReturning(); break;
@@ -177,20 +206,38 @@ namespace BlueNight.Shadows
 
         // ------------------------------------------------------------------ 逃げる
 
+        void UpdateWaiting()
+        {
+            if (DialogueRunner.IsBusy || player == null || !world.IsReady)
+                return;
+            // ルリが近づくか、光が当たったら気づいて、追いかけっこが始まる
+            float distance = Vector2.Distance(transform.position, player.position);
+            if (distance > noticeDistance && world.Grid.IsDark(current))
+                return;
+            state = State.Fleeing;
+            PlayOnce(surprised);
+            surpriseTimer = surpriseCooldown;
+            Surprised?.Invoke();
+            target = current;
+        }
+
         void UpdateFleeing()
         {
             if (DialogueRunner.IsBusy || player == null || !world.IsReady)
                 return;
 
-            Vector3 goal = world.CellToWorld(target) + FootOffset;
-            transform.position = Vector3.MoveTowards(transform.position, goal, speed * Time.deltaTime);
-            if ((transform.position - goal).sqrMagnitude < 0.0001f)
+            if (pauseTimer > 0f)
             {
-                current = target;
-                target = ChooseNext();
-                // 向きの絵が無いときだけ、左右を反転して向きを見せる（影には陰影が無いので反転してよい）
-                if (target.X != current.X && moveLeft.Length == 0)
-                    spriteRenderer.flipX = target.X < current.X;
+                pauseTimer -= Time.deltaTime; // 角で一度止まる（投げる前の間）。止まっていても、触れたら捕まる
+            }
+            else
+            {
+                Vector3 goal = world.CellToWorld(target) + FootOffset;
+                transform.position = Vector3.MoveTowards(transform.position, goal, speed * Time.deltaTime);
+                if ((transform.position - goal).sqrMagnitude < 0.0001f)
+                    ArriveAtCell();
+                if (state != State.Fleeing)
+                    return;
             }
 
             float distance = Vector2.Distance(transform.position, player.position);
@@ -206,6 +253,28 @@ namespace BlueNight.Shadows
                 Capture();
         }
 
+        void ArriveAtCell()
+        {
+            current = target;
+            if (useExits && world.Grid.HasEscaped(current))
+            {
+                state = State.AtExit;
+                ReachedExit?.Invoke(current);
+                return;
+            }
+            target = ChooseNext();
+            var step = target - current;
+            if (step != default(Cell))
+            {
+                if (cornerPause > 0f && lastStep != default(Cell) && step != lastStep)
+                    pauseTimer = cornerPause;
+                lastStep = step;
+            }
+            // 向きの絵が無いときだけ、左右を反転して向きを見せる（影には陰影が無いので反転してよい）
+            if (target.X != current.X && moveLeft.Length == 0)
+                spriteRenderer.flipX = target.X < current.X;
+        }
+
         Cell ChooseNext()
         {
             var grid = world.Grid;
@@ -213,7 +282,9 @@ namespace BlueNight.Shadows
                 return grid.StepTowardNearestDark(current); // 光に照らされたら、いちばん近い暗がりへ
 
             var playerDistances = grid.WalkDistancesFrom(world.WorldToCell(player.position));
-            return grid.FleeStep(current, playerDistances, speed / assumedPlayerSpeed);
+            return useExits
+                ? grid.ChaseStep(current, playerDistances, speed / assumedPlayerSpeed)
+                : grid.FleeStep(current, playerDistances, speed / assumedPlayerSpeed);
         }
 
         // ------------------------------------------------------------------ 捕まる・ついてくる・帰る
@@ -300,6 +371,62 @@ namespace BlueNight.Shadows
         {
             GameFlags.Set(capturedFlag);
             gameObject.SetActive(false);
+        }
+
+        // ------------------------------------------------------------------ 第 2 章：抜け道から逃げる・やり直し
+
+        /// <summary>抜け道の外側へ消えていく（会話もフラグも無い）。消えたら finished。</summary>
+        public void EscapeThroughExit(Action finished)
+        {
+            exitFinished = finished;
+            state = State.ExitEscaping;
+            escapeTime = 0f;
+            PlayOnce(surprised);
+            escapeDirection = Vector3.up;
+            foreach (var d in Cell.Directions)
+            {
+                // 通れるとなりの反対側が、抜け道の外
+                if (world.Grid.IsBlocked(current + d))
+                    continue;
+                escapeDirection = new Vector3(-d.X, -d.Y, 0f);
+                break;
+            }
+        }
+
+        void UpdateExitEscaping()
+        {
+            escapeTime += Time.deltaTime;
+            if (escapeTime < EscapeStartle)
+                return;
+            transform.position += escapeDirection * (2.8f * Time.deltaTime);
+            var c = spriteRenderer.color;
+            c.a = Mathf.MoveTowards(c.a, 0f, Time.deltaTime * 0.9f);
+            spriteRenderer.color = c;
+            if (c.a > 0f)
+                return;
+            state = State.Gone;
+            spriteRenderer.enabled = false;
+            var done = exitFinished;
+            exitFinished = null;
+            done?.Invoke();
+        }
+
+        /// <summary>やり直し：見える・不透明・（待つ影なら）待つ状態で、cell に置き直す。</summary>
+        public void ResetTo(Cell cell)
+        {
+            state = waitUntilNoticed ? State.Waiting : State.Fleeing;
+            current = cell;
+            target = cell;
+            lastStep = default(Cell);
+            pauseTimer = 0f;
+            surpriseTimer = 0f;
+            oneShot = null;
+            exitFinished = null;
+            transform.position = world.CellToWorld(cell) + FootOffset;
+            spriteRenderer.enabled = true;
+            var c = spriteRenderer.color;
+            c.a = 1f;
+            spriteRenderer.color = c;
         }
 
         void UpdateFollowing()
