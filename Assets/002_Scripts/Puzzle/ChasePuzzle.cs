@@ -39,6 +39,7 @@ namespace BlueNight.Puzzle
         Facing playerFacing;
         float chaseSeconds;
         bool hintShown;
+        bool pausedHere;
 
         public void Configure(RunawayShadow chaseShadow, PlayerController ruri, Lantern ruriLantern, LightSwitch[] lights,
             ExitMarker[] exitMarkers, DialogueLine[] onEscape, DialogueLine[] hint)
@@ -69,6 +70,9 @@ namespace BlueNight.Puzzle
             }
             Time.timeScale = 1f;
             IsBusy = false;
+            if (pausedHere)
+                GamePause.IsPaused = false;
+            pausedHere = false;
         }
 
         void OnCaptured() => solved = true;
@@ -183,11 +187,16 @@ namespace BlueNight.Puzzle
 
         IEnumerator FadeAndRestore()
         {
+            // 暗転している間は、影も止める（止めないと、止まったルリのとなりへ来て捕まったり、抜け道に着いたりする）
+            pausedHere = true;
+            GamePause.IsPaused = true;
             var fader = ScreenFader.Get();
             yield return fader.FadeOut(0.35f);
             Restore();
             yield return new WaitForSecondsRealtime(0.1f);
             yield return fader.FadeIn(0.35f);
+            GamePause.IsPaused = false;
+            pausedHere = false;
         }
 
         void Restore()

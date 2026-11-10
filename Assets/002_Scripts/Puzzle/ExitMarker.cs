@@ -44,11 +44,30 @@ namespace BlueNight.Puzzle
             glow.enabled = false;
         }
 
+        bool started;
+
+        // ShadowWorld.Instance はその OnEnable で決まる。物どうしの OnEnable の順番は決まっていないので、
+        // つなぐのは全員の OnEnable が終わったあとの Start で（OnEnable で取ると、空のままになることがある）
+        void Start()
+        {
+            started = true;
+            Subscribe();
+        }
+
         void OnEnable()
+        {
+            if (started)
+                Subscribe();
+        }
+
+        void Subscribe()
         {
             world = ShadowWorld.Instance;
             if (world != null)
+            {
+                world.Recomputed -= Refresh;
                 world.Recomputed += Refresh;
+            }
             Refresh();
         }
 

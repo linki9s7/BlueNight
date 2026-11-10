@@ -63,16 +63,35 @@ namespace BlueNight.Tests
         }
 
         [Test]
-        public void PlannedSolutionCanBePlacedWithoutStartingTheChase()
+        public void SolutionLampsAreSwitchableLamps()
         {
-            var shadow = Map.Find('S').Single();
-            Assert.Greater(Chapter2ProtoMap.SolutionLantern.DistanceTo(shadow), Chapter2ProtoMap.NoticeDistance);
+            foreach (var lamp in Chapter2ProtoMap.SolutionLamps)
+                Assert.AreEqual('l', Map.At(lamp), $"{lamp}");
+        }
+
+        /// <summary>
+        /// 答えのマスは、マスのどこに立っても影に気づかれない（いちばん近い点で比べる。
+        /// 影の足元はマスの中心より 0.45 下：RunawayShadow.FootOffset）。
+        /// </summary>
+        [Test]
+        public void SolutionCellsCanBeReachedWithoutStartingTheChase()
+        {
+            var s = Map.Find('S').Single();
+            float sx = s.X + 0.5f, sy = s.Y + 0.05f;
+            foreach (var c in Chapter2ProtoMap.SolutionLanterns)
+            {
+                float nx = System.Math.Max(c.X, System.Math.Min(sx, c.X + 1f));
+                float ny = System.Math.Max(c.Y, System.Math.Min(sy, c.Y + 1f));
+                float d = (float)System.Math.Sqrt((nx - sx) * (nx - sx) + (ny - sy) * (ny - sy));
+                Assert.Greater(d, Chapter2ProtoMap.NoticeDistance, $"{c}");
+            }
         }
 
         [Test]
-        public void PlannedSolutionCatches()
+        public void EverySolutionCellCatches()
         {
-            Assert.AreEqual(ChaseResult.Caught, Play(Chapter2ProtoMap.SolutionLamps, Chapter2ProtoMap.SolutionLantern));
+            foreach (var c in Chapter2ProtoMap.SolutionLanterns)
+                Assert.AreEqual(ChaseResult.Caught, Play(Chapter2ProtoMap.SolutionLamps, c), $"{c}");
         }
 
         [Test]

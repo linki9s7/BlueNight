@@ -8,7 +8,8 @@ namespace BlueNight.Logic
     /// - 東の抜け道（E）：奥の門灯（l）を点ければふさがる。
     /// - 北の抜け道（e、水たまりの上）：奥の門灯（l）を点けても、路地の上の看板（n）の逆さの影が水たまりに映って、開いたまま。
     ///   ランタンを抜け道の手前（西側）に置いて照らすとふさがり、同じ光で北の路地も切れる。
-    /// 答え：東の門灯を点け、ランタンを (12,14)・(13,14)・(14,14)・(13,15)・(14,16) のどれかに置く（北の門灯は点けても点けなくてもよい）。
+    /// 答え：東の門灯を点け、ランタンを (12,14)・(13,14)・(13,15) のどれかに置く。北の門灯は消したまま
+    /// （点けると、看板の逆さの影で北の抜け道が開き、(12,14)・(13,15) では逃げられる）。
     /// 全部点けただけでは、北の抜け道から逃げられる。ランタンが要る。影から 4 マス以内に置くと、影が気づいて逃げ出す。
     /// </summary>
     public static class Chapter2ProtoMap
@@ -47,10 +48,10 @@ namespace BlueNight.Logic
         };
 
         /// <summary>答え：点ける町の灯り（l）。</summary>
-        public static readonly Cell[] SolutionLamps = { new Cell(5, 8), new Cell(26, 9) };
+        public static readonly Cell[] SolutionLamps = { new Cell(26, 8) };
 
-        /// <summary>答え：ランタンを置くマス。</summary>
-        public static readonly Cell SolutionLantern = new Cell(13, 14);
+        /// <summary>答え：ランタンを置くマス（どれか 1 つ）。</summary>
+        public static readonly Cell[] SolutionLanterns = { new Cell(12, 14), new Cell(13, 14), new Cell(13, 15) };
 
         public static GridMap Create() => new GridMap(Rows);
     }
