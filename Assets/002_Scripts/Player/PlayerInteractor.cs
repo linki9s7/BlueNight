@@ -1,6 +1,8 @@
 using BlueNight.Core;
 using BlueNight.Dialogue;
+using BlueNight.Audio;
 using BlueNight.Interaction;
+using BlueNight.LightShadow;
 using UnityEngine;
 
 namespace BlueNight.Player
@@ -45,10 +47,14 @@ namespace BlueNight.Player
 
             current = FindBest();
             SetMarker(current);
+
+            bool lanternTarget = current is LanternHook || current is PlacedLantern;
+            if (GameInput.LanternPressed && !lanternTarget && TryPlaceLantern())
+                return;
             if (current == null)
                 return;
 
-            if (GameInput.ConfirmPressed || (GameInput.LanternPressed && current is LanternHook))
+            if (GameInput.ConfirmPressed || (GameInput.LanternPressed && lanternTarget))
             {
                 // 動き：ランタン掛けは腕をのばして掛ける、人と話すときはそのまま、それ以外はのぞきこむ
                 if (animator != null && current is LanternHook)
@@ -57,6 +63,24 @@ namespace BlueNight.Player
                     animator.PlayAction(PlayerAnimator.Action.Inspect);
                 current.Interact(this);
             }
+        }
+
+        /// <summary>ランタン立てで、足元のマスにランタンを置く（第 2 章）。歩けないマスには置かない。</summary>
+        bool TryPlaceLantern()
+        {
+            if (lantern == null || !lantern.isActiveAndEnabled || !lantern.IsCarried || !lantern.CanPlace)
+                return false;
+            var world = ShadowWorld.Instance;
+            if (world == null || world.Grid == null)
+                return false;
+            var cell = world.WorldToCell(transform.position);
+            if (world.Grid.IsBlocked(cell))
+                return false;
+            if (animator != null)
+                animator.PlayAction(PlayerAnimator.Action.Place);
+            lantern.PlaceAt(world.CellToWorld(cell) + new Vector3(0f, -0.35f, 0f));
+            SoundEffects.Play("lantern_hang");
+            return true;
         }
 
         Interactable FindBest()
