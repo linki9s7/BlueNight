@@ -564,11 +564,14 @@
 | Props/bus_sign.png | 7 |  | 0 | 0/0 | 0 | 1.3 | 0.0 |  |  |
 | Props/curve_mirror.png | 5 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Props/extinguisher_box.png | 5 |  | 0 | 0/0 | 0 | 1.1 | 0.0 |  |  |
+| Props/gate_lamp_off.png | 6 |  | 0 | 1/8 | 1 | 0.5 | 0.0 |  | 箱の屋根の 1 行は金属のふち（帯ではない）。ガラスの右下の 1 ドットは、ガラスのふちの影 |
+| Props/gate_lamp_on.png | 8 |  | 0 | 1/8 | 1 | 0.5 | 0.0 |  | 箱の屋根の 1 行は金属のふち（帯ではない）。ガラスの右下の 1 ドットは、ガラスのふちの影 |
 | Props/hook.png | 4 |  | 0 | 0/0 | 0 | 1.1 | 0.0 |  |  |
 | Props/lamp.png | 5 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Props/lamp_dim.png | 5 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Props/lamp_off.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Props/lantern.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Props/lantern_stand.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Props/mailbox.png | 6 |  | 0 | 1/3 | 0 | 0.0 | 0.0 |  | 差し入れ口の上の明るい点はつやの模様 |
 | Props/pot_plant.png | 6 |  | 0 | 0/0 | 1 | 2.4 | 0.0 |  | 花の 1 ドットは模様（AA ではない） |
 | Props/power_pole.png | 8 |  | 0 | 1/4 | 0 | 0.6 | 0.0 | stone | 光の向き：足元の黄色と黒の巻き標識はしま模様で、陰影ではない |

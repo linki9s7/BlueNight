@@ -143,8 +143,9 @@ namespace BlueNight.EditorTools
         /// <summary>点け消しできる門灯（l）。最初は消えている。調べると点く。</summary>
         static LightSwitch CreateGateLamp(GameObject parent, Cell cell, Material material)
         {
-            var lamp = CreateSpriteObject(parent, $"Gate Lamp {cell}", "Props/lamp_off", CellFoot(cell), material);
-            var light = CreatePointLight(lamp, "Gate Light", new Vector3(0f, 1.2f, 0f), Hex("#ffc98a"), 1.0f, Chapter2ProtoMap.SmallLampRadius);
+            // 門柱の上の四角い門灯（Tools/Art/ch2_proto.py）。灯りは白っぽく、ランタンの橙と見分ける
+            var lamp = CreateSpriteObject(parent, $"Gate Lamp {cell}", "Props/gate_lamp_off", CellFoot(cell), material);
+            var light = CreatePointLight(lamp, "Gate Light", new Vector3(0f, 1.3f, 0f), Hex("#d8ecff"), 1.0f, Chapter2ProtoMap.SmallLampRadius);
             var source = lamp.AddComponent<GridLightSource>();
             source.Configure(Chapter2ProtoMap.SmallLampRadius, light);
             source.SetHeight(Chapter2ProtoMap.SmallLampHeight);
@@ -152,9 +153,9 @@ namespace BlueNight.EditorTools
             var sw = lamp.AddComponent<LightSwitch>();
             sw.Configure(source);
             sw.ConfigureSprites(lamp.GetComponent<SpriteRenderer>(),
-                LoadSprite($"{TexturesRoot}/Props/lamp.png"), LoadSprite($"{TexturesRoot}/Props/lamp_off.png"));
+                LoadSprite($"{TexturesRoot}/Props/gate_lamp_on.png"), LoadSprite($"{TexturesRoot}/Props/gate_lamp_off.png"));
             sw.SetRange(1.6f);
-            sw.SetPromptOffset(new Vector2(0f, 2.6f));
+            sw.SetPromptOffset(new Vector2(0f, 2.0f));
             return sw;
         }
     }

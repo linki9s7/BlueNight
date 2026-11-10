@@ -9701,6 +9701,40 @@
   "reviewed": ""
  },
  {
+  "file": "Props/gate_lamp_off.png",
+  "group": "street_night",
+  "colors": 6,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 8,
+  "bandingColors": [
+   "#5a6285"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "箱の屋根の 1 行は金属のふち（帯ではない）。ガラスの右下の 1 ドットは、ガラスのふちの影"
+ },
+ {
+  "file": "Props/gate_lamp_on.png",
+  "group": "street_night",
+  "colors": 8,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 1,
+  "bandingPixels": 8,
+  "bandingColors": [
+   "#9fd2ff"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.5,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": "箱の屋根の 1 行は金属のふち（帯ではない）。ガラスの右下の 1 ドットは、ガラスのふちの影"
+ },
+ {
   "file": "Props/hook.png",
   "group": "street_night",
   "colors": 4,
@@ -9762,6 +9796,21 @@
  },
  {
   "file": "Props/lantern.png",
+  "group": "street_night",
+  "colors": 4,
+  "offPalette": [],
+  "doubles": 0,
+  "banding": 0,
+  "bandingPixels": 0,
+  "bandingColors": [],
+  "floatingAA": 0,
+  "noisePercent": 0.0,
+  "ditherPercent": 0.0,
+  "lightWrong": {},
+  "reviewed": ""
+ },
+ {
+  "file": "Props/lantern_stand.png",
   "group": "street_night",
   "colors": 4,
   "offPalette": [],

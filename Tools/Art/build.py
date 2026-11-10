@@ -21,6 +21,7 @@ import json  # noqa: E402
 import ch1_assets  # noqa: E402
 import ch1_interior  # noqa: E402
 import ch1_more  # noqa: E402
+import ch2_proto  # noqa: E402
 import m1_assets  # noqa: E402
 import nemu  # noqa: E402
 import npc  # noqa: E402
@@ -726,6 +727,7 @@ def main():
     interior = ch1_interior.build(save)
     home = room.build(save)
     kids.build(save)   # 回想 1 の 8 歳のルリとミオ
+    ch2_proto.build(save)   # 第 2 章の試作：門灯・ランタン立て
     faces = portrait.build(save)
     faces.update({f"nemu_{k}": v for k, v in NEMU_FACES.items()})
     ui = ui_title.build_ui(save)

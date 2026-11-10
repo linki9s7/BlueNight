@@ -24,6 +24,8 @@ namespace BlueNight.Player
         [SerializeField] Vector2 handOffsetSide = new Vector2(0.4f, 0.35f);
         [SerializeField] float swingAmplitude = 0.04f;
         [SerializeField, Tooltip("ランタン立てのフラグが無くても置ける（試作シーン）")] bool allowPlacing;
+        [SerializeField, Tooltip("地面に置いたときだけ見せるランタン立て（ランタンの子。ランタンはこの上に載る）")] SpriteRenderer stand;
+        [SerializeField, Tooltip("ランタン立ての天板の高さ（ワールド単位）")] float standHeight = 5f / 16f;
 
         public LanternHook Hook { get; private set; }
         public LanternState State { get; private set; } = LanternState.Carried;
@@ -31,6 +33,20 @@ namespace BlueNight.Player
         public bool CanPlace => allowPlacing || GameFlags.Has(StandFlag);
 
         public void SetAllowPlacing(bool allow) => allowPlacing = allow;
+
+        public void ConfigureStand(SpriteRenderer standRenderer, float height)
+        {
+            stand = standRenderer;
+            standHeight = height;
+            if (stand != null)
+                stand.enabled = false;
+        }
+
+        void ShowStand(bool show)
+        {
+            if (stand != null)
+                stand.enabled = show;
+        }
 
         float swingTime;
 
@@ -51,6 +67,7 @@ namespace BlueNight.Player
         {
             Hook = hook;
             State = LanternState.Hung;
+            ShowStand(false);
             // 掛けたランタンは、自分の足元の Y で前後が決まる（ルリの SortingGroup から出す）
             transform.SetParent(null, true);
             transform.position = hook.HangPoint;
@@ -67,7 +84,8 @@ namespace BlueNight.Player
             State = LanternState.Placed;
             // 置いたランタンは、自分の足元の Y で前後が決まる（ルリの SortingGroup から出す）
             transform.SetParent(null, true);
-            transform.position = foot;
+            transform.position = foot + new Vector3(0f, stand != null ? standHeight : 0f, 0f); // ランタン立ての上に載せる
+            ShowStand(true);
             spriteRenderer.sortingOrder = 0;
             spriteRenderer.flipX = false;
             if (lightSource != null)
@@ -78,6 +96,7 @@ namespace BlueNight.Player
         {
             Hook = null;
             State = LanternState.Carried;
+            ShowStand(false);
             // 持っている間はルリの子にして、ルリと一緒に前後を決める（下の sortingOrder はルリの中での前後）
             if (holder != null)
                 transform.SetParent(holder.transform, true);
