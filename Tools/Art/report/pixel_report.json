@@ -9812,17 +9812,19 @@
  {
   "file": "Props/lantern_stand.png",
   "group": "street_night",
-  "colors": 4,
+  "colors": 5,
   "offPalette": [],
   "doubles": 0,
-  "banding": 0,
-  "bandingPixels": 0,
-  "bandingColors": [],
-  "floatingAA": 0,
-  "noisePercent": 0.0,
+  "banding": 1,
+  "bandingPixels": 9,
+  "bandingColors": [
+   "#80544a"
+  ],
+  "floatingAA": 1,
+  "noisePercent": 0.7,
   "ditherPercent": 0.0,
   "lightWrong": {},
-  "reviewed": ""
+  "reviewed": "鉄の棒・フックは 1 ドット幅の線（帯ではない）。フックの先の曲がりは形"
  },
  {
   "file": "Props/mailbox.png",

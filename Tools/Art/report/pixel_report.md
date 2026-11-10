@@ -571,7 +571,7 @@
 | Props/lamp_dim.png | 5 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Props/lamp_off.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
 | Props/lantern.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
-| Props/lantern_stand.png | 4 |  | 0 | 0/0 | 0 | 0.0 | 0.0 |  |  |
+| Props/lantern_stand.png | 5 |  | 0 | 1/9 | 1 | 0.7 | 0.0 |  | 鉄の棒・フックは 1 ドット幅の線（帯ではない）。フックの先の曲がりは形 |
 | Props/mailbox.png | 6 |  | 0 | 1/3 | 0 | 0.0 | 0.0 |  | 差し入れ口の上の明るい点はつやの模様 |
 | Props/pot_plant.png | 6 |  | 0 | 0/0 | 1 | 2.4 | 0.0 |  | 花の 1 ドットは模様（AA ではない） |
 | Props/power_pole.png | 8 |  | 0 | 1/4 | 0 | 0.6 | 0.0 | stone | 光の向き：足元の黄色と黒の巻き標識はしま模様で、陰影ではない |

@@ -24,8 +24,8 @@ namespace BlueNight.Player
         [SerializeField] Vector2 handOffsetSide = new Vector2(0.4f, 0.35f);
         [SerializeField] float swingAmplitude = 0.04f;
         [SerializeField, Tooltip("ランタン立てのフラグが無くても置ける（試作シーン）")] bool allowPlacing;
-        [SerializeField, Tooltip("地面に置いたときだけ見せるランタン立て（ランタンの子。ランタンはこの上に載る）")] SpriteRenderer stand;
-        [SerializeField, Tooltip("ランタン立ての天板の高さ（ワールド単位）")] float standHeight = 5f / 16f;
+        [SerializeField, Tooltip("地面に置いたときだけ見せるランタン立て（ランタンの子。ランタンは立てのフックに吊るす）")] SpriteRenderer stand;
+        [SerializeField, Tooltip("立ての足元から、ランタンを吊るす所（ランタンの足元）までのずれ（ワールド単位）")] Vector2 hangOffset = new Vector2(5f / 16f, 9f / 16f);
 
         public LanternHook Hook { get; private set; }
         public LanternState State { get; private set; } = LanternState.Carried;
@@ -34,10 +34,10 @@ namespace BlueNight.Player
 
         public void SetAllowPlacing(bool allow) => allowPlacing = allow;
 
-        public void ConfigureStand(SpriteRenderer standRenderer, float height)
+        public void ConfigureStand(SpriteRenderer standRenderer, Vector2 hang)
         {
             stand = standRenderer;
-            standHeight = height;
+            hangOffset = hang;
             if (stand != null)
                 stand.enabled = false;
         }
@@ -84,7 +84,7 @@ namespace BlueNight.Player
             State = LanternState.Placed;
             // 置いたランタンは、自分の足元の Y で前後が決まる（ルリの SortingGroup から出す）
             transform.SetParent(null, true);
-            transform.position = foot + new Vector3(0f, stand != null ? standHeight : 0f, 0f); // ランタン立ての上に載せる
+            transform.position = foot + (stand != null ? (Vector3)hangOffset : Vector3.zero); // ランタン立てのフックに吊るす
             ShowStand(true);
             spriteRenderer.sortingOrder = 0;
             spriteRenderer.flipX = false;

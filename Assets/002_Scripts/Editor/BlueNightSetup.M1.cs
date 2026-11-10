@@ -264,15 +264,17 @@ namespace BlueNight.EditorTools
             var lantern = lanternGo.AddComponent<Lantern>();
             lantern.Configure(player, sprite, gridLight);
             lanternGo.AddComponent<PlacedLantern>().SetPromptOffset(new Vector2(0f, 1.4f)); // 地面に置いたら、調べて拾う（第 2 章）
-            // ランタン立て（木と鉄の小さな台）。地面に置いたときだけ見せる。ランタンの足元から天板の高さだけ下
+            // ランタン立て（木の丸い台座と、吊るす鉄のフック。Tools/Art/ch2_proto.py）。地面に置いたときだけ見せる。
+            // ランタンはフックの先に吊るす：立ての足元から右へ 5、上へ 9 ドット
+            var hang = new Vector2(5f / 16f, 9f / 16f);
             var standGo = new GameObject("Lantern Stand");
             standGo.transform.SetParent(lanternGo.transform, false);
-            standGo.transform.localPosition = new Vector3(0f, -5f / 16f, 0f);
+            standGo.transform.localPosition = -(Vector3)hang;
             var stand = standGo.AddComponent<SpriteRenderer>();
             stand.sprite = LoadSprite($"{TexturesRoot}/Props/lantern_stand.png");
             stand.spriteSortPoint = SpriteSortPoint.Pivot;
             stand.sharedMaterial = AssetDatabase.LoadAssetAtPath<Material>(SpriteLitMaterialPath);
-            lantern.ConfigureStand(stand, 5f / 16f);
+            lantern.ConfigureStand(stand, hang);
 
             var marker = new GameObject("Interact Prompt").AddComponent<SpriteRenderer>();
             marker.sprite = LoadSprite($"{TexturesRoot}/UI/prompt.png");
