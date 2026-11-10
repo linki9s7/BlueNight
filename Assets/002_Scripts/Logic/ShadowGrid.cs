@@ -219,6 +219,10 @@ namespace BlueNight.Logic
                 ? MaxShadowLength
                 : Math.Max(1, Math.Min(MaxShadowLength, (int)Math.Round(distance * casterHeight / (light.Height - casterHeight))));
 
+            // 頭の上の物（看板など、人も影も通れるマスにある物）は、真下のマスも影になる
+            if (direction > 0 && !IsBlocked(caster))
+                result.Add(caster);
+
             double dx = direction * (caster.X - light.Position.X) / distance;
             double dy = direction * (caster.Y - light.Position.Y) / distance;
             for (int k = 1; k <= length * 2; k++)

@@ -10,13 +10,16 @@ namespace BlueNight.Logic
     ///   w  低い塀（壁と同じく光も人も通さない。ただし塀の上は暗いので、逃げた影は触れられると越えて逃げる）
     ///   .  歩道（広場・床）  ,  路地（アスファルト）  =  車道  :  横断歩道
     ///   L  街灯（柱は通れない。光源）
+    ///   l  点け消しできる町の灯り（第 2 章。柱は通れない。最初は消えている）
     ///   H  路地のランタン掛け   h  広場・店の中のランタン掛け
     ///   V  自販機  A  室外機  T  ごみ箱  X  家具・バス停の壁（通れない。影を落とす）
     ///   B  ベンチ  M  ポスト  U  電柱  Q  バス停の標識（通れない）
     ///   G  おばあさん（ハル）  K  ランプ屋の主人  C  のら猫ゴマ（通れない）
     ///   N  軒先の古いランタン（ネムの住みか。通れる）  Y  調べる場所（通れる）
     ///   P  ルリの初期位置   S  逃げた影の初期位置   c  落とし影（ゴマの影）の初期位置
+    ///   n  頭の上の看板（第 2 章。人も影も通れる。影を落とし、光が当たると真下も影になる）
     ///   o  水たまり（第 2 章。路地のマス。モノの影が光のほうへ逆さに映り、その上は影が通れる）
+    ///   e  水たまりの上の抜け道（第 2 章。抜け道で、水たまりでもある：逆さの影が映ると、照らされていても開いたまま）
     ///   E  抜け道（第 2 章。路地のマス。暗いときに逃げた影がたどり着くと、越えて逃げる。明るいとふさがる）
     ///   1〜9  ほかのエリアへの出入口（同じ数字どうしがつながる。通れる。Chapter1Maps.Links）
     /// </summary>
@@ -48,8 +51,8 @@ namespace BlueNight.Logic
 
         public static bool IsWall(char c) => c == '#' || c == 'R' || c == 'w';
         public static bool IsLowFence(char c) => c == 'w';
-        public static bool IsSolid(char c) => "LVGATXBMUQKC".IndexOf(c) >= 0;
-        public static bool IsAlley(char c) => c == ',' || c == 'H' || c == 'S' || c == 'E' || c == 'o';
+        public static bool IsSolid(char c) => "LlVGATXBMUQKC".IndexOf(c) >= 0;
+        public static bool IsAlley(char c) => c == ',' || c == 'H' || c == 'S' || c == 'E' || c == 'e' || c == 'o' || c == 'n';
         public static bool IsLink(char c) => c >= '1' && c <= '9';
         public static bool IsWalkable(char c) => !IsWall(c) && !IsSolid(c);
 
@@ -62,6 +65,7 @@ namespace BlueNight.Logic
                 case 'X': return 1.2f;   // 棚・カウンター・バス停の壁
                 case 'A': return 1f;     // 室外機
                 case 'T': return 0.8f;   // ごみ箱
+                case 'n': return 2.5f;   // 頭の上の看板（第 2 章）
                 default: return 0f;
             }
         }
@@ -78,8 +82,8 @@ namespace BlueNight.Logic
                     char ch = At(c);
                     if (IsWall(ch)) grid.SetWall(c);
                     else if (IsSolid(ch)) grid.SetSolid(c);
-                    if (ch == 'E') grid.SetExit(c);
-                    if (ch == 'o') grid.SetPuddle(c);
+                    if (ch == 'E' || ch == 'e') grid.SetExit(c);
+                    if (ch == 'o' || ch == 'e') grid.SetPuddle(c);
                 }
             }
             return grid;

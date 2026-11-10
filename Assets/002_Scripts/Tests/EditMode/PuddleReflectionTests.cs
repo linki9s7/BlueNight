@@ -102,6 +102,48 @@ namespace BlueNight.Tests
             Assert.AreEqual(castLength, reflected);
         }
 
+        // 頭の上の看板（n）：人も影も通れるマスにあるモノ。光が当たると、真下のマスも影になる。
+        // 固い物（自販機など）の逆さの影は、まわりが照らされていて入口が無いが、看板なら真下から入れる。
+
+        [Test]
+        public void OverheadSignCellIsShadedWhenItCasts()
+        {
+            var grid = new ShadowGrid(20, 5);
+            var sign = new GridCaster { Height = 2.5f };
+            sign.Cells.Add(Thing);                       // SetSolid しない：通れる
+            grid.Compute(new[] { Light(4) }, new[] { sign });
+            Assert.AreEqual(CellState.CastShadow, grid.GetState(Thing));
+        }
+
+        [Test]
+        public void SolidThingCellStaysBlocked()
+        {
+            var grid = Grid();
+            Compute(grid, Light(4));
+            Assert.AreEqual(CellState.Blocked, grid.GetState(Thing));
+        }
+
+        [Test]
+        public void ShadowCanWalkFromUnderSignOntoReflection()
+        {
+            // 看板 (10, 2) の真下 → 光 (4, 2) のほうの水たまり (9, 2)・(8, 2) が、暗いまま続く
+            var grid = new ShadowGrid(20, 5);
+            grid.SetPuddle(new Cell(8, 2));
+            grid.SetPuddle(new Cell(9, 2));
+            var sign = new GridCaster { Height = 2.5f };
+            sign.Cells.Add(Thing);
+            grid.Compute(new[] { Light(4) }, new[] { sign });
+            var reach = grid.DistancesFrom(new Cell(11, 2), grid.IsDark);
+            Assert.AreNotEqual(ShadowGrid.Unreachable, grid.DistanceAt(reach, new Cell(8, 2)));
+        }
+
+        [Test]
+        public void GridMapLegendSign()
+        {
+            Assert.IsTrue(GridMap.IsWalkable('n'));
+            Assert.Greater(GridMap.CasterHeight('n'), 2f);
+        }
+
         [Test]
         public void GridMapLegendPuddle()
         {

@@ -98,6 +98,15 @@ namespace BlueNight.Tests
         }
 
         [Test]
+        public void GridMapLegendExitOnPuddle()
+        {
+            var grid = new GridMap(new[] { "#####", "#,e,#", "#####" }).CreateGrid();
+            Assert.IsTrue(grid.IsExit(new Cell(2, 1)));
+            Assert.IsTrue(grid.IsPuddle(new Cell(2, 1)));
+            Assert.IsTrue(GridMap.IsAlley('e'));
+        }
+
+        [Test]
         public void GridMapLegendE()
         {
             var grid = new GridMap(new[] { "#####", "#,E,#", "#####" }).CreateGrid();
