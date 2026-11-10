@@ -62,7 +62,9 @@ namespace BlueNight.Puzzle
         {
             if (spriteRenderer == null || world == null || world.Grid == null)
                 return;
-            spriteRenderer.sprite = world.Grid.IsDark(Cell) ? open : closed;
+            bool isOpen = world.Grid.IsDark(Cell);
+            spriteRenderer.sprite = isOpen ? open : closed;
+            spriteRenderer.color = isOpen ? Color.white : new Color(1f, 1f, 1f, 0.35f); // ふさがっていると薄く
         }
 
         /// <summary>逃げた印：ぼんやり光らせて、seconds 秒かけて消す（やり直しのあとも残る）。</summary>

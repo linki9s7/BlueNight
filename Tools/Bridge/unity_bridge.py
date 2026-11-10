@@ -62,7 +62,7 @@ def main():
     p.add_argument("--timeout", type=float, default=60.0)
     a = p.parse_args()
     arg, x, y = "", 0.0, 0.0
-    if a.command == "move":
+    if a.command == "move" or (a.command == "overview" and len(a.args) == 2):   # overview dx dy：見渡すカメラを動かす
         x, y = float(a.args[0]), float(a.args[1])
     elif a.command == "cell":              # cell エリア x y：そのエリアのマス (x, y) へ
         arg, x, y = a.args[0], float(a.args[1]), float(a.args[2])

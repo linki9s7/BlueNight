@@ -81,14 +81,11 @@ namespace BlueNight.Puzzle
                 playerStart = player.transform.position;
                 playerFacing = player.Facing;
             }
-            if (solved || IsBusy || DialogueRunner.IsBusy || GamePause.IsPaused)
+            if (!CanAct)
                 return;
 
-            if (GameInput.ResetPressed)
-            {
-                StartCoroutine(ManualReset());
+            if (GameInput.ResetPressed && TryReset())
                 return;
-            }
 
             if (!shadow.IsWaiting)
                 chaseSeconds += Time.deltaTime;
@@ -97,6 +94,18 @@ namespace BlueNight.Puzzle
                 hintShown = true;
                 DialogueRunner.Instance.Play(hintLines);
             }
+        }
+
+        /// <summary>やり直し・ヒントを受けつけてよいか（捕まえたあと・演出中・会話中・見渡している間は受けつけない）。</summary>
+        bool CanAct => !solved && !IsBusy && !DialogueRunner.IsBusy && !GamePause.IsPaused;
+
+        /// <summary>やり直しボタン（R）。受けつけたら true。</summary>
+        public bool TryReset()
+        {
+            if (!started || !CanAct)
+                return false;
+            StartCoroutine(ManualReset());
+            return true;
         }
 
         void OnReachedExit(Cell cell)
@@ -197,6 +206,8 @@ namespace BlueNight.Puzzle
                 body.velocity = Vector2.zero;
             }
             player.Face(playerFacing);
+            foreach (var nemu in FindObjectsOfType<NemuFollower>())
+                nemu.SnapToTarget();          // ネムもルリのそばへ（飛んで戻ってくると、戻ったことが分かりにくい）
             var camera = CameraFollow2D.Instance;
             if (camera != null)
             {

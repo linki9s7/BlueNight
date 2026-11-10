@@ -263,6 +263,7 @@ namespace BlueNight.EditorTools
 
             var lantern = lanternGo.AddComponent<Lantern>();
             lantern.Configure(player, sprite, gridLight);
+            lanternGo.AddComponent<PlacedLantern>().SetPromptOffset(new Vector2(0f, 1.4f)); // 地面に置いたら、調べて拾う（第 2 章）
 
             var marker = new GameObject("Interact Prompt").AddComponent<SpriteRenderer>();
             marker.sprite = LoadSprite($"{TexturesRoot}/UI/prompt.png");

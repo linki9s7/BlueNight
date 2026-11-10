@@ -230,7 +230,7 @@ namespace BlueNight.EditorTools
                         floor = (x + y) % 3 == 0 ? cross1 : cross0;
                     else if (ch == '=')
                         floor = above == '=' && below == '=' && (x & 1) == 0 ? line : random.NextDouble() < 0.15 ? road1 : road0;
-                    else if (ch == ',' || alley && "HSATL".IndexOf(ch) >= 0)
+                    else if (ch == ',' || alley && "HSATLlEeon".IndexOf(ch) >= 0)
                         floor = random.NextDouble() < 0.15 ? road1 : road0;
                     else if (below == '=' || below == ':')
                         floor = curb;

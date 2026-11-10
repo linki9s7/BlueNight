@@ -12,16 +12,33 @@ namespace BlueNight.Interaction
     public class LightSwitch : Interactable
     {
         [SerializeField] GridLightSource target;
+        [SerializeField, Tooltip("点いている・消えているで絵を替える（任意）")] SpriteRenderer picture;
+        [SerializeField] Sprite onSprite;
+        [SerializeField] Sprite offSprite;
 
         public bool InitialOn { get; private set; }
 
         public void Configure(GridLightSource light) => target = light;
+
+        public void ConfigureSprites(SpriteRenderer renderer, Sprite on, Sprite off)
+        {
+            picture = renderer;
+            onSprite = on;
+            offSprite = off;
+        }
+
+        void SyncPicture()
+        {
+            if (picture != null && target != null)
+                picture.sprite = target.On ? onSprite : offSprite;
+        }
 
         void Awake()
         {
             if (target == null)
                 target = GetComponent<GridLightSource>();
             InitialOn = target != null && target.On;
+            SyncPicture();
         }
 
         public override bool CanInteract(PlayerInteractor who) => target != null;
@@ -29,6 +46,7 @@ namespace BlueNight.Interaction
         public override void Interact(PlayerInteractor who)
         {
             target.On = !target.On;
+            SyncPicture();
             SoundEffects.Play(target.On ? "light_on" : "light_off");
         }
 
@@ -36,6 +54,7 @@ namespace BlueNight.Interaction
         {
             if (target != null)
                 target.On = InitialOn;
+            SyncPicture();
         }
     }
 }

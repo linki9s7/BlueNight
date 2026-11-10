@@ -120,6 +120,7 @@ namespace BlueNight.EditorTools
                         case "m1": BlueNightSetup.BuildM1Scene(); break;
                         case "title": BlueNightSetup.BuildTitleScene(); break;
                         case "ch1": BlueNightSetup.BuildChapter1Scene(); break;
+                        case "ch2proto": BlueNightSetup.BuildChapter2ProtoScene(); break;
                         default: throw new ArgumentException($"unknown scene: {r.arg}");
                     }
                     return $"built {r.arg}";
@@ -174,6 +175,23 @@ namespace BlueNight.EditorTools
                     return AdvanceDialogue(200);
                 case "interact":
                     return InteractNearest(r.arg == "hook");
+                case "place":
+                    // 第 2 章：ランタンボタン（F）で足元に置くのと同じ
+                    return CallPrivate(Player().GetComponent<BlueNight.Player.PlayerInteractor>(), "TryPlaceLantern");
+                case "puzzlereset":
+                    // 第 2 章：やり直しボタン（R）と同じ
+                    return UnityEngine.Object.FindObjectOfType<BlueNight.Puzzle.ChasePuzzle>().TryReset() ? "reset started" : "reset ignored";
+                case "overview":
+                    // 第 2 章：見渡すボタン（C）と同じ。x, y で見渡すカメラを動かす（0, 0 なら入る／出るだけ）
+                    var overview = UnityEngine.Object.FindObjectOfType<BlueNight.Puzzle.OverviewMode>();
+                    if (r.x != 0f || r.y != 0f)
+                    {
+                        BlueNight.Core.CameraFollow2D.Instance.PanFreeLook(new Vector2(r.x, r.y));
+                        return "panned";
+                    }
+                    if (!overview.TryToggle())
+                        return "overview ignored";
+                    return overview.IsActive ? "overview on" : "overview off";
                 case "cell":
                     // arg = エリア名。x, y = マス。そのマスの足元へルリを動かす
                     var areaObj = BlueNight.World.AreaManager.Instance.Find(r.arg);
@@ -361,6 +379,11 @@ namespace BlueNight.EditorTools
             best.Interact(who);
             return $"interacted with {best.name}";
         }
+
+        static object CallPrivateRaw(object target, string method, params object[] args) =>
+            target.GetType().GetMethod(method, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Invoke(target, args);
+
+        static string CallPrivate(object target, string method) => Convert.ToString(CallPrivateRaw(target, method));
 
         static string Invoke(string fullName)
         {

@@ -45,17 +45,34 @@ namespace BlueNight.Puzzle
 
             if (!active)
             {
-                if (GameInput.OverviewPressed && !DialogueRunner.IsBusy && !ChasePuzzle.IsBusy && player.InputEnabled)
-                    Enter(camera);
+                if (GameInput.OverviewPressed)
+                    TryToggle();
                 return;
             }
 
             if (GameInput.OverviewPressed || GameInput.CancelPressed)
             {
-                Exit();
+                TryToggle();
                 return;
             }
             camera.PanFreeLook(ReadMove() * (panSpeed * Time.unscaledDeltaTime));
+        }
+
+        /// <summary>見渡すボタン（C）：入る／出る。会話中・逃げられた演出中・操作が止まっている間は入れない。受けつけたら true。</summary>
+        public bool TryToggle()
+        {
+            var camera = CameraFollow2D.Instance;
+            if (camera == null || player == null)
+                return false;
+            if (active)
+            {
+                Exit();
+                return true;
+            }
+            if (DialogueRunner.IsBusy || ChasePuzzle.IsBusy || !player.InputEnabled)
+                return false;
+            Enter(camera);
+            return true;
         }
 
         void Enter(CameraFollow2D camera)
@@ -113,13 +130,15 @@ namespace BlueNight.Puzzle
             var rect = (RectTransform)label.transform;
             rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(1f, 1f);
             rect.anchoredPosition = new Vector2(-8f, -6f);
-            rect.sizeDelta = new Vector2(160f, 18f);
+            rect.sizeDelta = new Vector2(240f, 20f);
             var text = label.AddComponent<Text>();
             text.font = font;
             text.fontSize = 16;
             text.color = new Color(0.86f, 0.93f, 1f, 1f);
             text.alignment = TextAnchor.UpperRight;
             text.raycastTarget = false;
+            text.horizontalOverflow = HorizontalWrapMode.Overflow; // 折り返すと 2 行目が枠の外で消える
+            text.verticalOverflow = VerticalWrapMode.Overflow;
             text.text = "見渡す（C でもどる）";
             var outline = label.AddComponent<Outline>();
             outline.effectColor = new Color(0.03f, 0.04f, 0.1f, 0.9f);
